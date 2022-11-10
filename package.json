@@ -1,6 +1,6 @@
 {
-  "name": "prototype-name",
-  "description": "Prototype",
+  "name": "record-childrens-vaccinations",
+  "description": "A point of care (POC) prototype",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,7 @@
     "node": ">=16.0.0"
   },
   "prototype": {
-    "serviceName": "Your service name",
+    "serviceName": "Record children’s vaccinations",
     "defaultRigLayout": "layouts/default.html"
   },
   "stylelint": {

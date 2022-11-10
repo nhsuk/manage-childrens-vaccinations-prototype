@@ -1,5 +1,4 @@
 {% extends "layouts/default.html" %}
-
 {% set title = "Record children’s vaccinations" %}
 
 {% block main %}
@@ -7,12 +6,17 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-xl">{{ serviceName + " prototype" }}</h1>
+          <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+
+          <p>Use this service to:</p>
+          <ul class="govuk-list govuk-list--bullet nhsuk-u-margin-bottom-6">
+            <li>keep a record of vaccinations given to children</li>
+            <li>...</li>
+          </ul>
 
           {{ button({
-            text: 'View prototype',
-            href: '/start',
-            classes: 'nhsuk-u-margin-bottom-9'
+            text: 'Start now',
+            href: '/consent/school'
           }) }}
         </div>
       </div>

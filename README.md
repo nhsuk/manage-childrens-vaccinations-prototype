@@ -1,8 +1,10 @@
-# NHS.UK Prototype Rig template
+# Record children’s vaccinations
 
-A template prototype, built using the [NHS.UK Prototype Rig](https://github.com/x-govuk/nhsuk-prototype-rig).
+A point of care (POC) prototype, built using the [NHS.UK Prototype Rig](https://github.com/x-govuk/nhsuk-prototype-rig).
 
-Use this repository as a template.
+Point of Care Systems record data when someone is vaccinated, including product and batch details, and the recording of adverse reactions.
+
+<https://digital.nhs.uk/coronavirus/vaccinations/training-and-onboarding/point-of-care>
 
 ## Requirements
 
