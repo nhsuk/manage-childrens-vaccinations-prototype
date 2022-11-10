@@ -1,0 +1,49 @@
+{% extends "layouts/default.html" %}
+
+{% set title = "Help users to recover from validation errors" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <form method="post" novalidate data-validate>
+        <h1 class="nhsuk-heading-l">Personal details</h1>
+
+        {{ input({
+          label: {
+            text: "Full name"
+          },
+          autocomplete: "name",
+          spellcheck: false,
+          decorate: ["account", "full-name"],
+          validate: {
+            presence: {
+              message: "Enter your full name"
+            }
+          }
+        }) }}
+
+        {{ input({
+          label: {
+            text: "Email address"
+          },
+          autocomplete: "email",
+          spellcheck: false,
+          type: "email",
+          decorate: ["account", "email"],
+          validate: {
+            presence: {
+              message: "Enter your email address"
+            },
+            email: {
+              message: "Enter an email address in the correct format, like name@example.com"
+            }
+          }
+        }) }}
+
+        {{ button({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

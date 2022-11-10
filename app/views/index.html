@@ -1,0 +1,40 @@
+{% extends "layouts/default.html" %}
+
+{% set title = "NHS.UK Prototype Rig" %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <h1 class="nhsuk-heading-xl">{{ serviceName + " prototype" }}</h1>
+
+      {{ button({
+        text: 'View prototype',
+        href: '#',
+        classes: 'nhsuk-u-margin-bottom-9'
+      }) }}
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h2 class="nhsuk-heading-m">About this page</h2>
+          <p>We recommend you add links to your prototype to this page, rather than delete it. You’ll find this page in <code class="proto-code proto-code--inline">/app/views/index.njk</code>.</p>
+          <p>You can change the service name by changing the <code class="proto-code proto-code--inline">prototype.serviceName</code> value in <code class="proto-code proto-code--inline">package.json</code>.</p>
+
+          <h2 class="nhsuk-heading-m">Documentation</h2>
+          <p>The rig includes a number of utilities to help build your prototype. To learn how these work, visit the <a href="https://x-govuk.github.io/govuk-prototype-rig/">GOV.UK Prototype Rig website</a>.</p>
+
+          <h2 class="nhsuk-heading-m">Examples</h2>
+          <p>The rig also includes some example pages. You’ll find them in the <code class="proto-code proto-code--inline">/app/examples</code> folder.
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li><a href="/examples/check-answers">Check your answers page</a></li>
+            <li><a href="/examples/confirmation">Confirmation page</a></li>
+            <li><a href="/examples/question">Question page</a></li>
+            <li><a href="/examples/autocomplete">Question page with autocomplete</a></li>
+            <li><a href="/examples/validation-errors">Question page with validation</a></li>
+            <li><a href="/examples/start">Start page</a></li>
+            <li><a href="/examples/wizard">Wizard journey</a></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

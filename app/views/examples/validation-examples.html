@@ -1,0 +1,261 @@
+{% extends "layouts/default.html" %}
+
+{% set title = "All field types" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <form method="post" novalidate data-validate>
+        <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+        <h2 class="nhsuk-heading-m">Text input</h2>
+        {{ input({
+          label: {
+            text: "Full name"
+          },
+          autocomplete: "name",
+          spellcheck: false,
+          decorate: "full-name",
+          validate: {
+            presence: {
+              message: "Enter your full name"
+            }
+          }
+        }) }}
+
+        <h2 class="nhsuk-heading-m">Radio buttons</h2>
+        {{ radios({
+          classes: "govuk-radios--inline",
+          fieldset: {
+            legend: {
+              text: "Have you changed your name?"
+            }
+          },
+          hint: {
+            text: "This includes changing your last name or spelling your name differently."
+          },
+          items: [{
+            value: "yes",
+            text: "Yes"
+          }, {
+            value: "no",
+            text: "No"
+          }],
+          decorate: "changed-name",
+          validate: {
+            presence: {
+              message: "Select if you have changed your name"
+            }
+          }
+        }) }}
+
+        <h2 class="nhsuk-heading-m">Checkboxes</h2>
+        {{ checkboxes({
+          fieldset: {
+            legend: {
+              text: "Which types of waste do you transport?"
+            }
+          },
+          hint: {
+            text: "Select all that apply."
+          },
+          items: [{
+            value: "carcasses",
+            text: "Waste from animal carcasses"
+          }, {
+            value: "mines",
+            text: "Waste from mines or quarries"
+          }, {
+            value: "farm",
+            text: "Farm or agricultural waste"
+          }],
+          decorate: "waste",
+          validate: {
+            presence: {
+              message: "Select a type of waste"
+            }
+          }
+        }) }}
+
+        <h2 class="nhsuk-heading-m">Textarea</h2>
+        {{ textarea({
+          label: {
+            text: "Can you provide more detail?"
+          },
+          hint: {
+            text: "Do not include personal or financial information, like your National Insurance number or credit card details."
+          },
+          decorate: "more-detail",
+          validate: {
+            presence: {
+              message: "Enter more details"
+            }
+          }
+        }) }}
+
+        <h2 class="nhsuk-heading-m">Date input</h2>
+        {{ dateInput({
+          fieldset: {
+            legend: {
+              text: "When was your passport issued?"
+            }
+          },
+          hint: {
+            text: "For example, 12 11 2007"
+          },
+          decorate: "passport-issued",
+          validate: {
+            presence: {
+              message: "Enter the date your passport was issued"
+            },
+            date: {
+              message: "Passport issued should be a valid date"
+            }
+          }
+        }) }}
+
+        <h2 class="nhsuk-heading-m">Select</h2>
+        {{ select({
+          label: {
+            text: "Sort by"
+          },
+          items: [{
+            value: "",
+            text: "Please select",
+            selected: true
+          }, {
+            value: "published",
+            text: "Recently published"
+          }, {
+            value: "updated",
+            text: "Recently updated"
+          }, {
+            value: "views",
+            text: "Most views"
+          }, {
+            value: "comments",
+            text: "Most comments"
+          }],
+          decorate: "sort",
+          validate: {
+            presence: {
+              message: "Select a sort method"
+            }
+          }
+        }) }}
+
+        <h2 class="nhsuk-heading-m">Fieldset</h2>
+        {% call govukFieldset({
+          legend: {
+            classes: "nhsuk-fieldset__legend--s",
+            text: "What is your address?"
+          }
+        }) %}
+          {{ input({
+            label: {
+              html: "Building and street <span class=\"govuk-visually-hidden\">line 1 of 2</span>"
+            },
+            decorate: "address-line-1"
+          }) }}
+
+          {{ input({
+            label: {
+              html: "<span class=\"govuk-visually-hidden\">Building and street line 2 of 2</span>"
+            },
+            decorate: "address-line-2"
+          }) }}
+
+          {{ input({
+            classes: "nhsuk-u-width-two-thirds",
+            label: {
+              text: "Town or city"
+            },
+            decorate: "address-town"
+          }) }}
+
+          {{ input({
+            classes: "govuk-input--width-10",
+            label: {
+              text: "Postcode"
+            },
+            decorate: "address-postcode",
+            validate: {
+              presence: {
+                message: "Enter your postcode"
+              }
+            }
+          }) }}
+        {% endcall %}
+
+        <h2 class="nhsuk-heading-m">Conditional answers</h2>
+        {{ radios({
+          fieldset: {
+            legend: {
+              classes: "nhsuk-fieldset__legend--s",
+              text: "How would you prefer to be contacted?"
+            }
+          },
+          hint: {
+            text: "Select one option"
+          },
+          items: [{
+            value: "email",
+            text: "Email",
+            conditional: {
+              html: govukInput({
+                classes: "nhsuk-u-width-one-third",
+                label: {
+                  text: "Email address"
+                },
+                type: "email",
+                spellcheck: "false",
+                decorate: "email-address",
+                validate: {
+                  conditional: {
+                    dependentOn: {
+                      name: "[contact-method]",
+                      value: "email"
+                    },
+                    message: "Enter your email address"
+                  }
+                }
+              })
+            }
+          }, {
+            value: "phone",
+            text: "Phone",
+            conditional: {
+              html: govukInput({
+                classes: "nhsuk-u-width-one-third",
+                label: {
+                  text: "Phone number"
+                },
+                type: "tel",
+                decorate: "phone-number",
+                validate: {
+                  conditional: {
+                    dependentOn: {
+                      name: "[contact-method]",
+                      value: "phone"
+                    },
+                    message: "Enter your phone number"
+                  }
+                }
+              })
+            }
+          }],
+          decorate: "contact-method",
+          validate: {
+            presence: {
+              message: "Select a contact method"
+            }
+          }
+        }) }}
+
+        {{ button({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

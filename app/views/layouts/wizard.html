@@ -1,0 +1,34 @@
+{% extends "layouts/default.html" %}
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+{% block pageNavigation %}
+  {% if paths.back %}
+    <div class="nhsuk-width-container">
+      {{ backLink({
+        href: paths.back,
+        classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+      }) }}
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="{{ gridClass or 'nhsuk-grid-column-two-thirds' }} ">
+      {% block beforeForm %}{% endblock %}
+
+      <form method="post" novalidate {% if data.features.validation.on %}data-validate{% endif %}>
+        {% block form %}{% endblock %}
+
+        {% if not hideButton %}
+        <div class="nhsuk-u-margin-top-6">
+          {{ button({
+            html: buttonText if buttonText else 'Continue'
+          }) }}
+        </div>
+        {% endif %}
+      </form>
+
+      {% block afterForm %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
