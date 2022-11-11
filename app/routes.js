@@ -1,7 +1,7 @@
 import express from 'express'
-import { exampleWizardRoutes } from './routes/example-wizard.js'
+import { recordVaccinationRoutes } from './routes/record-vaccination.js'
 
 const router = express.Router()
-exampleWizardRoutes(router)
+recordVaccinationRoutes(router)
 
 export default router
