@@ -1,5 +1,6 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Was Emma Marr given the vaccine?" %}
+{% set name = data.patients.abc.name %}
+{% set title = "Was " + name + " given the vaccine?" %}
 
 {% block form %}
   {% set where %}
@@ -32,7 +33,8 @@
       }
     },
     items: [{
-      text: "Yes, they had the flu vaccine (Fluenz Tetra)"
+      text: "Yes, they had the " + d("vaccines.fluSpray.type") + " vaccine (" + d("vaccines.fluSpray.brand") + ")",
+      value: "Yes"
     }, {
       text: "No, they did not get the vaccine",
       value: "No"

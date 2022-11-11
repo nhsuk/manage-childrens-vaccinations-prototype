@@ -11,9 +11,18 @@
       }
     },
     items: [
-      { text: 'They refused it' },
-      { text: 'They were not well enough' },
-      { text: 'They had contraindications' }
+      {
+        text: 'They refused it',
+        value: data.patients.abc.name + ' refused it'
+      },
+      {
+        text: 'They were not well enough',
+        value: data.patients.abc.name + ' was not well enough'
+      },
+      {
+        text: 'They had contraindications',
+        value: data.patients.abc.name + ' had contraindications'
+      }
     ],
     decorate: ["vaccination", "why-not-given"]
   }) }}

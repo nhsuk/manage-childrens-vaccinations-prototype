@@ -7,6 +7,30 @@
  * existing application.
  */
 export default {
+  user: {
+    name: 'Jane Doe',
+    email: 'jane.doe@example.com'
+  },
+  campaign: {
+    location: 'St Mary’s Primary School',
+    type: 'school'
+  },
+  patients: {
+    abc: {
+      name: 'Emma Marr',
+      dob: '2017-01-01',
+      consent: 'Parental consent (digital)'
+    }
+  },
+  vaccines: {
+    fluSpray: {
+      type: 'flu',
+      brand: 'Fluenz Tetra',
+      method: 'Nasal spray',
+      batch: 'P100475581',
+      summary: 'Flu (Fluenz Tetra, P100475581)'
+    }
+  },
   // Set feature flags using the `features` key
   features: {
     validation: {

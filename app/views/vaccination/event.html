@@ -13,15 +13,15 @@
     rows: decorateRows([
       {
         key: "Name",
-        value: "Emma Marr"
+        data: "patients.abc.name"
       },
       {
         key: "Date of birth",
-        value: "1 January 2017"
+        value: d("patients.abc.dob") | govukDate
       },
       {
         key: "Consent",
-        value: "Parental consent (digital)"
+        data: "patients.abc.consent"
       }
     ])
   }) }}
@@ -50,15 +50,15 @@
     rows: decorateRows([
       {
         key: "Vaccine",
-        value: "Flu"
+        value: d("vaccines.fluSpray.type") | capitaliseFirstLetter
       },
       {
         key: "Brand",
-        value: "Fluenz Tetra (Nasal spray)"
+        value: d("vaccines.fluSpray.brand") + ' (' + d("vaccines.fluSpray.method") + ')'
       },
       {
         key: "Batch",
-        value: "P100475581"
+        data: "vaccines.fluSpray.batch"
       }
     ])
   }) }}

@@ -9,9 +9,9 @@
   {{ govukSummaryList({
     rows: decorateRows([
       {
-        key: 'Reason not given',
-        value: 'Emma Marr refused it',
-        href: '#'
+        key: 'Reason',
+        data: "vaccination.why-not-given",
+        href: '/vaccination/not-given'
       } if not vaccineGiven,
       {
         key: 'Date',
@@ -25,12 +25,12 @@
       } if vaccineGiven,
       {
         key: 'Location',
-        value: 'St Mary’s Primary School',
+        data: 'campaign.location',
         href: '#'
       },
       {
         key: 'Vaccinator',
-        value: 'You (Jane Doe)',
+        value: 'You (' + data.user.name + ')',
         href: '#'
       },
       {
@@ -45,11 +45,11 @@
       rows: decorateRows([
         {
           key: 'Patient',
-          value: 'Emma Marr'
+          data: 'patients.abc.name'
         },
         {
           key: 'Vaccine',
-          value: 'Flu (Fluenz Tetra, P100475581)'
+          data: 'vaccines.fluSpray.summary'
         }
       ])
     }) }}
