@@ -1,0 +1,16 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Record saved" %}
+{% set hideButton = true %}
+{% block pageNavigation %}{% endblock %}
+
+{% block form %}
+  {{ govukPanel({
+    titleText: title,
+    classes: 'nhsuk-u-margin-bottom-6'
+  }) }}
+
+  <h2 class="nhsuk-u-heading-m">Continue</h2>
+  <p>
+    <a href="#">Record another vaccination</a>
+  </p>
+{% endblock %}

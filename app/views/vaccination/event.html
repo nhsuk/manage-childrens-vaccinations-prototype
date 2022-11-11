@@ -1,0 +1,65 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Record a flu vaccination" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Patient</h2>
+  <p>
+    <a href="#">Change</a>
+  </p>
+
+  {{ summaryList({
+    rows: decorateRows([
+      {
+        key: "Name",
+        value: "Emma Marr"
+      },
+      {
+        key: "Date of birth",
+        value: "1 January 2017"
+      },
+      {
+        key: "Consent",
+        value: "Parental consent (digital)"
+      }
+    ])
+  }) }}
+  <!--  value: "Parent or guardian consent (digital)" -->
+
+  <!-- <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Vaccinator</h2>
+  <p>
+    <a href="#">Change</a>
+  </p>
+
+  {{ summaryList({
+    rows: decorateRows([
+      {
+        key: "Name",
+        value: "Jane Doe"
+      }
+    ])
+  }) }} -->
+
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Vaccine</h2>
+  <p>
+    <a href="#">Change</a>
+  </p>
+
+  {{ summaryList({
+    rows: decorateRows([
+      {
+        key: "Vaccine",
+        value: "Flu"
+      },
+      {
+        key: "Brand",
+        value: "Fluenz Tetra (Nasal spray)"
+      },
+      {
+        key: "Batch",
+        value: "P100475581"
+      }
+    ])
+  }) }}
+{% endblock %}

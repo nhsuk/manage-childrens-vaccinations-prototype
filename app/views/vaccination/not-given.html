@@ -1,0 +1,20 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Why was the vaccine not given?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [
+      { text: 'They refused it' },
+      { text: 'They were not well enough' },
+      { text: 'They had contraindications' }
+    ],
+    decorate: ["vaccination", "why-not-given"]
+  }) }}
+{% endblock %}

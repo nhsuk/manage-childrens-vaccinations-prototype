@@ -1,0 +1,57 @@
+{% extends "layouts/wizard.html" %}
+{% set vaccineGiven = d('vaccination.given') !== 'No' %}
+{% set title = "Check and confirm vaccination details" if vaccineGiven else "Confirm the vaccine was not given" %}
+{% set buttonText = "Confirm" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {{ govukSummaryList({
+    rows: decorateRows([
+      {
+        key: 'Reason not given',
+        value: 'Emma Marr refused it',
+        href: '#'
+      } if not vaccineGiven,
+      {
+        key: 'Date',
+        value: 'Today',
+        href: '#'
+      },
+      {
+        key: 'Time',
+        value: '12:03pm',
+        href: '#'
+      } if vaccineGiven,
+      {
+        key: 'Location',
+        value: 'St Mary’s Primary School',
+        href: '#'
+      },
+      {
+        key: 'Vaccinator',
+        value: 'You (Jane Doe)',
+        href: '#'
+      },
+      {
+        key: 'Site',
+        value: 'Nasal'
+      } if vaccineGiven
+    ])
+  }) }}
+
+  {% if vaccineGiven %}
+    {{ govukSummaryList({
+      rows: decorateRows([
+        {
+          key: 'Patient',
+          value: 'Emma Marr'
+        },
+        {
+          key: 'Vaccine',
+          value: 'Flu (Fluenz Tetra, P100475581)'
+        }
+      ])
+    }) }}
+  {% endif %}
+{% endblock %}

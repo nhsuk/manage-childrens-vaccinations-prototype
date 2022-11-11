@@ -1,0 +1,42 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Was Emma Marr given the vaccine?" %}
+
+{% block form %}
+  {% set where %}
+    {{ radios({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "Where did they get the vaccine?"
+        }
+      },
+      items: [
+        { text: "Nasal" },
+        { text: "Left arm" },
+        { text: "Right arm" },
+        { text: "Left thigh" },
+        { text: "Right thigh" },
+        { text: "Left buttock" },
+        { text: "Right buttock" }
+      ],
+      decorate: ["vaccination", "where"]
+    }) }}
+  {% endset %}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [{
+      text: "Yes, they had the flu vaccine (Fluenz Tetra)"
+    }, {
+      text: "No, they did not get the vaccine",
+      value: "No"
+    }],
+    decorate: ["vaccination", "given"]
+  }) }}
+{% endblock %}
