@@ -1,0 +1,29 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Which batches of Fluenz Tetra?" %}
+
+{% block form %}
+  {{ checkboxes({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [
+      {
+        text: "P100475581"
+      },
+      {
+        text: "P100475582"
+      },
+      {
+        text: "P100475583"
+      },
+      {
+        text: "A different batch"
+      }
+    ],
+    decorate: "day-setup.where"
+  }) }}
+{% endblock %}

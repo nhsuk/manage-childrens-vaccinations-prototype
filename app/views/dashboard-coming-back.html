@@ -1,0 +1,45 @@
+{% extends "layouts/default.html" %}
+{% set title = "You’re signed in as " + data.user.name %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <form action="/dashboard" method="post">
+            <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
+
+            <p>You’re using these details today:</p>
+
+            {{ summaryList({
+              rows: decorateRows([
+                {
+                  key: "Location",
+                  value: {
+                    html: "St Mary’s Primary School"
+                  },
+                  href: "#"
+                },
+                {
+                  key: "Vaccine",
+                  value: "Flu (Fluenz Tetra, " + d('vaccines.fluSpray.batch') + ")",
+                  href: "#"
+                },
+                {
+                  key: "Vaccinator",
+                  value: "You (Jane Doe)",
+                  href: "#"
+                }
+              ])
+            }) }}
+
+            {{ button({
+              text: 'Continue',
+              href: '/consent/school'
+            }) }}
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

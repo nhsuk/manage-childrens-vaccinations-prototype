@@ -1,0 +1,29 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Which flu vaccines are you using?" %}
+
+{% block form %}
+  {{ checkboxes({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    hint: {
+      text: "Pick all the vaccines you will use today"
+    },
+    items: [
+      {
+        text: "Nasal spray: Fluenz Tetra"
+      },
+      {
+        text: "Injection: Fluarix Tetra"
+      },
+      {
+        text: "A different vaccine"
+      }
+    ],
+    decorate: "day-setup.what"
+  }) }}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "What are you doing today?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [
+      {
+        html: "Flu campaign at St Mary’s Primary School<br />(morning session)"
+      },
+      {
+        html: "HPV campaign at Tundown Academy<br />(afternoon session)"
+      },
+      {
+        text: "A catch-up clinic",
+        value: "clinic"
+      },
+      { divider: 'or '},
+      {
+        text: "Somewhere else"
+      }
+    ],
+    decorate: "day-setup.where"
+  }) }}
+{% endblock %}

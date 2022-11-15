@@ -1,0 +1,55 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Are you the vaccinator?" %}
+
+{% block form %}
+  {% set otherVaccinator %}
+    <!-- {{ select({
+      label: {
+        text: "Who is the vaccinator?"
+      },
+      items: [
+        {
+          text: ""
+        },
+        {
+          text: "Hermione Potter"
+        },
+        {
+          text: "Harry Granger"
+        }
+      ],
+      decorate: "day-setup.other-vaccinator"
+    }) }} -->
+
+    {{ input({
+      label: {
+        text: "Who is the vaccinator?"
+      },
+      decorate: "day-setup.other-vaccinator"
+    }) }}
+  {% endset %}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [
+      {
+        text: "Yes",
+        value: data.user.name
+      },
+      {
+        text: "No, I am recording data for another vaccinator",
+        value: "other",
+        conditional: {
+          html: otherVaccinator
+        }
+      }
+    ],
+    decorate: "day-setup.vaccinator"
+  }) }}
+{% endblock %}
