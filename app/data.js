@@ -1,3 +1,5 @@
+import { patients } from './generators/patients.js'
+
 /**
  * Default values for user session data
  *
@@ -13,7 +15,8 @@ export default {
   },
   campaign: {
     location: 'St Mary’s Primary School',
-    type: 'school'
+    type: 'school',
+    patients: patients(100)
   },
   patients: {
     abc: {

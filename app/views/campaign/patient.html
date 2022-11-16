@@ -1,0 +1,132 @@
+{% extends "layouts/default.html" %}
+{% set title = patient.fullName %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard-coming-back"
+      }
+    ],
+    text: "Flu campaign at St Mary’s Primary School",
+    href: "/campaign/flu"
+  }) }}
+{% endblock %}
+
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+
+          {% set about %}
+            {{ summaryList({
+              classes: "app-summary-list--no-bottom-border",
+              rows: decorateRows([
+                {
+                  key: 'Name',
+                  value: patient.fullName
+                },
+                {
+                  key: 'Preferred name',
+                  value: patient.preferredName
+                } if patient.preferredName,
+                {
+                  key: 'Sex',
+                  value: patient.sex
+                },
+                {
+                  key: 'Date of birth',
+                  value: patient.dob | govukDate + ' (aged ' + patient.age + ')'
+                },
+                {
+                  key: 'GP',
+                  value: patient.gp
+                },
+                {
+                  key: 'NHS Number',
+                  value: patient.nhsNumber
+                },
+                {
+                  key: 'Screening',
+                  value: {
+                    html: patient.screening + '<br /><a href="#">Show health questions and answers</a>'
+                  }
+                }
+              ])
+            }) }}
+
+            {{ button({
+              text: 'Record a flu vaccination',
+              href: '/vaccination/event',
+              classes: 'nhsuk-u-margin-bottom-2'
+            }) }}
+          {% endset %}
+
+          {{ card({
+            "heading": "About them",
+            "headingLevel": "2",
+            "headingClasses": "nhsuk-heading-m",
+            "description": about
+          }) }}
+<!--
+          <h2 class="nhsuk-heading-m">Health notes</h2>
+
+          {% set healthNotes %}
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a disease or treatment that severely affects their immune system?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Does anyone in their household having treatment that severely affects their immune system?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Have they been diagnosed with asthma?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a severe egg allergy?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Are they taking aspirin medication?</h3>
+            <p>No</p>
+          {% endset %}
+
+          {{ details({
+            "text": "None given (Show answers)",
+            "HTML": healthNotes
+          }) }} -->
+
+          {% set parent %}
+            {{ summaryList({
+              classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+              rows: decorateRows([
+                {
+                  key: 'Name',
+                  value: patient.parentOrGuardian.fullName
+                },
+                {
+                  key: 'Relationship to child',
+                  value: patient.parentOrGuardian.relationship
+                },
+                {
+                  key: 'Contact details',
+                  value: {
+                    html: patient.parentOrGuardian.telephone + '<br />' + patient.parentOrGuardian.email
+                  }
+                }
+              ])
+            }) }}
+          {% endset %}
+
+          {{ card({
+            "heading": "Parent or guardian",
+            "headingLevel": "2",
+            "headingClasses": "nhsuk-heading-m",
+            "description": parent
+          }) }}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

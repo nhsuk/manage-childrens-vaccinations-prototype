@@ -69,6 +69,25 @@
                     {{ tag({ text: 'Vaccinated', classes: 'nhsuk-tag--complete' }) }}
                   </td>
                 </tr>
+                {% for patient in data.campaign.patients %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                      <a href="/campaign/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
+                      {% if patient.preferredName %}
+                        <br />Known as: {{ patient.preferredName }}
+                      {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                      {{ patient.dob | govukDate("truncate") }}
+                    </td>
+                    <td class="govuk-table__cell">
+                      Approved
+                    </td>
+                    <td class="govuk-table__cell">
+                      {{ tag({ text: 'Not yet', classes: 'nhsuk-tag--grey' }) }}
+                    </td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           {% endset %}
