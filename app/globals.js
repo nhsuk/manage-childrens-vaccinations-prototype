@@ -63,6 +63,7 @@ export default () => {
     const data = this.ctx.data
 
     rows = rows
+      .filter(r => typeof r === 'object')
       .filter(r => typeof r.condition === 'undefined' || evaluateCondition(data, r.condition))
       .map(r => {
         if (typeof r.key === 'string') {
