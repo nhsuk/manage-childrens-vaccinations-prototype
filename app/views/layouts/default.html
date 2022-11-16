@@ -42,3 +42,10 @@
     ]
   }) }}
 {% endblock %}
+
+{% block bodyEnd %}
+  {{ super() }}
+  {% if patient %}
+    <script>console.log('Patient', {{ patient | dump | safe }});</script>
+  {% endif %}
+{% endblock %}

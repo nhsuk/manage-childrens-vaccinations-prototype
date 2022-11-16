@@ -32,6 +32,7 @@ export const patient = () => {
   p.gp = 'Local GP'
   p.screening = 'Approved for vaccination'
   p.parentOrGuardian = parentOrGuardian(faker, p.lastName)
+  p.consent = 'Parental consent (digital)'
 
   return p
 }

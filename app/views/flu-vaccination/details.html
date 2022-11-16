@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set vaccineGiven = d('vaccination.given') !== 'No' %}
+{% set vaccineGiven = data['flu-vaccination'][patient.nhsNumber]['given'] !== 'No' %}
 {% set title = "Check and confirm vaccination details" if vaccineGiven else "Confirm the vaccine was not given" %}
 {% set buttonText = "Confirm" %}
 
@@ -9,9 +9,14 @@
   {{ govukSummaryList({
     rows: decorateRows([
       {
+        key: 'Vaccine given?',
+        value: data['flu-vaccination'][patient.nhsNumber]['given'],
+        href: '/flu-vaccination/' + patient.nhsNumber + '/has-it-been-given'
+      },
+      {
         key: 'Reason',
-        data: "vaccination.why-not-given",
-        href: '/vaccination/not-given'
+        value: data['flu-vaccination'][patient.nhsNumber]['why-not-given'],
+        href: '/flu-vaccination/' + patient.nhsNumber + '/not-given'
       } if not vaccineGiven,
       {
         key: 'Date',
@@ -45,7 +50,7 @@
       rows: decorateRows([
         {
           key: 'Patient',
-          data: 'patients.abc.name'
+          value: patient.name
         },
         {
           key: 'Vaccine',

@@ -14,7 +14,6 @@
   }) }}
 {% endblock %}
 
-
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
@@ -61,16 +60,16 @@
 
             {{ button({
               text: 'Record a flu vaccination',
-              href: '/vaccination/event',
+              href: '/flu-vaccination/' + patient.nhsNumber,
               classes: 'nhsuk-u-margin-bottom-2'
             }) }}
           {% endset %}
 
           {{ card({
-            "heading": "About them",
-            "headingLevel": "2",
-            "headingClasses": "nhsuk-heading-m",
-            "description": about
+            heading: "About them",
+            headingLevel: "2",
+            headingClasses: "nhsuk-heading-m",
+            description: about
           }) }}
 <!--
           <h2 class="nhsuk-heading-m">Health notes</h2>
@@ -120,10 +119,10 @@
           {% endset %}
 
           {{ card({
-            "heading": "Parent or guardian",
-            "headingLevel": "2",
-            "headingClasses": "nhsuk-heading-m",
-            "description": parent
+            heading: "Parent or guardian",
+            headingLevel: "2",
+            headingClasses: "nhsuk-heading-m",
+            description: parent
           }) }}
         </div>
       </div>

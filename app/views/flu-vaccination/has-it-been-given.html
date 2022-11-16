@@ -1,6 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set name = data.patients.abc.name %}
-{% set title = "Was " + name + " given the vaccine?" %}
+{% set title = "Was " + patient.fullName + " given the vaccine?" %}
 
 {% block form %}
   {% set where %}
@@ -39,6 +38,6 @@
       text: "No, they did not get the vaccine",
       value: "No"
     }],
-    decorate: ["vaccination", "given"]
+    decorate: ["flu-vaccination", patient.nhsNumber, "given"]
   }) }}
 {% endblock %}

@@ -13,33 +13,18 @@
     rows: decorateRows([
       {
         key: "Name",
-        data: "patients.abc.name"
+        value: patient.fullName
       },
       {
         key: "Date of birth",
-        value: d("patients.abc.dob") | govukDate
+        value: patient.dob | govukDate
       },
       {
         key: "Consent",
-        data: "patients.abc.consent"
+        value: patient.consent
       }
     ])
   }) }}
-  <!--  value: "Parent or guardian consent (digital)" -->
-
-  <!-- <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Vaccinator</h2>
-  <p>
-    <a href="#">Change</a>
-  </p>
-
-  {{ summaryList({
-    rows: decorateRows([
-      {
-        key: "Name",
-        value: "Jane Doe"
-      }
-    ])
-  }) }} -->
 
   <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Vaccine</h2>
   <p>

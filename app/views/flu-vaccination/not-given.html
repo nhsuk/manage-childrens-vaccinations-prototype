@@ -13,17 +13,17 @@
     items: [
       {
         text: 'They refused it',
-        value: data.patients.abc.name + ' refused it'
+        value: patient.fullName + ' refused it'
       },
       {
         text: 'They were not well enough',
-        value: data.patients.abc.name + ' was not well enough'
+        value: patient.fullName + ' was not well enough'
       },
       {
         text: 'They had contraindications',
-        value: data.patients.abc.name + ' had contraindications'
+        value: patient.fullName + ' had contraindications'
       }
     ],
-    decorate: ["vaccination", "why-not-given"]
+    decorate: ["flu-vaccination", patient.nhsNumber, "why-not-given"]
   }) }}
 {% endblock %}
