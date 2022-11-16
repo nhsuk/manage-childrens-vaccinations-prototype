@@ -4,47 +4,49 @@
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
 
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Patient</h2>
-  <p>
-    <a href="#">Change</a>
-  </p>
+  {% set html %}
+    {{ summaryList({
+      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+      rows: decorateRows([
+        {
+          key: "Vaccine",
+          value: d("vaccines.fluSpray.type") | capitaliseFirstLetter
+        },
+        {
+          key: "Brand",
+          value: d("vaccines.fluSpray.brand") + ' (' + d("vaccines.fluSpray.method") + ')'
+        },
+        {
+          key: "Batch",
+          data: "vaccines.fluSpray.batch"
+        }
+      ])
+    }) }}
+  {% endset %}
 
-  {{ summaryList({
-    rows: decorateRows([
-      {
-        key: "Name",
-        value: patient.fullName
-      },
-      {
-        key: "Date of birth",
-        value: patient.dob | govukDate
-      },
-      {
-        key: "Consent",
-        value: patient.consent
+  {{ card({
+    heading: "",
+    headingLevel: "2",
+    headingClasses: "nhsuk-heading-m nhsuk-u-margin-bottom-1",
+    HTML: html,
+    classes: "nhsuk-u-margin-bottom-4"
+  })}}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Are these details correct?"
       }
-    ])
+    },
+    items: [{
+      text: "Yes",
+      value: "Yes"
+    }, {
+      text: "No, I need to change something",
+      value: "No"
+    }],
+    decorate: ["flu-vaccination", patient.nhsNumber, "vaccine-correct"]
   }) }}
 
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">Vaccine</h2>
-  <p>
-    <a href="#">Change</a>
-  </p>
-
-  {{ summaryList({
-    rows: decorateRows([
-      {
-        key: "Vaccine",
-        value: d("vaccines.fluSpray.type") | capitaliseFirstLetter
-      },
-      {
-        key: "Brand",
-        value: d("vaccines.fluSpray.brand") + ' (' + d("vaccines.fluSpray.method") + ')'
-      },
-      {
-        key: "Batch",
-        data: "vaccines.fluSpray.batch"
-      }
-    ])
-  }) }}
 {% endblock %}

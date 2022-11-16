@@ -7,12 +7,25 @@
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
 
   {{ govukSummaryList({
+    classes: "app-u-frutiger",
     rows: decorateRows([
       {
-        key: 'Vaccine given?',
+        key: 'Patient',
+        value: patient.fullName
+      },
+      {
+        key: 'Vaccine',
+        data: 'vaccines.fluSpray.summary'
+      },
+      {
+        key: 'Vaccine given',
         value: data['flu-vaccination'][patient.nhsNumber]['given'],
         href: '/flu-vaccination/' + patient.nhsNumber + '/has-it-been-given'
       },
+      {
+        key: 'Site',
+        value: 'Nasal'
+      } if vaccineGiven,
       {
         key: 'Reason',
         value: data['flu-vaccination'][patient.nhsNumber]['why-not-given'],
@@ -20,12 +33,12 @@
       } if not vaccineGiven,
       {
         key: 'Date',
-        value: 'Today',
+        value: 'Today (' + "today" | govukDate + ')',
         href: '#'
       },
       {
         key: 'Time',
-        value: '12:03pm',
+        value: "now" | govukTime,
         href: '#'
       } if vaccineGiven,
       {
@@ -37,26 +50,7 @@
         key: 'Vaccinator',
         value: 'You (' + data.user.name + ')',
         href: '#'
-      },
-      {
-        key: 'Site',
-        value: 'Nasal'
-      } if vaccineGiven
+      }
     ])
   }) }}
-
-  {% if vaccineGiven %}
-    {{ govukSummaryList({
-      rows: decorateRows([
-        {
-          key: 'Patient',
-          value: patient.name
-        },
-        {
-          key: 'Vaccine',
-          data: 'vaccines.fluSpray.summary'
-        }
-      ])
-    }) }}
-  {% endif %}
 {% endblock %}
