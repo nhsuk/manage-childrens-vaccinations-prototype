@@ -1,0 +1,124 @@
+{% extends "layouts/default.html" %}
+{% set title = "Emma Marr" %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard-coming-back"
+      }
+    ],
+    text: "Flu campaign at St Mary’s Primary School",
+    href: "/campaign/flu"
+  }) }}
+{% endblock %}
+
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+
+          {% set about %}
+            {{ summaryList({
+              classes: "app-summary-list--no-bottom-border",
+              rows: decorateRows([
+                {
+                  key: 'Sex',
+                  value: "Female"
+                },
+                {
+                  key: 'Date of birth',
+                  value: "1 January 2017 (5 years old)"
+                },
+                {
+                  key: 'GP',
+                  value: "Local GP"
+                },
+                {
+                  key: 'NHS Number',
+                  value: "1234567890"
+                },
+                {
+                  key: 'Screening',
+                  value: {
+                    html: 'Approved for vaccination<br /><a href="#">Show health questions and answers</a>'
+                  }
+                }
+              ])
+            }) }}
+
+            {{ button({
+              text: 'Record a flu vaccination',
+              href: '/vaccination/event',
+              classes: 'nhsuk-u-margin-bottom-2'
+            }) }}
+          {% endset %}
+
+          {{ card({
+            "heading": "About them",
+            "headingLevel": "2",
+            "headingClasses": "nhsuk-heading-m",
+            "description": about
+          }) }}
+<!--
+          <h2 class="nhsuk-heading-m">Health notes</h2>
+
+          {% set healthNotes %}
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a disease or treatment that severely affects their immune system?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Does anyone in their household having treatment that severely affects their immune system?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Have they been diagnosed with asthma?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a severe egg allergy?</h3>
+            <p>No</p>
+
+            <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Are they taking aspirin medication?</h3>
+            <p>No</p>
+          {% endset %}
+
+          {{ details({
+            "text": "None given (Show answers)",
+            "HTML": healthNotes
+          }) }} -->
+
+          {% set parent %}
+            {{ summaryList({
+              classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+              rows: decorateRows([
+                {
+                  key: 'Name',
+                  value: "Andrew Marr"
+                },
+                {
+                  key: 'Relationship to child',
+                  value: "Parent"
+                },
+                {
+                  key: 'Contact details',
+                  value: {
+                    html: "07123456789<br />email@example.com"
+                  }
+                }
+              ])
+            }) }}
+          {% endset %}
+
+          {{ card({
+            "heading": "Parent or guardian",
+            "headingLevel": "2",
+            "headingClasses": "nhsuk-heading-m",
+            "description": parent
+          }) }}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

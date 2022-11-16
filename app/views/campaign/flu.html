@@ -1,0 +1,86 @@
+{% extends "layouts/default.html" %}
+{% set title = "Flu campaign at St Mary’s Primary School" %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    text: "Home",
+    href: "/dashboard-coming-back"
+  }) }}
+{% endblock %}
+
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+
+          {% set listOfPeople %}
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header">Name</th>
+                  <th class="govuk-table__header">Date of birth</th>
+                  <th class="govuk-table__header">Screening</th>
+                  <th class="govuk-table__header">Vaccinated</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    <a href="/campaign/child">Emma Marr</a>
+                  </td>
+                  <td class="govuk-table__cell">
+                    1 Jan 2017
+                  </td>
+                  <td class="govuk-table__cell">
+                    Approved
+                  </td>
+                  <td class="govuk-table__cell">
+                    {{ tag({ text: 'Not yet', classes: 'nhsuk-tag--grey' }) }}
+                  </td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    <a href="#">Melinda Gates</a><br />Known as: Mel Jones
+                  </td>
+                  <td class="govuk-table__cell">
+                    10 Jan 2017
+                  </td>
+                  <td class="govuk-table__cell">
+                    Approved with notes
+                  </td>
+                  <td class="govuk-table__cell">
+                    {{ tag({ text: 'Not yet', classes: 'nhsuk-tag--grey' }) }}
+                  </td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    <a href="#">Nigella Lawson</a>
+                  </td>
+                  <td class="govuk-table__cell">
+                    1 Nov 2016
+                  </td>
+                  <td class="govuk-table__cell">
+                    Approved
+                  </td>
+                  <td class="govuk-table__cell">
+                    {{ tag({ text: 'Vaccinated', classes: 'nhsuk-tag--complete' }) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          {% endset %}
+
+          {{ card({
+            "heading": "Year 1",
+            "headingLevel": "2",
+            "headingClasses": "nhsuk-heading-m",
+            "description": listOfPeople
+          }) }}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

@@ -2,7 +2,7 @@ import { wizard } from 'nhsuk-prototype-rig'
 
 export function recordVaccination (req) {
   const journey = {
-    '/vaccination/start': {},
+    '/campaign/child': {},
     '/vaccination/event': {},
     '/vaccination/given': {
       '/vaccination/event-details': {

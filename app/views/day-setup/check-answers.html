@@ -1,11 +1,11 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Check and confirm" %}
-{% set buttonText = "Confirm" %}
+{% set title = "Check and confirm what you’re doing today" %}
+{% set buttonText = "Confirm and continue" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-  {{ govukSummaryList({
+  {{ summaryList({
     rows: decorateRows([
       {
         key: 'Activity',
@@ -19,23 +19,18 @@
       },
       {
         key: 'Vaccines',
-        value: '12:03pm',
-        href: '#'
-      } if vaccineGiven,
-      {
-        key: 'Location',
-        data: 'campaign.location',
-        href: '#'
+        value: {
+          html: d("day-setup.vaccines") | join('<br>')
+        },
+        href: '/day-setup/what'
       },
       {
-        key: 'Vaccinator',
-        value: 'You (' + data.user.name + ')',
-        href: '#'
-      },
-      {
-        key: 'Site',
-        value: 'Nasal'
-      } if vaccineGiven
+        key: 'Batches',
+        value: {
+          html: d("day-setup.batches") | join('<br>')
+        },
+        href: '/day-setup/batches'
+      }
     ])
   }) }}
 {% endblock %}

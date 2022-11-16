@@ -12,3 +12,17 @@ $govuk-assets-path: "/govuk/assets/";
 @import "govuk-prototype-components/x-govuk/all";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+.app-summary-list--no-bottom-border {
+  .nhsuk-summary-list__row:last-child {
+    border: none;
+
+    .nhsuk-summary-list__key {
+      border-bottom: none;
+    }
+
+    .nhsuk-summary-list__value {
+      border-bottom: none;
+    }
+  }
+}
