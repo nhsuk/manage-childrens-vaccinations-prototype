@@ -48,4 +48,7 @@
   {% if patient %}
     <script>console.log('Patient', {{ patient | dump | safe }});</script>
   {% endif %}
+  {% if vaccinationRecord %}
+    <script>console.log('Vaccination record', {{ vaccinationRecord | dump | safe }});</script>
+  {% endif %}
 {% endblock %}

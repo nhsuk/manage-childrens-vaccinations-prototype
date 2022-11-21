@@ -1,7 +1,8 @@
 {% extends "layouts/wizard.html" %}
-{% set vaccineGiven = data['flu-vaccination'][patient.nhsNumber]['given'] !== 'No' %}
+{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 {% set title = "Check and confirm vaccination details" if vaccineGiven else "Confirm the vaccine was not given" %}
 {% set buttonText = "Confirm" %}
+{% set basePath = '/vaccination/' + campaign.id + '/' + patient.nhsNumber %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
@@ -15,21 +16,26 @@
       },
       {
         key: 'Vaccine',
-        data: 'vaccines.fluSpray.summary'
+        value: campaign.vaccine.summary
       },
       {
         key: 'Vaccine given',
-        value: data['flu-vaccination'][patient.nhsNumber]['given'],
-        href: '/flu-vaccination/' + patient.nhsNumber + '/has-it-been-given'
+        value: vaccinationRecord.given,
+        href: basePath + '/has-it-been-given'
       },
       {
         key: 'Site',
         value: 'Nasal'
-      } if vaccineGiven,
+      } if vaccineGiven and campaign.vaccine.method == "Nasal spray",
+      {
+        key: 'Site',
+        value: vaccinationRecord.where,
+        href: basePath + '/has-it-been-given'
+      } if vaccineGiven and campaign.vaccine.method == "Injection",
       {
         key: 'Reason',
-        value: data['flu-vaccination'][patient.nhsNumber]['why-not-given'],
-        href: '/flu-vaccination/' + patient.nhsNumber + '/not-given'
+        value: vaccinationRecord['why-not-given'],
+        href: basePath + '/not-given'
       } if not vaccineGiven,
       {
         key: 'Date',
@@ -38,12 +44,12 @@
       },
       {
         key: 'Time',
-        value: "now" | govukTime,
+        value: 'now' | govukTime,
         href: '#'
       } if vaccineGiven,
       {
         key: 'Location',
-        data: 'campaign.location',
+        value: campaign.location,
         href: '#'
       },
       {

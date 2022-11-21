@@ -9,8 +9,8 @@
         href: "/dashboard-coming-back"
       }
     ],
-    text: "Flu campaign at St Mary’s Primary School",
-    href: "/campaign/flu"
+    text: campaign.title,
+    href: "/campaign/" + campaign.id
   }) }}
 {% endblock %}
 
@@ -59,8 +59,8 @@
             }) }}
 
             {{ button({
-              text: 'Record a flu vaccination',
-              href: '/flu-vaccination/' + patient.nhsNumber,
+              text: 'Record ' + campaign.type + ' vaccination',
+              href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber,
               classes: 'nhsuk-u-margin-bottom-2'
             }) }}
           {% endset %}

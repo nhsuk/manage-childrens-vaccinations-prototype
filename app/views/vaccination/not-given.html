@@ -24,6 +24,6 @@
         value: patient.fullName + ' had contraindications'
       }
     ],
-    decorate: ["flu-vaccination", patient.nhsNumber, "why-not-given"]
+    decorate: ["vaccination", campaign.id, patient.nhsNumber, "why-not-given"]
   }) }}
 {% endblock %}

@@ -22,9 +22,9 @@ const preferredName = (patient) => {
   return `${patient.firstName} ${faker.name.lastName()}`
 }
 
-export const patient = () => {
+export const patient = (options) => {
   const p = person(faker)
-  p.dob = faker.date.birthdate({ min: 4, max: 11, mode: 'age' })
+  p.dob = faker.date.birthdate({ min: options.minAge, max: options.maxAge, mode: 'age' })
   p.age = age(p.dob)
   p.preferredName = faker.helpers.maybe(() => preferredName(p), { probability: 0.1 })
   p.yearGroup = yearGroup(p.dob)
