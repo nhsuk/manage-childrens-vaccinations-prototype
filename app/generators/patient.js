@@ -23,7 +23,8 @@ const preferredName = (patient) => {
 }
 
 export const patient = (options) => {
-  const p = person(faker)
+  const isChild = true
+  const p = person(faker, isChild)
   p.dob = faker.date.birthdate({ min: options.minAge, max: options.maxAge, mode: 'age' })
   p.age = age(p.dob)
   p.preferredName = faker.helpers.maybe(() => preferredName(p), { probability: 0.1 })
@@ -33,6 +34,7 @@ export const patient = (options) => {
   p.screening = 'Approved for vaccination'
   p.parentOrGuardian = parentOrGuardian(faker, p.lastName)
   p.consent = 'Parental consent (digital)'
+  p.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
 
   return p
 }
