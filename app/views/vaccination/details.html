@@ -16,10 +16,16 @@
       },
       {
         key: 'Vaccine',
-        value: campaign.vaccine.summary
+        value: campaign.vaccine.summary,
+        href: '#'
       },
       {
-        key: 'Vaccine given',
+        key: 'Dose',
+        value: '1 of 2',
+        href: '#'
+      } if vaccineGiven and campaign.type == "HPV",
+      {
+        key: 'Vaccine given?',
         value: vaccinationRecord.given,
         href: basePath + '/has-it-been-given'
       },

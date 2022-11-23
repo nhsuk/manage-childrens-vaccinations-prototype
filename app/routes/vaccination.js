@@ -29,6 +29,20 @@ export const vaccinationRoutes = router => {
   })
 
   router.post([
+    '/vaccination/:campaignId/:nhsNumber/details'
+  ], (req, res, next) => {
+    const vaccineGiven = res.locals.vaccinationRecord.given !== 'No'
+
+    if (vaccineGiven) {
+      res.locals.patient.seen = { text: 'Vaccinated', classes: 'nhsuk-tag--green' }
+    } else {
+      res.locals.patient.seen = { text: 'Vaccine not given', classes: 'nhsuk-tag--yellow' }
+    }
+
+    next()
+  })
+
+  router.post([
     '/vaccination/:campaignId/:nhsNumber',
     '/vaccination/:campaignId/:nhsNumber/:view'
   ], (req, res) => {

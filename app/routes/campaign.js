@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export const campaignRoutes = router => {
   /**
    * Example routes to demonstrate using wizard helper.
@@ -18,6 +20,7 @@ export const campaignRoutes = router => {
     '/campaign/:campaignId/patient/:nhsNumber/*'
   ], (req, res, next) => {
     res.locals.patient = res.locals.campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
+    res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     next()
   })
 
