@@ -13,16 +13,32 @@ export default {
     name: 'Jane Doe',
     email: 'jane.doe@example.com'
   },
-  campaign: {
-    location: 'St Mary’s Primary School',
-    type: 'school',
-    patients: patients(100)
-  },
-  patients: {
-    abc: {
-      name: 'Emma Marr',
-      dob: '2017-01-01',
-      consent: 'Parental consent (digital)'
+  campaigns: {
+    flu: {
+      id: 'flu',
+      title: 'Flu campaign at St Mary’s Primary School',
+      location: 'St Mary’s Primary School',
+      type: 'flu',
+      vaccine: {
+        brand: 'Fluenz Tetra',
+        method: 'Nasal spray',
+        batch: 'P100475581',
+        summary: 'Flu (Fluenz Tetra, P100475581)'
+      },
+      patients: patients({ count: 100, patient: { minAge: 4, maxAge: 11 } })
+    },
+    hpv: {
+      id: 'hpv',
+      title: 'HPV campaign at Hele’s Secondary School',
+      location: 'Hele’s Secondary School',
+      type: 'HPV',
+      vaccine: {
+        brand: 'Gardasil 9',
+        method: 'Injection',
+        batch: 'G100475581',
+        summary: 'HPV (Gardasil 9, G100475581)'
+      },
+      patients: patients({ count: 100, patient: { minAge: 12, maxAge: 13 } })
     }
   },
   vaccines: {

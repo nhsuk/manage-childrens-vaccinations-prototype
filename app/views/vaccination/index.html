@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Record a flu vaccination" %}
+{% set title = "Record " + campaign.type + " vaccination" %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
@@ -10,15 +10,19 @@
       rows: decorateRows([
         {
           key: "Vaccine",
-          value: d("vaccines.fluSpray.type") | capitaliseFirstLetter
+          value: campaign.type
         },
         {
+          key: "Dose",
+          value: "1 of 2"
+        } if campaign.type == "HPV",
+        {
           key: "Brand",
-          value: d("vaccines.fluSpray.brand") + ' (' + d("vaccines.fluSpray.method") + ')'
+          value: campaign.vaccine.brand
         },
         {
           key: "Batch",
-          data: "vaccines.fluSpray.batch"
+          value: campaign.vaccine.batch
         }
       ])
     }) }}
@@ -30,7 +34,7 @@
     headingClasses: "nhsuk-heading-m nhsuk-u-margin-bottom-1",
     HTML: html,
     classes: "nhsuk-u-margin-bottom-4"
-  })}}
+  }) }}
 
   {{ radios({
     fieldset: {
@@ -46,7 +50,7 @@
       text: "No, I need to change something",
       value: "No"
     }],
-    decorate: ["flu-vaccination", patient.nhsNumber, "vaccine-correct"]
+    decorate: ["vaccination", campaignId, patient.nhsNumber, "vaccine-correct"]
   }) }}
 
 {% endblock %}

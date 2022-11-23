@@ -1,5 +1,6 @@
 {% extends "layouts/default.html" %}
 {% set title = patient.fullName %}
+{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 
 {% block pageNavigation %}
   {{ breadcrumb({
@@ -9,8 +10,8 @@
         href: "/dashboard-coming-back"
       }
     ],
-    text: "Flu campaign at St Mary’s Primary School",
-    href: "/campaign/flu"
+    text: campaign.title,
+    href: "/campaign/" + campaign.id
   }) }}
 {% endblock %}
 
@@ -23,7 +24,7 @@
 
           {% set about %}
             {{ summaryList({
-              classes: "app-summary-list--no-bottom-border",
+              classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
               rows: decorateRows([
                 {
                   key: 'Name',
@@ -57,12 +58,6 @@
                 }
               ])
             }) }}
-
-            {{ button({
-              text: 'Record a flu vaccination',
-              href: '/flu-vaccination/' + patient.nhsNumber,
-              classes: 'nhsuk-u-margin-bottom-2'
-            }) }}
           {% endset %}
 
           {{ card({
@@ -71,6 +66,84 @@
             headingClasses: "nhsuk-heading-m",
             description: about
           }) }}
+
+          {% set record %}
+            {% if campaign.type == "HPV" %}
+              <p>They need their 1st dose.</p>
+            {% endif %}
+
+            {{ button({
+              text: 'Record ' + campaign.type + ' vaccination',
+              href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber,
+              classes: 'nhsuk-u-margin-bottom-2'
+            }) }}
+          {% endset %}
+
+          {% set vaccineRecorded %}
+            <p><a href="#">Change</a></p>
+
+            {{ govukSummaryList({
+              classes: "app-u-frutiger app-summary-list--no-bottom-border  nhsuk-u-margin-bottom-0",
+              rows: decorateRows([
+                {
+                  key: 'Vaccine',
+                  value: campaign.vaccine.summary
+                },
+                {
+                  key: 'Dose',
+                  value: '1 of 2'
+                } if vaccineGiven and campaign.type == "HPV",
+                {
+                  key: 'Vaccine given?',
+                  value: vaccinationRecord.given
+                },
+                {
+                  key: 'Site',
+                  value: 'Nasal'
+                } if vaccineGiven and campaign.vaccine.method == "Nasal spray",
+                {
+                  key: 'Site',
+                  value: vaccinationRecord.where
+                } if vaccineGiven and campaign.vaccine.method == "Injection",
+                {
+                  key: 'Reason',
+                  value: vaccinationRecord['why-not-given']
+                } if not vaccineGiven,
+                {
+                  key: 'Date',
+                  value: 'Today (' + "today" | govukDate + ')'
+                },
+                {
+                  key: 'Time',
+                  value: 'now' | govukTime
+                } if vaccineGiven,
+                {
+                  key: 'Location',
+                  value: campaign.location
+                },
+                {
+                  key: 'Vaccinator',
+                  value: 'You (' + data.user.name + ')'
+                }
+              ])
+            }) }}
+          {% endset %}
+
+          {% if patient.seen.text == 'Not yet' %}
+            {{ card({
+              heading: "Record vaccination",
+              headingLevel: "2",
+              headingClasses: "nhsuk-heading-m",
+              description: record
+            }) }}
+          {% else %}
+            {{ card({
+              heading: "Vaccination details",
+              headingLevel: "2",
+              headingClasses: "nhsuk-heading-m",
+              description: vaccineRecorded
+            }) }}
+          {% endif %}
 <!--
           <h2 class="nhsuk-heading-m">Health notes</h2>
 

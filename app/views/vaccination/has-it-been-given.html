@@ -11,7 +11,6 @@
         }
       },
       items: [
-        { text: "Nasal" },
         { text: "Left arm" },
         { text: "Right arm" },
         { text: "Left thigh" },
@@ -19,7 +18,7 @@
         { text: "Left buttock" },
         { text: "Right buttock" }
       ],
-      decorate: ["vaccination", "where"]
+      decorate: ["vaccination", campaign.id, patient.nhsNumber, "where"]
     }) }}
   {% endset %}
 
@@ -32,12 +31,15 @@
       }
     },
     items: [{
-      text: "Yes, they had the " + d("vaccines.fluSpray.type") + " vaccine (" + d("vaccines.fluSpray.brand") + ")",
-      value: "Yes"
+      text: "Yes, they had the " + campaign.type + " vaccine",
+      value: "Yes",
+      conditional: {
+        html: where
+      } if campaign.vaccine.method == "Injection"
     }, {
       text: "No, they did not get the vaccine",
       value: "No"
     }],
-    decorate: ["flu-vaccination", patient.nhsNumber, "given"]
+    decorate: ["vaccination", campaign.id, patient.nhsNumber, "given"]
   }) }}
 {% endblock %}

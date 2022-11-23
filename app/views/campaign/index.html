@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = "Flu campaign at St Mary’s Primary School" %}
+{% set title = campaign.title %}
 
 {% block pageNavigation %}
   {{ breadcrumb({
@@ -21,42 +21,24 @@
               <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header">Name</th>
-                  <!-- <th class="govuk-table__header">Date of birth</th> -->
                   <th class="govuk-table__header">Screening</th>
                   <th class="govuk-table__header">Vaccinated</th>
                 </tr>
               </thead>
               <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
-                    <a href="/campaign/child">Emma Marr</a>
-                  </td>
-                  <!-- <td class="govuk-table__cell">
-                    1 Jan 2017
-                  </td> -->
-                  <td class="govuk-table__cell">
-                    Approved
-                  </td>
-                  <td class="govuk-table__cell">
-                    {{ tag({ text: 'Not yet', classes: 'nhsuk-tag--grey' }) }}
-                  </td>
-                </tr>
-                {% for patient in data.campaign.patients %}
+                {% for patient in campaign.patients %}
                   <tr class="govuk-table__row">
                     <td class="govuk-table__cell">
-                      <a href="/campaign/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
+                      <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
                       {% if patient.preferredName %}
                         <br />Known as: {{ patient.preferredName }}
                       {% endif %}
                     </td>
-                    <!-- <td class="govuk-table__cell">
-                      {{ patient.dob | govukDate("truncate") }}
-                    </td> -->
                     <td class="govuk-table__cell">
                       Approved
                     </td>
                     <td class="govuk-table__cell">
-                      {{ tag({ text: 'Not yet', classes: 'nhsuk-tag--grey' }) }}
+                      {{ tag(patient.seen) }}
                     </td>
                   </tr>
                 {% endfor %}
@@ -65,7 +47,7 @@
           {% endset %}
 
           {{ card({
-            "heading": "Year 1",
+            "heading": "Students",
             "headingLevel": "2",
             "headingClasses": "nhsuk-heading-m",
             "description": listOfPeople
