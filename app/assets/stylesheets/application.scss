@@ -19,13 +19,16 @@ $govuk-assets-path: "/govuk/assets/";
 }
 
 .app-summary-list--no-bottom-border {
+  .govuk-summary-list__row:last-child,
   .nhsuk-summary-list__row:last-child {
     border: none;
 
+    .govuk-summary-list__key,
     .nhsuk-summary-list__key {
       border-bottom: none;
     }
 
+    .govuk-summary-list__value,
     .nhsuk-summary-list__value {
       border-bottom: none;
     }
