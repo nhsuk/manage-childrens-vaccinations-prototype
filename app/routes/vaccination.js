@@ -34,7 +34,7 @@ export const vaccinationRoutes = router => {
     const vaccineGiven = res.locals.vaccinationRecord.given !== 'No'
 
     if (vaccineGiven) {
-      res.locals.patient.seen = { text: 'Vaccinated', classes: 'nhsuk-tag--green' }
+      res.locals.patient.seen = { text: 'Vaccinated' }
     } else {
       res.locals.patient.seen = { text: 'Vaccine not given', classes: 'nhsuk-tag--yellow' }
     }
