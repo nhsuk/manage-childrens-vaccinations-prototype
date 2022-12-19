@@ -141,6 +141,12 @@
               description: record
             }) }}
           {% else %}
+            {% if data.features.offline.on %}
+              <div class="app-offline-status">
+                <b>Vaccination record stored on your device</b><br />
+                You need to connect to the internet to save it
+              </div>
+            {% endif %}
             {{ card({
               heading: "Vaccination details",
               headingLevel: "2",

@@ -3,8 +3,14 @@
 
 {% block pageNavigation %}
   {{ breadcrumb({
-    text: "Home",
-    href: "/dashboard-coming-back"
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard-coming-back"
+      }
+    ],
+    text: "Campaigns",
+    href: "#"
   }) }}
 {% endblock %}
 
@@ -14,43 +20,117 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+          <h1 class="nhsuk-heading-l">
+            {{ title | noOrphans | safe }}
+          </h1>
 
           {% set listOfPeople %}
-            <table class="govuk-table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header">Name</th>
-                  <th class="govuk-table__header">Screening</th>
-                  <th class="govuk-table__header">Vaccinated</th>
-                </tr>
-              </thead>
-              <tbody class="govuk-table__body">
-                {% for patient in campaign.patients %}
+          <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-one-quarter">
+              <p class="nhsuk-u-margin-bottom-1">By year group:</p>
+              <ul class="nhsuk-list">
+                <li>
+                  <a href="#">Reception</a>
+                </li>
+                <li>
+                  <a href="#">Year 1</a>
+                </li>
+                <li>
+                  <a href="#">Year 2</a>
+                </li>
+                <li>
+                  <a href="#">Year 3</a>
+                </li>
+                <li>
+                  <a href="#">Year 4</a>
+                </li>
+                <li>
+                  <a href="#">Year 5</a>
+                </li>
+                <li>
+                  <a href="#">Year 6</a>
+                </li>
+              </ul>
+
+              <p class="nhsuk-u-margin-bottom-1">By status:</p>
+              <ul class="nhsuk-list">
+                <li>
+                  <a href="#">Vaccinated</a>
+                </li>
+                <li>
+                  <a href="#">Not yet seen</a>
+                </li>
+                <li>
+                  <a href="#">Not vaccinated</a>
+                </li>
+              </ul>
+
+              <p class="nhsuk-u-margin-bottom-1">By screening:</p>
+              <ul class="nhsuk-list">
+                <li>
+                  <a href="#">All</a>
+                </li>
+                <li>
+                  <a href="#">Approved</a>
+                </li>
+                <li>
+                  <a href="#">Contraindications</a>
+                </li>
+              </ul>
+            </div>
+            <div class="nhsuk-grid-column-three-quarters">
+
+              <div class="app-search">
+                {{ input({
+                  label: {
+                    text: 'Search by name'
+                  },
+                  decorate: 'search'
+                }) }}
+              </div>
+
+              <table class="nhsuk-table">
+                <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                      <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
-                      {% if patient.preferredName %}
-                        <br />Known as: {{ patient.preferredName }}
-                      {% endif %}
-                    </td>
-                    <td class="govuk-table__cell">
-                      Approved
-                    </td>
-                    <td class="govuk-table__cell">
-                      {{ tag(patient.seen) }}
-                    </td>
+                    <th class="govuk-table__header">Name</th>
+                    <th class="govuk-table__header">Date of birth</th>
+                    <th class="govuk-table__header">Screening</th>
+                    <th class="govuk-table__header">Vaccinated</th>
                   </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for patient in campaign.patients %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">
+                        <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
+                        {% if patient.preferredName %}
+                          <br />Known as: {{ patient.preferredName }}
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell" style="width: 150px">
+                        {{ patient.dob | govukDate('truncate') }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        Approved
+                      </td>
+                      <td class="govuk-table__cell">
+                        {{ tag(patient.seen) }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           {% endset %}
 
           {{ card({
             "heading": "Students",
             "headingLevel": "2",
             "headingClasses": "nhsuk-heading-m",
-            "description": listOfPeople
+            "description": listOfPeople,
+            "classes": "nhsuk-u-margin-bottom-0"
           }) }}
         </div>
       </div>

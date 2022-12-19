@@ -52,6 +52,11 @@ export default {
   },
   // Set feature flags using the `features` key
   features: {
+    offline: {
+      on: false,
+      name: 'Offline mode',
+      description: 'Simulate offline mode'
+    },
     validation: {
       on: false,
       name: 'Form validation',

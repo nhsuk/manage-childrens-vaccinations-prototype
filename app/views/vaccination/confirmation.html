@@ -1,16 +1,23 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Record saved" %}
+{% set title = "Record stored" if data.features.offline.on else "Record saved"  %}
 {% set hideButton = true %}
 {% block pageNavigation %}{% endblock %}
 
 {% block form %}
+  {% set html %}
+    {% if data.features.offline.on %}
+      <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">You still need to connect to the internet to save this&nbsp;record.</p>
+    {% endif %}
+  {% endset %}
+
   {{ govukPanel({
     titleText: title,
+    html: html,
     classes: 'nhsuk-u-margin-bottom-6 app-u-frutiger'
   }) }}
 
   <h2 class="nhsuk-u-heading-m">Continue</h2>
   <p>
-    <a href="{{ paths.next }}">Record another vaccination</a>
+    <a href="/campaign/{{ campaign.id }}">Record another vaccination</a>
   </p>
 {% endblock %}
