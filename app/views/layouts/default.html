@@ -95,6 +95,12 @@
       } if useAutoStoreData, {
         label: "Feature flags",
         URL: "/feature-flags"
+      }, {
+        label: "Go offline",
+        URL: "/go-offline"
+      } if data.features.offline.on == false else {
+        label: "Go online",
+        URL: "/go-online"
       }
     ]
   }) }}

@@ -8,4 +8,14 @@ vaccinationRoutes(router)
 daySetupRoutes(router)
 campaignRoutes(router)
 
+router.get('/go-offline', (req, res) => {
+  req.session.data.features.offline.on = true
+  res.redirect('back')
+})
+
+router.get('/go-online', (req, res) => {
+  req.session.data.features.offline.on = false
+  res.redirect('back')
+})
+
 export default router
