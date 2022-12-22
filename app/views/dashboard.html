@@ -1,26 +1,75 @@
 {% extends "layouts/default.html" %}
-{% set title = "You’re signed in as " + data.user.name %}
+{% set title = "Your campaigns" %}
 
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          <form action="/dashboard" method="post">
-            <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
+        <div class="nhsuk-grid-column-full">
+          <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
 
-            <p>Before you start, you need to tell us:</p>
-            <ul class="nhsuk-list nhsuk-list--bullet">
-              <li>which campaign or clinic you are doing</li>
-              <li>where you are vaccinating people today</li>
-              <li>what vaccines you will be using</li>
-            </ul>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header">School</th>
+                <th class="govuk-table__header">Campaign type</th>
+                <th class="govuk-table__header">Date</th>
+                <th class="govuk-table__header">Download</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for id, c in data.campaigns %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                </td>
+                <td class="govuk-table__cell">
+                  {{ c.type }}
+                </td>
+                <td class="govuk-table__cell">
+                  {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
+                </td>
+                <td class="govuk-table__cell">
 
-            {{ button({
-              text: 'Continue',
-              href: '/day-setup/where'
-            }) }}
-          </form>
+                </td>
+              </tr>
+              {% endfor %}
+
+              <!-- <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a href="/campaign/flu">Flu campaign at St Mary’s Primary School</a>
+                </td>
+                <td class="govuk-table__cell">
+                  Monday 23 January at 9am
+                </td>
+                <td class="govuk-table__cell">
+                  Available offline
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a href="/campaign/hpv">HPV campaign at Hele’s Secondary School</a>
+                </td>
+                <td class="govuk-table__cell">
+                  Tuesday 24 January at 9am
+                </td>
+                <td class="govuk-table__cell">
+                  <a href="#">Make available offline</a>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a href="#">Flu campaign at Ashurst</a>
+                </td>
+                <td class="govuk-table__cell">
+                  Thursday 26 January at 2pm
+                </td>
+                <td class="govuk-table__cell">
+                  <a href="#">Make available offline</a>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
         </div>
       </div>
     </main>

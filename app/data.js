@@ -1,4 +1,5 @@
 import { patients } from './generators/patients.js'
+import { campaigns } from './generators/campaigns.js'
 
 /**
  * Default values for user session data
@@ -13,7 +14,8 @@ export default {
     name: 'Jane Doe',
     email: 'jane.doe@example.com'
   },
-  campaigns: {
+  campaigns: campaigns({ count: 20 }),
+  campaigns_old: {
     flu: {
       id: 'flu',
       title: 'Flu campaign at St Mary’s Primary School',
