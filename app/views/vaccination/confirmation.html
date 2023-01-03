@@ -1,11 +1,11 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Record stored" if data.features.offline.on else "Record saved"  %}
+{% set title = "Record stored" if isOffline else "Record saved"  %}
 {% set hideButton = true %}
 {% block pageNavigation %}{% endblock %}
 
 {% block form %}
   {% set html %}
-    {% if data.features.offline.on %}
+    {% if isOffline %}
       <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">You still need to connect to the internet to save this&nbsp;record.</p>
     {% endif %}
   {% endset %}

@@ -1,4 +1,3 @@
-import { patients } from './generators/patients.js'
 import { campaigns } from './generators/campaigns.js'
 
 /**
@@ -28,8 +27,13 @@ export default {
   features: {
     offline: {
       on: false,
-      name: 'Offline mode',
-      description: 'Simulate offline mode'
+      name: 'Go offline',
+      description: 'Simulate being offline'
+    },
+    showOfflineFeatures: {
+      on: false,
+      name: 'Display offline features',
+      description: 'Hide and show features that relate to being online or offline'
     },
     validation: {
       on: false,

@@ -141,7 +141,7 @@
               description: record
             }) }}
           {% else %}
-            {% if data.features.offline.on %}
+            {% if isOffline %}
               <div class="app-offline-status">
                 <b>Vaccination record stored on your device</b><br />
                 You need to connect to the internet to save it

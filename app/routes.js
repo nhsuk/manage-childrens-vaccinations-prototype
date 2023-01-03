@@ -8,6 +8,12 @@ vaccinationRoutes(router)
 daySetupRoutes(router)
 campaignRoutes(router)
 
+router.all('*', (req, res, next) => {
+  const features = req.session.data.features
+  res.locals.isOffline = features.showOfflineFeatures.on && features.offline.on
+  next()
+})
+
 router.get('/go-offline', (req, res) => {
   req.session.data.features.offline.on = true
   res.redirect('back')
