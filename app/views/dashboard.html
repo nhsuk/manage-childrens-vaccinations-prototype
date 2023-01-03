@@ -14,7 +14,6 @@
                 <th class="govuk-table__header">School</th>
                 <th class="govuk-table__header">Campaign type</th>
                 <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header">Download</th>
               </tr>
             </thead>
             <tbody class="govuk-table__body">
@@ -29,45 +28,8 @@
                 <td class="govuk-table__cell">
                   {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                 </td>
-                <td class="govuk-table__cell">
-
-                </td>
               </tr>
               {% endfor %}
-
-              <!-- <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                  <a href="/campaign/flu">Flu campaign at St Mary’s Primary School</a>
-                </td>
-                <td class="govuk-table__cell">
-                  Monday 23 January at 9am
-                </td>
-                <td class="govuk-table__cell">
-                  Available offline
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                  <a href="/campaign/hpv">HPV campaign at Hele’s Secondary School</a>
-                </td>
-                <td class="govuk-table__cell">
-                  Tuesday 24 January at 9am
-                </td>
-                <td class="govuk-table__cell">
-                  <a href="#">Make available offline</a>
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                  <a href="#">Flu campaign at Ashurst</a>
-                </td>
-                <td class="govuk-table__cell">
-                  Thursday 26 January at 2pm
-                </td>
-                <td class="govuk-table__cell">
-                  <a href="#">Make available offline</a>
-                </td>
-              </tr> -->
             </tbody>
           </table>
         </div>
