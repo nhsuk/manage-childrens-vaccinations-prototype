@@ -32,12 +32,12 @@
       {
         key: 'Site',
         value: 'Nasal'
-      } if vaccineGiven and campaign.vaccine.method == "Nasal spray",
+      } if vaccineGiven and campaign.vaccines[0].method == "Nasal spray",
       {
         key: 'Site',
         value: vaccinationRecord.where,
         href: basePath + '/has-it-been-given'
-      } if vaccineGiven and campaign.vaccine.method == "Injection",
+      } if vaccineGiven and campaign.vaccines[0].method == "Injection",
       {
         key: 'Reason',
         value: vaccinationRecord['why-not-given'],
