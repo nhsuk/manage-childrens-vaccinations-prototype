@@ -18,11 +18,11 @@
         } if campaign.type == "HPV",
         {
           key: "Brand",
-          value: campaign.vaccine.brand
+          value: campaign.vaccines[0].brand
         },
         {
           key: "Batch",
-          value: campaign.vaccine.batch
+          value: campaign.vaccines[0].batches[0].name + ' (expires ' + (campaign.vaccines[0].batches[0].expiry | govukDate('truncate')) + ')'
         }
       ])
     }) }}

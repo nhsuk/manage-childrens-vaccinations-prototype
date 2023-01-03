@@ -15,7 +15,12 @@ const getBatches = (faker) => {
   return batches
 }
 
-export const vaccines = (faker, vaccineType) => {
+const summarise = (v) => {
+  const brand = v.method === 'Nasal spray' ? v.brand + ' nasal spray' : v.brand
+  v.summary = `${v.type} (${brand}, ${v.batches[0].name})`
+}
+
+export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1107978/Influenza-green-book-chapter19-16September22.pdf
   const fluVaccines = [
     {
@@ -59,18 +64,23 @@ export const vaccines = (faker, vaccineType) => {
     }
   ]
 
-  let v
-  switch (vaccineType) {
+  let vacs
+  switch (type) {
     case 'Flu':
-      v = fluVaccines
+      vacs = fluVaccines
       break
     case 'HPV':
-      v = hpvVaccines
+      vacs = hpvVaccines
       break
     case '3-in-1':
-      v = dptVaccines.concat(menAcwyVaccines)
+      vacs = dptVaccines.concat(menAcwyVaccines)
       break
   }
 
-  return v
+  vacs.forEach(vaccine => {
+    vaccine.type = type
+    summarise(vaccine)
+  })
+
+  return vacs
 }
