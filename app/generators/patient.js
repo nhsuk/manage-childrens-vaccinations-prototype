@@ -32,6 +32,7 @@ export const patient = (options) => {
   p.nhsNumber = faker.phone.number('##########')
   p.gp = 'Local GP'
   p.screening = 'Approved for vaccination'
+  p.contraindications = false
   p.parentOrGuardian = parentOrGuardian(faker, p.lastName)
   p.consent = 'Parental consent (digital)'
   p.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
