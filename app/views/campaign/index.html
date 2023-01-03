@@ -23,27 +23,11 @@
             <div class="nhsuk-grid-column-one-quarter">
               <p class="nhsuk-u-margin-bottom-1">By year group:</p>
               <ul class="nhsuk-list">
-                <li>
-                  <a href="#">Reception</a>
-                </li>
-                <li>
-                  <a href="#">Year 1</a>
-                </li>
-                <li>
-                  <a href="#">Year 2</a>
-                </li>
-                <li>
-                  <a href="#">Year 3</a>
-                </li>
-                <li>
-                  <a href="#">Year 4</a>
-                </li>
-                <li>
-                  <a href="#">Year 5</a>
-                </li>
-                <li>
-                  <a href="#">Year 6</a>
-                </li>
+                {% for group in campaign.yearGroups %}
+                  <li>
+                    <a href="#">{{ group }}</a>
+                  </li>
+                {% endfor %}
               </ul>
 
               <p class="nhsuk-u-margin-bottom-1">By status:</p>
