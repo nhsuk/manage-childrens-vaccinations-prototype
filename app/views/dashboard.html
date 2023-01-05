@@ -8,25 +8,55 @@
         <div class="nhsuk-grid-column-full">
           <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
 
+          <h2 class="nhsuk-heading-l">Flu campaign</h2>
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header">School and campaign</th>
+                <th class="govuk-table__header">School</th>
               </tr>
             </thead>
             <tbody class="govuk-table__body">
               {% for id, c in data.campaigns %}
+                {% if c.type === "Flu" %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
+                  </td>
+                  <td class="govuk-table__cell">
+                    <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <p>
+            <a href="#">Add school</a><br />
+            <a href="#">View past school visits</a>
+          </p>
+
+          <h2 class="nhsuk-heading-l">HPV campaign</h2>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
               <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                  {{ c.date | govukDate('truncate') }}<br />{{ c.date | govukTime }}
-                </td>
-                <td class="govuk-table__cell">
-                  <span class="nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">{{ c.school.name }} ({{ c.type }})</span><br />
-                  <a href="/campaign/{{ c.id }}">Students</a><br />
-                  <a href="/campaign/{{ c.id }}">Vaccines</a>
-                </td>
+                <th class="govuk-table__header">Date</th>
+                <th class="govuk-table__header">School</th>
               </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for id, c in data.campaigns %}
+                {% if c.type === "HPV" %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
+                  </td>
+                  <td class="govuk-table__cell">
+                    <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                </tr>
+                {% endif %}
               {% endfor %}
             </tbody>
           </table>
