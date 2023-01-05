@@ -35,4 +35,10 @@ export const campaignRoutes = router => {
   ], (req, res) => {
     res.render('campaign/patient')
   })
+
+  router.all([
+    '/campaign/:campaignId/:view'
+  ], (req, res) => {
+    res.render(`campaign/${req.params.view}`)
+  })
 }

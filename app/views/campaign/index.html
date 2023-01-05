@@ -16,100 +16,60 @@
         <div class="nhsuk-grid-column-full">
           <h1 class="nhsuk-heading-l">
             {{ title | noOrphans | safe }}
+            <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ campaign.date | govukDate() }} at {{ campaign.date | govukTime }}</span>
           </h1>
 
-          {% set listOfPeople %}
-          <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-one-quarter">
-              <p class="nhsuk-u-margin-bottom-1">By year group:</p>
-              <ul class="nhsuk-list">
-                {% for group in campaign.yearGroups %}
-                  <li>
-                    <a href="#">{{ group }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
+          <h2 class="nhsuk-heading-s">
+            <a href="#">Send consent requests</a>
+          </h2>
 
-              <p class="nhsuk-u-margin-bottom-1">By status:</p>
-              <ul class="nhsuk-list">
-                <li>
-                  <a href="#">Vaccinated</a>
-                </li>
-                <li>
-                  <a href="#">Not yet seen</a>
-                </li>
-                <li>
-                  <a href="#">Not vaccinated</a>
-                </li>
-              </ul>
+          <p>Use this section to:</p>
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li>send vaccination consent requests to parents</li>
+            <li>send reminders to parents who have not responded</li>
+            <li>view uptake for vaccination consent</li>
+          </ul>
 
-              <p class="nhsuk-u-margin-bottom-1">By screening:</p>
-              <ul class="nhsuk-list">
-                <li>
-                  <a href="#">All</a>
-                </li>
-                <li>
-                  <a href="#">Approved</a>
-                </li>
-                <li>
-                  <a href="#">Contraindications</a>
-                </li>
-              </ul>
-            </div>
-            <div class="nhsuk-grid-column-three-quarters">
+          <h2 class="nhsuk-heading-s">
+            <a href="#">Triage consent responses</a>
+          </h2>
 
-              <div class="app-search">
-                {{ input({
-                  label: {
-                    text: 'Search by name'
-                  },
-                  decorate: 'search'
-                }) }}
-              </div>
+          <p>Use this section to:</p>
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li>check for contraindications</li>
+            <li>approve for vaccination</li>
+            <li>contact parents about their answers to health questions</li>
+          </ul>
 
-              <table class="nhsuk-table">
-                <thead class="govuk-table__head">
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header">Name</th>
-                    <th class="govuk-table__header">Date of birth</th>
-                    <th class="govuk-table__header">Screening</th>
-                    <th class="govuk-table__header">Vaccinated</th>
-                  </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                  {% for patient in campaign.patients %}
-                    <tr class="govuk-table__row">
-                      <td class="govuk-table__cell">
-                        <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
-                        {% if patient.preferredName %}
-                          <br />Known as: {{ patient.preferredName }}
-                        {% endif %}
-                      </td>
-                      <td class="govuk-table__cell" style="width: 150px">
-                        {{ patient.dob | govukDate('truncate') }}
-                      </td>
-                      <td class="govuk-table__cell">
-                        Approved
-                      </td>
-                      <td class="govuk-table__cell">
-                        {{ tag(patient.seen) }}
-                      </td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <h2 class="nhsuk-heading-s">
+            <a href="#">Manage vaccines</a>
+          </h2>
 
-          {% endset %}
+          <p>Use this section to:</p>
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li>see vaccine brands, batches and expiration dates</li>
+            <li>add and remove vaccines and batches</li>
+          </ul>
 
-          {{ card({
-            "heading": "Students",
-            "headingLevel": "2",
-            "headingClasses": "nhsuk-heading-m",
-            "description": listOfPeople,
-            "classes": "nhsuk-u-margin-bottom-0"
-          }) }}
+          <h2 class="nhsuk-heading-s">
+            <a href="/campaign/{{ campaign.id }}/students">Record vaccinations</a>
+          </h2>
+
+          <p>Use this section to:</p>
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li>record vaccinations for children</li>
+            <li>check the vaccine a child was given</li>
+          </ul>
+
+          <h2 class="nhsuk-heading-s">
+            <a href="#">Edit campaign</a>
+          </h2>
+
+          <p>Use this section to:</p>
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li>change the campaign date</li>
+            <li>manage access to the campaign</li>
+          </ul>
         </div>
       </div>
     </main>
