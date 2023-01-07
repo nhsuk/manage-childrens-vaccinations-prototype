@@ -1,0 +1,29 @@
+{% extends "layouts/default.html" %}
+{% set neverOffline = true %}
+{% set title = "Get ready to work offline" %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    text: "Home",
+    href: "/dashboard"
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+          <p>Before you can work offline, you must download the data you need. Do this shortly before you go offline to get the most recent data.</p>
+
+          {{ button({
+            text: 'Prepare to work offline',
+            href: '/ready-offline'
+          }) }}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Which vaccine is being given first?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [{
+      text: "3 in 1 teenage booster",
+      value: "3 in 1"
+    }, {
+      text: "MenACWY"
+    }],
+    decorate: ["vaccination", campaign.id, patient.nhsNumber, "which-first"]
+  }) }}
+{% endblock %}

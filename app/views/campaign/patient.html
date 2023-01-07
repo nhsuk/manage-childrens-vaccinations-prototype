@@ -7,7 +7,7 @@
     items: [
       {
         text: "Home",
-        href: "/dashboard-coming-back"
+        href: "/dashboard"
       }
     ],
     text: campaign.title,
@@ -31,7 +31,7 @@
                   value: patient.fullName
                 },
                 {
-                  key: 'Preferred name',
+                  key: 'Known as',
                   value: patient.preferredName
                 } if patient.preferredName,
                 {
@@ -76,11 +76,24 @@
               <p>They need their 1st dose.</p>
             {% endif %}
 
-            {{ button({
-              text: 'Record ' + campaign.type + ' vaccination',
-              href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber,
-              classes: 'nhsuk-u-margin-bottom-2'
-            }) }}
+            {% if campaign.is3in1MenACWY %}
+              {{ warningCallout({
+                "heading": "Do not give both vaccines",
+                "HTML": "<p>Consent has only been given for MenACWY.</p>"
+              }) }}
+
+              {{ button({
+                text: 'Record ' + campaign.type + ' vaccination',
+                href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
+                classes: 'nhsuk-u-margin-bottom-2'
+              }) }}
+            {% else %}
+              {{ button({
+                text: 'Record ' + campaign.type + ' vaccination',
+                href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber,
+                classes: 'nhsuk-u-margin-bottom-2'
+              }) }}
+            {% endif %}
           {% endset %}
 
           {% set vaccineRecorded %}
@@ -91,7 +104,7 @@
               rows: decorateRows([
                 {
                   key: 'Vaccine',
-                  value: campaign.vaccine.summary
+                  value: campaign.vaccines[0].summary
                 },
                 {
                   key: 'Dose',
@@ -104,11 +117,11 @@
                 {
                   key: 'Site',
                   value: 'Nasal'
-                } if vaccineGiven and campaign.vaccine.method == "Nasal spray",
+                } if vaccineGiven and campaign.vaccines[0].method == "Nasal spray",
                 {
                   key: 'Site',
                   value: vaccinationRecord.where
-                } if vaccineGiven and campaign.vaccine.method == "Injection",
+                } if vaccineGiven and campaign.vaccines[0].method == "Injection",
                 {
                   key: 'Reason',
                   value: vaccinationRecord['why-not-given']
@@ -141,6 +154,12 @@
               description: record
             }) }}
           {% else %}
+            {% if isOffline %}
+              <div class="app-offline-status">
+                <b>Vaccination record stored on your device</b><br />
+                You need to connect to the internet to save it
+              </div>
+            {% endif %}
             {{ card({
               heading: "Vaccination details",
               headingLevel: "2",

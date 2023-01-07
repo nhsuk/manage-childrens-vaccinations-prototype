@@ -13,6 +13,38 @@ $govuk-assets-path: "/govuk/assets/";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
 
+.app-offline-indicator {
+  background: $color_nhsuk-pale-yellow;
+  padding: nhsuk-spacing(2) 0;
+}
+
+.app-offline-status {
+  background: $color_nhsuk-pale-yellow;
+  border: 1px solid $nhsuk-border-color;
+  border-bottom: 0;
+  padding: nhsuk-spacing(3) nhsuk-spacing(5);
+}
+
+.app-search {
+  background: $color_nhsuk-grey-5;
+  border: 1px solid $nhsuk-border-color;
+  padding: nhsuk-spacing(3);
+  margin-bottom: nhsuk-spacing(4);
+
+  .nhsuk-form-group {
+    margin-bottom: 0;
+  }
+}
+
+.app-ready-for-offline  {
+  border-top: 2px solid $nhsuk-border-color;
+  padding: nhsuk-spacing(4) 0 nhsuk-spacing(2);
+}
+
+.app-u-inherit {
+  color: inherit !important;
+}
+
 .app-u-frutiger,
 .app-u-frutiger * {
   font-family: "Frutiger W01", Arial, sans-serif !important

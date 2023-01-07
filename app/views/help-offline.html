@@ -1,0 +1,31 @@
+{% extends "layouts/default.html" %}
+{% set title = "Help working offline" %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    text: "Home",
+    href: "/dashboard"
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+
+          <p>You can use this service if you are not connected to the internet. There are some things you need to prepare first.</p>
+
+          <p><a href="/prepare-offline">Preparing to work offline</a></p>
+
+          <h2 class="nhsuk-heading-m">While working offline</h2>
+
+          <p>Changes you make will be stored on your device. They are not saved until you reconnect to the internet.</p>
+
+          <p>While offline you cannot sign in or sign out.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

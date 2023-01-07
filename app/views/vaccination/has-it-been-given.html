@@ -35,7 +35,7 @@
       value: "Yes",
       conditional: {
         html: where
-      } if campaign.vaccine.method == "Injection"
+      } if campaign.vaccines[0].method == "Injection"
     }, {
       text: "No, they did not get the vaccine",
       value: "No"

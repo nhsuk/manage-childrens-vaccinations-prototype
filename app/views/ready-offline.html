@@ -1,0 +1,35 @@
+{% extends "layouts/default.html" %}
+{% set neverOffline = true %}
+{% set title = "You are ready to work offline" %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    text: "Home",
+    href: "/dashboard"
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+          <p>The data you need has been downloaded to your device.</p>
+
+          <p>Last downloaded: {{ 'today' | govukDate }} at 8:05am</p>
+
+          <p>
+            <a href="#">Refresh data</a>
+          </p>
+
+          {{ button({
+            text: 'Continue',
+            href: '/dashboard'
+          }) }}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

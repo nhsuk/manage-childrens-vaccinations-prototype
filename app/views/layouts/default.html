@@ -1,5 +1,4 @@
 {% extends "template.njk" %}
-
 {% block head %}
   <link rel="stylesheet" href="/public/stylesheets/application.css" media="all">
   <script src="/public/javascripts/application.js" defer></script>
@@ -14,6 +13,27 @@
 {% set bodyAttributes = {"data-module": "edge"} %}
 
 {% block header %}
+  {% if isOffline and not neverOffline %}
+    <div class="app-offline-indicator">
+      <div class="nhsuk-width-container">
+        <p class="nhsuk-body-s nhsuk-u-font-weight-bold nhsuk-u-margin-top-1 nhsuk-u-margin-bottom-1">
+          You are working offline
+        </p>
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column-two-thirds">
+            <p class="nhsuk-body-s nhsuk-u-margin-bottom-2">
+              Changes will be saved when you connect to the internet again
+            </p>
+          </div>
+          <div class="nhsuk-grid-column-one-third">
+            <p class="nhsuk-body-s nhsuk-u-margin-bottom-2 nhsuk-u-text-align-right">
+              <a href="/help-offline" class="app-u-inherit">Help working offline</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
   {{ header({
     service: {
       name: serviceName,
@@ -30,6 +50,41 @@
 {% endblock %}
 
 {% block footer %}
+  {% if data.features.showOfflineFeatures.on and not offline and not neverOffline %}
+    {% if true %}
+      <div class="app-ready-for-offline nhsuk-u-margin-bottom-3">
+        <div class="nhsuk-width-container">
+          <p class="nhsuk-u-font-weight-bold nhsuk-u-margin-top-1 nhsuk-u-margin-bottom-1">
+            You are not ready to work offline
+          </p>
+          <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-two-thirds">
+              <p class="nhsuk-body-s nhsuk-u-margin-bottom-1">
+                <a href="/prepare-offline">Prepare to work offline</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="app-ready-for-offline nhsuk-u-margin-bottom-3">
+      <div class="nhsuk-width-container">
+        <p class="nhsuk-u-font-weight-bold nhsuk-u-margin-top-1 nhsuk-u-margin-bottom-1">
+          You’re ready to work offline
+        </p>
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column-two-thirds">
+            <p class="nhsuk-body-s nhsuk-u-margin-bottom-1">
+              Data last downloaded: {{ 'today' | govukDate }} at {{ 'now' | govukTime }}
+            </p>
+            <p class="nhsuk-body-s nhsuk-u-margin-bottom-2">
+              <a href="/ready-offline">Refresh data</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
   {{ footer({
     links: [
       {
@@ -38,6 +93,12 @@
       } if useAutoStoreData, {
         label: "Feature flags",
         URL: "/feature-flags"
+      }, {
+        label: "Go offline",
+        URL: "/go-offline"
+      } if data.features.offline.on == false else {
+        label: "Go online",
+        URL: "/go-online"
       }
     ]
   }) }}
