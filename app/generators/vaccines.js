@@ -24,11 +24,13 @@ export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1107978/Influenza-green-book-chapter19-16September22.pdf
   const fluVaccines = [
     {
+      vaccine: 'Flu',
       brand: 'Fluenz Tetra',
       method: 'Nasal spray',
       batches: getBatches(faker)
     },
     {
+      vaccine: 'Flu',
       brand: 'Fluarix Tetra',
       method: 'Injection',
       batches: getBatches(faker)
@@ -38,6 +40,7 @@ export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1065283/HPV-greenbook-chapter-18a.pdf
   const hpvVaccines = [
     {
+      vaccine: 'HPV',
       brand: 'Gardasil 9',
       method: 'Injection',
       batches: getBatches(faker)
@@ -48,6 +51,7 @@ export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/147952/Green-Book-Chapter-15.pdf
   const dptVaccines = [
     {
+      vaccine: '3 in 1',
       brand: 'Revaxis',
       method: 'Injection',
       batches: getBatches(faker)
@@ -58,6 +62,7 @@ export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1076053/Meningococcal-greenbook-chapter-22_17May2022.pdf
   const menAcwyVaccines = [
     {
+      vaccine: 'MenACWY',
       brand: 'Nimenrix',
       method: 'Injection',
       batches: getBatches(faker)
@@ -72,7 +77,7 @@ export const vaccines = (faker, type) => {
     case 'HPV':
       vacs = hpvVaccines
       break
-    case '3-in-1':
+    case '3 in 1 and MenACWY':
       vacs = dptVaccines.concat(menAcwyVaccines)
       break
   }

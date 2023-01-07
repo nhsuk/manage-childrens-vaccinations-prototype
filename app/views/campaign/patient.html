@@ -31,7 +31,7 @@
                   value: patient.fullName
                 },
                 {
-                  key: 'Preferred name',
+                  key: 'Known as',
                   value: patient.preferredName
                 } if patient.preferredName,
                 {
@@ -76,11 +76,24 @@
               <p>They need their 1st dose.</p>
             {% endif %}
 
-            {{ button({
-              text: 'Record ' + campaign.type + ' vaccination',
-              href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber,
-              classes: 'nhsuk-u-margin-bottom-2'
-            }) }}
+            {% if campaign.is3in1MenACWY %}
+              {{ warningCallout({
+                "heading": "Do not give both vaccines",
+                "HTML": "<p>Consent has only been given for MenACWY.</p>"
+              }) }}
+
+              {{ button({
+                text: 'Record ' + campaign.type + ' vaccination',
+                href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
+                classes: 'nhsuk-u-margin-bottom-2'
+              }) }}
+            {% else %}
+              {{ button({
+                text: 'Record ' + campaign.type + ' vaccination',
+                href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber,
+                classes: 'nhsuk-u-margin-bottom-2'
+              }) }}
+            {% endif %}
           {% endset %}
 
           {% set vaccineRecorded %}
