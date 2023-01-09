@@ -13,7 +13,7 @@ export function vaccination (req) {
         [`/vaccination/${campaignId}/${nhsNumber}/which-first`]: {
           [`/vaccination/${campaignId}/${nhsNumber}/3-in-1`]: {
             data: `vaccination.${campaignId}.${nhsNumber}.which-first`,
-            value: '3 in 1'
+            value: '3-in-1'
           }
         }
       }

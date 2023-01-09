@@ -51,7 +51,7 @@ export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/147952/Green-Book-Chapter-15.pdf
   const dptVaccines = [
     {
-      vaccine: '3 in 1',
+      vaccine: '3-in-1',
       brand: 'Revaxis',
       method: 'Injection',
       batches: getBatches(faker)
@@ -77,7 +77,7 @@ export const vaccines = (faker, type) => {
     case 'HPV':
       vacs = hpvVaccines
       break
-    case '3 in 1 and MenACWY':
+    case '3-in-1 and MenACWY':
       vacs = dptVaccines.concat(menAcwyVaccines)
       break
   }

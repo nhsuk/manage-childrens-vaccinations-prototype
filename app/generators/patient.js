@@ -22,6 +22,21 @@ const preferredName = (patient) => {
   return `${patient.firstName} ${faker.name.lastName()}`
 }
 
+const consent = (type) => {
+  switch (type) {
+    case '3-in-1 and MenACWY':
+      return faker.helpers.arrayElement(
+        [
+          { '3-in-1': true, MenACWY: true, both: true },
+          { '3-in-1': false, MenACWY: true, both: false },
+          { '3-in-1': true, MenACWY: false, both: false }
+        ]
+      )
+  }
+
+  return { [type]: true }
+}
+
 export const patient = (options) => {
   const isChild = true
   const p = person(faker, isChild)
@@ -34,7 +49,7 @@ export const patient = (options) => {
   p.screening = 'Approved for vaccination'
   p.contraindications = false
   p.parentOrGuardian = parentOrGuardian(faker, p.lastName)
-  p.consent = 'Parental consent (digital)'
+  p.consent = consent(options.type)
   p.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
 
   return p
