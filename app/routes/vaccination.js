@@ -49,6 +49,8 @@ export const vaccinationRoutes = router => {
     '/vaccination/:campaignId/:nhsNumber',
     '/vaccination/:campaignId/:nhsNumber/:view'
   ], (req, res, next) => {
+    res.locals.type = res.locals.campaign.type
+    res.locals.dataLocation = 'vaccination'
     res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     next()
   })

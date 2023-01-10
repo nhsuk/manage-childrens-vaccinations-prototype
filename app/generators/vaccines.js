@@ -27,6 +27,7 @@ export const vaccines = (faker, type) => {
       vaccine: 'Flu',
       brand: 'Fluenz Tetra',
       method: 'Nasal spray',
+      isNasal: true,
       batches: getBatches(faker)
     },
     {

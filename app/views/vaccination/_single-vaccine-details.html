@@ -6,6 +6,8 @@
   {% set rootPath = '/men-acwy-vaccination/' %}
   {% set index = 1 %}
 {% endif %}
+{% set vaccine = campaign.vaccines[index] %}
+{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 {% set basePath = rootPath + campaign.id + '/' + patient.nhsNumber %}
 
 {{ govukSummaryList({
@@ -17,7 +19,7 @@
     },
     {
       key: 'Vaccine',
-      value: campaign.vaccines[index].summary,
+      value: vaccine.summary,
       href: '#'
     },
     {
@@ -33,12 +35,12 @@
     {
       key: 'Site',
       value: 'Nasal'
-    } if vaccineGiven and campaign.vaccines[index].method == "Nasal spray",
+    } if vaccineGiven and vaccine.isNasal,
     {
       key: 'Site',
       value: vaccinationRecord.where,
       href: basePath + '/has-it-been-given'
-    } if vaccineGiven and campaign.vaccines[index].method == "Injection",
+    } if vaccineGiven and not vaccine.isNasal,
     {
       key: 'Reason',
       value: vaccinationRecord['why-not-given'],

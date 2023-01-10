@@ -1,7 +1,4 @@
 {% extends "layouts/wizard.html" %}
-{% if isSingleVaccine %}
-  {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
-{% endif %}
 {% set title = "Check and confirm details" %}
 {% set buttonText = "Confirm" %}
 
