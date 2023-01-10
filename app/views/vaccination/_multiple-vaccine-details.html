@@ -1,0 +1,90 @@
+{% set menACWYVaccineGiven = menACWYVaccinationRecord.given !== 'No' %}
+{% set 3in1VaccineGiven = 3in1VaccinationRecord.given !== 'No' %}
+
+{{ govukSummaryList({
+  classes: "app-u-frutiger",
+  rows: decorateRows([
+    {
+      key: 'Child',
+      value: patient.fullName
+    },
+    {
+      key: 'Date',
+      value: 'Today (' + "today" | govukDate + ')',
+      href: '#'
+    },
+    {
+      key: 'Time',
+      value: 'now' | govukTime,
+      href: '#'
+    },
+    {
+      key: 'Location',
+      value: campaign.location,
+      href: '#'
+    },
+    {
+      key: 'Vaccinator',
+      value: 'You (' + data.user.name + ')',
+      href: '#'
+    }
+  ])
+}) }}
+
+<h2 class="nhsuk-heading-m">MenACWY vaccination details</h2>
+{% set basePath = '/men-acwy-vaccination/' + campaign.id + '/' + patient.nhsNumber %}
+
+{{ govukSummaryList({
+  classes: "app-u-frutiger",
+  rows: decorateRows([
+    {
+      key: 'Vaccine',
+      value: campaign.vaccines[1].summary,
+      href: '#'
+    },
+    {
+      key: 'Vaccine given?',
+      value: menACWYVaccinationRecord.given,
+      href: basePath + '/has-it-been-given'
+    },
+    {
+      key: 'Site',
+      value: menACWYVaccinationRecord.where,
+      href: basePath + '/has-it-been-given'
+    } if menACWYVaccineGiven,
+    {
+      key: 'Reason',
+      value: menACWYVaccinationRecord['why-not-given'],
+      href: basePath + '/not-given'
+    } if not menACWYVaccineGiven
+  ])
+}) }}
+
+<h2 class="nhsuk-heading-m">3-in-1 vaccination details</h2>
+{% set basePath = '/3-in-1-vaccination/' + campaign.id + '/' + patient.nhsNumber %}
+
+{{ govukSummaryList({
+  classes: "app-u-frutiger",
+  rows: decorateRows([
+    {
+      key: 'Vaccine',
+      value: campaign.vaccines[0].summary,
+      href: '#'
+    },
+    {
+      key: 'Vaccine given?',
+      value: vaccinationRecord.given,
+      href: basePath + '/has-it-been-given'
+    },
+    {
+      key: 'Site',
+      value: vaccinationRecord.where,
+      href: basePath + '/has-it-been-given'
+    } if 3in1VaccineGiven,
+    {
+      key: 'Reason',
+      value: vaccinationRecord['why-not-given'],
+      href: basePath + '/not-given'
+    } if not 3in1VaccineGiven
+  ])
+}) }}

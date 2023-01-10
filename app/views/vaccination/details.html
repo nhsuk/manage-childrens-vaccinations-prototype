@@ -1,68 +1,13 @@
 {% extends "layouts/wizard.html" %}
-{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
-{% set title = "Check and confirm vaccination details" if vaccineGiven else "Confirm the vaccine was not given" %}
+{% set title = "Check and confirm details" %}
 {% set buttonText = "Confirm" %}
-{% set basePath = '/vaccination/' + campaign.id + '/' + patient.nhsNumber %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
 
-  {{ govukSummaryList({
-    classes: "app-u-frutiger",
-    rows: decorateRows([
-      {
-        key: 'Patient',
-        value: patient.fullName
-      },
-      {
-        key: 'Vaccine',
-        value: campaign.vaccines[0].summary,
-        href: '#'
-      },
-      {
-        key: 'Dose',
-        value: '1 of 2',
-        href: '#'
-      } if vaccineGiven and campaign.type == "HPV",
-      {
-        key: 'Vaccine given?',
-        value: vaccinationRecord.given,
-        href: basePath + '/has-it-been-given'
-      },
-      {
-        key: 'Site',
-        value: 'Nasal'
-      } if vaccineGiven and campaign.vaccines[0].method == "Nasal spray",
-      {
-        key: 'Site',
-        value: vaccinationRecord.where,
-        href: basePath + '/has-it-been-given'
-      } if vaccineGiven and campaign.vaccines[0].method == "Injection",
-      {
-        key: 'Reason',
-        value: vaccinationRecord['why-not-given'],
-        href: basePath + '/not-given'
-      } if not vaccineGiven,
-      {
-        key: 'Date',
-        value: 'Today (' + "today" | govukDate + ')',
-        href: '#'
-      },
-      {
-        key: 'Time',
-        value: 'now' | govukTime,
-        href: '#'
-      } if vaccineGiven,
-      {
-        key: 'Location',
-        value: campaign.location,
-        href: '#'
-      },
-      {
-        key: 'Vaccinator',
-        value: 'You (' + data.user.name + ')',
-        href: '#'
-      }
-    ])
-  }) }}
+  {% if isSingleVaccine %}
+    {% include 'vaccination/_single-vaccine-details.html' %}
+  {% else %}
+    {% include 'vaccination/_multiple-vaccine-details.html' %}
+  {% endif %}
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Why was the vaccine not given?" %}
+{% set title = "Why was the " + type + " vaccine not given?" %}
 
 {% block form %}
   {{ radios({
@@ -24,6 +24,6 @@
         value: patient.fullName + ' had contraindications'
       }
     ],
-    decorate: ["vaccination", campaign.id, patient.nhsNumber, "why-not-given"]
+    decorate: [dataLocation, campaign.id, patient.nhsNumber, "why-not-given"]
   }) }}
 {% endblock %}

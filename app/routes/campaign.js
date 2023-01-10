@@ -20,7 +20,13 @@ export const campaignRoutes = router => {
     '/campaign/:campaignId/patient/:nhsNumber/*'
   ], (req, res, next) => {
     res.locals.patient = res.locals.campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
-    res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    if (res.locals.campaign.is3in1MenACWY) {
+      res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+      res.locals.menAcwyVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    } else {
+      res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    }
+
     next()
   })
 

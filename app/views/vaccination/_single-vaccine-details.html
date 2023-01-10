@@ -1,0 +1,70 @@
+{% set rootPath = '/vaccination/' %}
+{% set index = 0 %}
+{% if 3in1VaccinationRecord %}
+  {% set rootPath = '/3-in-1-vaccination/' %}
+{% elseif menACWYVaccinationRecord %}
+  {% set rootPath = '/men-acwy-vaccination/' %}
+  {% set index = 1 %}
+{% endif %}
+{% set vaccine = campaign.vaccines[index] %}
+{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
+{% set basePath = rootPath + campaign.id + '/' + patient.nhsNumber %}
+
+{{ govukSummaryList({
+  classes: "app-u-frutiger",
+  rows: decorateRows([
+    {
+      key: 'Child',
+      value: patient.fullName
+    },
+    {
+      key: 'Vaccine',
+      value: vaccine.summary,
+      href: '#'
+    },
+    {
+      key: 'Dose',
+      value: '1 of 2',
+      href: '#'
+    } if vaccineGiven and campaign.type == "HPV",
+    {
+      key: 'Vaccine given?',
+      value: vaccinationRecord.given,
+      href: basePath + '/has-it-been-given'
+    },
+    {
+      key: 'Site',
+      value: 'Nasal'
+    } if vaccineGiven and vaccine.isNasal,
+    {
+      key: 'Site',
+      value: vaccinationRecord.where,
+      href: basePath + '/has-it-been-given'
+    } if vaccineGiven and not vaccine.isNasal,
+    {
+      key: 'Reason',
+      value: vaccinationRecord['why-not-given'],
+      href: basePath + '/not-given'
+    } if not vaccineGiven,
+    {
+      key: 'Date',
+      value: 'Today (' + "today" | govukDate + ')',
+      href: '#'
+    },
+    {
+      key: 'Time',
+      value: 'now' | govukTime,
+      href: '#'
+    } if vaccineGiven,
+    {
+      key: 'Location',
+      value: campaign.location,
+      href: '#'
+    },
+    {
+      key: 'Vaccinator',
+      value: 'You (' + data.user.name + ')',
+      href: '#'
+    }
+  ])
+}) }}

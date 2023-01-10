@@ -17,7 +17,7 @@ const getBatches = (faker) => {
 
 const summarise = (v) => {
   const brand = v.method === 'Nasal spray' ? v.brand + ' nasal spray' : v.brand
-  v.summary = `${v.type} (${brand}, ${v.batches[0].name})`
+  v.summary = `${v.vaccine} (${brand}, ${v.batches[0].name})`
 }
 
 export const vaccines = (faker, type) => {
@@ -27,6 +27,7 @@ export const vaccines = (faker, type) => {
       vaccine: 'Flu',
       brand: 'Fluenz Tetra',
       method: 'Nasal spray',
+      isNasal: true,
       batches: getBatches(faker)
     },
     {
@@ -51,7 +52,7 @@ export const vaccines = (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/147952/Green-Book-Chapter-15.pdf
   const dptVaccines = [
     {
-      vaccine: '3 in 1',
+      vaccine: '3-in-1',
       brand: 'Revaxis',
       method: 'Injection',
       batches: getBatches(faker)
@@ -77,7 +78,7 @@ export const vaccines = (faker, type) => {
     case 'HPV':
       vacs = hpvVaccines
       break
-    case '3 in 1 and MenACWY':
+    case '3-in-1 and MenACWY':
       vacs = dptVaccines.concat(menAcwyVaccines)
       break
   }

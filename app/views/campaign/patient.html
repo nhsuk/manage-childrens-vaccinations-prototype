@@ -15,6 +15,17 @@
   }) }}
 {% endblock %}
 
+{% set consentValue %}
+  <b>3-in-1</b><br />
+  {{ 'Parental consent' if patient.consent['3-in-1'] else 'No consent' }}
+  <br />
+  <p class="nhsuk-u-margin-top-2">
+    <b>MenACWY</b>
+    <br />
+    {{ 'Parental consent' if patient.consent['men-acwy'] else 'No consent' }}
+  </p>
+{% endset %}
+
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
@@ -45,7 +56,13 @@
                 {
                   key: 'Consent',
                   value: 'Parental'
-                },
+                } if not campaign.is3in1MenACWY,
+                {
+                  key: 'Consent',
+                  value: {
+                    html: consentValue
+                  }
+                } if campaign.is3in1MenACWY,
                 {
                   key: 'GP',
                   value: patient.gp
@@ -77,16 +94,29 @@
             {% endif %}
 
             {% if campaign.is3in1MenACWY %}
-              {{ warningCallout({
-                "heading": "Do not give both vaccines",
-                "HTML": "<p>Consent has only been given for MenACWY.</p>"
-              }) }}
+              {% if not patient.consent.both %}
+                {% set consentSlug %}{{ '3-in-1' if patient.consent['3-in-1'] else 'men-acwy' }}{% endset %}
+                {% set consentFor %}{{ '3-in-1' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
+                {% set warningConsentFor %}{{ 'the 3-in-1 booster' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
 
-              {{ button({
-                text: 'Record ' + campaign.type + ' vaccination',
-                href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
-                classes: 'nhsuk-u-margin-bottom-2'
-              }) }}
+                {{ warningCallout({
+                  heading: "Do not give both vaccines",
+                  classes: "nhsuk-u-margin-bottom-6",
+                  HTML: "<p>Consent has only been given for " + warningConsentFor + ".</p>"
+                }) }}
+
+                {{ button({
+                  text: 'Record ' + consentFor + ' vaccination',
+                  href: '/' + consentSlug + '-vaccination/' + campaign.id + '/' + patient.nhsNumber,
+                  classes: 'nhsuk-u-margin-bottom-2'
+                }) }}
+              {% else %}
+                {{ button({
+                  text: 'Record ' + campaign.type + ' vaccinations',
+                  href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
+                  classes: 'nhsuk-u-margin-bottom-2'
+                }) }}
+              {% endif %}
             {% else %}
               {{ button({
                 text: 'Record ' + campaign.type + ' vaccination',
