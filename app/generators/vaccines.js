@@ -17,7 +17,7 @@ const getBatches = (faker) => {
 
 const summarise = (v) => {
   const brand = v.method === 'Nasal spray' ? v.brand + ' nasal spray' : v.brand
-  v.summary = `${v.type} (${brand}, ${v.batches[0].name})`
+  v.summary = `${v.vaccine} (${brand}, ${v.batches[0].name})`
 }
 
 export const vaccines = (faker, type) => {

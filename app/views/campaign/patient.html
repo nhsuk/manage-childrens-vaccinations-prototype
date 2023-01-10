@@ -22,7 +22,7 @@
   <p class="nhsuk-u-margin-top-2">
     <b>MenACWY</b>
     <br />
-    {{ 'Parental consent' if patient.consent['MenACWY'] else 'No consent' }}
+    {{ 'Parental consent' if patient.consent['men-acwy'] else 'No consent' }}
   </p>
 {% endset %}
 
@@ -95,6 +95,7 @@
 
             {% if campaign.is3in1MenACWY %}
               {% if not patient.consent.both %}
+                {% set consentSlug %}{{ '3-in-1' if patient.consent['3-in-1'] else 'men-acwy' }}{% endset %}
                 {% set consentFor %}{{ '3-in-1' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
                 {% set warningConsentFor %}{{ 'the 3-in-1 booster' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
 
@@ -106,7 +107,7 @@
 
                 {{ button({
                   text: 'Record ' + consentFor + ' vaccination',
-                  href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
+                  href: '/' + consentSlug + '-vaccination/' + campaign.id + '/' + patient.nhsNumber,
                   classes: 'nhsuk-u-margin-bottom-2'
                 }) }}
               {% else %}

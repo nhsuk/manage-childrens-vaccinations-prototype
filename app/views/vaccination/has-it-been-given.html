@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Was " + patient.fullName + " given the vaccine?" %}
+{% set title = "Was " + patient.fullName + " given the " + type + " vaccine?" %}
 
 {% block form %}
   {% set where %}
@@ -18,7 +18,7 @@
         { text: "Left buttock" },
         { text: "Right buttock" }
       ],
-      decorate: ["vaccination", campaign.id, patient.nhsNumber, "where"]
+      decorate: [dataLocation, campaign.id, patient.nhsNumber, "where"]
     }) }}
   {% endset %}
 
@@ -27,11 +27,11 @@
       legend: {
         classes: "nhsuk-fieldset__legend--l",
         isPageHeading: true,
-        text: title
+        text: title | noOrphans | safe
       }
     },
     items: [{
-      text: "Yes, they had the " + campaign.type + " vaccine",
+      text: "Yes, they had the " + type + " vaccine",
       value: "Yes",
       conditional: {
         html: where
@@ -40,6 +40,6 @@
       text: "No, they did not get the vaccine",
       value: "No"
     }],
-    decorate: ["vaccination", campaign.id, patient.nhsNumber, "given"]
+    decorate: [dataLocation, campaign.id, patient.nhsNumber, "given"]
   }) }}
 {% endblock %}

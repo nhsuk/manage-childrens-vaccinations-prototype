@@ -1,5 +1,6 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Record " + campaign.type + " vaccination" %}
+{% set index = 1 if isMenACWY else 0 %}
+{% set title = "Record " + type + " vaccination" %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
@@ -10,19 +11,19 @@
       rows: decorateRows([
         {
           key: "Vaccine",
-          value: campaign.type
+          value: type
         },
         {
           key: "Dose",
           value: "1 of 2"
-        } if campaign.type == "HPV",
+        } if type == "HPV",
         {
           key: "Brand",
-          value: campaign.vaccines[0].brand
+          value: campaign.vaccines[index].brand
         },
         {
           key: "Batch",
-          value: campaign.vaccines[0].batches[0].name + ' (expires ' + (campaign.vaccines[0].batches[0].expiry | govukDate('truncate')) + ')'
+          value: campaign.vaccines[index].batches[index].name + ' (expires ' + (campaign.vaccines[index].batches[index].expiry | govukDate('truncate')) + ')'
         }
       ])
     }) }}
@@ -50,7 +51,7 @@
       text: "No, I need to change something",
       value: "No"
     }],
-    decorate: ["vaccination", campaignId, patient.nhsNumber, "vaccine-correct"]
+    decorate: [dataLocation, campaignId, patient.nhsNumber, "vaccine-correct"]
   }) }}
 
 {% endblock %}

@@ -27,9 +27,9 @@ const consent = (type) => {
     case '3-in-1 and MenACWY':
       return faker.helpers.arrayElement(
         [
-          { '3-in-1': true, MenACWY: true, both: true },
-          { '3-in-1': false, MenACWY: true, both: false },
-          { '3-in-1': true, MenACWY: false, both: false }
+          { '3-in-1': true, 'men-acwy': true, both: true },
+          { '3-in-1': false, 'men-acwy': true, both: false },
+          { '3-in-1': true, 'men-acwy': false, both: false }
         ]
       )
   }
