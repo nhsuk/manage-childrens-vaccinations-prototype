@@ -9,22 +9,28 @@
           <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
 
           <h2 class="nhsuk-heading-l">Flu campaign</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header" style="width: 75%">School</th>
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Date</th>
+                <th class="nhsuk-table__header" style="width: 50%">School</th>
+                <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
               </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="nhsuk-table__body">
               {% for id, c in data.campaigns %}
                 {% if c.type === "Flu" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell">
                     {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                   </td>
-                  <td class="govuk-table__cell">
+                  <td class="nhsuk-table__cell">
                     <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                    {% if c['available-offline'] %}
+                      Available offline
+                    {% endif %}
                   </td>
                 </tr>
                 {% endif %}
@@ -33,22 +39,28 @@
           </table>
 
           <h2 class="nhsuk-heading-l">HPV campaign</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header" style="width: 75%">School</th>
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Date</th>
+                <th class="nhsuk-table__header" style="width: 50%">School</th>
+                <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
               </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="nhsuk-table__body">
               {% for id, c in data.campaigns %}
                 {% if c.type === "HPV" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell">
                     {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                   </td>
-                  <td class="govuk-table__cell">
+                  <td class="nhsuk-table__cell">
                     <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                    {% if c['available-offline'] %}
+                      Available offline
+                    {% endif %}
                   </td>
                 </tr>
                 {% endif %}
@@ -57,22 +69,28 @@
           </table>
 
           <h2 class="nhsuk-heading-l">3-in-1 and MenACWY campaign</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header" style="width: 75%">School</th>
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Date</th>
+                <th class="nhsuk-table__header" style="width: 50%">School</th>
+                <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
               </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="nhsuk-table__body">
               {% for id, c in data.campaigns %}
                 {% if c.type === "3-in-1 and MenACWY" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell">
                     {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                   </td>
-                  <td class="govuk-table__cell">
+                  <td class="nhsuk-table__cell">
                     <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                    {% if c['available-offline'] %}
+                      Available offline
+                    {% endif %}
                   </td>
                 </tr>
                 {% endif %}

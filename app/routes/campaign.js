@@ -30,6 +30,11 @@ export const campaignRoutes = router => {
     next()
   })
 
+  router.post('/campaign/:campaignId', (req, res, next) => {
+    res.locals.campaign['available-offline'] = true
+    next()
+  })
+
   router.all([
     '/campaign/:campaignId'
   ], (req, res) => {
