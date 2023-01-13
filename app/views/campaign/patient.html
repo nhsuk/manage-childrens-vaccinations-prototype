@@ -8,10 +8,14 @@
       {
         text: "Home",
         href: "/dashboard"
+      },
+      {
+        text: campaign.title,
+        href: "/campaign/" + campaign.id
       }
     ],
-    text: campaign.title,
-    href: "/campaign/" + campaign.id
+    text: "Record vaccinations",
+    href: "/campaign/" + campaign.id + "/students"
   }) }}
 {% endblock %}
 
@@ -31,7 +35,10 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+          <h1 class="nhsuk-heading-l">
+            {{ title | noOrphans | safe }}
+            {% include 'campaign/_available-offline.html' %}
+          </h1>
 
           {% set about %}
             {{ summaryList({

@@ -67,6 +67,11 @@ $govuk-assets-path: "/govuk/assets/";
   }
 }
 
+.app-icon-small {
+  width: 24px;
+  height: 24px;
+}
+
 .nhsuk-card__heading:empty {
   display: none !important;
 }

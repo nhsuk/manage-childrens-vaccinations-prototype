@@ -31,7 +31,7 @@ export default {
       description: 'Simulate being offline'
     },
     showOfflineFeatures: {
-      on: false,
+      on: true,
       name: 'Display offline features',
       description: 'Hide and show features that relate to being online or offline'
     },

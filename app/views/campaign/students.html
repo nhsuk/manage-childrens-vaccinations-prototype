@@ -22,6 +22,7 @@
         <div class="nhsuk-grid-column-full">
           <h1 class="nhsuk-heading-l">
             {{ title | noOrphans | safe }}
+            {% include 'campaign/_available-offline.html' %}
           </h1>
 
           {% set listOfPeople %}
@@ -78,7 +79,7 @@
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header">Name</th>
                     <th class="govuk-table__header">Date of birth</th>
-                    <th class="govuk-table__header">Screening</th>
+                    <th class="govuk-table__header">Clinical triage</th>
                     <th class="govuk-table__header">Vaccinated</th>
                   </tr>
                 </thead>
@@ -95,7 +96,7 @@
                         {{ patient.dob | govukDate('truncate') }}
                       </td>
                       <td class="govuk-table__cell">
-                        Approved
+                        Yes
                       </td>
                       <td class="govuk-table__cell">
                         {{ tag(patient.seen) }}
