@@ -93,6 +93,7 @@ export const vaccinationRoutes = router => {
       res.locals.patient.seen = { text: 'Vaccine not given', classes: 'nhsuk-tag--yellow' }
     }
 
+    res.locals.patient.seen.isOffline = res.locals.isOffline
     next()
   })
 
