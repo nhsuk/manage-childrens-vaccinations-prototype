@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.all('*', (req, res, next) => {
   const features = req.session.data.features
+  res.locals.success = !!req.query.success
   res.locals.isOffline = features.showOfflineFeatures.on && features.offline.on
   next()
 })
