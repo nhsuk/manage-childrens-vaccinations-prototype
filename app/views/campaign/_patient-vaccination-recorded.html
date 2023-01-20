@@ -1,0 +1,63 @@
+{% if isOffline %}
+  <div class="app-offline-status">
+    <b>Vaccination record stored on your device</b><br />
+    You need to connect to the internet to save it
+  </div>
+{% endif %}
+
+{% set vaccineRecorded %}
+  <p><a href="#">Change</a></p>
+
+  {{ govukSummaryList({
+    classes: "app-u-frutiger app-summary-list--no-bottom-border  nhsuk-u-margin-bottom-0",
+    rows: decorateRows([
+      {
+        key: 'Vaccine',
+        value: campaign.vaccines[0].summary
+      },
+      {
+        key: 'Dose',
+        value: '1 of 2'
+      } if vaccineGiven and campaign.type == "HPV",
+      {
+        key: 'Vaccine given?',
+        value: vaccinationRecord.given
+      },
+      {
+        key: 'Site',
+        value: 'Nasal'
+      } if vaccineGiven and campaign.vaccines[0].method == "Nasal spray",
+      {
+        key: 'Site',
+        value: vaccinationRecord.where
+      } if vaccineGiven and campaign.vaccines[0].method == "Injection",
+      {
+        key: 'Reason',
+        value: vaccinationRecord['why-not-given']
+      } if not vaccineGiven,
+      {
+        key: 'Date',
+        value: 'Today (' + "today" | govukDate + ')'
+      },
+      {
+        key: 'Time',
+        value: 'now' | govukTime
+      } if vaccineGiven,
+      {
+        key: 'Location',
+        value: campaign.location
+      },
+      {
+        key: 'Vaccinator',
+        value: 'You (' + data.user.name + ')'
+      }
+    ])
+  }) }}
+{% endset %}
+
+{{ card({
+  heading: "Vaccination details",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: vaccineRecorded
+}) }}

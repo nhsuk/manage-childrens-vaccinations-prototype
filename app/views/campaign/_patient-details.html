@@ -1,0 +1,56 @@
+<div class="nhsuk-card">
+  <div class="nhsuk-card__content">
+    {% set parentContactDetailsHtml %}
+      <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
+        Telephone: {{ patient.parentOrGuardian.telephone }}<br />
+        Email: {{ patient.parentOrGuardian.email }}
+      </div>
+    {% endset %}
+
+    {{ summaryList({
+      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+      rows: decorateRows([
+        {
+          key: 'Name',
+          value: patient.fullName
+        },
+        {
+          key: 'Known as',
+          value: patient.preferredName
+        } if patient.preferredName,
+        {
+          key: 'Sex',
+          value: patient.sex
+        },
+        {
+          key: 'Date of birth',
+          value: patient.dob | govukDate + ' (aged ' + patient.age + ')'
+        },
+        {
+          key: 'Consent',
+          value: 'Parental'
+        } if not campaign.is3in1MenACWY,
+        {
+          key: 'Consent',
+          value: {
+            html: consentValue
+          }
+        } if campaign.is3in1MenACWY,
+        {
+          key: 'GP',
+          value: patient.gp
+        },
+        {
+          key: 'NHS Number',
+          value: patient.nhsNumber
+        },
+        {
+          key: patient.parentOrGuardian.relationship,
+          value: {
+            html: patient.parentOrGuardian.fullName + parentContactDetailsHtml
+          }
+        }
+      ])
+    }) }}
+  </div>
+</div>

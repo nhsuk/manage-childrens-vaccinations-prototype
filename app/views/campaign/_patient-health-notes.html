@@ -1,0 +1,40 @@
+{% set healthNotes %}
+  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a disease or treatment that severely affects their immune system?</h3>
+  <p>No</p>
+
+  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Does anyone in their household having treatment that severely affects their immune system?</h3>
+  <p>No</p>
+
+  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Have they been diagnosed with asthma?</h3>
+  <p>No</p>
+
+  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a severe egg allergy?</h3>
+  <p>No</p>
+
+  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Are they taking aspirin medication?</h3>
+  <p>No</p>
+{% endset %}
+
+{% set healthNotes %}
+  {% if true %}
+    <p>No triage needed</p>
+  {% else %}
+    <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage notes</h2>
+    <p>Notes</p>
+
+    <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Medical history answers</h2>
+  {% endif %}
+
+  {{ details({
+    "text": "Show answers",
+    "HTML": healthNotes,
+    classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
+  }) }}
+{% endset %}
+
+{{ card({
+  heading: "Medical history",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: healthNotes
+}) }}

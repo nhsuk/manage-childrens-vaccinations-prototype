@@ -1,0 +1,99 @@
+{% set wasGiven3in1MenACWY %}
+  {% if not patient.consent.both %}
+    {% set consentSlug %}{{ '3-in-1' if patient.consent['3-in-1'] else 'men-acwy' }}{% endset %}
+    {% set consentFor %}{{ '3-in-1' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
+    {% set warningConsentFor %}{{ 'the 3-in-1 booster' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
+
+    {{ warningCallout({
+      heading: "Do not give both vaccines",
+      classes: "nhsuk-u-margin-bottom-6",
+      HTML: "<p>Consent has only been given for " + warningConsentFor + ".</p>"
+    }) }}
+
+    {{ button({
+      text: 'Record ' + consentFor + ' vaccination',
+      href: '/' + consentSlug + '-vaccination/' + campaign.id + '/' + patient.nhsNumber,
+      classes: 'nhsuk-u-margin-bottom-2'
+    }) }}
+  {% else %}
+    {{ button({
+      text: 'Record ' + campaign.type + ' vaccinations',
+      href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
+      classes: 'nhsuk-u-margin-bottom-2'
+    }) }}
+  {% endif %}
+{% endset %}
+
+{% set wasGiven %}
+  {% set where %}
+    {{ radios({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "Where did they get the vaccine?"
+        }
+      },
+      items: [
+        { text: "Left arm" },
+        { text: "Right arm" },
+        { text: "Left thigh" },
+        { text: "Right thigh" },
+        { text: "Left buttock" },
+        { text: "Right buttock" }
+      ],
+      decorate: ['vaccination', campaign.id, patient.nhsNumber, "where"]
+    }) }}
+  {% endset %}
+
+  {% if campaign.type == "HPV" %}
+    <p>They need their 1st dose.</p>
+  {% endif %}
+
+  {{ radios({
+    items: [{
+      text: "Yes, they got the " + (campaign.type | lower if campaign.type == 'Flu' else campaign.type) + " vaccine",
+      value: "Yes",
+      conditional: {
+        html: where
+      } if campaign.vaccines[0].method == "Injection"
+    }, {
+      text: "No, they did not get it",
+      value: "No"
+    }],
+    decorate: ['vaccination', campaign.id, patient.nhsNumber, "given"]
+  }) }}
+
+  {% set where %}
+    {{ radios({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "Where did they get the vaccine?"
+        }
+      },
+      items: [
+        { text: "Left arm" },
+        { text: "Right arm" },
+        { text: "Left thigh" },
+        { text: "Right thigh" },
+        { text: "Left buttock" },
+        { text: "Right buttock" }
+      ],
+      decorate: ['vaccination', campaign.id, patient.nhsNumber, "where"]
+    }) }}
+  {% endset %}
+
+  {{ button({
+    text: 'Continue',
+    classes: 'nhsuk-u-margin-bottom-2'
+  }) }}
+{% endset %}
+
+<form method="post">
+  {{ card({
+    heading: "Record vaccination" if campaign.is3in1MenACWY else "Did they get the vaccine?",
+    headingLevel: "2",
+    headingClasses: "nhsuk-heading-m",
+    description: wasGiven3in1MenACWY if campaign.is3in1MenACWY else wasGiven
+  }) }}
+</form>

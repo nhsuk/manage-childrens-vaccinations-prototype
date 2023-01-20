@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { vaccination } from '../wizards/vaccination.js'
 
 export const campaignRoutes = router => {
   /**
@@ -27,7 +28,14 @@ export const campaignRoutes = router => {
       res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     }
 
+    res.locals.paths = vaccination(req)
     next()
+  })
+
+  router.post([
+    '/campaign/:campaignId/patient/:nhsNumber'
+  ], (req, res) => {
+    res.redirect(res.locals.paths.next)
   })
 
   router.post('/campaign/:campaignId', (req, res, next) => {
