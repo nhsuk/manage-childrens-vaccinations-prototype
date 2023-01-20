@@ -2,6 +2,7 @@
 $govuk-global-styles: false;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/govuk/assets/";
+$color_app-pale-blue: #ccdff1;
 
 @import 'node_modules/nhsuk-frontend/packages/nhsuk';
 
@@ -12,18 +13,7 @@ $govuk-assets-path: "/govuk/assets/";
 @import "govuk-prototype-components/x-govuk/all";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
-
-.app-offline-indicator {
-  background: $color_nhsuk-pale-yellow;
-  padding: nhsuk-spacing(2) 0;
-}
-
-.app-offline-status {
-  background: $color_nhsuk-pale-yellow;
-  border: 1px solid $nhsuk-border-color;
-  border-bottom: 0;
-  padding: nhsuk-spacing(3) nhsuk-spacing(5);
-}
+@import "_offline.scss";
 
 .app-search {
   background: $color_nhsuk-grey-5;
@@ -34,11 +24,6 @@ $govuk-assets-path: "/govuk/assets/";
   .nhsuk-form-group {
     margin-bottom: 0;
   }
-}
-
-.app-ready-for-offline  {
-  border-top: 2px solid $nhsuk-border-color;
-  padding: nhsuk-spacing(4) 0 nhsuk-spacing(2);
 }
 
 .app-u-inherit {
@@ -72,6 +57,10 @@ $govuk-assets-path: "/govuk/assets/";
   height: 24px;
 }
 
-.nhsuk-card__heading:empty {
-  display: none !important;
+.app-notification-banner {
+  border-color: $color_nhsuk-blue;
+
+  .govuk-notification-banner__header {
+    background-color: $color_nhsuk-blue;
+  }
 }
