@@ -16,24 +16,30 @@
   {% if isOffline and not neverOffline %}
     <div class="app-offline-indicator">
       <div class="nhsuk-width-container">
-        <p class="nhsuk-body-s nhsuk-u-font-weight-bold nhsuk-u-margin-top-1 nhsuk-u-margin-bottom-1">
-          You are working offline
-        </p>
         <div class="nhsuk-grid-row">
           <div class="nhsuk-grid-column-two-thirds">
-            <p class="nhsuk-body-s nhsuk-u-margin-bottom-2">
-              Changes will be saved when you connect to the internet again
-            </p>
-          </div>
-          <div class="nhsuk-grid-column-one-third">
-            <p class="nhsuk-body-s nhsuk-u-margin-bottom-2 nhsuk-u-text-align-right">
-              <a href="/help-offline" class="app-u-inherit">Help working offline</a>
-            </p>
+            <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-19">You are working offline</span>
+            <span class="nhsuk-u-padding-left-2 nhsuk-u-padding-right-2"></span>
+            <a href="/help-offline" class="app-u-inherit">Help working offline</a>
           </div>
         </div>
       </div>
     </div>
   {% endif %}
+
+  <!-- <div class="app-changes-synced-indicator">
+    <div class="nhsuk-width-container">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#fff"></path>
+          </svg>
+          <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-22 nhsuk-u-padding-left-1">Your offline changes have been saved successfully</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
   {{ header({
     service: {
       name: serviceName,
@@ -50,7 +56,7 @@
 {% endblock %}
 
 {% block footer %}
-  {% if data.features.showOfflineFeatures.on and not offline and not neverOffline %}
+  {% if false and data.features.showOfflineFeatures.on and not offline and not neverOffline %}
     {% if true %}
       <div class="app-ready-for-offline nhsuk-u-margin-bottom-3">
         <div class="nhsuk-width-container">

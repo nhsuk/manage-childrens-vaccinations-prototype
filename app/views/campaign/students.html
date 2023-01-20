@@ -20,9 +20,47 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
+          {% if success %}
+            {% set html %}
+              {% if isOffline %}
+                <p class="govuk-notification-banner__heading">
+                  Offline changes saved
+                </p>
+                <p>
+                  You will need to go online to sync your changes.
+                </p>
+              {% else %}
+                <p class="govuk-notification-banner__heading">
+                  Record saved
+                </p>
+              {% endif %}
+            {% endset %}
+
+            {{ govukNotificationBanner({
+              html: html,
+              classes: "app-u-frutiger",
+              type: "success"
+            }) }}
+          {% endif %}
+
           <h1 class="nhsuk-heading-l">
             {{ title | noOrphans | safe }}
           </h1>
+
+          {% if campaign['available-offline'] %}
+            {% set tagHtml %}
+              <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-16">
+                You can record vaccinations for these children while offline
+              </span>
+            {% endset %}
+
+            <div class="nhsuk-u-margin-bottom-4" style="margin-top: -15px">
+            {{ tag({
+              html: tagHtml,
+              classes: 'nhsuk-tag--blue'
+            }) }}
+            </div>
+          {% endif %}
 
           {% set listOfPeople %}
           <div class="nhsuk-grid-row">
@@ -78,8 +116,7 @@
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header">Name</th>
                     <th class="govuk-table__header">Date of birth</th>
-                    <th class="govuk-table__header">Screening</th>
-                    <th class="govuk-table__header">Vaccinated</th>
+                    <th class="govuk-table__header">Seen by nurse</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -95,10 +132,23 @@
                         {{ patient.dob | govukDate('truncate') }}
                       </td>
                       <td class="govuk-table__cell">
-                        Approved
-                      </td>
-                      <td class="govuk-table__cell">
-                        {{ tag(patient.seen) }}
+                        {% if patient.seen.text != 'Not yet' %}
+                          {% set isOfflineSaved = patient.seen.isOffline %}
+                          {% set color = "#004281" if isOfflineSaved else '#007f3b' %}
+                          {% set tagHtml %}
+                            <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+                              <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="{{ color }}"></path>
+                            </svg>
+                            <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-16">
+                              Saved {{ 'offline' if isOfflineSaved }}
+                            </span>
+                          {% endset %}
+
+                          {{ tag({
+                            html: tagHtml,
+                            classes: 'nhsuk-tag--blue' if patient.seen.isOffline else 'nhsuk-tag--green'
+                          }) }}
+                        {% endif %}
                       </td>
                     </tr>
                   {% endfor %}

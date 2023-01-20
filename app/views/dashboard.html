@@ -6,25 +6,46 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
+          {% if hasAnyOfflineChanges %}
+            {{ warningCallout({
+              heading: "You have offline changes",
+              HTML: "<p>Your offline changes will upload when you’re back&nbsp;online.</p>",
+              classes: "nhsuk-u-margin-top-0"
+            }) }}
+          {% endif %}
+
           <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
 
           <h2 class="nhsuk-heading-l">Flu campaign</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header" style="width: 75%">School</th>
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Date</th>
+                <th class="nhsuk-table__header" style="width: 50%">School</th>
+                <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
               </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="nhsuk-table__body">
               {% for id, c in data.campaigns %}
                 {% if c.type === "Flu" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell">
                     {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                   </td>
-                  <td class="govuk-table__cell">
-                    <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  <td class="nhsuk-table__cell">
+                      <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                    {% if c['available-offline'] %}
+                      <span class="nhsuk-u-font-weight-bold" style="color: #007f3b">
+                        <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+                          <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                        </svg>
+                        Available offline
+                      </span>
+                    {% elseif isOffline %}
+                      <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endif %}
@@ -33,22 +54,35 @@
           </table>
 
           <h2 class="nhsuk-heading-l">HPV campaign</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header" style="width: 75%">School</th>
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Date</th>
+                <th class="nhsuk-table__header" style="width: 50%">School</th>
+                <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
               </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="nhsuk-table__body">
               {% for id, c in data.campaigns %}
                 {% if c.type === "HPV" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell">
                     {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                   </td>
-                  <td class="govuk-table__cell">
+                  <td class="nhsuk-table__cell">
                     <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                    {% if c['available-offline'] %}
+                      <span class="nhsuk-u-font-weight-bold" style="color: #007f3b">
+                        <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+                          <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                        </svg>
+                        Available offline
+                      </span>
+                    {% elseif isOffline %}
+                      <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endif %}
@@ -57,22 +91,35 @@
           </table>
 
           <h2 class="nhsuk-heading-l">3-in-1 and MenACWY campaign</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Date</th>
-                <th class="govuk-table__header" style="width: 75%">School</th>
+          <table class="nhsuk-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Date</th>
+                <th class="nhsuk-table__header" style="width: 50%">School</th>
+                <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
               </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="nhsuk-table__body">
               {% for id, c in data.campaigns %}
                 {% if c.type === "3-in-1 and MenACWY" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell">
                     {{ c.date | govukDate('truncate') }} at {{ c.date | govukTime }}
                   </td>
-                  <td class="govuk-table__cell">
+                  <td class="nhsuk-table__cell">
                     <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                    {% if c['available-offline'] %}
+                      <span class="nhsuk-u-font-weight-bold" style="color: #007f3b">
+                        <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+                          <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                        </svg>
+                        Available offline
+                      </span>
+                    {% elseif isOffline %}
+                      <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endif %}

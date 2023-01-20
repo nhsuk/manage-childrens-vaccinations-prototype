@@ -63,24 +63,19 @@ export function vaccination (req) {
   const patient = campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
 
   const journey = {
-    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
+    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {
+      [`/vaccination/${campaignId}/${nhsNumber}/details`]: {
+        data: `vaccination.${campaignId}.${nhsNumber}.given`,
+        excludedValue: 'No'
+      }
+    },
     ...campaign.is3in1MenACWY
       ? journeyFor3in1MenAcwy(req, campaign, patient)
       : {
-        [`/vaccination/${campaignId}/${nhsNumber}`]: {},
-        [`/vaccination/${campaignId}/${nhsNumber}/has-it-been-given`]: {
-          [`/vaccination/${campaignId}/${nhsNumber}/details`]: {
-            data: `vaccination.${campaignId}.${nhsNumber}.given`,
-            excludedValue: 'No'
-          }
-        },
         [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
       },
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
-    [`/vaccination/${campaignId}/${nhsNumber}/confirmation`]: {
-      [`/campaign/${campaignId}/patient/${nhsNumber}`]: true
-    },
-    [`/campaign/${campaignId}/`]: {}
+    [`/campaign/${campaignId}/students?success=${nhsNumber}`]: {}
   }
 
   return wizard(journey, req)
