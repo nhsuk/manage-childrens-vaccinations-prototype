@@ -102,8 +102,7 @@
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header">Name</th>
                     <th class="govuk-table__header">Date of birth</th>
-                    <th class="govuk-table__header">Clinical triage</th>
-                    <th class="govuk-table__header">Vaccinated</th>
+                    <th class="govuk-table__header">Seen by nurse</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -119,10 +118,23 @@
                         {{ patient.dob | govukDate('truncate') }}
                       </td>
                       <td class="govuk-table__cell">
-                        Yes
-                      </td>
-                      <td class="govuk-table__cell">
-                        {{ tag(patient.seen) }}
+                        {% if patient.seen.text != 'Not yet' %}
+                          {% set isOfflineSaved = patient.seen.isOffline %}
+                          {% set color = "#004281" if isOfflineSaved else '#007f3b' %}
+                          {% set tagHtml %}
+                            <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+                              <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="{{ color }}"></path>
+                            </svg>
+                            <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-16">
+                              Saved {{ 'offline' if isOfflineSaved }}
+                            </span>
+                          {% endset %}
+
+                          {{ tag({
+                            html: tagHtml,
+                            classes: 'nhsuk-tag--blue' if patient.seen.isOffline else 'nhsuk-tag--green'
+                          }) }}
+                        {% endif %}
                       </td>
                     </tr>
                   {% endfor %}
