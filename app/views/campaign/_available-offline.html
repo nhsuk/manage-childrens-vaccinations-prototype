@@ -1,8 +1,14 @@
 {% if campaign['available-offline'] %}
-<span class="nhsuk-heading-s" style="color: #007f3b">
-  <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-    <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-  </svg>
-  Available offline
-</span>
+  {% set tagHtml %}
+    <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-16">
+      Child’s record is available offline
+    </span>
+  {% endset %}
+
+  <div class="nhsuk-u-margin-bottom-4" style="margin-top: -15px">
+  {{ tag({
+    html: tagHtml,
+    classes: 'nhsuk-tag--blue'
+  }) }}
+  </div>
 {% endif %}

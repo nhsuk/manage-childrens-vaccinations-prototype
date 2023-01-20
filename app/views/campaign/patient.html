@@ -26,8 +26,8 @@
         <div class="nhsuk-grid-column-two-thirds">
           <h1 class="nhsuk-heading-l">
             {{ title | noOrphans | safe }}
-            {% include 'campaign/_available-offline.html' %}
           </h1>
+          {% include 'campaign/_available-offline.html' %}
 
           {% include 'campaign/_patient-details.html' %}
           {% include 'campaign/_patient-health-notes.html' %}
