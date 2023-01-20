@@ -19,17 +19,6 @@
   }) }}
 {% endblock %}
 
-{% set consentValue %}
-  <b>3-in-1</b><br />
-  {{ 'Parental consent' if patient.consent['3-in-1'] else 'No consent' }}
-  <br />
-  <p class="nhsuk-u-margin-top-2">
-    <b>MenACWY</b>
-    <br />
-    {{ 'Parental consent' if patient.consent['men-acwy'] else 'No consent' }}
-  </p>
-{% endset %}
-
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">

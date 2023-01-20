@@ -1,3 +1,14 @@
+{% set consentValue %}
+  <b>3-in-1</b><br />
+  {{ 'Parental consent' if patient.consent['3-in-1'] else 'No consent' }}
+  <br />
+  <p class="nhsuk-u-margin-top-2">
+    <b>MenACWY</b>
+    <br />
+    {{ 'Parental consent' if patient.consent['men-acwy'] else 'No consent' }}
+  </p>
+{% endset %}
+
 <div class="nhsuk-card">
   <div class="nhsuk-card__content">
     {% set parentContactDetailsHtml %}
