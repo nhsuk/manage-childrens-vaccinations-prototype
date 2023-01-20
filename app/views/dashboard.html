@@ -6,6 +6,14 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
+          {% if hasAnyOfflineChanges %}
+            {{ warningCallout({
+              heading: "You have offline changes",
+              HTML: "<p>Your offline changes will upload when you’re back&nbsp;online.</p>",
+              classes: "nhsuk-u-margin-top-0"
+            }) }}
+          {% endif %}
+
           <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
 
           <h2 class="nhsuk-heading-l">Flu campaign</h2>

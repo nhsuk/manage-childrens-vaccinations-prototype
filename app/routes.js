@@ -16,6 +16,16 @@ vaccinationRoutes(router)
 daySetupRoutes(router)
 campaignRoutes(router)
 
+router.get('/dashboard', (req, res, next) => {
+  const anyOffline = Object.values(req.session.data.campaigns)
+    .map(c => c.patients)
+    .flat()
+    .some(patient => patient.seen.isOffline)
+
+  res.locals.hasAnyOfflineChanges = anyOffline
+  next()
+})
+
 router.get('/go-offline', (req, res) => {
   req.session.data.features.offline.on = true
   res.redirect('back')
