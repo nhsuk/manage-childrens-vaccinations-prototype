@@ -123,7 +123,7 @@
                   {% for patient in campaign.patients %}
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell">
-                        <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
+                        <a href="/campaign/{{ campaign.id }}/child/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
                         {% if patient.preferredName %}
                           <br />Known as: {{ patient.preferredName }}
                         {% endif %}

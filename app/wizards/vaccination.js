@@ -63,7 +63,7 @@ export function vaccination (req) {
   const patient = campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
 
   const journey = {
-    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {
+    [`/campaign/${campaignId}/child/${nhsNumber}`]: {
       [`/vaccination/${campaignId}/${nhsNumber}/details`]: {
         data: `vaccination.${campaignId}.${nhsNumber}.given`,
         excludedValue: 'No'
