@@ -117,8 +117,8 @@
 
 {% block bodyEnd %}
   {{ super() }}
-  {% if patient %}
-    <script>console.log('Patient', {{ patient | dump | safe }});</script>
+  {% if child %}
+    <script>console.log('Child', {{ child | dump | safe }});</script>
   {% endif %}
   {% if vaccinationRecord %}
     <script>console.log('Vaccination record', {{ vaccinationRecord | dump | safe }});</script>

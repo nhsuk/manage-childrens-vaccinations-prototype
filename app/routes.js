@@ -21,9 +21,9 @@ campaignRoutes(router)
 
 const hasAnyOfflineChanges = (campaigns) => {
   return Object.values(campaigns)
-    .map(c => c.patients)
+    .map(c => c.children)
     .flat()
-    .some(patient => patient.seen.isOffline)
+    .some(child => child.seen.isOffline)
 }
 
 router.get('/dashboard', (req, res, next) => {
@@ -46,11 +46,11 @@ router.get('/go-online', (req, res) => {
   const campaigns = req.session.data.campaigns
   if (hasAnyOfflineChanges(campaigns)) {
     Object.values(campaigns)
-      .map(c => c.patients)
+      .map(c => c.children)
       .flat()
-      .filter(patient => patient.seen.isOffline)
-      .forEach(patient => {
-        patient.seen.isOffline = false
+      .filter(child => child.seen.isOffline)
+      .forEach(child => {
+        child.seen.isOffline = false
       })
 
     req.session.offlineUploaded = true

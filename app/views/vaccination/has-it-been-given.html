@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Was " + patient.fullName + " given the " + type + " vaccine?" %}
+{% set title = "Was " + child.fullName + " given the " + type + " vaccine?" %}
 
 {% block form %}
   {% set where %}
@@ -18,7 +18,7 @@
         { text: "Left buttock" },
         { text: "Right buttock" }
       ],
-      decorate: [dataLocation, campaign.id, patient.nhsNumber, "where"]
+      decorate: [dataLocation, campaign.id, child.nhsNumber, "where"]
     }) }}
   {% endset %}
 
@@ -40,6 +40,6 @@
       text: "No, they did not get the vaccine",
       value: "No"
     }],
-    decorate: [dataLocation, campaign.id, patient.nhsNumber, "given"]
+    decorate: [dataLocation, campaign.id, child.nhsNumber, "given"]
   }) }}
 {% endblock %}

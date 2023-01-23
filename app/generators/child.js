@@ -18,8 +18,8 @@ const yearGroup = (dob) => {
   // TODO
 }
 
-const preferredName = (patient) => {
-  return `${patient.firstName} ${faker.name.lastName()}`
+const preferredName = (child) => {
+  return `${child.firstName} ${faker.name.lastName()}`
 }
 
 const consent = (type) => {
@@ -37,20 +37,20 @@ const consent = (type) => {
   return { [type]: true }
 }
 
-export const patient = (options) => {
+export const child = (options) => {
   const isChild = true
-  const p = person(faker, isChild)
-  p.dob = faker.date.birthdate({ min: options.minAge, max: options.maxAge, mode: 'age' })
-  p.age = age(p.dob)
-  p.preferredName = faker.helpers.maybe(() => preferredName(p), { probability: 0.1 })
-  p.yearGroup = yearGroup(p.dob)
-  p.nhsNumber = faker.phone.number('##########')
-  p.gp = 'Local GP'
-  p.screening = 'Approved for vaccination'
-  p.contraindications = false
-  p.parentOrGuardian = parentOrGuardian(faker, p.lastName)
-  p.consent = consent(options.type)
-  p.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
+  const c = person(faker, isChild)
+  c.dob = faker.date.birthdate({ min: options.minAge, max: options.maxAge, mode: 'age' })
+  c.age = age(c.dob)
+  c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
+  c.yearGroup = yearGroup(c.dob)
+  c.nhsNumber = faker.phone.number('##########')
+  c.gp = 'Local GP'
+  c.screening = 'Approved for vaccination'
+  c.contraindications = false
+  c.parentOrGuardian = parentOrGuardian(faker, c.lastName)
+  c.consent = consent(options.type)
+  c.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
 
-  return p
+  return c
 }

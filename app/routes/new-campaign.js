@@ -48,7 +48,7 @@ export const newCampaignRoutes = router => {
     campaign.location = tempCampaign.where
     campaign.date = `${isoDateFromDateInput(tempCampaign['session-date'])}T${time}`
     campaign.type = tempCampaign.which
-    campaign.patients = []
+    campaign.children = []
     campaign.title = `${tempCampaign.which} campaign at ${tempCampaign.where}`
     campaign.school = {
       urn: 123456,

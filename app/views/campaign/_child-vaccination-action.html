@@ -1,8 +1,8 @@
 {% set wasGiven3in1MenACWY %}
-  {% if not patient.consent.both %}
-    {% set consentSlug %}{{ '3-in-1' if patient.consent['3-in-1'] else 'men-acwy' }}{% endset %}
-    {% set consentFor %}{{ '3-in-1' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
-    {% set warningConsentFor %}{{ 'the 3-in-1 booster' if patient.consent['3-in-1'] else 'MenACWY' }}{% endset %}
+  {% if not child.consent.both %}
+    {% set consentSlug %}{{ '3-in-1' if child.consent['3-in-1'] else 'men-acwy' }}{% endset %}
+    {% set consentFor %}{{ '3-in-1' if child.consent['3-in-1'] else 'MenACWY' }}{% endset %}
+    {% set warningConsentFor %}{{ 'the 3-in-1 booster' if child.consent['3-in-1'] else 'MenACWY' }}{% endset %}
 
     {{ warningCallout({
       heading: "Do not give both vaccines",
@@ -12,13 +12,13 @@
 
     {{ button({
       text: 'Record ' + consentFor + ' vaccination',
-      href: '/' + consentSlug + '-vaccination/' + campaign.id + '/' + patient.nhsNumber,
+      href: '/' + consentSlug + '-vaccination/' + campaign.id + '/' + child.nhsNumber,
       classes: 'nhsuk-u-margin-bottom-2'
     }) }}
   {% else %}
     {{ button({
       text: 'Record ' + campaign.type + ' vaccinations',
-      href: '/vaccination/' + campaign.id + '/' + patient.nhsNumber + '/which-first',
+      href: '/vaccination/' + campaign.id + '/' + child.nhsNumber + '/which-first',
       classes: 'nhsuk-u-margin-bottom-2'
     }) }}
   {% endif %}
@@ -41,7 +41,7 @@
         { text: "Left buttock" },
         { text: "Right buttock" }
       ],
-      decorate: ['vaccination', campaign.id, patient.nhsNumber, "where"]
+      decorate: ['vaccination', campaign.id, child.nhsNumber, "where"]
     }) }}
   {% endset %}
 
@@ -60,7 +60,7 @@
       text: "No, they did not get it",
       value: "No"
     }],
-    decorate: ['vaccination', campaign.id, patient.nhsNumber, "given"]
+    decorate: ['vaccination', campaign.id, child.nhsNumber, "given"]
   }) }}
 
   {% set where %}
@@ -79,7 +79,7 @@
         { text: "Left buttock" },
         { text: "Right buttock" }
       ],
-      decorate: ['vaccination', campaign.id, patient.nhsNumber, "where"]
+      decorate: ['vaccination', campaign.id, child.nhsNumber, "where"]
     }) }}
   {% endset %}
 

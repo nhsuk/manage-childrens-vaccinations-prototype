@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = patient.fullName %}
+{% set title = child.fullName %}
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 
 {% block pageNavigation %}
@@ -32,7 +32,7 @@
           {% include 'campaign/_child-details.html' %}
           {% include 'campaign/_child-health-notes.html' %}
 
-          {% if patient.seen.text == 'Not yet' %}
+          {% if child.seen.text == 'Not yet' %}
             {% include 'campaign/_child-vaccination-action.html' %}
           {% else %}
             {% include 'campaign/_child-vaccination-recorded.html' %}
