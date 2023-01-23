@@ -14,9 +14,13 @@
             }) }}
           {% endif %}
 
-          <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
+          <h1 class="nhsuk-heading-xl{% if not isOffline %} nhsuk-u-margin-bottom-2{% endif %}">{{ title | noOrphans | safe }}</h1>
 
-          <a href="/campaign/new/start" class="nhsuk-button">Add session</a>
+          {% if not isOffline %}
+            <p>
+              <a href="/campaign/new/start">Add a session</a>
+            </p>
+          {% endif %}
 
           <h2 class="nhsuk-heading-l">Flu campaign</h2>
           <table class="nhsuk-table">
