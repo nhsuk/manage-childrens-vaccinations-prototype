@@ -21,11 +21,6 @@ export default {
       name: 'Go offline',
       description: 'Simulate being offline'
     },
-    showOfflineFeatures: {
-      on: true,
-      name: 'Display offline features',
-      description: 'Hide and show features that relate to being online or offline'
-    },
     validation: {
       on: false,
       name: 'Form validation',
