@@ -2,9 +2,6 @@ import _ from 'lodash'
 import { vaccination } from '../wizards/vaccination.js'
 
 export const campaignRoutes = router => {
-  /**
-   * Example routes to demonstrate using wizard helper.
-   */
   router.all([
     '/campaign/:campaignId',
     '/campaign/:campaignId/*'

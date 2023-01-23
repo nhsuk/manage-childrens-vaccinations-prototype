@@ -1,9 +1,6 @@
 import { daySetup } from '../wizards/day-setup.js'
 
 export const daySetupRoutes = router => {
-  /**
-   * Example routes to demonstrate using wizard helper.
-   */
   router.all([
     '/day-setup',
     '/day-setup/:view'
