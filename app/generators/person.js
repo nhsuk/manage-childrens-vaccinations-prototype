@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 const getChildNames = (sex) => {
-  return fs.readFileSync(`app/generators/${sex === 'Female' ? 'girls' : 'boys'}-names.txt`)
+  return fs.readFileSync(`app/generators/data/${sex === 'Female' ? 'girls' : 'boys'}-names.txt`)
     .toString()
     .split('\n')
     .filter(e => String(e).trim())
