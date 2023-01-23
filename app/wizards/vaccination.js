@@ -75,7 +75,7 @@ export function vaccination (req) {
         [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
       },
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
-    [`/campaign/${campaignId}/students?success=${nhsNumber}`]: {}
+    [`/campaign/${campaignId}/children?success=${nhsNumber}`]: {}
   }
 
   return wizard(journey, req)
