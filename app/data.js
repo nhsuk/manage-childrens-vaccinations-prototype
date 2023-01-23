@@ -14,26 +14,12 @@ export default {
     email: 'jane.doe@example.com'
   },
   campaigns: campaigns({ count: 20 }),
-  vaccines: {
-    fluSpray: {
-      type: 'flu',
-      brand: 'Fluenz Tetra',
-      method: 'Nasal spray',
-      batch: 'P100475581',
-      summary: 'Flu (Fluenz Tetra, P100475581)'
-    }
-  },
   // Set feature flags using the `features` key
   features: {
     offline: {
       on: false,
       name: 'Go offline',
       description: 'Simulate being offline'
-    },
-    showOfflineFeatures: {
-      on: true,
-      name: 'Display offline features',
-      description: 'Hide and show features that relate to being online or offline'
     },
     validation: {
       on: false,

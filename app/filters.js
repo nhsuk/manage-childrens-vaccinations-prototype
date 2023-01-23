@@ -27,9 +27,8 @@ export default (env) => {
    */
 
   // example: 7 December 2021
-  filters.dateWithYear = params => {
-    const datetime = DateTime.local(parseInt(params.year), parseInt(params.month), parseInt(params.day))
-    return datetime.toFormat('d MMMM yyyy')
+  filters.dateWithDayOfWeek = params => {
+    return DateTime.fromISO(params).toFormat('EEEE d MMMM yyyy')
   }
 
   // stringify an object

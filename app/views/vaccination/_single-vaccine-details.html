@@ -10,14 +10,14 @@
 {% set batch = vaccine.batches[0] %}
 {% set brand = vaccine.brand + ' (Nasal spray)' if vaccine.isNasal else vaccine.brand + ' (Injection)' %}
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
-{% set basePath = rootPath + campaign.id + '/' + patient.nhsNumber %}
+{% set basePath = rootPath + campaign.id + '/' + child.nhsNumber %}
 
 {{ govukSummaryList({
   classes: "app-u-frutiger app-summary-list--no-bottom-border",
   rows: decorateRows([
     {
       key: 'Child',
-      value: patient.fullName
+      value: child.fullName
     },
     {
       key: "Vaccine",

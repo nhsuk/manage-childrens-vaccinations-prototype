@@ -5,13 +5,13 @@ const getData = (data, keyPath) => {
   return _.get(data, _.toPath(keyPath))
 }
 
-const journeyFor3in1MenAcwy = (req, campaign, patient) => {
+const journeyFor3in1MenAcwy = (req, campaign, child) => {
   const campaignId = campaign.id
-  const nhsNumber = patient.nhsNumber
-  const whichVaccinations = Object.keys(patient.consent).filter(key => {
-    return patient.consent[key] && key !== 'both'
+  const nhsNumber = child.nhsNumber
+  const whichVaccinations = Object.keys(child.consent).filter(key => {
+    return child.consent[key] && key !== 'both'
   })
-  const isBoth = patient.consent.both
+  const isBoth = child.consent.both
 
   let vaccinationOrder = whichVaccinations
   if (isBoth) {
@@ -60,22 +60,22 @@ export function vaccination (req) {
   const campaignId = req.params.campaignId
   const data = req.session.data
   const campaign = data.campaigns[campaignId]
-  const patient = campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
+  const child = campaign.children.find(p => p.nhsNumber === req.params.nhsNumber)
 
   const journey = {
-    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {
+    [`/campaign/${campaignId}/child/${nhsNumber}`]: {
       [`/vaccination/${campaignId}/${nhsNumber}/details`]: {
         data: `vaccination.${campaignId}.${nhsNumber}.given`,
         excludedValue: 'No'
       }
     },
     ...campaign.is3in1MenACWY
-      ? journeyFor3in1MenAcwy(req, campaign, patient)
+      ? journeyFor3in1MenAcwy(req, campaign, child)
       : {
         [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
       },
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
-    [`/campaign/${campaignId}/students?success=${nhsNumber}`]: {}
+    [`/campaign/${campaignId}/children?success=${nhsNumber}`]: {}
   }
 
   return wizard(journey, req)

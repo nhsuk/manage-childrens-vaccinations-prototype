@@ -6,7 +6,7 @@
   rows: decorateRows([
     {
       key: 'Child',
-      value: patient.fullName
+      value: child.fullName
     },
     {
       key: 'Date',
@@ -32,7 +32,7 @@
 }) }}
 
 <h2 class="nhsuk-heading-m">MenACWY vaccination details</h2>
-{% set basePath = '/men-acwy-vaccination/' + campaign.id + '/' + patient.nhsNumber %}
+{% set basePath = '/men-acwy-vaccination/' + campaign.id + '/' + child.nhsNumber %}
 
 {{ govukSummaryList({
   classes: "app-u-frutiger",
@@ -61,7 +61,7 @@
 }) }}
 
 <h2 class="nhsuk-heading-m">3-in-1 vaccination details</h2>
-{% set basePath = '/3-in-1-vaccination/' + campaign.id + '/' + patient.nhsNumber %}
+{% set basePath = '/3-in-1-vaccination/' + campaign.id + '/' + child.nhsNumber %}
 
 {{ govukSummaryList({
   classes: "app-u-frutiger",

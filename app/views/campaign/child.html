@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = patient.fullName %}
+{% set title = child.fullName %}
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 
 {% block pageNavigation %}
@@ -15,7 +15,7 @@
       }
     ],
     text: "Record vaccinations",
-    href: "/campaign/" + campaign.id + "/students"
+    href: "/campaign/" + campaign.id + "/children"
   }) }}
 {% endblock %}
 
@@ -29,13 +29,13 @@
           </h1>
           {% include 'campaign/_available-offline.html' %}
 
-          {% include 'campaign/_patient-details.html' %}
-          {% include 'campaign/_patient-health-notes.html' %}
+          {% include 'campaign/_child-details.html' %}
+          {% include 'campaign/_child-health-notes.html' %}
 
-          {% if patient.seen.text == 'Not yet' %}
-            {% include 'campaign/_patient-vaccination-action.html' %}
+          {% if child.seen.text == 'Not yet' %}
+            {% include 'campaign/_child-vaccination-action.html' %}
           {% else %}
-            {% include 'campaign/_patient-vaccination-recorded.html' %}
+            {% include 'campaign/_child-vaccination-recorded.html' %}
           {% endif %}
         </div>
       </div>

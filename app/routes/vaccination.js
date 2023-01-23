@@ -39,7 +39,7 @@ export const vaccinationRoutes = router => {
     const campaign = data.campaigns[req.params.campaignId]
 
     res.locals.campaign = campaign
-    res.locals.patient = campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
+    res.locals.child = campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
     res.locals.paths = vaccination(req)
     next()
   })
@@ -58,7 +58,7 @@ export const vaccinationRoutes = router => {
   router.all([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
-    res.locals.isMultipleVaccines = res.locals.patient.consent.both
+    res.locals.isMultipleVaccines = res.locals.child.consent.both
     res.locals.isSingleVaccine = !res.locals.isMultipleVaccines
     res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     res.locals.menACWYVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
@@ -88,12 +88,12 @@ export const vaccinationRoutes = router => {
     const vaccineGiven = res.locals.vaccinationRecord.given !== 'No'
 
     if (vaccineGiven) {
-      res.locals.patient.seen = { text: 'Vaccinated', given: vaccineGiven }
+      res.locals.child.seen = { text: 'Vaccinated', given: vaccineGiven }
     } else {
-      res.locals.patient.seen = { text: 'Vaccine not given', given: vaccineGiven }
+      res.locals.child.seen = { text: 'Vaccine not given', given: vaccineGiven }
     }
 
-    res.locals.patient.seen.isOffline = res.locals.isOffline
+    res.locals.child.seen.isOffline = res.locals.isOffline
     next()
   })
 

@@ -1,5 +1,5 @@
 import { school } from './school.js'
-import { patients } from './patients.js'
+import { children } from './children.js'
 import { vaccines } from './vaccines.js'
 import { yearGroups } from './year-groups.js'
 import { faker } from '@faker-js/faker'
@@ -41,6 +41,6 @@ export const campaign = (options) => {
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',
     is3in1MenACWY: type === '3-in-1 and MenACWY',
-    patients: patients({ count: 100, patient: ageRange(type) })
+    children: children({ count: 100, child: ageRange(type) })
   }
 }

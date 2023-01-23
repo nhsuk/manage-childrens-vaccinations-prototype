@@ -13,21 +13,21 @@
     items: [
       {
         text: 'They refused it',
-        value: patient.fullName + ' refused it'
+        value: child.fullName + ' refused it'
       },
       {
         text: 'They were not well enough',
-        value: patient.fullName + ' was not well enough'
+        value: child.fullName + ' was not well enough'
       },
       {
         text: 'They had contraindications',
-        value: patient.fullName + ' had contraindications'
+        value: child.fullName + ' had contraindications'
       },
       {
         text: 'They have already had the vaccine',
-        value: patient.fullName + ' has already had the vaccine'
+        value: child.fullName + ' has already had the vaccine'
       }
     ],
-    decorate: [dataLocation, campaign.id, patient.nhsNumber, "why-not-given"]
+    decorate: [dataLocation, campaign.id, child.nhsNumber, "why-not-given"]
   }) }}
 {% endblock %}

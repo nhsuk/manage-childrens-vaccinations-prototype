@@ -2,9 +2,6 @@ import _ from 'lodash'
 import { vaccination } from '../wizards/vaccination.js'
 
 export const campaignRoutes = router => {
-  /**
-   * Example routes to demonstrate using wizard helper.
-   */
   router.all([
     '/campaign/:campaignId',
     '/campaign/:campaignId/*'
@@ -17,10 +14,10 @@ export const campaignRoutes = router => {
   })
 
   router.all([
-    '/campaign/:campaignId/patient/:nhsNumber',
-    '/campaign/:campaignId/patient/:nhsNumber/*'
+    '/campaign/:campaignId/child/:nhsNumber',
+    '/campaign/:campaignId/child/:nhsNumber/*'
   ], (req, res, next) => {
-    res.locals.patient = res.locals.campaign.patients.find(p => p.nhsNumber === req.params.nhsNumber)
+    res.locals.child = res.locals.campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
     if (res.locals.campaign.is3in1MenACWY) {
       res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
       res.locals.menAcwyVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
@@ -33,7 +30,7 @@ export const campaignRoutes = router => {
   })
 
   router.post([
-    '/campaign/:campaignId/patient/:nhsNumber'
+    '/campaign/:campaignId/child/:nhsNumber'
   ], (req, res) => {
     res.redirect(res.locals.paths.next)
   })
@@ -50,9 +47,9 @@ export const campaignRoutes = router => {
   })
 
   router.all([
-    '/campaign/:campaignId/patient/:nhsNumber'
+    '/campaign/:campaignId/child/:nhsNumber'
   ], (req, res) => {
-    res.render('campaign/patient')
+    res.render('campaign/child')
   })
 
   router.all([

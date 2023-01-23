@@ -120,20 +120,20 @@
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                  {% for patient in campaign.patients %}
+                  {% for child in campaign.children %}
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell">
-                        <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
-                        {% if patient.preferredName %}
-                          <br />Known as: {{ patient.preferredName }}
+                        <a href="/campaign/{{ campaign.id }}/child/{{ child.nhsNumber }}">{{ child.fullName }}</a>
+                        {% if child.preferredName %}
+                          <br />Known as: {{ child.preferredName }}
                         {% endif %}
                       </td>
                       <td class="govuk-table__cell" style="width: 150px">
-                        {{ patient.dob | govukDate('truncate') }}
+                        {{ child.dob | govukDate('truncate') }}
                       </td>
                       <td class="govuk-table__cell">
-                        {% if patient.seen.text != 'Not yet' %}
-                          {% set isOfflineSaved = patient.seen.isOffline %}
+                        {% if child.seen.text != 'Not yet' %}
+                          {% set isOfflineSaved = child.seen.isOffline %}
                           {% set color = "#004281" if isOfflineSaved else '#007f3b' %}
                           {% set tagHtml %}
                             <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
@@ -146,7 +146,7 @@
 
                           {{ tag({
                             html: tagHtml,
-                            classes: 'nhsuk-tag--blue' if patient.seen.isOffline else 'nhsuk-tag--green'
+                            classes: 'nhsuk-tag--blue' if child.seen.isOffline else 'nhsuk-tag--green'
                           }) }}
                         {% endif %}
                       </td>

@@ -1,5 +1,5 @@
 import fs from 'fs'
-const schools = JSON.parse(fs.readFileSync('app/generators/schools_sample.json'))
+const schools = JSON.parse(fs.readFileSync('app/generators/data/schools_sample.json'))
 
 export const school = (faker, type) => {
   let s = faker.helpers.arrayElement(schools)
