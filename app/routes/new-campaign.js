@@ -34,6 +34,37 @@ export const newCampaignRoutes = router => {
   })
 
   router.post([
+    '/campaign/new/:campaignId/check'
+  ], (req, res, next) => {
+    const tempCampaign = res.locals.campaign
+    const time = tempCampaign.time === 'Afternoon' ? '13:00' : '09:00'
+    const campaign = {
+      is3in1MenACWY: tempCampaign.which === '3-in-1 and MenACWY',
+      isFlu: tempCampaign.which === 'Flu',
+      isHPV: tempCampaign.which === 'HPV'
+    }
+
+    campaign.id = tempCampaign.id
+    campaign.location = tempCampaign.where
+    campaign.date = `${isoDateFromDateInput(tempCampaign['session-date'])}T${time}`
+    campaign.type = tempCampaign.which
+    campaign.patients = []
+    campaign.title = `${tempCampaign.which} campaign at ${tempCampaign.where}`
+    campaign.school = {
+      urn: 123456,
+      name: tempCampaign.where
+    }
+
+    campaign.vaccines = vaccines(faker, campaign.type)
+    campaign.yearGroups = yearGroups(campaign.type)
+
+    req.session.data.campaigns[campaign.id] = campaign
+    delete req.session.data['temp-campaign']
+
+    next()
+  })
+
+  router.post([
     '/campaign/new/:campaignId',
     '/campaign/new/:campaignId/*'
   ], (req, res) => {
