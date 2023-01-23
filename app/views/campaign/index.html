@@ -12,6 +12,19 @@
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      {% if success %}
+        {% set html %}
+          <p class="govuk-notification-banner__heading">
+            New session created
+          </p>
+        {% endset %}
+        {{ govukNotificationBanner({
+          html: html,
+          classes: "app-u-frutiger",
+          type: "success"
+        }) }}
+      {% endif %}
+
       <h1 class="nhsuk-heading-l">
         {{ title | noOrphans | safe }}
         <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ campaign.date | govukDate() }} at {{ campaign.date | govukTime }}</span>
