@@ -52,7 +52,7 @@ export const campaignRoutes = router => {
   router.all([
     '/campaign/:campaignId/patient/:nhsNumber'
   ], (req, res) => {
-    res.render('campaign/patient')
+    res.render('campaign/child')
   })
 
   router.all([
