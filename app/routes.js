@@ -1,6 +1,7 @@
 import express from 'express'
 import { vaccinationRoutes } from './routes/vaccination.js'
 import { daySetupRoutes } from './routes/day-setup.js'
+import { newCampaignRoutes } from './routes/new-campaign.js'
 import { campaignRoutes } from './routes/campaign.js'
 
 const router = express.Router()
@@ -15,6 +16,7 @@ router.all('*', (req, res, next) => {
 
 vaccinationRoutes(router)
 daySetupRoutes(router)
+newCampaignRoutes(router)
 campaignRoutes(router)
 
 const hasAnyOfflineChanges = (campaigns) => {

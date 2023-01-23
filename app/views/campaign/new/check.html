@@ -1,0 +1,39 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Check and confirm details" %}
+{% set buttonText = "Confirm" %}
+{% set base = '/campaign/new/' + campaignId %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {{ govukSummaryList({
+    classes: "app-u-frutiger app-summary-list--no-bottom-border",
+    rows: decorateRows([
+      {
+        key: 'Type of session',
+        value: campaign['type-of-session'],
+        href: base
+      },
+      {
+        key: 'School',
+        value: campaign.where,
+        href: "#"
+      },
+      {
+        key: 'Vaccine',
+        value: campaign.which,
+        href: base + "/which"
+      },
+      {
+        key: 'Date',
+        value: campaign['session-date'] | isoDateFromDateInput | govukDate,
+        href: base + "/when"
+      },
+      {
+        key: 'Time',
+        value: campaign['time'],
+        href: "#"
+      }
+    ])
+  }) }}
+{% endblock %}

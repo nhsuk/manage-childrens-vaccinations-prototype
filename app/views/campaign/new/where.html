@@ -1,0 +1,13 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Which school is it at?" %}
+
+{% block form %}
+  {{ input({
+    label: {
+      classes: "nhsuk-label--l",
+      isPageHeading: true,
+      text: title
+    },
+    decorate: ["temp-campaign", "where"]
+  }) }}
+{% endblock %}

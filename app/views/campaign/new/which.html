@@ -1,0 +1,22 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Which routine vaccine is being given?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [{
+      text: "Flu"
+    }, {
+      text: "HPV"
+    }, {
+      text: "3-in-1 and MenACWY"
+    }],
+    decorate: ["temp-campaign", "which"]
+  }) }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "When is the session?" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {{ dateInput({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Date"
+      }
+    },
+    hint: {
+      text: "For example, 27 3 2023"
+    },
+    decorate: ["temp-campaign", "session-date"]
+  }) }}
+
+  {{ radios({
+    formGroup: {
+      classes: "nhsuk-u-margin-top-5"
+    },
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Time"
+      }
+    },
+    items: [{
+      text: "Morning"
+    }, {
+      text: "Afternoon"
+    }, {
+      text: "All day"
+    }],
+    decorate: ["temp-campaign", "time"]
+  }) }}
+{% endblock %}
