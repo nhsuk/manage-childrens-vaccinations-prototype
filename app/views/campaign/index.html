@@ -1,5 +1,6 @@
 {% extends "layouts/default.html" %}
 {% set title = campaign.title %}
+{% set hasChildren = campaign.patients.length > 0 %}
 
 {% block pageNavigation %}
   {{ breadcrumb({
@@ -11,6 +12,19 @@
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      {% if success %}
+        {% set html %}
+          <p class="govuk-notification-banner__heading">
+            New session created
+          </p>
+        {% endset %}
+        {{ govukNotificationBanner({
+          html: html,
+          classes: "app-u-frutiger",
+          type: "success"
+        }) }}
+      {% endif %}
+
       <h1 class="nhsuk-heading-l">
         {{ title | noOrphans | safe }}
         <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ campaign.date | govukDate() }} at {{ campaign.date | govukTime }}</span>
@@ -31,15 +45,24 @@
                 </h2>
                 <p>Check for contraindications and contact parents.</p> -->
 
+                {% if not hasChildren %}
+                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+                    <a href="#">Add children</a>
+                  </h2>
+                  <p>Upload a list of children in this school</p>
+                {% endif %}
+
                 <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                   <a href="#">Manage vaccines</a>
                 </h2>
                 <p>Add or change vaccines, batches and expiry dates.</p>
 
-                <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                  <a href="/campaign/{{ campaign.id }}/students">Record vaccinations</a>
-                </h2>
-                <p>Record vaccinations for children.</p>
+                {% if hasChildren %}
+                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+                    <a href="/campaign/{{ campaign.id }}/students">Record vaccinations</a>
+                  </h2>
+                  <p>Record vaccinations for children.</p>
+                {% endif %}
 
                 <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                   <a href="#">Edit session</a>
@@ -49,7 +72,7 @@
             </div>
           </div>
           <div class="nhsuk-grid-column-one-third">
-            {% if not campaign['available-offline'] %}
+            {% if hasChildren and not campaign['available-offline'] %}
             <div id="save-offline">
               <h2 class="nhsuk-heading-s">Save offline</h2>
               <p>Record vaccinations while not connected to the internet.</p>

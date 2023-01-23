@@ -1,0 +1,28 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "What type of session are you adding?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        isPageHeading: true,
+        text: title
+      }
+    },
+    items: [{
+      text: "A routine session in school"
+    }, {
+      text: "A catch-up session in school"
+    }, {
+      text: "A catch-up clinic"
+    },
+    {
+      divider: "or"
+    },
+    {
+      text: "Something else"
+    }],
+    decorate: ["temp-campaign", "type-of-session"]
+  }) }}
+{% endblock %}
