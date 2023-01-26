@@ -1,5 +1,6 @@
 import { person } from './person.js'
 import { parentOrGuardian } from './parentOrGuardian.js'
+import { DateTime, Interval } from 'luxon'
 import { faker } from '@faker-js/faker'
 faker.locale = 'en_GB'
 
@@ -14,8 +15,29 @@ const age = (dob) => {
   return age
 }
 
+const yearGroupRange = (startYear) => {
+  const startDate = DateTime.fromISO(`${startYear}-09-01`)
+  const endDate = DateTime.fromISO(`${startYear + 1}-08-31`)
+  return {
+    start: startDate.toISO(),
+    end: endDate.toISO(),
+    interval: Interval.fromDateTimes(startDate, endDate)
+  }
+}
+
+const year0 = 2017
+const yearGroups = {}
+for (let i = 0; i < 13; i++) {
+  yearGroups[i] = yearGroupRange(year0 - i)
+}
+
 const yearGroup = (dob) => {
-  // TODO
+  const dobDate = DateTime.fromJSDate(dob)
+  for (const [yearGroup, range] of Object.entries(yearGroups)) {
+    if (range.interval.contains(dobDate)) {
+      return yearGroup
+    }
+  }
 }
 
 const preferredName = (child) => {
@@ -40,13 +62,18 @@ const consent = (type) => {
 export const child = (options) => {
   const isChild = true
   const c = person(faker, isChild)
-  c.dob = faker.date.birthdate({ min: options.minAge, max: options.maxAge, mode: 'age' })
-  c.age = age(c.dob)
+  const dob = faker.date.between(
+    yearGroups[options.maxYearGroup].start,
+    yearGroups[options.minYearGroup].end
+  )
+
   c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
-  c.yearGroup = yearGroup(c.dob)
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
-  c.nhsNumber = faker.phone.number('999 ### ####')
+  c.nhsNumber = faker.phone.number('999#######')
   c.gp = 'Local GP'
+  c.dob = dob
+  c.age = age(dob)
+  c.yearGroup = yearGroup(dob)
   c.screening = 'Approved for vaccination'
   c.contraindications = false
   c.parentOrGuardian = parentOrGuardian(faker, c.lastName)
