@@ -1,5 +1,11 @@
 {% extends "layouts/default.html" %}
-{% set title = "Record vaccinations" %}
+
+{% if filteredYearGroup %}
+  {% set caption = "Record vaccinations" %}
+  {% set title = filteredYearGroup.name %}
+{% else %}
+  {% set title = "Record vaccinations" %}
+{% endif %}
 
 {% block pageNavigation %}
   {{ breadcrumb({
@@ -44,6 +50,7 @@
           {% endif %}
 
           <h1 class="nhsuk-heading-l">
+            {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
             {{ title | noOrphans | safe }}
           </h1>
 
@@ -69,7 +76,15 @@
               <ul class="nhsuk-list">
                 {% for group in campaign.yearGroups %}
                   <li>
-                    <a href="#">{{ group }}</a>
+                    {% if filteredYearGroup.number == group.number %}
+                      <a class="app-u-inherit app-u-text-decoration-none nhsuk-u-font-weight-bold" href="?year={{ group.number }}">
+                        {{ group.name }}
+                      </a>
+                    {% else %}
+                      <a href="?year={{ group.number }}">
+                        {{ group.name }}
+                      </a>
+                    {% endif %}
                   </li>
                 {% endfor %}
               </ul>
@@ -84,19 +99,6 @@
                 </li>
                 <li>
                   <a href="#">Not vaccinated</a>
-                </li>
-              </ul>
-
-              <p class="nhsuk-u-margin-bottom-1">By screening:</p>
-              <ul class="nhsuk-list">
-                <li>
-                  <a href="#">All</a>
-                </li>
-                <li>
-                  <a href="#">Approved</a>
-                </li>
-                <li>
-                  <a href="#">Contraindications</a>
                 </li>
               </ul>
             </div>
@@ -120,7 +122,7 @@
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                  {% for child in campaign.children %}
+                  {% for child in (filteredChildren or campaign.children) %}
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell">
                         <a href="/campaign/{{ campaign.id }}/child/{{ child.nhsNumber }}">{{ child.fullName }}</a>

@@ -14,11 +14,11 @@ const generateRandomString = (length) => {
 const ageRange = (type) => {
   switch (type) {
     case 'Flu':
-      return { minAge: 4, maxAge: 11, type }
+      return { minYearGroup: 0, maxYearGroup: 6, type }
     case 'HPV':
-      return { minAge: 12, maxAge: 14, type }
+      return { minYearGroup: 8, maxYearGroup: 9, type }
     case '3-in-1 and MenACWY':
-      return { minAge: 13, maxAge: 15, type }
+      return { minYearGroup: 9, maxYearGroup: 10, type }
   }
 }
 

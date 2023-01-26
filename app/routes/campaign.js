@@ -14,6 +14,26 @@ export const campaignRoutes = router => {
   })
 
   router.all([
+    '/campaign/:campaignId/children'
+  ], (req, res, next) => {
+    const campaign = res.locals.campaign
+    const year = req.query.year
+    const anyFilters = year
+
+    if (anyFilters) {
+      const children = campaign.children
+      res.locals.filteredYearGroup = campaign.yearGroups.find(y => y.number === parseInt(year))
+      res.locals.filteredChildren = children.filter((c) => {
+        if (year) {
+          return c.yearGroup === year
+        }
+      })
+    }
+
+    next()
+  })
+
+  router.all([
     '/campaign/:campaignId/child/:nhsNumber',
     '/campaign/:campaignId/child/:nhsNumber/*'
   ], (req, res, next) => {
