@@ -44,7 +44,8 @@ export const child = (options) => {
   c.age = age(c.dob)
   c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
   c.yearGroup = yearGroup(c.dob)
-  c.nhsNumber = faker.phone.number('##########')
+  // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
+  c.nhsNumber = faker.phone.number('999 ### ####')
   c.gp = 'Local GP'
   c.screening = 'Approved for vaccination'
   c.contraindications = false
