@@ -1,0 +1,129 @@
+{% extends "layouts/default.html" %}
+{% set title = "Manage vaccines" %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard"
+      }
+    ],
+    text: campaign.title,
+    href: "/campaign/" + campaign.id
+  }) }}
+{% endblock %}
+
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      {% if success %}
+        {% set html %}
+          {% if isOffline %}
+            <p class="govuk-notification-banner__heading">
+              Offline changes saved
+            </p>
+            <p>
+              You will need to go online to sync your changes.
+            </p>
+          {% else %}
+            <p class="govuk-notification-banner__heading">
+              Record saved
+            </p>
+          {% endif %}
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          classes: "app-u-frutiger",
+          type: "success"
+        }) }}
+      {% endif %}
+
+      <h1 class="nhsuk-heading-l">
+        {{ title | noOrphans | safe }}
+      </h1>
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+              {% for vaccine in campaign.vaccines %}
+                <h2 class="nhsuk-heading-m">{{ vaccine.brand }} ({{ vaccine.vaccine }})</h2>
+
+                {% set batchesHtml %}
+                  <ul class="nhsuk-list">
+                    {% for batch in vaccine.batches %}
+                      <li>
+                        {{ batch.name }}<br />
+                        <span class="nhsuk-u-font-size-16">Expires {{ batch.expiry | govukDate }}</span>
+                      </li>
+                    {% endfor %}
+                    <p>
+                      <a href="#">Manage batches</a>
+                    </p>
+                  </ul>
+                {% endset %}
+
+                <table class="govuk-table">
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" style="width: 30%">Batch</th>
+                      <th class="govuk-table__header" style="width: 50%">Expiry</th>
+                      <th class="govuk-table__header"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    {% for batch in vaccine.batches %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">{{ batch.name }}</td>
+                      <td class="govuk-table__cell">{{ batch.expiry | govukDate }}</td>
+                      <td class="govuk-table__cell nhsuk-u-text-align-right">
+                        <a href="#">Remove</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <p>
+                  <a href="#">Add a batch</a><br />
+                  <a href="#">Change vaccine</a>
+                </p>
+
+                <!-- {{ govukSummaryList({
+                  classes: "app-u-frutiger app-summary-list--no-bottom-border",
+                  rows: decorateRows([
+                    {
+                      key: 'Type',
+                      value: vaccine.vaccine
+                    },
+                    {
+                      key: 'Brand',
+                      value: vaccine.brand
+                    },
+                    {
+                      key: 'Method',
+                      value: vaccine.method
+                    },
+                    {
+                      key: 'Batches',
+                      value: {
+                        html: batchesHtml
+                      }
+                    }
+                  ])
+                }) }} -->
+              {% endfor %}
+
+              <p class="nhsuk-u-margin-top-6">
+                <a href="#" class="nhsuk-button">Add another vaccine</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}
