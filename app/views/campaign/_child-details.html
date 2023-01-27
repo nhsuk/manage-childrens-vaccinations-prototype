@@ -56,6 +56,12 @@
           value: child.nhsNumber | formatNHSNumber
         },
         {
+          key: 'Vaccination history',
+          value: {
+            html: '<a href="#">Record available</a>'
+          }
+        },
+        {
           key: child.parentOrGuardian.relationship,
           value: {
             html: child.parentOrGuardian.fullName + parentContactDetailsHtml
