@@ -31,6 +31,13 @@ export default (env) => {
     return DateTime.fromISO(params).toFormat('EEEE d MMMM yyyy')
   }
 
+  filters.formatNHSNumber = nhsNumber => {
+    const numberArray = nhsNumber.split('')
+    numberArray.splice(3, 0, ' ')
+    numberArray.splice(8, 0, ' ')
+    return numberArray.join('')
+  }
+
   // stringify an object
   filters.stringify = obj => {
     return JSON.stringify(obj)
