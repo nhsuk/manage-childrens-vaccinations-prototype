@@ -1,4 +1,5 @@
 import { campaigns } from './generators/campaigns.js'
+import { users } from './generators/users.js'
 
 /**
  * Default values for user session data
@@ -14,6 +15,7 @@ export default {
     email: 'jane.doe@example.com'
   },
   campaigns: campaigns({ count: 20 }),
+  users: users({ count: 20 }),
   // Set feature flags using the `features` key
   features: {
     offline: {
