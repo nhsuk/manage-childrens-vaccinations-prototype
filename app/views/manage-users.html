@@ -13,10 +13,28 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
+          {% if success %}
+            {% set html %}
+              <p class="govuk-notification-banner__heading">
+                Changes saved
+              </p>
+            {% endset %}
+
+            {{ govukNotificationBanner({
+              html: html,
+              classes: "app-u-frutiger",
+              type: "success"
+            }) }}
+          {% endif %}
 
           <h1 class="nhsuk-heading-xl">
             {{ title | noOrphans | safe }}
           </h1>
+
+          {{ button({
+            text: 'Add user',
+            href: '#'
+          }) }}
 
           <table class="nhsuk-table">
             <thead class="nhsuk-table__head">
@@ -26,10 +44,10 @@
               </tr>
             </thead>
             <tbody class="nhsuk-table__body">
-              {% for user in data.users %}
+              {% for id, user in data.users %}
                 <tr class="nhsuk-table__row">
                   <td class="nhsuk-table__cell">
-                    <a href="#">{{ user.fullName }}</a>
+                    <a href="/user/{{ user.id }}">{{ user.fullName }}</a>
                   </td>
                   <td class="nhsuk-table__cell">{{ user.email }}</td>
                 </tr>

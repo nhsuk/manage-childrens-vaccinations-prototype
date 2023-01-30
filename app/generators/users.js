@@ -15,5 +15,10 @@ export const users = options => {
     users.push(p)
   }
 
-  return users.sort((a, b) => a.fullName.localeCompare(b.fullName))
+  return users
+    .sort((a, b) => a.fullName.localeCompare(b.fullName))
+    .reduce((acc, c) => {
+      acc[c.id] = c
+      return acc
+    }, {})
 }
