@@ -4,8 +4,14 @@
 
 {% block pageNavigation %}
   {{ breadcrumb({
-    text: "Home",
-    href: "/dashboard"
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard"
+      }
+    ],
+    text: "Your campaigns",
+    href: "/your-campaigns"
   }) }}
 {% endblock %}
 

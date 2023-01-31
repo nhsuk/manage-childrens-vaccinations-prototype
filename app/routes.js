@@ -3,6 +3,7 @@ import { vaccinationRoutes } from './routes/vaccination.js'
 import { daySetupRoutes } from './routes/day-setup.js'
 import { newCampaignRoutes } from './routes/new-campaign.js'
 import { campaignRoutes } from './routes/campaign.js'
+import { userRoutes } from './routes/user.js'
 import { onlineOfflineRoutes } from './routes/online-offline.js'
 
 const router = express.Router()
@@ -25,6 +26,7 @@ vaccinationRoutes(router)
 daySetupRoutes(router)
 newCampaignRoutes(router)
 campaignRoutes(router)
+userRoutes(router)
 onlineOfflineRoutes(router, hasAnyOfflineChanges)
 
 router.get('/dashboard', (req, res, next) => {

@@ -3,20 +3,12 @@
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 
 {% block pageNavigation %}
-  {{ breadcrumb({
-    items: [
-      {
-        text: "Home",
-        href: "/dashboard"
-      },
-      {
-        text: campaign.title,
-        href: "/campaign/" + campaign.id
-      }
-    ],
-    text: "Record vaccinations",
-    href: "/campaign/" + campaign.id + "/children"
-  }) }}
+  <div class="nhsuk-width-container">
+    {{ backLink({
+      href: "/campaign/" + campaign.id + "/children",
+      classes: "nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-0"
+    }) }}
+  </div>
 {% endblock %}
 
 {% block main %}
