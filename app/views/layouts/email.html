@@ -27,6 +27,18 @@
   </div>
 {% endblock %}
 
-{% block beforeContent %}
+{% block content %}
+  {{ header({
+    service: {
+      name: serviceName,
+      href: "/"
+    },
+    showNav: "false",
+    showSearch: "false",
+    classes: "app-email__header"
+  }) }}
 
+  <div class="app-email__message-content">
+    {% block email %}{% endblock %}
+  </div>
 {% endblock %}

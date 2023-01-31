@@ -18,15 +18,30 @@ $email-width: 650px;
   border-radius: 10px 10px 0 0;
 }
 
-.app-email__header,
+.app-email__header {
+  padding-left: nhsuk-spacing(5);
+  padding-right: nhsuk-spacing(5);
+
+  @include govuk-media-query($until: tablet) {
+    padding-left: govuk-spacing(3);
+    padding-right: govuk-spacing(3);
+  }
+
+  .nhsuk-width-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 .app-email__message {
-  max-width: $email-width - 40px;
+  max-width: $email-width;
+  padding-top: 0;
   margin-left: auto;
   margin-right: auto;
 
   @include govuk-media-query($until: tablet) {
-    margin-left: govuk-spacing(3);
-    margin-right: govuk-spacing(3);
+    margin-left: govuk-spacing(0);
+    margin-right: govuk-spacing(0);
   }
 }
 
@@ -38,6 +53,12 @@ $email-width: 650px;
   :last-child {
     margin-bottom: 0;
   }
+}
+
+.app-email__message-content {
+  margin-top: nhsuk-spacing(5);
+  margin-left: nhsuk-spacing(5);
+  margin-right: nhsuk-spacing(5);
 }
 
 .app-email__metadata {
