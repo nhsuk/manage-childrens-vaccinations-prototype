@@ -13,6 +13,7 @@ $color_app-pale-blue: #ccdff1;
 @import "govuk-prototype-components/x-govuk/all";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+@import "_email.scss";
 @import "_offline.scss";
 
 .app-search {
@@ -23,6 +24,15 @@ $color_app-pale-blue: #ccdff1;
 
   .nhsuk-form-group {
     margin-bottom: 0;
+  }
+}
+
+.app-hidden-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 
