@@ -16,7 +16,7 @@ const hasAnyOfflineChanges = (campaigns) => {
 }
 
 router.all('*', (req, res, next) => {
-  res.locals.success = !!req.query.success
+  res.locals.success = req.query.success
   res.locals.isOffline = req.session.data.features.offline.on
   res.locals.offlineUploaded = req.session.offlineUploaded
   next()

@@ -9,6 +9,20 @@ export const userRoutes = router => {
     next()
   })
 
+  router.get([
+    '/user/new/'
+  ], (req, res) => {
+    res.render('user/new')
+  })
+
+  router.post([
+    '/user/new/'
+  ], (req, res) => {
+    req.session.data.users['123'] = req.session.data.users.new
+    delete req.session.data.users.new
+    res.redirect('/manage-users?success=invited')
+  })
+
   router.all([
     '/user/:userId/'
   ], (req, res) => {

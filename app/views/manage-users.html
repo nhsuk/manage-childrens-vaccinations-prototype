@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = "Manage users" %}
+{% set title = "Manage team" %}
 
 {% block pageNavigation %}
   {{ breadcrumb({
@@ -16,7 +16,11 @@
           {% if success %}
             {% set html %}
               <p class="govuk-notification-banner__heading">
-                Changes saved
+                {% if success == 'invited' %}
+                  <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
+                {% else %}
+                  Changes saved
+                {% endif %}
               </p>
             {% endset %}
 
@@ -32,8 +36,8 @@
           </h1>
 
           {{ button({
-            text: 'Add user',
-            href: '#'
+            text: 'Add team member',
+            href: '/user/new'
           }) }}
 
           <table class="nhsuk-table">
