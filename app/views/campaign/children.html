@@ -96,13 +96,10 @@
               <p class="nhsuk-u-margin-bottom-1">By status:</p>
               <ul class="nhsuk-list">
                 <li>
-                  <a href="#">Vaccinated</a>
+                  <a href="#">Seen</a>
                 </li>
                 <li>
-                  <a href="#">Not yet seen</a>
-                </li>
-                <li>
-                  <a href="#">Not vaccinated</a>
+                  <a href="#">Not seen</a>
                 </li>
               </ul>
             </div>
@@ -117,7 +114,7 @@
                 }) }}
               </div>
 
-              <table class="nhsuk-table">
+              <table class="nhsuk-table" id="children">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header">Name</th>
@@ -175,4 +172,22 @@
       </div>
     </main>
   </div>
+
+  <script>
+    function filterTable() {
+      var inputValue = document.getElementById("search").value.toLowerCase();
+      var rows = document.getElementById("children").querySelectorAll("tbody tr");
+
+      for (var i = 0; i < rows.length; i++) {
+        var nameCell = rows[i].getElementsByTagName("td")[0];
+        var name = nameCell.textContent || nameCell.innerText;
+        if (name.toLowerCase().indexOf(inputValue) > -1) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+    document.getElementById("search").addEventListener("input", filterTable);
+  </script>
 {% endblock %}

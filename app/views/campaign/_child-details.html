@@ -53,7 +53,13 @@
         },
         {
           key: 'NHS Number',
-          value: child.nhsNumber
+          value: child.nhsNumber | formatNHSNumber
+        },
+        {
+          key: 'Vaccination history',
+          value: {
+            html: '<a href="#">Record available</a>'
+          }
         },
         {
           key: child.parentOrGuardian.relationship,
