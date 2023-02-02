@@ -1,8 +1,8 @@
-{% set menACWYVaccineGiven = menACWYVaccinationRecord.given !== 'No' %}
-{% set 3in1VaccineGiven = 3in1VaccinationRecord.given !== 'No' %}
+{% set menACWYVaccineGiven = 'men-acwy' in vaccinationRecord['multi-given'] %}
+{% set 3in1VaccineGiven = '3-in-1' in vaccinationRecord['multi-given'] %}
 
 {{ govukSummaryList({
-  classes: "app-u-frutiger",
+  classes: "app-u-frutiger app-summary-list--no-bottom-border",
   rows: decorateRows([
     {
       key: 'Child',
@@ -31,60 +31,84 @@
   ])
 }) }}
 
-<h2 class="nhsuk-heading-m">MenACWY vaccination details</h2>
+<h2 class="nhsuk-heading-m">MenACWY</h2>
 {% set basePath = '/men-acwy-vaccination/' + campaign.id + '/' + child.nhsNumber %}
+{% set vaccine = campaign.vaccines[1] %}
+{% set batch = vaccine.batches[0] %}
+{% set brand = vaccine.brand + ' (Injection)' %}
 
-{{ govukSummaryList({
-  classes: "app-u-frutiger",
-  rows: decorateRows([
-    {
-      key: 'Vaccine',
-      value: campaign.vaccines[1].summary,
-      href: '#'
-    },
-    {
-      key: 'Vaccine given?',
-      value: menACWYVaccinationRecord.given,
-      href: basePath + '/has-it-been-given'
-    },
-    {
-      key: 'Site',
-      value: menACWYVaccinationRecord.where,
-      href: basePath + '/has-it-been-given'
-    } if menACWYVaccineGiven,
-    {
-      key: 'Reason',
-      value: menACWYVaccinationRecord['why-not-given'],
-      href: basePath + '/not-given'
-    } if not menACWYVaccineGiven
-  ])
-}) }}
+{% if child.consent['men-acwy'] or menACWYVaccineGiven %}
+  {{ govukSummaryList({
+    classes: "app-u-frutiger app-summary-list--no-bottom-border",
+    rows: decorateRows([
+      {
+        key: "Brand",
+        value: brand,
+        href: "#"
+      } if menACWYVaccineGiven,
+      {
+        key: "Batch",
+        value: batch.name + ' (expires ' + (batch.expiry | govukDate('truncate')) + ')',
+        href: "#"
+      } if menACWYVaccineGiven,
+      {
+        key: 'Site',
+        value: vaccinationRecord['where-men-acwy'],
+        href: '#'
+      } if menACWYVaccineGiven,
+      {
+        key: 'Given',
+        value: 'No',
+        href: '#'
+      } if not menACWYVaccineGiven,
+      {
+        key: 'Reason',
+        value: menACWYVaccinationRecord['why-not-given'],
+        href: basePath + '/not-given'
+      } if not menACWYVaccineGiven
+    ])
+  }) }}
+{% else %}
+  <p>Consent not given</p>
+{% endif %}
 
-<h2 class="nhsuk-heading-m">3-in-1 vaccination details</h2>
+<h2 class="nhsuk-heading-m">3-in-1 booster</h2>
 {% set basePath = '/3-in-1-vaccination/' + campaign.id + '/' + child.nhsNumber %}
+{% set vaccine = campaign.vaccines[0] %}
+{% set batch = vaccine.batches[0] %}
+{% set brand = vaccine.brand + ' (Injection)' %}
 
-{{ govukSummaryList({
-  classes: "app-u-frutiger",
-  rows: decorateRows([
-    {
-      key: 'Vaccine',
-      value: campaign.vaccines[0].summary,
-      href: '#'
-    },
-    {
-      key: 'Vaccine given?',
-      value: vaccinationRecord.given,
-      href: basePath + '/has-it-been-given'
-    },
-    {
-      key: 'Site',
-      value: vaccinationRecord.where,
-      href: basePath + '/has-it-been-given'
-    } if 3in1VaccineGiven,
-    {
-      key: 'Reason',
-      value: vaccinationRecord['why-not-given'],
-      href: basePath + '/not-given'
-    } if not 3in1VaccineGiven
-  ])
-}) }}
+{% if child.consent['3-in-1'] or 3in1VaccineGiven %}
+  {{ govukSummaryList({
+    classes: "app-u-frutiger app-summary-list--no-bottom-border",
+    rows: decorateRows([
+      {
+        key: "Brand",
+        value: brand,
+        href: "#"
+      } if 3in1VaccineGiven,
+      {
+        key: "Batch",
+        value: batch.name + ' (expires ' + (batch.expiry | govukDate('truncate')) + ')',
+        href: "#"
+      } if 3in1VaccineGiven,
+      {
+        key: 'Site',
+        value: vaccinationRecord['where-3-in-1'],
+        href: '#'
+      } if 3in1VaccineGiven,
+      {
+        key: 'Given',
+        value: 'No',
+        href: '#'
+      } if not 3in1VaccineGiven,
+      {
+        key: 'Reason',
+        value: 3in1VaccinationRecord['why-not-given'],
+        href: basePath + '/not-given'
+      } if not 3in1VaccineGiven
+    ])
+  }) }}
+{% else %}
+  <p>Consent not given</p>
+{% endif %}
