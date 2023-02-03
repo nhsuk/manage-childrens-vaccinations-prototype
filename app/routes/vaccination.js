@@ -58,11 +58,9 @@ export const vaccinationRoutes = router => {
   router.all([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
-    res.locals.isMultipleVaccines = res.locals.child.consent.both
-    res.locals.isSingleVaccine = !res.locals.isMultipleVaccines
     res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     res.locals.menACWYVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
-    res.locals.vaccinationRecord = res.locals['3in1VaccinationRecord'] || res.locals.menACWYVaccinationRecord || _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     next()
   })
 

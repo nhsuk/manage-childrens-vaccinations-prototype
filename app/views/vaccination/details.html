@@ -6,10 +6,10 @@
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
 
   {% set detailsHtml %}
-    {% if isSingleVaccine %}
-      {% include 'vaccination/_single-vaccine-details.html' %}
-    {% else %}
+    {% if campaign.is3in1MenACWY %}
       {% include 'vaccination/_multiple-vaccine-details.html' %}
+    {% else %}
+      {% include 'vaccination/_single-vaccine-details.html' %}
     {% endif %}
   {% endset %}
 

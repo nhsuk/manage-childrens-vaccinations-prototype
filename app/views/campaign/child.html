@@ -20,12 +20,15 @@
             {{ title | noOrphans | safe }}
           </h1>
           {% include 'campaign/_available-offline.html' %}
-
           {% include 'campaign/_child-details.html' %}
           {% include 'campaign/_child-health-notes.html' %}
 
           {% if child.seen.text == 'Not yet' %}
-            {% include 'campaign/_child-vaccination-action.html' %}
+            {% if campaign.is3in1MenACWY %}
+              {% include 'campaign/_child-action-multi.html' %}
+            {% else %}
+              {% include 'campaign/_child-action.html' %}
+            {% endif %}
           {% else %}
             {% include 'campaign/_child-vaccination-recorded.html' %}
           {% endif %}

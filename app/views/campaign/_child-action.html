@@ -1,0 +1,45 @@
+{% set wasGiven %}
+  {% if campaign.type == "HPV" %}
+    <p>They need their 1st dose.</p>
+  {% endif %}
+
+  {% set where %}
+    {{ radios({
+      items: [
+        { text: "Left arm" },
+        { text: "Right arm" },
+        { text: "Other" }
+      ],
+      classes: "nhsuk-radios--inline",
+      decorate: ["vaccination", campaign.id, child.nhsNumber, "where"]
+    }) }}
+  {% endset %}
+
+  {{ radios({
+    items: [{
+      text: "Yes, they got the " + (campaign.type | lower if campaign.type == 'Flu' else campaign.type) + " vaccine",
+      value: "Yes",
+      conditional: {
+        html: where
+      } if campaign.vaccines[0].method == "Injection"
+    }, {
+      text: "No, they did not get it",
+      value: "No"
+    }],
+    decorate: ['vaccination', campaign.id, child.nhsNumber, "given"]
+  }) }}
+
+  {{ button({
+    text: 'Continue',
+    classes: 'nhsuk-u-margin-bottom-2'
+  }) }}
+{% endset %}
+
+<form method="post">
+  {{ card({
+    heading: "Did they get the vaccine?",
+    headingLevel: "2",
+    headingClasses: "nhsuk-heading-m",
+    description: wasGiven
+  }) }}
+</form>
