@@ -18,6 +18,11 @@ export default {
   users: users({ count: 20 }),
   // Set feature flags using the `features` key
   features: {
+    pilot: {
+      on: false,
+      name: 'Pilot only',
+      description: 'Hide everything not in the pilot'
+    },
     offline: {
       on: false,
       name: 'Go offline',
