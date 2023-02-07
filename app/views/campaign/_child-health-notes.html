@@ -1,28 +1,20 @@
 {% set healthNotes %}
-  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a disease or treatment that severely affects their immune system?</h3>
-  <p>No</p>
-
-  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Does anyone in their household having treatment that severely affects their immune system?</h3>
-  <p>No</p>
-
-  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Have they been diagnosed with asthma?</h3>
-  <p>No</p>
-
-  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Do they have a severe egg allergy?</h3>
-  <p>No</p>
-
-  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">Are they taking aspirin medication?</h3>
-  <p>No</p>
+  {% for question in child.healthQuestions.questions %}
+    <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
+      {{ question.question }}
+    </h3>
+    <p>{{ question.answer }}</p>
+  {% endfor %}
 {% endset %}
 
 {% set healthNotes %}
-  {% if true %}
-    <p>No triage needed</p>
-  {% else %}
+  {% if child.healthQuestions.triageNotes %}
     <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage notes</h2>
-    <p>Notes</p>
+    <p>{{ child.healthQuestions.triageNotes }}</p>
 
     <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Medical history answers</h2>
+  {% else %}
+    <p>No triage needed</p>
   {% endif %}
 
   {{ details({
