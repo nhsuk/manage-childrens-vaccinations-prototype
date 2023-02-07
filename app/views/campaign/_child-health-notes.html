@@ -4,6 +4,9 @@
       {{ question.question }}
     </h3>
     <p>{{ question.answer }}</p>
+    {% if question.details %}
+      <p>{{ question.details }}</p>
+    {% endif %}
   {% endfor %}
 {% endset %}
 
@@ -18,8 +21,11 @@
   {% endif %}
 
   {{ details({
-    "text": "Show answers",
-    "HTML": healthNotes,
+    text: "Show answers",
+    attributes: {
+      open: child.healthQuestions.contraindications
+    },
+    HTML: healthNotes,
     classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
   }) }}
 {% endset %}
