@@ -1,5 +1,6 @@
 import { person } from './person.js'
 import { parentOrGuardian } from './parentOrGuardian.js'
+import { healthQuestions } from './health-questions.js'
 import { DateTime, Interval } from 'luxon'
 import { faker } from '@faker-js/faker'
 faker.locale = 'en_GB'
@@ -74,11 +75,10 @@ export const child = (options) => {
   c.dob = dob
   c.age = age(dob)
   c.yearGroup = yearGroup(dob)
-  c.screening = 'Approved for vaccination'
-  c.contraindications = false
   c.parentOrGuardian = parentOrGuardian(faker, c.lastName)
   c.consent = consent(options.type)
   c.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
+  c.healthQuestions = healthQuestions(options.type)
 
   return c
 }
