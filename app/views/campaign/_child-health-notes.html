@@ -11,9 +11,9 @@
 {% endset %}
 
 {% set healthNotes %}
-  {% if child.healthQuestions.triageNotes %}
+  {% if child.healthQuestions.triage %}
     <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage notes</h2>
-    <p>{{ child.healthQuestions.triageNotes }}</p>
+    <p>{{ child.healthQuestions.triage }}</p>
 
     <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Medical history answers</h2>
   {% else %}
