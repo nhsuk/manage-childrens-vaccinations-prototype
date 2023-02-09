@@ -166,7 +166,7 @@ const realisticAnswers = {
 const enrichWithRealisticAnswers = (faker, type, health) => {
   const triageNeeded = faker.helpers.maybe(() => true, { probability: 0.2 })
   if (!triageNeeded) {
-    return
+    return health
   }
 
   const answer = faker.helpers.objectKey(realisticAnswers)
