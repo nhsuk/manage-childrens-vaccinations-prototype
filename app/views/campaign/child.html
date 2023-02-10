@@ -14,11 +14,12 @@
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <h1 class="nhsuk-heading-l">
+        {{ title | noOrphans | safe }}
+      </h1>
+
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-l">
-            {{ title | noOrphans | safe }}
-          </h1>
           {% include 'campaign/_available-offline.html' %}
           {% include 'campaign/_child-details.html' %}
           {% include 'campaign/_child-health-notes.html' %}
@@ -32,6 +33,26 @@
           {% else %}
             {% include 'campaign/_child-vaccination-recorded.html' %}
           {% endif %}
+
+          <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+              {{ textarea({
+                label: {
+                  text: "Add notes",
+                  classes: "nhsuk-label--m nhsuk-u-margin-bottom-3"
+                },
+                rows: 5,
+                name: "notes",
+                classes: "nhsuk-u-margin-bottom-0",
+                decorate: ["vaccination", campaign.id, child.nhsNumber, "notes"]
+              }) }}
+
+              {{ button({
+                text: "Add notes",
+                classes: "nhsuk-button--secondary"
+              }) }}
+            </div>
+          </div>
         </div>
       </div>
     </main>
