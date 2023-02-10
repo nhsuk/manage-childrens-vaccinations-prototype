@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Check and confirm details" %}
+{% set title = "Check and confirm" %}
 {% set buttonText = "Confirm" %}
 
 {% block form %}
@@ -16,6 +16,24 @@
   <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
     <div class="nhsuk-card__content">
       {{ detailsHtml | safe }}
+    </div>
+  </div>
+
+  <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-3">
+    <div class="nhsuk-card__content">
+      {{ textarea({
+        label: {
+          text: "Add notes",
+          classes: "nhsuk-label--m nhsuk-u-margin-bottom-3"
+        },
+        hint: {
+          text: "For example, if the child had a reaction to the vaccine"
+        },
+        rows: 5,
+        name: "notes",
+        classes: "nhsuk-u-margin-bottom-0",
+        decorate: ["vaccination", campaign.id, child.nhsNumber, "notes"]
+      }) }}
     </div>
   </div>
 {% endblock %}
