@@ -28,14 +28,14 @@
   {% endif %}
 
   {% if offlineUploaded %}
-    <div class="app-changes-synced-indicator">
+    <div class="app-changes-synced-indicator nhsuk-u-padding-top-9 nhsuk-u-padding-bottom-9">
       <div class="nhsuk-width-container">
         <div class="nhsuk-grid-row">
           <div class="nhsuk-grid-column-two-thirds">
-            <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+            <!-- <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
               <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#fff"></path>
-            </svg>
-            <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-22 nhsuk-u-padding-left-1">Your offline changes have been saved successfully</span>
+            </svg> -->
+            <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-48 nhsuk-u-padding-left-1">Your offline changes have been saved successfully</span>
             <div class="nhsuk-u-margin-top-2">
               <a href="/dismiss-upload" class="app-u-inherit">Hide this message</a>
             </div>
@@ -61,23 +61,45 @@
 {% endblock %}
 
 {% block footer %}
-  {{ footer({
-    links: [
-      {
-        label: "Clear session data",
-        URL: "/clear-session-data"
-      } if useAutoStoreData, {
-        label: "Feature flags",
-        URL: "/feature-flags"
-      }, {
-        label: "Go offline",
-        URL: "/go-offline"
-      } if data.features.offline.on == false else {
-        label: "Go online",
-        URL: "/go-online"
-      }
-    ]
-  }) }}
+  <footer role="contentinfo">
+    <div class="nhsuk-footer" id="nhsuk-footer">
+      <div class="nhsuk-width-container">
+        <h2 class="nhsuk-u-visually-hidden">Scenario links</h2>
+        <ul class="nhsuk-footer__list nhsuk-u-margin-bottom-6">
+          <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="/scenario-office">Scenario 1</a>
+          </li>
+          <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="/scenario-offline">Scenario 2</a>
+          </li>
+          <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="/scenario-back-online">Scenario 3</a>
+          </li>
+        </ul>
+
+        <h2 class="nhsuk-u-visually-hidden">Support links</h2>
+        <ul class="nhsuk-footer__list">
+          <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="/clear-session-data">Clear session data</a>
+          </li>
+          <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="/feature-flags">Feature flags</a>
+          </li>
+          {% if data.features.offline.on === false %}
+            <li class="nhsuk-footer__list-item">
+              <a class="nhsuk-footer__list-item-link" href="/go-offline">Go offline</a>
+            </li>
+          {% else %}
+            <li class="nhsuk-footer__list-item">
+              <a class="nhsuk-footer__list-item-link" href="/go-online">Go online</a>
+            </li>
+          {% endif %}
+        </ul>
+
+        <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
+      </div>
+    </div>
+  </footer>
 {% endblock %}
 
 {% block bodyEnd %}
