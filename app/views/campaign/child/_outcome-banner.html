@@ -1,0 +1,47 @@
+{% set outcome = child.outcome %}
+{% set consent = child.consent[campaign.type] %}
+
+{% if outcome == 'Vaccinated' %}
+  {% set icon = 'tick' %}
+  {% set color = 'green' %}
+{% elif outcome == 'No consent' %}
+  {% set icon = 'cross' %}
+  {% set color = 'red' %}
+  {% set outcomeText = 'Not vaccinated' %}
+{% elif outcome == 'Could not vaccinate' %}
+  {% set icon = 'cross' %}
+  {% set color = 'orange' %}
+{% endif %}
+
+{% if consent == 'Yes' %}
+  {% set consentText %}
+    Consent was given by {{ child.parentOrGuardian.relationship | lower }}
+  {% endset %}
+{% elif consent == 'No' %}
+  {% set consentText %}
+    Consent was refused by the {{ child.parentOrGuardian.relationship | lower }}
+  {% endset %}
+{% elif consent == 'Unknown' %}
+  {% set consentText %}
+    No response to consent request
+  {% endset %}
+{% endif %}
+
+{% if vaccinationRecord['why-not-given'] %}
+  {% set reasonText %}
+    {{ vaccinationRecord['why-not-given'] }}<br>
+  {% endset %}
+{% endif %}
+
+<div class="app-consent-banner app-consent-banner--{{ color }} nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
+  <span class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
+    {% if icon %}
+      {{ appIcon({ type: icon }) }}
+    {% endif %}
+    {{ outcomeText or outcome }}
+  </span>
+  <p class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-1">
+    {{ reasonText | safe }}
+    {{ consentText }}
+  </p>
+</div>

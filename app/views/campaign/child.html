@@ -26,10 +26,14 @@
         <div class="nhsuk-grid-column-two-thirds">
           {% include 'campaign/_available-offline.html' %}
 
-          {% if campaign.is3in1MenACWY %}
-            {% include 'campaign/child/_consent-banner-3-in-1.html' %}
+          {% if child.outcome == 'Not yet seen' %}
+            {% if campaign.is3in1MenACWY %}
+              {% include 'campaign/child/_consent-banner-3-in-1.html' %}
+            {% else %}
+              {% include 'campaign/child/_consent-banner.html' %}
+            {% endif %}
           {% else %}
-            {% include 'campaign/child/_consent-banner.html' %}
+            {% include 'campaign/child/_outcome-banner.html' %}
           {% endif %}
 
           {% include 'campaign/child/_details.html' %}
@@ -38,7 +42,7 @@
             {% include 'campaign/child/_health-notes.html' %}
           {% endif %}
 
-          {% if child.seen.text == 'Not yet' %}
+          {% if child.outcome == 'Not yet seen' %}
             {% if isUnknown or refused %}
                 {% include 'campaign/child/_action-get-consent.html' %}
             {% elseif campaign.is3in1MenACWY %}

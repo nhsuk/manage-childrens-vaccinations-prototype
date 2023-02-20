@@ -1,18 +1,26 @@
-.app-consent-status {
+.app-consent-banner {
   padding: nhsuk-spacing(3) nhsuk-spacing(5);
+
+  .nhsuk-icon__tick,
+  .nhsuk-icon__cross {
+    vertical-align: bottom;
+  }
 
   &--green {
     color: #004c23;
+    border: 1px solid #004c23;
     background-color: #cce5d8;
   }
 
   &--red {
     color: #6b140e;
+    border: 1px solid #6b140e;
     background-color: #f7d4d1;
   }
 
-  &--amber {
+  &--orange {
     color: #4d3708;
+    border: 1px solid #4d3708;
     background-color: #ffdc8e;
   }
 }
