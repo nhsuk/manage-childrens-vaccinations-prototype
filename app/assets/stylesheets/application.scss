@@ -86,3 +86,22 @@ $color_app-pale-blue: #ccdff1;
     background-color: $color_nhsuk-blue;
   }
 }
+
+.app-consent-status {
+  padding: nhsuk-spacing(3) nhsuk-spacing(5);
+
+  &--green {
+    color: #004c23;
+    background-color: #cce5d8;
+  }
+
+  &--red {
+    color: #6b140e;
+    background-color: #f7d4d1;
+  }
+
+  &--amber {
+    color: #4d3708;
+    background-color: #ffdc8e;
+  }
+}
