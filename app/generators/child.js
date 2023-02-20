@@ -1,5 +1,5 @@
 import { person } from './person.js'
-import { parentOrGuardian } from './parentOrGuardian.js'
+import { parent } from './parent.js'
 import { healthQuestions } from './health-questions.js'
 import { DateTime, Interval } from 'luxon'
 import { faker } from '@faker-js/faker'
@@ -93,7 +93,7 @@ export const child = (options) => {
   c.dob = dob
   c.age = age(dob)
   c.yearGroup = yearGroup(dob)
-  c.parentOrGuardian = parentOrGuardian(faker, c.lastName)
+  c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consentObj
   c.outcome = 'Not yet seen'
   c.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
