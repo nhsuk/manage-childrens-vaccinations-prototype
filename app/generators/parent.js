@@ -1,6 +1,6 @@
 import { person } from './person.js'
 
-export const parentOrGuardian = (faker, lastName) => {
+export const parent = (faker, lastName) => {
   const relationship = faker.helpers.arrayElement(['Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Guardian', 'Carer'])
 
   // Do not match name if guardian or carer
