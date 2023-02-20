@@ -1,23 +1,23 @@
-{% if child.consent[campaign.type] == 'Yes' %}
-<div class="app-consent-status app-consent-status--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
+{% set consent = child.consent[campaign.type] %}
+{% if consent == 'Yes' %}
+  {% set color = 'green' %}
+  {% set text %}
     Consent given by {{ child.parentOrGuardian.relationship | lower }}
-  </h2>
-</div>
-{% endif %}
-
-{% if child.consent[campaign.type] == 'No' %}
-<div class="app-consent-status app-consent-status--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
+  {% endset %}
+{% elif consent == 'No' %}
+  {% set color = 'red' %}
+  {% set text %}
     Consent refused by {{ child.parentOrGuardian.relationship | lower }}
-  </h2>
-</div>
+  {% endset %}
+{% elif consent == 'Unknown' %}
+  {% set color = 'orange' %}
+  {% set text %}
+    No response to consent request
+  {% endset %}
 {% endif %}
 
-{% if child.consent[campaign.type] == 'Unknown' %}
-<div class="app-consent-status app-consent-status--amber nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
-    No response to consent request
-  </h2>
+<div class="app-consent-banner app-consent-banner--{{ color }} nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
+  <span class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
+    {{ text }}
+  </span>
 </div>
-{% endif %}

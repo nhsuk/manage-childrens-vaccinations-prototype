@@ -15,7 +15,7 @@ $color_app-pale-blue: #ccdff1;
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
 @import "_email.scss";
 @import "_offline.scss";
-@import "components/_consent-status.scss";
+@import "components/_consent-banner.scss";
 @import "components/_outcome-tag.scss";
 
 .app-scenario {
@@ -82,4 +82,8 @@ $color_app-pale-blue: #ccdff1;
   .govuk-notification-banner__header {
     background-color: $color_nhsuk-blue;
   }
+}
+
+.app-children-table td {
+  vertical-align: middle;
 }

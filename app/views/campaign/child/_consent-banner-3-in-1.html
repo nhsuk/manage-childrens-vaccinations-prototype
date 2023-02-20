@@ -1,18 +1,18 @@
 {% if child.consent[campaign.type].unknown %}
-<div class="app-consent-status app-consent-status--amber nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
+<div class="app-consent-banner app-consent-banner--orange nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
   <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
     No response to consent request
   </h2>
 </div>
 {% else %}
   {% if child.consent['men-acwy'] == 'Yes' %}
-  <div class="app-consent-status app-consent-status--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
+  <div class="app-consent-banner app-consent-banner--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
     <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
       MenACWY consent given by {{ child.parentOrGuardian.relationship | lower }}
     </h2>
   </div>
   {% else %}
-  <div class="app-consent-status app-consent-status--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
+  <div class="app-consent-banner app-consent-banner--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
     <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
       MenACWY consent refused by {{ child.parentOrGuardian.relationship | lower }}
     </h2>
@@ -20,13 +20,13 @@
   {% endif %}
 
   {% if child.consent['3-in-1'] == 'Yes' %}
-  <div class="app-consent-status app-consent-status--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
+  <div class="app-consent-banner app-consent-banner--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
     <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
       3 in 1 consent given by {{ child.parentOrGuardian.relationship | lower }}
     </h2>
   </div>
   {% else %}
-  <div class="app-consent-status app-consent-status--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
+  <div class="app-consent-banner app-consent-banner--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
     <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
       3 in 1 consent refused by {{ child.parentOrGuardian.relationship | lower }}
     </h2>
