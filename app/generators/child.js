@@ -96,7 +96,7 @@ export const child = (options) => {
   c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consentObj
   c.outcome = 'Not yet seen'
-  c.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
+  c.seen = {}
   c.healthQuestions = healthQuestions(faker, options.type)
 
   return c

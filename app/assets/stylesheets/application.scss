@@ -15,6 +15,8 @@ $color_app-pale-blue: #ccdff1;
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
 @import "_email.scss";
 @import "_offline.scss";
+@import "components/_consent-status.scss";
+@import "components/_outcome-tag.scss";
 
 .app-search {
   background: $color_nhsuk-grey-5;
@@ -70,34 +72,10 @@ $color_app-pale-blue: #ccdff1;
   }
 }
 
-.app-icon-small {
-  width: 24px;
-  height: 24px;
-}
-
 .app-notification-banner {
   border-color: $color_nhsuk-blue;
 
   .govuk-notification-banner__header {
     background-color: $color_nhsuk-blue;
-  }
-}
-
-.app-consent-status {
-  padding: nhsuk-spacing(3) nhsuk-spacing(5);
-
-  &--green {
-    color: #004c23;
-    background-color: #cce5d8;
-  }
-
-  &--red {
-    color: #6b140e;
-    background-color: #f7d4d1;
-  }
-
-  &--amber {
-    color: #4d3708;
-    background-color: #ffdc8e;
   }
 }
