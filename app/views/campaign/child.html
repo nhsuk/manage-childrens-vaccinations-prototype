@@ -32,22 +32,22 @@
             {% include 'campaign/child/_consent-banner.html' %}
           {% endif %}
 
-          {% include 'campaign/_child-details.html' %}
+          {% include 'campaign/child/_details.html' %}
 
           {% if consented %}
-            {% include 'campaign/_child-health-notes.html' %}
+            {% include 'campaign/child/_health-notes.html' %}
           {% endif %}
 
           {% if child.seen.text == 'Not yet' %}
             {% if isUnknown or refused %}
                 {% include 'campaign/_child-action-get-consent.html' %}
             {% elseif campaign.is3in1MenACWY %}
-              {% include 'campaign/_child-action-multi.html' %}
+              {% include 'campaign/child/_action-vaccinate-3-in-1.html' %}
             {% else %}
-              {% include 'campaign/_child-action.html' %}
+              {% include 'campaign/child/_action-vaccinate.html' %}
             {% endif %}
           {% else %}
-            {% include 'campaign/_child-vaccination-recorded.html' %}
+            {% include 'campaign/child/_vaccination-recorded.html' %}
           {% endif %}
 
           <div class="nhsuk-card">
