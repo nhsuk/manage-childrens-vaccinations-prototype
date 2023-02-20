@@ -1,0 +1,43 @@
+{% if noConsent %}
+  {% set html %}
+  {% if isOffline %}
+    <p class="govuk-notification-banner__heading">
+      Offline changes saved
+    </p>
+    <p>
+      You will need to go online to sync your changes.
+    </p>
+  {% else %}
+    <p class="govuk-notification-banner__heading">
+      Outcome saved
+    </p>
+  {% endif %}
+  {% endset %}
+
+  {{ govukNotificationBanner({
+  html: html,
+  classes: "app-u-frutiger",
+  type: "success"
+  }) }}
+{% elseif success %}
+  {% set html %}
+    {% if isOffline %}
+      <p class="govuk-notification-banner__heading">
+        Offline changes saved
+      </p>
+      <p>
+        You will need to go online to sync your changes.
+      </p>
+    {% else %}
+      <p class="govuk-notification-banner__heading">
+        Record saved
+      </p>
+    {% endif %}
+  {% endset %}
+
+  {{ govukNotificationBanner({
+    html: html,
+    classes: "app-u-frutiger",
+    type: "success"
+  }) }}
+{% endif %}

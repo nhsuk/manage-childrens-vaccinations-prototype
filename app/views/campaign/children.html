@@ -30,28 +30,7 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-          {% if success %}
-            {% set html %}
-              {% if isOffline %}
-                <p class="govuk-notification-banner__heading">
-                  Offline changes saved
-                </p>
-                <p>
-                  You will need to go online to sync your changes.
-                </p>
-              {% else %}
-                <p class="govuk-notification-banner__heading">
-                  Record saved
-                </p>
-              {% endif %}
-            {% endset %}
-
-            {{ govukNotificationBanner({
-              html: html,
-              classes: "app-u-frutiger",
-              type: "success"
-            }) }}
-          {% endif %}
+          {% include 'campaign/_children-banner.html' %}
 
           <h1 class="nhsuk-heading-l">
             {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}

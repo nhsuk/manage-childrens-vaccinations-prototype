@@ -40,7 +40,7 @@
 
           {% if child.seen.text == 'Not yet' %}
             {% if isUnknown or refused %}
-                {% include 'campaign/_child-action-get-consent.html' %}
+                {% include 'campaign/child/_action-get-consent.html' %}
             {% elseif campaign.is3in1MenACWY %}
               {% include 'campaign/child/_action-vaccinate-3-in-1.html' %}
             {% else %}
