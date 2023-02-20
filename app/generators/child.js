@@ -95,7 +95,7 @@ export const child = (options) => {
   c.yearGroup = yearGroup(dob)
   c.parentOrGuardian = parentOrGuardian(faker, c.lastName)
   c.consent = consentObj
-  c.outcome = ''
+  c.outcome = 'Not yet seen'
   c.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
   c.healthQuestions = healthQuestions(faker, options.type)
 

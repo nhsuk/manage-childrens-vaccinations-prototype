@@ -78,7 +78,7 @@ export const campaignRoutes = router => {
       const nhsNumber = req.query.noConsent
       const campaign = req.session.data.campaigns[req.params.campaignId]
       const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
-      child.outcome = 'No consent to vaccinate'
+      child.outcome = 'No consent'
     }
     next()
   })
