@@ -46,23 +46,41 @@ const preferredName = (child) => {
 }
 
 const consent = (type) => {
-  switch (type) {
-    case '3-in-1 and MenACWY':
-      return faker.helpers.arrayElement(
-        [
-          { '3-in-1': true, 'men-acwy': true, both: true },
-          { '3-in-1': false, 'men-acwy': true, both: false },
-          { '3-in-1': true, 'men-acwy': false, both: false }
-        ]
-      )
+  if (type === '3-in-1 and MenACWY') {
+    const yes = { '3-in-1': 'Yes', 'men-acwy': 'Yes', both: true, text: 'Yes', responded: true }
+    const no = { '3-in-1': 'No', 'men-acwy': 'No', refusedBoth: true, text: 'No', responded: true }
+    const unknown = { '3-in-1': 'Unknown', 'men-acwy': 'Unknown', unknown: true, text: 'Unknown', responded: false }
+
+    return faker.helpers.arrayElement(
+      [
+        yes,
+        yes,
+        yes,
+        yes,
+        yes,
+        { '3-in-1': 'No', 'men-acwy': 'Yes', text: 'Only MenACWY', responded: true },
+        { '3-in-1': 'Yes', 'men-acwy': 'No', text: 'Only 3-in-1', responded: true },
+        unknown,
+        unknown,
+        unknown,
+        no,
+        no
+      ]
+    )
   }
 
-  return { [type]: true }
+  const r = faker.helpers.arrayElement(['Yes', 'Yes', 'Yes', 'Yes', 'Unknown', 'Unknown', 'Unknown', 'No'])
+  return {
+    [type]: r,
+    responded: r !== 'Unknown'
+  }
 }
 
 export const child = (options) => {
   const isChild = true
   const c = person(faker, isChild)
+  const consentObj = consent(options.type)
+
   const dob = faker.date.between(
     yearGroups[options.maxYearGroup].start,
     yearGroups[options.minYearGroup].end
@@ -76,7 +94,8 @@ export const child = (options) => {
   c.age = age(dob)
   c.yearGroup = yearGroup(dob)
   c.parentOrGuardian = parentOrGuardian(faker, c.lastName)
-  c.consent = consent(options.type)
+  c.consent = consentObj
+  c.outcome = ''
   c.seen = { text: 'Not yet', classes: 'nhsuk-tag--grey' }
   c.healthQuestions = healthQuestions(faker, options.type)
 

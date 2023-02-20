@@ -1,16 +1,8 @@
-{% set consentValue %}
-  <b>3-in-1</b><br />
-  {{ 'Parental consent' if child.consent['3-in-1'] else 'No consent' }}
-  <br />
-  <p class="nhsuk-u-margin-top-2">
-    <b>MenACWY</b>
-    <br />
-    {{ 'Parental consent' if child.consent['men-acwy'] else 'No consent' }}
-  </p>
-{% endset %}
-
 <div class="nhsuk-card">
   <div class="nhsuk-card__content">
+    <h2 class="nhsuk-card__heading nhsuk-heading-m">
+      Child details
+    </h2>
     {% set parentContactDetailsHtml %}
       <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
         Telephone: {{ child.parentOrGuardian.telephone }}<br />
@@ -45,37 +37,25 @@
           value: {
             html: addressHtml
           }
-        },
-        {
-          key: 'Consent given',
-          value: {
-            html: 'Yes, by parent<br />(electronic consent)'
-          }
-        } if not campaign.is3in1MenACWY,
-        {
-          key: 'Consent',
-          value: {
-            html: consentValue
-          }
-        } if campaign.is3in1MenACWY,
+        } if responded,
         {
           key: 'GP',
           value: child.gp
-        },
+        } if responded,
         {
           key: 'NHS Number',
           value: child.nhsNumber | formatNHSNumber
-        },
+        } if responded,
         {
           key: 'Vaccination history',
           value: {
             html: '<a href="#">Record available</a>'
           }
-        },
+        } if responded,
         {
           key: child.parentOrGuardian.relationship,
           value: {
-            html: child.parentOrGuardian.fullName + parentContactDetailsHtml
+            html: child.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
           }
         }
       ])

@@ -86,8 +86,10 @@ export const vaccinationRoutes = router => {
     const vaccineGiven = res.locals.vaccinationRecord.given !== 'No'
 
     if (vaccineGiven) {
+      res.locals.child.outcome = 'Vaccinated'
       res.locals.child.seen = { text: 'Vaccinated', given: vaccineGiven }
     } else {
+      res.locals.child.outcome = 'Could not vaccinate'
       res.locals.child.seen = { text: 'Vaccine not given', given: vaccineGiven }
     }
 
