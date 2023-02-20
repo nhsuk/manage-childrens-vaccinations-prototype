@@ -1,6 +1,10 @@
 {% extends "layouts/default.html" %}
 {% set title = child.fullName %}
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
+{% set isUnknown = child.consent.unknown or child.consent[campaign.type] == 'Unknown' %}
+{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == 'No' %}
+{% set consented = not refused and not isUnknown %}
+{% set responded = consented or refused %}
 
 {% block pageNavigation %}
   <div class="nhsuk-width-container">
@@ -21,11 +25,23 @@
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
           {% include 'campaign/_available-offline.html' %}
+
+          {% if campaign.is3in1MenACWY %}
+            {% include 'campaign/_child-consent-3-in-1.html' %}
+          {% else %}
+            {% include 'campaign/_child-consent.html' %}
+          {% endif %}
+
           {% include 'campaign/_child-details.html' %}
-          {% include 'campaign/_child-health-notes.html' %}
+
+          {% if consented %}
+            {% include 'campaign/_child-health-notes.html' %}
+          {% endif %}
 
           {% if child.seen.text == 'Not yet' %}
-            {% if campaign.is3in1MenACWY %}
+            {% if isUnknown or refused %}
+                {% include 'campaign/_child-action-get-consent.html' %}
+            {% elseif campaign.is3in1MenACWY %}
               {% include 'campaign/_child-action-multi.html' %}
             {% else %}
               {% include 'campaign/_child-action.html' %}

@@ -1,6 +1,6 @@
 {% if not child.consent.both %}
   {% set warningConsentFor %}
-    {{ 'the 3-in-1 booster' if child.consent['3-in-1'] else 'MenACWY' }}
+    {{ 'the 3-in-1 booster' if child.consent['3-in-1'] == 'Yes' else 'MenACWY' }}
   {% endset %}
   {{ warningCallout({
     heading: "Do not give both vaccines",
