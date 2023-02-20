@@ -24,9 +24,7 @@ export const campaignRoutes = router => {
       const children = campaign.children
       res.locals.filteredYearGroup = campaign.yearGroups.find(y => y.number === parseInt(year))
       res.locals.filteredChildren = children.filter((c) => {
-        if (year) {
-          return c.yearGroup === year
-        }
+        return c.yearGroup === year
       })
     }
 
@@ -70,6 +68,19 @@ export const campaignRoutes = router => {
     '/campaign/:campaignId/child/:nhsNumber'
   ], (req, res) => {
     res.render('campaign/child')
+  })
+
+  router.all([
+    '/campaign/:campaignId/children'
+  ], (req, res, next) => {
+    if (req.query.noConsent) {
+      res.locals.noConsent = req.query.noConsent
+      const nhsNumber = req.query.noConsent
+      const campaign = req.session.data.campaigns[req.params.campaignId]
+      const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
+      child.outcome = 'No consent to vaccinate'
+    }
+    next()
   })
 
   router.all([

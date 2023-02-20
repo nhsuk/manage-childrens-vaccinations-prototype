@@ -1,0 +1,29 @@
+{% set getConsent %}
+  {{ radios({
+    items: [{
+      text: "Yes, I am contacting a parent or guardian",
+      value: "Yes"
+    }, {
+      text: "Yes, I am assessing Gillick competence",
+      value: "Yes"
+    } if not (campaign.type == 'Flu'), {
+      text: "No",
+      value: "No"
+    }],
+    decorate: ['vaccination', campaign.id, child.nhsNumber, 'get-consent']
+  }) }}
+
+  {{ button({
+    text: 'Continue',
+    classes: 'nhsuk-u-margin-bottom-2'
+  }) }}
+{% endset %}
+
+<form method="post">
+  {{ card({
+    heading: "Are you attempting to get consent?",
+    headingLevel: "2",
+    headingClasses: "nhsuk-heading-m",
+    description: getConsent
+  }) }}
+</form>
