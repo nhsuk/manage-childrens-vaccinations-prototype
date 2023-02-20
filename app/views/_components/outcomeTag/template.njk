@@ -1,0 +1,25 @@
+{%- from "_components/icon/macro.njk" import appIcon -%}
+{% if outcome == 'Vaccinated' %}
+  {% set icon = 'tick' %}
+  {% set color = 'green' %}
+{% elif outcome == 'No consent' %}
+  {% set icon = 'cross' %}
+  {% set color = 'red' %}
+{% elif outcome == 'Could not vaccinate' %}
+  {% set icon = 'cross' %}
+  {% set color = 'orange' %}
+{% elif outcome == 'Not yet seen' %}
+  {% set color = 'white' %}
+{% endif %}
+
+<div
+  class="app-outcome-tag nhsuk-tag nhsuk-tag--{{ color }}"
+  style="width: 100%"
+>
+  {% if icon %}
+    {{ appIcon({ type: icon }) }}
+  {% endif %}
+  <b class="nhsuk-u-font-size-16">
+    {{ outcome }}
+  </b>
+</div>
