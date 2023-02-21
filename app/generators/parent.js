@@ -6,10 +6,11 @@ export const parent = (faker, lastName) => {
   // Do not match name if guardian or carer
   // 3 out of 4 parents with same surname as child
   const lastNameToUse = relationship === 'Parent' ? faker.helpers.arrayElement([lastName, lastName, lastName, false]) : false
-
   const p = person(faker, false, lastNameToUse)
+  const parent = p.sex === 'Female' ? 'Mum' : 'Dad'
+
   p.telephone = faker.phone.number('07#########')
-  p.relationship = relationship
+  p.relationship = relationship === 'Parent' ? parent : relationship
   p.email = faker.internet.email(p.firstName, p.lastName)
 
   return p
