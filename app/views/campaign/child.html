@@ -52,7 +52,23 @@
             {% else %}
               {% include 'campaign/child/_action-vaccinate.html' %}
             {% endif %}
-          {% else %}
+
+            {# {% set absentHtml %}
+              {{ button({
+                text: 'Mark as absent',
+                classes: 'nhsuk-button--secondary nhsuk-u-margin-bottom-2'
+              }) }}
+            {% endset %}
+
+            <form method="post">
+              {{ card({
+                heading: "Are they absent?",
+                headingLevel: "2",
+                headingClasses: "nhsuk-heading-m",
+                description: absentHtml
+              }) }}
+            </form> #}
+          {% elif child.outcome == 'Vaccinated' %}
             {% include 'campaign/child/_vaccination-recorded.html' %}
           {% endif %}
 
