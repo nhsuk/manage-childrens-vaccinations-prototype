@@ -15,15 +15,15 @@
 
 {% if consent == 'Yes' %}
   {% set consentText %}
-    Consent was given by {{ child.parentOrGuardian.relationship | lower }}
+    Their {{ child.parentOrGuardian.relationship | lower }} gave consent
   {% endset %}
 {% elif consent == 'No' %}
   {% set consentText %}
-    Consent was refused by the {{ child.parentOrGuardian.relationship | lower }}
+    Their {{ child.parentOrGuardian.relationship | lower }} refused to give consent
   {% endset %}
 {% elif consent == 'Unknown' %}
   {% set consentText %}
-    No response to consent request
+    No-one responded to our requests for consent
   {% endset %}
 {% endif %}
 

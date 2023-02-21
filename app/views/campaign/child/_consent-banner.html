@@ -2,17 +2,17 @@
 {% if consent == 'Yes' %}
   {% set color = 'green' %}
   {% set text %}
-    Consent given by {{ child.parentOrGuardian.relationship | lower }}
+    Their {{ child.parentOrGuardian.relationship | lower }} has given consent
   {% endset %}
 {% elif consent == 'No' %}
   {% set color = 'red' %}
   {% set text %}
-    Consent refused by {{ child.parentOrGuardian.relationship | lower }}
+    Their {{ child.parentOrGuardian.relationship | lower }} has refused to give consent
   {% endset %}
 {% elif consent == 'Unknown' %}
   {% set color = 'orange' %}
   {% set text %}
-    No response to consent request
+    No-one responded to our requests for consent
   {% endset %}
 {% endif %}
 
