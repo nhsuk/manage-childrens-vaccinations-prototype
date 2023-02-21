@@ -13,11 +13,11 @@
   {% set color = 'orange' %}
 {% endif %}
 
-{% if consent == 'Yes' %}
+{% if consent == 'Given' %}
   {% set consentText %}
     Their {{ child.parentOrGuardian.relationship | lower }} gave consent
   {% endset %}
-{% elif consent == 'No' %}
+{% elif consent == 'Refused' %}
   {% set consentText %}
     Their {{ child.parentOrGuardian.relationship | lower }} refused to give consent
   {% endset %}
