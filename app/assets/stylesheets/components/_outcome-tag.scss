@@ -1,4 +1,6 @@
 .app-outcome-tag {
+  border-width: 0 0 0 3px;
+
   .nhsuk-icon {
     width: 24px;
     height: 24px;
@@ -10,5 +12,11 @@
 
   .nhsuk-icon__cross {
     vertical-align: bottom;
+  }
+
+  &.nhsuk-tag--white {
+    opacity: 0.5;
+    border-width: 1px;
+    border-style: dashed;
   }
 }

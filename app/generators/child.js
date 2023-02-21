@@ -47,8 +47,8 @@ const preferredName = (child) => {
 
 const consent = (type) => {
   if (type === '3-in-1 and MenACWY') {
-    const yes = { '3-in-1': 'Yes', 'men-acwy': 'Yes', both: true, text: 'Yes', responded: true }
-    const no = { '3-in-1': 'No', 'men-acwy': 'No', refusedBoth: true, text: 'No', responded: true }
+    const yes = { '3-in-1': 'Given', 'men-acwy': 'Given', both: true, text: 'Given', responded: true }
+    const no = { '3-in-1': 'Refused', 'men-acwy': 'Refused', refusedBoth: true, text: 'Refused', responded: true }
     const unknown = { '3-in-1': 'Unknown', 'men-acwy': 'Unknown', unknown: true, text: 'Unknown', responded: false }
 
     return faker.helpers.arrayElement(
@@ -58,8 +58,8 @@ const consent = (type) => {
         yes,
         yes,
         yes,
-        { '3-in-1': 'No', 'men-acwy': 'Yes', text: 'Only MenACWY', responded: true },
-        { '3-in-1': 'Yes', 'men-acwy': 'No', text: 'Only 3-in-1', responded: true },
+        { '3-in-1': 'Refused', 'men-acwy': 'Given', text: 'Only MenACWY', responded: true },
+        { '3-in-1': 'Given', 'men-acwy': 'Refused', text: 'Only 3-in-1', responded: true },
         unknown,
         unknown,
         unknown,
@@ -69,7 +69,7 @@ const consent = (type) => {
     )
   }
 
-  const r = faker.helpers.arrayElement(['Yes', 'Yes', 'Yes', 'Yes', 'Unknown', 'Unknown', 'Unknown', 'No'])
+  const r = faker.helpers.arrayElement(['Given', 'Given', 'Given', 'Given', 'Unknown', 'Unknown', 'Unknown', 'Refused'])
   return {
     [type]: r,
     responded: r !== 'Unknown'
@@ -95,7 +95,7 @@ export const child = (options) => {
   c.yearGroup = yearGroup(dob)
   c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consentObj
-  c.outcome = 'Not yet seen'
+  c.outcome = 'No outcome yet'
   c.seen = {}
   c.healthQuestions = healthQuestions(faker, options.type)
 
