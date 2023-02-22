@@ -46,4 +46,9 @@ router.get('/go/record-vaccinations', (req, res) => {
   res.redirect(`/campaign/${campaignId}/children`)
 })
 
+router.get('/go/in-progress', (req, res) => {
+  const campaignId = Object.values(req.session.data.campaigns).find(c => c.inProgress).id
+  res.redirect(`/campaign/${campaignId}/children`)
+})
+
 export default router
