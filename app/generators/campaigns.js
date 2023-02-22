@@ -1,4 +1,5 @@
 import { campaign } from './campaign.js'
+import { campaignInProgress } from './campaign-in-progress.js'
 import { DateTime } from 'luxon'
 
 export const campaigns = options => {
@@ -9,6 +10,8 @@ export const campaigns = options => {
     const c = campaign(options.campaign)
     campaigns.push(c)
   }
+
+  campaigns.push(campaignInProgress(options.campaign))
 
   return campaigns
     .sort((a, b) => DateTime.fromISO(a.date).valueOf() - DateTime.fromISO(b.date).valueOf())
