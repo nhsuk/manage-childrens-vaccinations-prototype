@@ -8,7 +8,7 @@ faker.locale = 'en_GB'
 
 const generateRandomString = (length) => {
   length = length || 3
-  return Math.random().toString(36).substr(2, length).toUpperCase()
+  return Math.random().toString(36).slice(2, 2 + length).toUpperCase()
 }
 
 const ageRange = (type) => {
@@ -23,7 +23,8 @@ const ageRange = (type) => {
 }
 
 export const campaign = (options) => {
-  const type = faker.helpers.arrayElement(['Flu', 'HPV', '3-in-1 and MenACWY'])
+  // const type = faker.helpers.arrayElement(['Flu', 'HPV', '3-in-1 and MenACWY'])
+  const type = 'HPV'
   const vaccinesObject = vaccines(faker, type)
   const schoolObject = school(faker, type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])

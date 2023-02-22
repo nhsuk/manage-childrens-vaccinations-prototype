@@ -29,20 +29,26 @@
             </p>
           {% endif %}
 
-          <h2 class="nhsuk-heading-l">Flu campaign</h2>
+          {% if hasFluCampaigns %}
+            <h2 class="nhsuk-heading-l">Flu campaign</h2>
 
-          {% set type = 'Flu' %}
-          {% include '_sessions-table.html' %}
+            {% set type = 'Flu' %}
+            {% include '_sessions-table.html' %}
+          {% endif %}
 
-          <h2 class="nhsuk-heading-l">HPV campaign</h2>
+          {% if hasHPVCampaigns %}
+            <h2 class="nhsuk-heading-l">HPV campaign</h2>
 
-          {% set type = 'HPV' %}
-          {% include '_sessions-table.html' %}
+            {% set type = 'HPV' %}
+            {% include '_sessions-table.html' %}
+          {% endif %}
 
-          <h2 class="nhsuk-heading-l">3-in-1 and MenACWY campaign</h2>
+          {% if has3in1Campaigns %}
+            <h2 class="nhsuk-heading-l">3-in-1 and MenACWY campaign</h2>
 
-          {% set type = '3-in-1 and MenACWY' %}
-          {% include '_sessions-table.html' %}
+            {% set type = '3-in-1 and MenACWY' %}
+            {% include '_sessions-table.html' %}
+          {% endif %}
         </div>
       </div>
     </main>
