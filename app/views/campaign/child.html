@@ -2,7 +2,7 @@
 {% set title = child.fullName %}
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 {% set isUnknown = child.consent.unknown or child.consent[campaign.type] == 'Unknown' %}
-{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == 'No' %}
+{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == 'Refused' %}
 {% set consented = not refused and not isUnknown %}
 {% set responded = consented or refused %}
 
