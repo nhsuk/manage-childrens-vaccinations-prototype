@@ -86,9 +86,12 @@ export const child = (options) => {
     yearGroups[options.minYearGroup].end
   )
 
+  const postcode = `BS${faker.random.numeric(2)} ${faker.random.numeric(1)}${faker.random.alpha(2)}`.toUpperCase()
+
   c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   c.nhsNumber = faker.phone.number('999#######')
+  c.address = `${faker.random.numeric(3)} ${faker.address.street()}<br>Bristol<br>${postcode}`
   c.gp = 'Local GP'
   c.dob = dob
   c.age = age(dob)
