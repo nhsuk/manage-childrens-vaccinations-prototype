@@ -51,7 +51,6 @@
             </div>
           {% endif %}
 
-          {% set listOfPeople %}
           <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-one-quarter">
               {{ input({
@@ -142,15 +141,6 @@
               </table>
             </div>
           </div>
-          {% endset %}
-
-          {{ card({
-            "heading": "Children",
-            "headingLevel": "2",
-            "headingClasses": "nhsuk-heading-m",
-            "description": listOfPeople,
-            "classes": "nhsuk-u-margin-bottom-0"
-          }) }}
         </div>
       </div>
     </main>

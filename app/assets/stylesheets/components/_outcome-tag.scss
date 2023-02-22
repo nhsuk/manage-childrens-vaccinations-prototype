@@ -1,5 +1,6 @@
 .app-outcome-tag {
   border-width: 0 0 0 3px;
+  font-weight: bold;
 
   .nhsuk-icon {
     width: 24px;
@@ -15,7 +16,8 @@
   }
 
   &.nhsuk-tag--white {
-    opacity: 0.5;
+    background: none;
+    font-weight: normal;
     border-width: 1px;
     border-style: dashed;
   }
