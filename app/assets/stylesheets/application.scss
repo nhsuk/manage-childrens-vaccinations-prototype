@@ -84,6 +84,12 @@ $color_app-pale-blue: #ccdff1;
   }
 }
 
-.app-children-table td {
-  vertical-align: middle;
+.app-children-table {
+  .govuk-table__header {
+    padding-top: 0;
+  }
+
+  td {
+    vertical-align: middle;
+  }
 }
