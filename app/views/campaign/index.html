@@ -42,40 +42,35 @@
             <div class="nhsuk-card">
               <div class="nhsuk-card__content">
                 {% if not data.features.pilot.on %}
-                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
                     <a href="#">Send consent requests</a>
                   </h2>
-                  <p>Send vaccination consent requests and reminders to parents.</p>
-
-                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                    <a href="#">Triage consent responses</a>
-                  </h2>
-                  <p>Check for contraindications and contact parents.</p>
                 {% endif %}
 
                 {% if not hasChildren %}
-                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
                     <a href="#">Add children</a>
                   </h2>
                   <p>Upload a list of children in this school</p>
                 {% endif %}
 
-                <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                  <a href="/campaign/{{ campaign.id }}/vaccines">Manage vaccines</a>
-                </h2>
-                <p>Add or change vaccines, batches and expiry dates.</p>
-
                 {% if hasChildren %}
-                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+                    <a href="#">Triage</a>
+                  </h2>
+
+                  <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
                     <a href="/campaign/{{ campaign.id }}/children">Record vaccinations</a>
                   </h2>
-                  <p>Record vaccinations for children.</p>
                 {% endif %}
 
-                <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+                <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+                  <a href="/campaign/{{ campaign.id }}/vaccines">Manage vaccines</a>
+                </h2>
+
+                <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
                   <a href="#">Edit session</a>
                 </h2>
-                <p>Change dates and manage access.</p>
               </div>
             </div>
           </div>

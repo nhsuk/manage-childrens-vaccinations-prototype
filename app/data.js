@@ -19,7 +19,7 @@ export default {
   // Set feature flags using the `features` key
   features: {
     pilot: {
-      on: false,
+      on: true,
       name: 'Pilot only',
       description: 'Hide everything not in the pilot'
     },
