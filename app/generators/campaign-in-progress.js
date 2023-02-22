@@ -3,14 +3,14 @@ import _ from 'lodash'
 import { DateTime } from 'luxon'
 import { faker } from '@faker-js/faker'
 
-const setOutcome = (child, consent) => {
+const outcome = (consent) => {
   if (consent === 'Refused' || consent === 'Unknown') {
-    child.outcome = 'No consent'
+    return 'No consent'
   }
 
   if (consent === 'Given') {
     const couldNotVaccinate = faker.helpers.maybe(() => 'Could not vaccinate', { probability: 0.2 })
-    child.outcome = couldNotVaccinate || 'Vaccinated'
+    return couldNotVaccinate || 'Vaccinated'
   }
 }
 
@@ -21,7 +21,7 @@ export const campaignInProgress = (options) => {
   c.date = DateTime.now().toISODate() + 'T' + '09:00'
 
   _.sampleSize(c.children, 50).forEach(child => {
-    setOutcome(child, child.consent[c.type])
+    child.outcome = outcome(child.consent[c.type])
   })
 
   return c
