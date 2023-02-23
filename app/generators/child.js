@@ -3,7 +3,17 @@ import { parent } from './parent.js'
 import { healthQuestions } from './health-questions.js'
 import { DateTime, Interval } from 'luxon'
 import { faker } from '@faker-js/faker'
+import fs from 'fs'
 faker.locale = 'en_GB'
+
+const gp = () => {
+  const gpSurgeries = fs.readFileSync(`app/generators/data/gp-surgeries.txt`)
+    .toString()
+    .split('\n')
+    .filter(e => String(e).trim())
+
+  return faker.helpers.arrayElement(gpSurgeries)
+}
 
 const age = (dob) => {
   const today = new Date()
@@ -92,7 +102,7 @@ export const child = (options) => {
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   c.nhsNumber = faker.phone.number('999#######')
   c.address = `${faker.random.numeric(3)} ${faker.address.street()}<br>Bristol<br>${postcode}`
-  c.gp = 'Local GP'
+  c.gp = gp()
   c.dob = dob
   c.age = age(dob)
   c.yearGroup = yearGroup(dob)
