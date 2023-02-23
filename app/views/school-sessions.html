@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = "Your campaigns" %}
+{% set title = "School sessions" %}
 
 {% block pageNavigation %}
   {{ breadcrumb({
@@ -30,21 +30,21 @@
           {% endif %}
 
           {% if hasFluCampaigns %}
-            <h2 class="nhsuk-heading-l">Flu campaign</h2>
+            <h2 class="nhsuk-heading-l">Flu</h2>
 
             {% set type = 'Flu' %}
             {% include '_sessions-table.html' %}
           {% endif %}
 
           {% if hasHPVCampaigns %}
-            <h2 class="nhsuk-heading-l">HPV campaign</h2>
+            <h2 class="nhsuk-heading-l">HPV</h2>
 
             {% set type = 'HPV' %}
             {% include '_sessions-table.html' %}
           {% endif %}
 
           {% if has3in1Campaigns %}
-            <h2 class="nhsuk-heading-l">3-in-1 and MenACWY campaign</h2>
+            <h2 class="nhsuk-heading-l">3-in-1 and MenACWY</h2>
 
             {% set type = '3-in-1 and MenACWY' %}
             {% include '_sessions-table.html' %}

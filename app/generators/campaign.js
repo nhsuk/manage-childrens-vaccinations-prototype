@@ -32,7 +32,7 @@ export const campaign = (options) => {
 
   return {
     id: generateRandomString(3),
-    title: `${type} campaign at ${schoolObject.name}`,
+    title: `${type} session at ${schoolObject.name}`,
     location: schoolObject.name,
     date: DateTime.now().plus({ days: daysUntil }).toISODate() + 'T' + atTime,
     type,
