@@ -7,7 +7,7 @@ import fs from 'fs'
 faker.locale = 'en_GB'
 
 const gp = () => {
-  const gpSurgeries = fs.readFileSync(`app/generators/data/gp-surgeries.txt`)
+  const gpSurgeries = fs.readFileSync('app/generators/data/gp-surgeries.txt')
     .toString()
     .split('\n')
     .filter(e => String(e).trim())
