@@ -34,7 +34,7 @@ router.get('/dashboard', (req, res, next) => {
   next()
 })
 
-router.get('/your-campaigns', (req, res, next) => {
+router.get('/school-sessions', (req, res, next) => {
   res.locals.hasFluCampaigns = Object.values(req.session.data.campaigns).some(c => c.type === 'Flu')
   res.locals.hasHPVCampaigns = Object.values(req.session.data.campaigns).some(c => c.type === 'HPV')
   res.locals.has3in1Campaigns = Object.values(req.session.data.campaigns).some(c => c.type === '3-in-1 and MenACWY')
