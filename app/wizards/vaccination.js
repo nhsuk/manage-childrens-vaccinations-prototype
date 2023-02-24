@@ -9,7 +9,7 @@ const journeyForEverythingElse = (data, campaign, child) => {
   const nhsNumber = child.nhsNumber
   const campaignId = campaign.id
   const isUnknown = child.consent.unknown || child.consent[campaign.type] === 'Unknown'
-  const refused = child.consent.refusedBoth || child.consent[campaign.type] === 'No'
+  const refused = child.consent.refusedBoth || child.consent[campaign.type] === 'Refused'
   const hasConsent = !(isUnknown || refused)
   const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
   const askForNoReason = getData(data, `vaccination.${campaignId}.${nhsNumber}.given`) === 'No'
