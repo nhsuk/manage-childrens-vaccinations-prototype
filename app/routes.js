@@ -9,16 +9,34 @@ import { onlineOfflineRoutes } from './routes/online-offline.js'
 const router = express.Router()
 
 const hasAnyOfflineChanges = (campaigns) => {
-  return Object.values(campaigns)
+  const children = Object.values(campaigns)
     .map(c => c.children)
     .flat()
-    .some(child => child.seen.isOffline)
+
+  children.forEach(child => {
+    if (child.seen.isOffline) {
+      child.hadOfflineChanges = true
+    }
+  })
+
+  return children.some(child => child.seen.isOffline)
+}
+
+const offlineChangesCount = (campaigns) => {
+  const offlineCount = Object.values(campaigns)
+    .map(c => c.children)
+    .flat()
+    .reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
+
+  return offlineCount
 }
 
 router.all('*', (req, res, next) => {
   res.locals.success = req.query.success
   res.locals.isOffline = req.session.data.features.offline.on
   res.locals.offlineUploaded = req.session.offlineUploaded
+  res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
+  res.locals.totalOfflineChangesCount = offlineChangesCount(req.session.data.campaigns)
   next()
 })
 

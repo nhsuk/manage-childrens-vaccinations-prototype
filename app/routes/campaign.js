@@ -1,6 +1,11 @@
 import _ from 'lodash'
 import { vaccination } from '../wizards/vaccination.js'
 
+const offlineChangesCount = (campaign) => {
+  const offlineCount = campaign.children.reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
+  return offlineCount
+}
+
 export const campaignRoutes = router => {
   router.all([
     '/campaign/:campaignId',
@@ -10,6 +15,13 @@ export const campaignRoutes = router => {
     const campaign = data.campaigns[req.params.campaignId]
 
     res.locals.campaign = campaign
+    res.locals.campaignOfflineChangesCount = offlineChangesCount(campaign)
+
+    // Will use this flag to show a message after offline changes have synced
+    if (res.locals.campaignOfflineChangesCount > 0) {
+      campaign.hadOfflineChanges = true
+    }
+
     next()
   })
 
@@ -79,6 +91,7 @@ export const campaignRoutes = router => {
       const campaign = req.session.data.campaigns[req.params.campaignId]
       const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
       child.outcome = 'No consent'
+      child.seen.isOffline = res.locals.isOffline
     }
     next()
   })
