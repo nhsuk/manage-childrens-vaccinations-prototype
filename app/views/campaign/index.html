@@ -65,7 +65,7 @@
                 {% endif %}
 
                 <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
-                  <a href="/campaign/{{ campaign.id }}/vaccines">Manage vaccines</a>
+                  <a href="/campaign/{{ campaign.id }}/vaccines">Manage vaccine batches</a>
                 </h2>
 
                 <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
@@ -90,15 +90,31 @@
             {% endif %}
 
             {% if campaign['available-offline'] %}
-            <div id="available-offline">
-              <h2 class="nhsuk-heading-s" style="color: #007f3b">
-                <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-                  <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-                </svg>
-                Available offline
-              </h2>
-              <p>You can record vaccinations while not connected to the internet.</p>
-            </div>
+              <div id="available-offline">
+                <h2 class="nhsuk-heading-s" style="color: #007f3b">
+                  <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                    <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                  </svg>
+                  Available offline
+                </h2>
+                {% if campaignOfflineChangesCount == 0 and not campaign.hadOfflineChanges %}
+                  <p>You can record vaccinations while not connected to the internet.</p>
+                {% endif %}
+              </div>
+
+              {% if campaignOfflineChangesCount == 1 %}
+                <hr class="nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-3" />
+                <h2 class="nhsuk-heading-s">You changed 1 record offline</h2>
+                <p>Your change will automatically sync when you’re back online.</p>
+              {% elif campaignOfflineChangesCount > 1 %}
+                <hr class="nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-3" />
+                <h2 class="nhsuk-heading-s">You changed {{ campaignOfflineChangesCount }} records offline</h2>
+                <p>Your changes will automatically sync when you’re back online.</p>
+              {% elif campaign.hadOfflineChanges and campaignOfflineChangesCount == 0 %}
+                <hr class="nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-3" />
+                <h2 class="nhsuk-heading-s">Your changes were synced</h2>
+                <p>They were synced on {{ 'today' | govukDate }} at {{ 'now' | govukTime }}.</p>
+              {% endif %}
             {% endif %}
           </div>
         </div>
