@@ -1,6 +1,6 @@
-import { campaigns } from './generators/campaigns.js'
-import { vaccinationRecord } from './generators/vaccination-record.js'
-import { users } from './generators/users.js'
+import campaigns from './generators/campaigns.js'
+import vaccinationRecord from './generators/vaccination-record.js'
+import users from './generators/users.js'
 
 /**
  * Default values for user session data

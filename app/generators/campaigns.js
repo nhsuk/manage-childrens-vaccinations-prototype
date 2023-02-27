@@ -1,8 +1,8 @@
-import { campaign } from './campaign.js'
-import { campaignInProgress } from './campaign-in-progress.js'
+import campaign from './campaign.js'
+import campaignInProgress from './campaign-in-progress.js'
 import { DateTime } from 'luxon'
 
-export const campaigns = options => {
+export default (options) => {
   const campaigns = []
   options = options || {}
 

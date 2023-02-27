@@ -1,7 +1,7 @@
 import fs from 'fs'
 const schools = JSON.parse(fs.readFileSync('app/generators/data/schools_sample.json'))
 
-export const school = (faker, type) => {
+export default (faker, type) => {
   let s = faker.helpers.arrayElement(schools)
 
   if (type === 'Flu') {

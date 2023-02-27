@@ -1,7 +1,7 @@
-import { school } from './school.js'
-import { children } from './children.js'
-import { vaccines } from './vaccines.js'
-import { yearGroups } from './year-groups.js'
+import school from './school.js'
+import children from './children.js'
+import vaccines from './vaccines.js'
+import yearGroups from './year-groups.js'
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 faker.locale = 'en_GB'
@@ -22,7 +22,7 @@ const ageRange = (type) => {
   }
 }
 
-export const campaign = (options) => {
+export default () => {
   // const type = faker.helpers.arrayElement(['Flu', 'HPV', '3-in-1 and MenACWY'])
   const type = 'HPV'
   const vaccinesObject = vaccines(faker, type)

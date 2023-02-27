@@ -1,8 +1,8 @@
 import { newCampaignWizard } from '../wizards/new-campaign.js'
 import { isoDateFromDateInput } from 'nhsuk-prototype-rig/lib/filters/date.js'
 import { faker } from '@faker-js/faker'
-import { vaccines } from '../generators/vaccines.js'
-import { yearGroups } from '../generators/year-groups.js'
+import vaccines from '../generators/vaccines.js'
+import yearGroups from '../generators/year-groups.js'
 
 const generateRandomString = (length) => {
   length = length || 3
