@@ -2,6 +2,7 @@ import person from './person.js'
 import parent from './parent.js'
 import address from './address.js'
 import consent from './consent.js'
+import triageStatus from './triage-status.js'
 import gp from './gp.js'
 import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
@@ -29,6 +30,7 @@ export default (options) => {
   c.outcome = 'No outcome yet'
   c.seen = {}
   c.healthQuestions = healthQuestions(faker, options.type)
+  c.triageStatus = triageStatus(c.consent.consented)
 
   return c
 }

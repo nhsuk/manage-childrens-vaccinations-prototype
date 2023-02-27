@@ -1,7 +1,7 @@
 export const TRIAGE = {
   TO_DO: 'To do',
-  CANNOT_TRIAGE_YET: 'Cannot triage yet',
   NEEDS_FOLLOW_UP: 'Needs follow up',
+  CANNOT_TRIAGE_YET: 'Cannot triage yet',
   READY: 'Ready for session',
   DO_NOT_VACCINATE: 'Do not vaccinate'
 }

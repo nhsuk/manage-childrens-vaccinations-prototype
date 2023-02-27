@@ -61,21 +61,11 @@
 
               <p class="nhsuk-u-margin-bottom-1">By triage status</p>
               <ul class="nhsuk-list">
-                <li>
-                  <a href="#">To do</a>
-                </li>
-                <li>
-                  <a href="#">Needs follow up</a>
-                </li>
-                <li>
-                  <a href="#">Cannot triage yet</a>
-                </li>
-                <li>
-                  <a href="#">Ready for session</a>
-                </li>
-                <li>
-                  <a href="#">Do not vaccinate</a>
-                </li>
+                {% for key, item in TRIAGE %}
+                  <li>
+                    <a href="#">{{ item }}</a>
+                  </li>
+                {% endfor %}
               </ul>
 
               <p class="nhsuk-u-margin-bottom-1">By year group</p>
@@ -98,13 +88,13 @@
               <p class="nhsuk-u-margin-bottom-1">By consent</p>
               <ul class="nhsuk-list">
                 <li>
-                  <a href="#">Given</a>
+                  <a href="#">{{ CONSENT.GIVEN }}</a>
                 </li>
                 <li>
-                  <a href="#">Refused</a>
+                  <a href="#">{{ CONSENT.REFUSED }}</a>
                 </li>
                 <li>
-                  <a href="#">Unknown</a>
+                  <a href="#">{{ CONSENT.UNKNOWN }}</a>
                 </li>
               </ul>
             </div>
@@ -130,14 +120,10 @@
                       <td class="govuk-table__cell">
                         {% set nothing = '---' %}
                         {% set consentText = child.consent.text if campaign.is3in1MenACWY else child.consent[campaign.type] %}
-                        {% if consentText == 'Unknown' %}
-                          {{ nothing }}
-                        {% else %}
-                          {{ consentText }}
-                        {% endif %}
+                        {{ nothing if consentText == CONSENT.UNKNOWN else consentText }}
                       </td>
                       <td class="govuk-table__cell">
-                        {% if consentText == 'Given' and child.healthQuestions.hasAnswers %}
+                        {% if consentText == CONSENT.GIVEN and child.healthQuestions.hasAnswers %}
                           Yes
                         {% else %}
                           {{ nothing }}
