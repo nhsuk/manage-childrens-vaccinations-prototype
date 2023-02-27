@@ -1,30 +1,28 @@
-const GIVEN = 'Given'
-const REFUSED = 'Refused'
-const UNKNOWN = 'Unknown'
+import { CONSENT } from '../enums.js'
 
 export default (faker, type) => {
   if (type === '3-in-1 and MenACWY') {
     const yes = {
-      '3-in-1': GIVEN,
-      'men-acwy': GIVEN,
+      '3-in-1': CONSENT.GIVEN,
+      'men-acwy': CONSENT.GIVEN,
+      text: CONSENT.GIVEN,
       both: true,
       consented: true,
-      text: GIVEN,
       responded: true
     }
     const no = {
-      '3-in-1': REFUSED,
-      'men-acwy': REFUSED,
+      '3-in-1': CONSENT.REFUSED,
+      'men-acwy': CONSENT.REFUSED,
+      text: CONSENT.REFUSED,
       refusedBoth: true,
       refused: true,
-      text: REFUSED,
       responded: true
     }
     const unknown = {
-      '3-in-1': UNKNOWN,
-      'men-acwy': UNKNOWN,
+      '3-in-1': CONSENT.UNKNOWN,
+      'men-acwy': CONSENT.UNKNOWN,
+      text: CONSENT.UNKNOWN,
       unknown: true,
-      text: UNKNOWN,
       responded: false
     }
 
@@ -35,8 +33,8 @@ export default (faker, type) => {
         yes,
         yes,
         yes,
-        { '3-in-1': REFUSED, 'men-acwy': GIVEN, text: 'Only MenACWY', responded: true, consented: true },
-        { '3-in-1': GIVEN, 'men-acwy': REFUSED, text: 'Only 3-in-1', responded: true, consented: true },
+        { '3-in-1': CONSENT.REFUSED, 'men-acwy': CONSENT.GIVEN, text: CONSENT.ONLY_MENACWY, responded: true, consented: true },
+        { '3-in-1': CONSENT.GIVEN, 'men-acwy': CONSENT.REFUSED, text: CONSENT.ONLY_3_IN_1, responded: true, consented: true },
         unknown,
         unknown,
         unknown,
@@ -46,11 +44,11 @@ export default (faker, type) => {
     )
   }
 
-  const r = faker.helpers.arrayElement([GIVEN, GIVEN, GIVEN, GIVEN, UNKNOWN, UNKNOWN, UNKNOWN, REFUSED])
+  const r = faker.helpers.arrayElement([CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.UNKNOWN, CONSENT.UNKNOWN, CONSENT.UNKNOWN, CONSENT.REFUSED])
   return {
     [type]: r,
-    refused: r === REFUSED,
-    consented: r === GIVEN,
-    responded: r !== UNKNOWN
+    refused: r === CONSENT.REFUSED,
+    consented: r === CONSENT.GIVEN,
+    responded: r !== CONSENT.UNKNOWN
   }
 }

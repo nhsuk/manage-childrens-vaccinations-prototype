@@ -1,15 +1,12 @@
 import _ from 'lodash'
+import { TRIAGE, CONSENT, OUTCOME } from './enums.js'
 
-/**
- * Prototype specific global functions for use in Nunjucks templates.
- *
- * You can override Prototype Rig globals by creating global methods
- * with the same name.
- *
- * You can delete this file if you don’t need your own globals.
- */
 export default () => {
-  const globals = {}
+  const globals = {
+    TRIAGE,
+    CONSENT,
+    OUTCOME
+  }
 
   /**
    * Add your methods to the globals object below this comment block.
