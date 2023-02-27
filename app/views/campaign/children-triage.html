@@ -1,0 +1,177 @@
+{% extends "layouts/default.html" %}
+
+{% if filteredYearGroup %}
+  {% set caption = "Triage" %}
+  {% set title = filteredYearGroup.name %}
+{% else %}
+  {% set title = "Triage" %}
+{% endif %}
+
+{% block pageNavigation %}
+  {{ breadcrumb({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard"
+      },
+      {
+        text: "School sessions",
+        href: "/school-sessions"
+      }
+    ],
+    text: campaign.title,
+    href: "/campaign/" + campaign.id
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          {% include 'campaign/_children-banner.html' %}
+
+          {% if campaign['available-offline'] %}
+            <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
+          {% endif %}
+
+          <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
+            {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
+            {{ title | noOrphans | safe }}
+          </h1>
+
+          <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-one-quarter">
+              {{ input({
+                label: {
+                  text: 'By name'
+                },
+                decorate: 'search'
+              }) }}
+
+              <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
+              <ul class="nhsuk-list">
+                <li>
+                  <a href="#">Yes</a>
+                </li>
+                <li>
+                  <a href="#">No notes</a>
+                </li>
+              </ul>
+
+              <p class="nhsuk-u-margin-bottom-1">By triage status</p>
+              <ul class="nhsuk-list">
+                <li>
+                  <a href="#">To do</a>
+                </li>
+                <li>
+                  <a href="#">Needs follow up</a>
+                </li>
+                <li>
+                  <a href="#">Cannot triage yet</a>
+                </li>
+                <li>
+                  <a href="#">Ready for session</a>
+                </li>
+                <li>
+                  <a href="#">Do not vaccinate</a>
+                </li>
+              </ul>
+
+              <p class="nhsuk-u-margin-bottom-1">By year group</p>
+              <ul class="nhsuk-list">
+                {% for group in campaign.yearGroups %}
+                  <li>
+                    {% if filteredYearGroup.number == group.number %}
+                      <a class="app-u-inherit app-u-text-decoration-none nhsuk-u-font-weight-bold" href="?year={{ group.number }}">
+                        {{ group.name }}
+                      </a>
+                    {% else %}
+                      <a href="?year={{ group.number }}">
+                        {{ group.name }}
+                      </a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <p class="nhsuk-u-margin-bottom-1">By consent</p>
+              <ul class="nhsuk-list">
+                <li>
+                  <a href="#">Given</a>
+                </li>
+                <li>
+                  <a href="#">Refused</a>
+                </li>
+                <li>
+                  <a href="#">Unknown</a>
+                </li>
+              </ul>
+            </div>
+            <div class="nhsuk-grid-column-three-quarters">
+              <table class="nhsuk-table app-children-table" id="children">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header">Name</th>
+                    <th class="govuk-table__header">Consent</th>
+                    <th class="govuk-table__header">Notes</th>
+                    <th class="govuk-table__header" style="width: 180px">Triage status</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for child in (filteredChildren or campaign.children) %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">
+                        <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
+                        {% if child.preferredName %}
+                          <br />Known as: {{ child.preferredName }}
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {% set nothing = '---' %}
+                        {% set consentText = child.consent.text if campaign.is3in1MenACWY else child.consent[campaign.type] %}
+                        {% if consentText == 'Unknown' %}
+                          {{ nothing }}
+                        {% else %}
+                          {{ consentText }}
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {% if consentText == 'Given' and child.healthQuestions.hasAnswers %}
+                          Yes
+                        {% else %}
+                          {{ nothing }}
+                        {% endif %}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {% include('campaign/_triage-tag.html') %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function filterTable() {
+      var inputValue = document.getElementById("search").value.toLowerCase();
+      var rows = document.getElementById("children").querySelectorAll("tbody tr");
+
+      for (var i = 0; i < rows.length; i++) {
+        var nameCell = rows[i].getElementsByTagName("td")[0];
+        var name = nameCell.textContent || nameCell.innerText;
+        if (name.toLowerCase().indexOf(inputValue) > -1) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+    document.getElementById("search").addEventListener("input", filterTable);
+  </script>
+{% endblock %}

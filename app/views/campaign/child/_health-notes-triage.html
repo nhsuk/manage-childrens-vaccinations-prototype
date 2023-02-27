@@ -1,0 +1,25 @@
+{% set healthNotes %}
+  {% for question in child.healthQuestions.questions %}
+    <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
+      {{ question.question }}
+    </h3>
+
+    <div
+      class="nhsuk-inset-text nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-4"
+      {% if question.answer == 'No' %}style="border-color: #d8dde0"{% endif %}
+    >
+      {% if question.details %}
+        <p>{{ question.answer }} – {{ question.details }}</p>
+      {% else %}
+        <p>{{ question.answer }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endset %}
+
+{{ card({
+  heading: "Medical history",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: healthNotes
+}) }}

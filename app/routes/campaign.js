@@ -45,7 +45,9 @@ export const campaignRoutes = router => {
 
   router.all([
     '/campaign/:campaignId/child/:nhsNumber',
-    '/campaign/:campaignId/child/:nhsNumber/*'
+    '/campaign/:campaignId/child/:nhsNumber/*',
+    '/campaign/:campaignId/child-triage/:nhsNumber/',
+    '/campaign/:campaignId/child-triage/:nhsNumber/*'
   ], (req, res, next) => {
     res.locals.child = res.locals.campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
     if (res.locals.campaign.is3in1MenACWY) {
@@ -80,6 +82,12 @@ export const campaignRoutes = router => {
     '/campaign/:campaignId/child/:nhsNumber'
   ], (req, res) => {
     res.render('campaign/child')
+  })
+
+  router.all([
+    '/campaign/:campaignId/child-triage/:nhsNumber'
+  ], (req, res) => {
+    res.render('campaign/child-triage')
   })
 
   router.all([
