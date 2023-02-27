@@ -47,6 +47,7 @@ export default (faker, type) => {
   const r = faker.helpers.arrayElement([CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.UNKNOWN, CONSENT.UNKNOWN, CONSENT.UNKNOWN, CONSENT.REFUSED])
   return {
     [type]: r,
+    text: r,
     refused: r === CONSENT.REFUSED,
     consented: r === CONSENT.GIVEN,
     responded: r !== CONSENT.UNKNOWN

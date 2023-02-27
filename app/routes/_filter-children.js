@@ -1,4 +1,4 @@
-import { TRIAGE } from '../enums.js'
+import { TRIAGE, OUTCOME, CONSENT } from '../enums.js'
 import _ from 'lodash'
 
 const filters = {
@@ -10,6 +10,16 @@ const filters = {
   'triage-status': (children, triageStatus) => {
     return children.filter((c) => {
       return c.triageStatus === TRIAGE[triageStatus]
+    })
+  },
+  outcome: (children, outcome) => {
+    return children.filter((c) => {
+      return c.outcome === OUTCOME[outcome]
+    })
+  },
+  consent: (children, consent) => {
+    return children.filter((c) => {
+      return c.consent.text === CONSENT[consent]
     })
   }
 }

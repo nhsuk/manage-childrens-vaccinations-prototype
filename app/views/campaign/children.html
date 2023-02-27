@@ -68,22 +68,22 @@
 
               <p class="nhsuk-u-margin-bottom-1">By outcome</p>
               <ul class="nhsuk-list">
-                <li>
-                  <a href="#">No outcome yet</a>
-                </li>
-                <li>
-                  <a href="#">Vaccinated</a>
-                </li>
-                <li>
-                  <a href="#">Not vaccinated</a>
-                </li>
-                <li>
-                  <a href="#">Could not vaccinate</a>
-                </li>
+                {% for key, item in OUTCOME %}
+                  <li>
+                    <a href="?outcome={{ key }}">{{ item }}</a>
+                  </li>
+                {% endfor %}
               </ul>
 
               <p class="nhsuk-u-margin-bottom-1">By consent</p>
               <ul class="nhsuk-list">
+                {% for key, item in CONSENT %}
+                  <li>
+                    <a href="?consent={{ key }}">{{ item }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              {# <ul class="nhsuk-list">
                 <li>
                   <a href="#">{{ CONSENT.GIVEN }}</a>
                 </li>
@@ -93,7 +93,7 @@
                 <li>
                   <a href="#">{{ CONSENT.UNKNOWN }}</a>
                 </li>
-              </ul>
+              </ul> #}
             </div>
             <div class="nhsuk-grid-column-three-quarters">
               <table class="nhsuk-table app-children-table" id="children">

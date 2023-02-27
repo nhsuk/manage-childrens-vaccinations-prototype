@@ -15,8 +15,8 @@ export const CONSENT = {
 }
 
 export const OUTCOME = {
+  NO_OUTCOME_YET: 'No outcome yet',
   VACCINATED: 'Vaccinated',
   NO_CONSENT: 'No consent',
-  COULD_NOT_VACCINATE: 'Could not vaccinate',
-  NO_OUTCOME_YET: 'No outcome yet'
+  COULD_NOT_VACCINATE: 'Could not vaccinate'
 }
