@@ -3,14 +3,14 @@
   {% set icon = 'tick' %}
   {% set color = 'green' %}
 {% elif triageStatus == TRIAGE.CANNOT_TRIAGE_YET %}
-  {% set color = 'grey' %}
+  {% set color = 'white' %}
 {% elif triageStatus == TRIAGE.DO_NOT_VACCINATE %}
   {% set icon = 'cross' %}
   {% set color = 'red' %}
 {% elif triageStatus == TRIAGE.NEEDS_FOLLOW_UP %}
   {% set color = 'blue' %}
 {% elif triageStatus == TRIAGE.TO_DO %}
-  {% set color = 'white' %}
+  {% set color = 'grey' %}
 {% endif %}
 
 <div

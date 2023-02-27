@@ -63,7 +63,7 @@
               <ul class="nhsuk-list">
                 {% for key, item in TRIAGE %}
                   <li>
-                    <a href="#">{{ item }}</a>
+                    <a href="?triage-status={{ key }}">{{ item }}</a>
                   </li>
                 {% endfor %}
               </ul>

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import filterChildren from './_filter-children.js'
 import { vaccination } from '../wizards/vaccination.js'
 
 const offlineChangesCount = (campaign) => {
@@ -26,20 +27,10 @@ export const campaignRoutes = router => {
   })
 
   router.all([
-    '/campaign/:campaignId/children'
+    '/campaign/:campaignId/children',
+    '/campaign/:campaignId/children-triage'
   ], (req, res, next) => {
-    const campaign = res.locals.campaign
-    const year = req.query.year
-    const anyFilters = year
-
-    if (anyFilters) {
-      const children = campaign.children
-      res.locals.filteredYearGroup = campaign.yearGroups.find(y => y.number === parseInt(year))
-      res.locals.filteredChildren = children.filter((c) => {
-        return c.yearGroup === year
-      })
-    }
-
+    res.locals.filteredChildren = filterChildren(req.query, res.locals.campaign.children)
     next()
   })
 
