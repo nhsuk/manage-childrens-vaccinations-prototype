@@ -1,37 +1,37 @@
 export const healthQuestions = (faker, type) => {
   let questions = []
-  const allergy = { id: 'allergy', question: 'Does your child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
-  const medicalConditions = { id: 'medical-conditions', question: 'Does your child have any existing medical conditions?', answer: 'No' }
+  const allergy = { title: 'Allergies', id: 'allergy', question: 'Does your child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
+  const medicalConditions = { title: 'Medical conditions', id: 'medical-conditions', question: 'Does your child have any existing medical conditions?', answer: 'No' }
 
   switch (type) {
     case 'Flu':
       questions = [
-        { id: 'their-immune', question: 'Does your child have a disease or treatment that severely affects their immune system?', answer: 'No' },
-        { id: 'household-immune', question: 'Is anyone in your household having treatment that severely affects their immune system?', answer: 'No' },
-        { id: 'asthma', question: 'Has your child been diagnosed with asthma?', answer: 'No' },
-        { id: 'egg-allergy', question: 'Has your child been admitted to intensive care because of a severe egg allergy?', answer: 'No' }
+        { title: 'Immunity', id: 'their-immune', question: 'Does your child have a disease or treatment that severely affects their immune system?', answer: 'No' },
+        { title: 'Household immunity', id: 'household-immune', question: 'Is anyone in your household having treatment that severely affects their immune system?', answer: 'No' },
+        { title: 'Asthma', id: 'asthma', question: 'Has your child been diagnosed with asthma?', answer: 'No' },
+        { title: 'Egg allergy', id: 'egg-allergy', question: 'Has your child been admitted to intensive care because of a severe egg allergy?', answer: 'No' }
       ]
       break
     case 'HPV':
       questions = [
         allergy,
         medicalConditions,
-        { id: 'medication', question: 'Does your child take any regular medication, excluding contraception?', answer: 'No' }
+        { title: 'Medication', id: 'medication', question: 'Does your child take any regular medication, excluding contraception?', answer: 'No' }
       ]
       break
     case '3-in-1 and MenACWY':
       questions = [
         allergy,
         medicalConditions,
-        { id: 'immunosuppressant', question: 'Does your child take any immunosuppressant medication?', answer: 'No' }
+        { title: 'Immunosuppressant', id: 'immunosuppressant', question: 'Does your child take any immunosuppressant medication?', answer: 'No' }
       ]
       break
   }
 
-  questions.push({ id: 'anything-else', question: 'Is there anything else you think we should know?', answer: 'No' })
+  questions.push({ title: 'Anything else', id: 'anything-else', question: 'Is there anything else you think we should know?', answer: 'No' })
 
   return enrichWithRealisticAnswers(faker, type, {
-    contraindications: false,
+    hasAnswers: false,
     triage: false,
     questions
   })
@@ -174,7 +174,7 @@ const enrichWithRealisticAnswers = (faker, type, health) => {
     if (realisticAnswers[answer][q.id]) {
       q.details = realisticAnswers[answer][q.id]
       q.answer = 'Yes'
-      health.contraindications = true
+      health.hasAnswers = true
       health.triage = realisticAnswers[answer].triage
     }
   })
