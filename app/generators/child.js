@@ -15,16 +15,15 @@ const preferredName = (child) => {
 export const child = (options) => {
   const isChild = true
   const c = person(faker, isChild)
-  const dob = dateOfBirth(faker, options)
 
-  c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   c.nhsNumber = faker.phone.number('999#######')
+  c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
   c.address = address(faker)
   c.gp = gp(faker)
-  c.dob = dob
-  c.age = age(dob)
-  c.yearGroup = yearGroup(dob)
+  c.dob = dateOfBirth(faker, options)
+  c.age = age(c.dob)
+  c.yearGroup = yearGroup(c.dob)
   c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consent(faker, options.type)
   c.outcome = 'No outcome yet'
