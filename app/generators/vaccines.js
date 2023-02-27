@@ -5,7 +5,7 @@ const getBatches = (faker) => {
   const count = faker.datatype.number({ min: 1, max: 3 })
   const prefix = faker.random.alpha({ casing: 'upper', count: 2 })
 
-  for (var i = 0; i < count; i++) {
+  for (let i = 0; i < count; i++) {
     const name = `${prefix}${faker.phone.number('####')}`
     const daysUntilExpiry = faker.datatype.number({ min: 10, max: 50 })
     const expiry = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
@@ -20,7 +20,7 @@ const summarise = (v) => {
   v.summary = `${v.vaccine} (${brand}, ${v.batches[0].name})`
 }
 
-export const vaccines = (faker, type) => {
+export default (faker, type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1107978/Influenza-green-book-chapter19-16September22.pdf
   const fluVaccines = [
     {

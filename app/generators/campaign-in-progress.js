@@ -1,4 +1,4 @@
-import { campaign } from './campaign.js'
+import campaign from './campaign.js'
 import _ from 'lodash'
 import { DateTime } from 'luxon'
 import { faker } from '@faker-js/faker'
@@ -14,7 +14,7 @@ const setOutcome = (child, consent) => {
   }
 }
 
-export const campaignInProgress = (options) => {
+export default (options) => {
   const c = campaign(options)
 
   c.inProgress = true

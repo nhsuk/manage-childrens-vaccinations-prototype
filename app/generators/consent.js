@@ -1,4 +1,4 @@
-export const consent = (faker, type) => {
+export default (faker, type) => {
   if (type === '3-in-1 and MenACWY') {
     const yes = { '3-in-1': 'Given', 'men-acwy': 'Given', both: true, text: 'Given', responded: true }
     const no = { '3-in-1': 'Refused', 'men-acwy': 'Refused', refusedBoth: true, text: 'Refused', responded: true }

@@ -1,4 +1,4 @@
-export const healthQuestions = (faker, type) => {
+export default (faker, type) => {
   let questions = []
   const allergy = { title: 'Allergies', id: 'allergy', question: 'Does your child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
   const medicalConditions = { title: 'Medical conditions', id: 'medical-conditions', question: 'Does your child have any existing medical conditions?', answer: 'No' }
@@ -31,6 +31,7 @@ export const healthQuestions = (faker, type) => {
   questions.push({ title: 'Anything else', id: 'anything-else', question: 'Is there anything else you think we should know?', answer: 'No' })
 
   return enrichWithRealisticAnswers(faker, type, {
+    triageStatus: 'To do',
     hasAnswers: false,
     triage: false,
     questions

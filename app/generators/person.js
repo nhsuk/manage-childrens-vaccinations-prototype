@@ -7,7 +7,7 @@ const getChildNames = (sex) => {
     .filter(e => String(e).trim())
 }
 
-export const person = (faker, isChild, lastName) => {
+export default (faker, isChild, lastName) => {
   const sex = faker.helpers.arrayElement(['Male', 'Female'])
   const firstName = isChild
     ? faker.helpers.arrayElement(getChildNames(sex))

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 
-export const vaccinationRecord = (campaigns) => {
+export default (campaigns) => {
   const campaign = Object.values(campaigns).find(c => c.inProgress)
   const campaignId = campaign.id
   const children = campaign.children

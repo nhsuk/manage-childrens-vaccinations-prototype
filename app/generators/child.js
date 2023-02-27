@@ -1,9 +1,9 @@
-import { person } from './person.js'
-import { parent } from './parent.js'
-import { address } from './address.js'
-import { consent } from './consent.js'
-import { gp } from './gp.js'
-import { healthQuestions } from './health-questions.js'
+import person from './person.js'
+import parent from './parent.js'
+import address from './address.js'
+import consent from './consent.js'
+import gp from './gp.js'
+import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
 import { faker } from '@faker-js/faker'
 faker.locale = 'en_GB'
@@ -12,7 +12,7 @@ const preferredName = (child) => {
   return `${child.firstName} ${faker.name.lastName()}`
 }
 
-export const child = (options) => {
+export default (options) => {
   const isChild = true
   const c = person(faker, isChild)
 

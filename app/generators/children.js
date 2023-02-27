@@ -1,9 +1,9 @@
-import { child } from './child.js'
+import child from './child.js'
 
-export const children = options => {
+export default (options) => {
   const children = []
   options = options || {}
-  for (var i = 0; i < options.count; i++) {
+  for (let i = 0; i < options.count; i++) {
     children.push(child(options.child))
   }
 

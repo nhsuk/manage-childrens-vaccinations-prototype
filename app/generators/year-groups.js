@@ -1,4 +1,4 @@
-export const yearGroups = (type) => {
+export default (type) => {
   switch (type) {
     case 'Flu':
       return [
