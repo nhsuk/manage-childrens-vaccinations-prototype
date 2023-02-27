@@ -32,42 +32,42 @@
 
           <div class="nhsuk-card">
             <div class="nhsuk-card__content">
-              <h2 class="nhsuk-heading-m">Triage</h2>
-              {{ textarea({
-                label: {
-                  text: "Triage notes"
-                },
-                rows: 5,
-                name: "notes",
-                classes: "nhsuk-u-margin-bottom-0",
-                decorate: ["vaccination", campaign.id, child.nhsNumber, "notes"]
-              }) }}
-
-              {{ radios({
-                fieldset: {
-                  legend: {
-                    text: "Triage status"
-                  }
-                },
-                name: "triage",
-                classes: "nhsuk-u-margin-bottom-0",
-                items: [
-                  {
-                    text: "Ready for session"
+              <form method="post" action="/campaign/{{ campaign.id }}/children-triage?success={{ child.nhsNumber }}">
+                <h2 class="nhsuk-heading-m">Triage</h2>
+                {{ textarea({
+                  label: {
+                    text: "Triage notes"
                   },
-                  {
-                    text: "Do not vaccinate"
-                  },
-                  {
-                    text: "Needs follow up"
-                  }
-                ],
-                decorate: ["vaccination", campaign.id, child.nhsNumber, "triage-status"]
-              }) }}
+                  rows: 5,
+                  classes: "nhsuk-u-margin-bottom-0",
+                  decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
+                }) }}
 
-              {{ button({
-                text: "Save triage"
-              }) }}
+                {{ radios({
+                  fieldset: {
+                    legend: {
+                      text: "Triage status"
+                    }
+                  },
+                  classes: "nhsuk-u-margin-bottom-0",
+                  items: [
+                    {
+                      text: TRIAGE.READY
+                    },
+                    {
+                      text: TRIAGE.DO_NOT_VACCINATE
+                    },
+                    {
+                      text: TRIAGE.NEEDS_FOLLOW_UP
+                    }
+                  ],
+                  decorate: ["triage", campaign.id, child.nhsNumber, "status"]
+                }) }}
+
+                {{ button({
+                  text: "Save triage"
+                }) }}
+              </form>
             </div>
           </div>
         </div>

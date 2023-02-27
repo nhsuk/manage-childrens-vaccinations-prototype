@@ -1,21 +1,16 @@
-{% set triageStatus = ['To do', 'Need to follow up', 'Ready for session', 'Do not vaccinate'] | random %}
-
-{% if triageStatus == 'Ready for session' %}
+{% set triageStatus = data.triage[campaign.id][child.nhsNumber].status or child.triageStatus %}
+{% if triageStatus == TRIAGE.READY %}
   {% set icon = 'tick' %}
   {% set color = 'green' %}
-{% elif triageStatus == 'Do not vaccinate' %}
+{% elif triageStatus == TRIAGE.CANNOT_TRIAGE_YET %}
+  {% set color = 'grey' %}
+{% elif triageStatus == TRIAGE.DO_NOT_VACCINATE %}
   {% set icon = 'cross' %}
   {% set color = 'red' %}
-{% elif triageStatus == 'Need to follow up' %}
+{% elif triageStatus == TRIAGE.NEEDS_FOLLOW_UP %}
   {% set color = 'blue' %}
-{% elif triageStatus == 'To do' %}
+{% elif triageStatus == TRIAGE.TO_DO %}
   {% set color = 'white' %}
-{% endif %}
-
-{% if child.consent[campaign.type] == 'Unknown' or child.consent[campaign.type] == 'Refused' %}
-  {% set color = 'grey' %}
-  {% set icon = false %}
-  {% set triageStatus = 'Cannot triage yet' %}
 {% endif %}
 
 <div

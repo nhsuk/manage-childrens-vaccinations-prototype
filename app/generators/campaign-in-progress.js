@@ -2,15 +2,16 @@ import campaign from './campaign.js'
 import _ from 'lodash'
 import { DateTime } from 'luxon'
 import { faker } from '@faker-js/faker'
+import { CONSENT, OUTCOME } from '../enums.js'
 
 const setOutcome = (child, consent) => {
-  if (consent === 'Refused' || consent === 'Unknown') {
-    child.outcome = 'No consent'
+  if (consent === CONSENT.REFUSED || consent === CONSENT.UNKNOWN) {
+    child.outcome = OUTCOME.NO_CONSENT
   }
 
-  if (consent === 'Given') {
-    const couldNotVaccinate = faker.helpers.maybe(() => 'Could not vaccinate', { probability: 0.2 })
-    child.outcome = couldNotVaccinate || 'Vaccinated'
+  if (consent === CONSENT.GIVEN) {
+    const couldNotVaccinate = faker.helpers.maybe(() => OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 })
+    child.outcome = couldNotVaccinate || OUTCOME.VACCINATED
   }
 }
 
