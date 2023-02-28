@@ -1,0 +1,39 @@
+{% set parentContactDetailsHtml %}
+  <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
+    Telephone: {{ child.parentOrGuardian.telephone }}<br />
+    Email: {{ child.parentOrGuardian.email }}
+  </div>
+{% endset %}
+
+{% set consentHtml %}
+  {{ summaryList({
+      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+      rows: decorateRows([
+        {
+          key: "Given by" if consented else "Refused by",
+          value: child.parentOrGuardian.relationship
+        },
+        {
+          key: child.parentOrGuardian.relationship,
+          value: {
+            html: child.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
+          }
+        },
+        {
+          key: "Date",
+          value: child.consentedDate | govukDate
+        },
+        {
+          key: "Type of consent",
+          value: child.consentedMethod
+        }
+      ])
+    }) }}
+{% endset %}
+
+{{ card({
+  heading: "Consent",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: consentHtml
+}) }}
