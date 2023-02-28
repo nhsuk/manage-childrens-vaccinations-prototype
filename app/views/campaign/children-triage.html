@@ -1,4 +1,5 @@
 {% extends "layouts/default.html" %}
+{% set children = filteredChildren or campaign.children %}
 
 {% if filteredYearGroup %}
   {% set caption = "Triage" %}
@@ -95,43 +96,53 @@
               </ul>
             </div>
             <div class="nhsuk-grid-column-three-quarters">
-              <table class="nhsuk-table app-children-table" id="children">
-                <thead class="govuk-table__head">
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header">Name</th>
-                    <th class="govuk-table__header">Consent</th>
-                    <th class="govuk-table__header">Notes</th>
-                    <th class="govuk-table__header" style="width: 180px">Triage status</th>
-                  </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                  {% for child in (filteredChildren or campaign.children) %}
+              {% if children | length %}
+                <table class="nhsuk-table app-children-table" id="children">
+                  <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                      <td class="govuk-table__cell">
-                        <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
-                        {% if child.preferredName %}
-                          <br />Known as: {{ child.preferredName }}
-                        {% endif %}
-                      </td>
-                      <td class="govuk-table__cell">
-                        {% set nothing = '---' %}
-                        {% set consentText = child.consent.text if campaign.is3in1MenACWY else child.consent[campaign.type] %}
-                        {{ nothing if consentText == CONSENT.UNKNOWN else consentText }}
-                      </td>
-                      <td class="govuk-table__cell">
-                        {% if consentText == CONSENT.GIVEN and child.healthQuestions.hasAnswers %}
-                          Yes
-                        {% else %}
-                          {{ nothing }}
-                        {% endif %}
-                      </td>
-                      <td class="govuk-table__cell">
-                        {% include('campaign/_triage-tag.html') %}
-                      </td>
+                      <th class="govuk-table__header">Name</th>
+                      <th class="govuk-table__header">Consent</th>
+                      <th class="govuk-table__header">Notes</th>
+                      <th class="govuk-table__header" style="width: 180px">Triage status</th>
                     </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    {% for child in (filteredChildren or campaign.children) %}
+                      <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                          <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
+                          {% if child.preferredName %}
+                            <br />Known as: {{ child.preferredName }}
+                          {% endif %}
+                        </td>
+                        <td class="govuk-table__cell">
+                          {% set nothing = '---' %}
+                          {% set consentText = child.consent.text if campaign.is3in1MenACWY else child.consent[campaign.type] %}
+                          {{ nothing if consentText == CONSENT.UNKNOWN else consentText }}
+                        </td>
+                        <td class="govuk-table__cell">
+                          {% if consentText == CONSENT.GIVEN and child.healthQuestions.hasAnswers %}
+                            Yes
+                          {% else %}
+                            {{ nothing }}
+                          {% endif %}
+                        </td>
+                        <td class="govuk-table__cell">
+                          {% include('campaign/_triage-tag.html') %}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% else %}
+                <div style="margin-top: 32px; border: 2px solid #b1b4b6; padding-bottom: 10px">
+                  <div class="nhsuk-card__content">
+                    <h2 class="nhsuk-heading-l">No results</h2>
+                    <p>We couldn’t find any children that matched your filters.</p>
+                    <p><a href="#">Remove filter</a></p>
+                  </div>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
