@@ -1,6 +1,6 @@
 import { daySetup } from '../wizards/day-setup.js'
 
-export const daySetupRoutes = router => {
+export default (router) => {
   router.all([
     '/day-setup',
     '/day-setup/:view'

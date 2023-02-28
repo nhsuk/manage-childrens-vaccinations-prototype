@@ -1,4 +1,4 @@
-export const userRoutes = router => {
+export default (router) => {
   router.all([
     '/user/:userId',
     '/user/:userId/*'

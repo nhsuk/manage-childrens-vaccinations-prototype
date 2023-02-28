@@ -7,7 +7,7 @@ const offlineChangesCount = (campaign) => {
   return offlineCount
 }
 
-export const campaignRoutes = router => {
+export default (router) => {
   router.all([
     '/campaign/:campaignId',
     '/campaign/:campaignId/*'

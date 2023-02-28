@@ -20,7 +20,7 @@ const goOnline = (req, hasAnyOfflineChanges) => {
   req.session.data.features.offline.on = false
 }
 
-export const onlineOfflineRoutes = (router, hasAnyOfflineChanges) => {
+export default (router, hasAnyOfflineChanges) => {
   router.post(['/scenario-office', '/scenario-back-online'], (req, res) => {
     goOnline(req, hasAnyOfflineChanges)
     res.redirect('/dashboard')

@@ -9,7 +9,7 @@ const generateRandomString = (length) => {
   return Math.random().toString(36).substr(2, length).toUpperCase()
 }
 
-export const newCampaignRoutes = router => {
+export default (router) => {
   router.all('/campaign/new/start', (req, res) => {
     const campaignId = generateRandomString()
     req.session.data['temp-campaign'] = { id: campaignId }

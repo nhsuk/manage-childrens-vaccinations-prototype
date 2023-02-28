@@ -1,10 +1,11 @@
 import express from 'express'
-import { vaccinationRoutes } from './routes/vaccination.js'
-import { daySetupRoutes } from './routes/day-setup.js'
-import { newCampaignRoutes } from './routes/new-campaign.js'
-import { campaignRoutes } from './routes/campaign.js'
-import { userRoutes } from './routes/user.js'
-import { onlineOfflineRoutes } from './routes/online-offline.js'
+import vaccinationRoutes from './routes/vaccination.js'
+import daySetupRoutes from './routes/day-setup.js'
+import newCampaignRoutes from './routes/new-campaign.js'
+import campaignRoutes from './routes/campaign.js'
+import userRoutes from './routes/user.js'
+import onlineOfflineRoutes from './routes/online-offline.js'
+import redirects from './routes/redirects.js'
 
 const router = express.Router()
 
@@ -46,6 +47,7 @@ newCampaignRoutes(router)
 campaignRoutes(router)
 userRoutes(router)
 onlineOfflineRoutes(router, hasAnyOfflineChanges)
+redirects(router)
 
 router.get('/dashboard', (req, res, next) => {
   res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
@@ -57,16 +59,6 @@ router.get('/school-sessions', (req, res, next) => {
   res.locals.hasHPVCampaigns = Object.values(req.session.data.campaigns).some(c => c.type === 'HPV')
   res.locals.has3in1Campaigns = Object.values(req.session.data.campaigns).some(c => c.type === '3-in-1 and MenACWY')
   next()
-})
-
-router.get('/go/record-vaccinations', (req, res) => {
-  const campaignId = Object.keys(req.session.data.campaigns)[0]
-  res.redirect(`/campaign/${campaignId}/children`)
-})
-
-router.get('/go/in-progress', (req, res) => {
-  const campaignId = Object.values(req.session.data.campaigns).find(c => c.inProgress).id
-  res.redirect(`/campaign/${campaignId}/children`)
 })
 
 export default router

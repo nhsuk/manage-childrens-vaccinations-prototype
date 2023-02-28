@@ -1,7 +1,7 @@
 import { vaccination } from '../wizards/vaccination.js'
 import _ from 'lodash'
 
-export const vaccinationRoutes = router => {
+export default (router) => {
   router.all([
     '/3-in-1-vaccination/:campaignId/',
     '/3-in-1-vaccination/:campaignId/:nhsNumber',
