@@ -20,3 +20,8 @@ export const OUTCOME = {
   NO_CONSENT: 'No consent',
   COULD_NOT_VACCINATE: 'Could not vaccinate'
 }
+
+export const MEDICAL = {
+  YES: 'Yes',
+  NO: 'No medical notes'
+}

@@ -7,6 +7,7 @@ import gp from './gp.js'
 import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
 import { faker } from '@faker-js/faker'
+import { DateTime } from 'luxon'
 faker.locale = 'en_GB'
 
 const preferredName = (child) => {
@@ -31,6 +32,10 @@ export default (options) => {
   c.seen = {}
   c.healthQuestions = healthQuestions(faker, options.type)
   c.triageStatus = triageStatus(c.consent.consented)
+
+  const days = faker.datatype.number({ min: 10, max: 35 })
+  c.consentedDate = DateTime.local().minus({ days }).toISODate()
+  c.consentedMethod = faker.helpers.arrayElement(['Website', 'Website', 'Website', 'Website', 'Website', 'Text message', 'Telephone', 'In person', 'Paper'])
 
   return c
 }
