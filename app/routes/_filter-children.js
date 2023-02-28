@@ -17,6 +17,12 @@ const filters = {
       return c.outcome === OUTCOME[outcome]
     })
   },
+  medical: (children, medical) => {
+    return children.filter((c) => {
+      const hasAnswers = c.healthQuestions.hasAnswers && c.consent.consented
+      return medical === 'true' ? hasAnswers : !hasAnswers
+    })
+  },
   consent: (children, consent) => {
     return children.filter((c) => {
       return c.consent.text === CONSENT[consent]

@@ -52,10 +52,10 @@
               <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
               <ul class="nhsuk-list">
                 <li>
-                  <a href="#">Yes</a>
+                  <a href="?medical=true">Yes</a>
                 </li>
                 <li>
-                  <a href="#">No notes</a>
+                  <a href="?medical=false">No notes</a>
                 </li>
               </ul>
 
@@ -87,15 +87,11 @@
 
               <p class="nhsuk-u-margin-bottom-1">By consent</p>
               <ul class="nhsuk-list">
-                <li>
-                  <a href="#">{{ CONSENT.GIVEN }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ CONSENT.REFUSED }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ CONSENT.UNKNOWN }}</a>
-                </li>
+                {% for key, item in CONSENT %}
+                  <li>
+                    <a href="?consent={{ key }}">{{ item }}</a>
+                  </li>
+                {% endfor %}
               </ul>
             </div>
             <div class="nhsuk-grid-column-three-quarters">
