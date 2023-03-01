@@ -55,6 +55,8 @@ export default (req, res) => {
     return false
   }
 
+  res.locals.activeFilters = activeFilters
+
   let filteredChildren = children
   for (const f in activeFilters) {
     filteredChildren = filter(filteredChildren, f, activeFilters[f], req, res)
