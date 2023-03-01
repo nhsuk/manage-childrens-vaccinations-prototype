@@ -33,46 +33,48 @@
             {% include 'campaign/child/_health-notes-triage.html' %}
           {% endif %}
 
-          <div class="nhsuk-card">
-            <div class="nhsuk-card__content">
-              <form method="post" action="/campaign/{{ campaign.id }}/children-triage?success={{ child.nhsNumber }}">
-                <h2 class="nhsuk-heading-m">Triage</h2>
-                {{ textarea({
-                  label: {
-                    text: "Triage notes"
-                  },
-                  rows: 5,
-                  classes: "nhsuk-u-margin-bottom-0",
-                  decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
-                }) }}
-
-                {{ radios({
-                  fieldset: {
-                    legend: {
-                      text: "Triage status"
-                    }
-                  },
-                  classes: "nhsuk-u-margin-bottom-0",
-                  items: [
-                    {
-                      text: TRIAGE.READY
+          {% if child.consent.responded %}
+            <div class="nhsuk-card">
+              <div class="nhsuk-card__content">
+                <form method="post" action="/campaign/{{ campaign.id }}/children-triage?success={{ child.nhsNumber }}">
+                  <h2 class="nhsuk-heading-m">Triage</h2>
+                  {{ textarea({
+                    label: {
+                      text: "Triage notes"
                     },
-                    {
-                      text: TRIAGE.DO_NOT_VACCINATE
-                    },
-                    {
-                      text: TRIAGE.NEEDS_FOLLOW_UP
-                    }
-                  ],
-                  decorate: ["triage", campaign.id, child.nhsNumber, "status"]
-                }) }}
+                    rows: 5,
+                    classes: "nhsuk-u-margin-bottom-0",
+                    decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
+                  }) }}
 
-                {{ button({
-                  text: "Save triage"
-                }) }}
-              </form>
+                  {{ radios({
+                    fieldset: {
+                      legend: {
+                        text: "Triage status"
+                      }
+                    },
+                    classes: "nhsuk-u-margin-bottom-0",
+                    items: [
+                      {
+                        text: TRIAGE.READY
+                      },
+                      {
+                        text: TRIAGE.DO_NOT_VACCINATE
+                      },
+                      {
+                        text: TRIAGE.NEEDS_FOLLOW_UP
+                      }
+                    ],
+                    decorate: ["triage", campaign.id, child.nhsNumber, "status"]
+                  }) }}
+
+                  {{ button({
+                    text: "Save triage"
+                  }) }}
+                </form>
+              </div>
             </div>
-          </div>
+          {% endif %}
         </div>
         <div class="nhsuk-grid-column-one-third">
           {% if campaign['available-offline'] %}
