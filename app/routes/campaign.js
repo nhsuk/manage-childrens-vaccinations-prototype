@@ -30,7 +30,7 @@ export default (router) => {
     '/campaign/:campaignId/children',
     '/campaign/:campaignId/children-triage'
   ], (req, res, next) => {
-    res.locals.filteredChildren = filterChildren(req.query, res.locals.campaign.children)
+    res.locals.filteredChildren = filterChildren(req, res)
     next()
   })
 

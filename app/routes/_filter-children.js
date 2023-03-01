@@ -7,8 +7,13 @@ const filters = {
       return c.yearGroup === yearGroup
     })
   },
-  'triage-status': (children, triageStatus) => {
+  'triage-status': (children, triageStatus, req, res) => {
     return children.filter((c) => {
+      const triageRecord = req.session.data.triage[res.locals.campaign.id]
+      if (triageRecord && triageRecord[c.nhsNumber]) {
+        return triageRecord[c.nhsNumber].status === TRIAGE[triageStatus]
+      }
+
       return c.triageStatus === TRIAGE[triageStatus]
     })
   },
@@ -30,11 +35,14 @@ const filters = {
   }
 }
 
-const filter = (children, filterName, value) => {
-  return filters[filterName](children, value)
+const filter = (children, filterName, value, req, res) => {
+  return filters[filterName](children, value, req, res)
 }
 
-export default (query, children) => {
+export default (req, res) => {
+  const query = req.query
+  const children = res.locals.campaign.children
+
   const activeFilters = Object.keys(filters).reduce((acc, f) => {
     if (query[f]) {
       acc[f] = query[f]
@@ -48,7 +56,7 @@ export default (query, children) => {
 
   let filteredChildren = children
   for (const f in activeFilters) {
-    filteredChildren = filter(filteredChildren, f, activeFilters[f])
+    filteredChildren = filter(filteredChildren, f, activeFilters[f], req, res)
   }
 
   return filteredChildren
