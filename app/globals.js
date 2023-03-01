@@ -26,6 +26,32 @@ export default () => {
     return _.get(data, _.toPath(keyPath))
   }
 
+  // get filter path
+  globals.filterPath = (activeFilters, key, value) => {
+    const complexFilters = false
+    let path = '?'
+    if (!complexFilters) {
+      return `?${key}=${value}`
+    }
+
+    activeFilters = activeFilters || {}
+
+    // if key is not in activeFilters, add it to path
+    if (!activeFilters[key]) {
+      path += `${key}=${value}&`
+    }
+
+    for (const f in activeFilters) {
+      if (f === key) {
+        path += `${f}=${value}&`
+      } else {
+        path += `${f}=${activeFilters[f]}&`
+      }
+    }
+
+    return path.slice(0, -1)
+  }
+
   const evaluateCondition = (data, condition) => {
     if (typeof condition === 'function' && condition()) {
       return true
