@@ -1,3 +1,7 @@
+{% if activeFilters %}
+<p><a href="?">Remove all filters</a></p>
+{% endif %}
+
 {{ input({
   label: {
     text: 'By name'
@@ -9,10 +13,10 @@
   <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
   <ul class="nhsuk-list">
     <li {% if activeFilters.medical == "true" %}class="app-active-filter"{% endif %}>
-      <a href="?medical=true">Yes</a>
+      <a href="{{ filterPath(activeFilters, 'medical', 'true') }}">Yes</a>
     </li>
     <li {% if activeFilters.medical == "false" %}class="app-active-filter"{% endif %}>
-      <a href="?medical=false">No notes</a>
+      <a href="{{ filterPath(activeFilters, 'medical', 'false') }}">No notes</a>
     </li>
   </ul>
 
@@ -21,7 +25,7 @@
     {% for key, item in TRIAGE %}
       {% set active = activeFilters['triage-status'] == key %}
       <li {% if active %}class="app-active-filter"{% endif %}>
-        <a href="?triage-status={{ key }}">{{ item }}</a>
+        <a href="{{ filterPath(activeFilters, 'triage-status', key) }}">{{ item }}</a>
       </li>
     {% endfor %}
   </ul>
@@ -32,7 +36,7 @@
   {% for group in campaign.yearGroups %}
     {% set active = activeFilters.year == group.number %}
     <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="?year={{ group.number }}">
+      <a href="{{ filterPath(activeFilters, 'year', group.number) }}">
         {{ group.name }}
       </a>
     </li>
@@ -45,7 +49,7 @@
   {% for key, item in OUTCOME %}
     {% set active = activeFilters.outcome == key %}
     <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="?outcome={{ key }}">{{ item }}</a>
+      <a href="{{ filterPath(activeFilters, 'outcome', key) }}">{{ item }}</a>
     </li>
   {% endfor %}
 </ul>
@@ -56,7 +60,7 @@
   {% for key, item in CONSENT %}
     {% set active = activeFilters.consent == key %}
     <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="?consent={{ key }}">{{ item }}</a>
+      <a href="{{ filterPath(activeFilters, 'consent', key) }}">{{ item }}</a>
     </li>
   {% endfor %}
 </ul>
