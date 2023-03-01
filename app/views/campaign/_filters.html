@@ -8,10 +8,10 @@
 {% if triaging %}
   <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
   <ul class="nhsuk-list">
-    <li>
+    <li {% if activeFilters.medical == "true" %}class="app-active-filter"{% endif %}>
       <a href="?medical=true">Yes</a>
     </li>
-    <li>
+    <li {% if activeFilters.medical == "false" %}class="app-active-filter"{% endif %}>
       <a href="?medical=false">No notes</a>
     </li>
   </ul>
@@ -19,7 +19,8 @@
   <p class="nhsuk-u-margin-bottom-1">By triage status</p>
   <ul class="nhsuk-list">
     {% for key, item in TRIAGE %}
-      <li>
+      {% set active = activeFilters['triage-status'] == key %}
+      <li {% if active %}class="app-active-filter"{% endif %}>
         <a href="?triage-status={{ key }}">{{ item }}</a>
       </li>
     {% endfor %}
@@ -29,16 +30,11 @@
 <p class="nhsuk-u-margin-bottom-1">By year group</p>
 <ul class="nhsuk-list">
   {% for group in campaign.yearGroups %}
-    <li>
-      {% if filteredYearGroup.number == group.number %}
-        <a class="app-u-inherit app-u-text-decoration-none nhsuk-u-font-weight-bold" href="?year={{ group.number }}">
-          {{ group.name }}
-        </a>
-      {% else %}
-        <a href="?year={{ group.number }}">
-          {{ group.name }}
-        </a>
-      {% endif %}
+    {% set active = activeFilters.year == group.number %}
+    <li {% if active %}class="app-active-filter"{% endif %}>
+      <a href="?year={{ group.number }}">
+        {{ group.name }}
+      </a>
     </li>
   {% endfor %}
 </ul>
@@ -47,7 +43,8 @@
 <p class="nhsuk-u-margin-bottom-1">By outcome</p>
 <ul class="nhsuk-list">
   {% for key, item in OUTCOME %}
-    <li>
+    {% set active = activeFilters.outcome == key %}
+    <li {% if active %}class="app-active-filter"{% endif %}>
       <a href="?outcome={{ key }}">{{ item }}</a>
     </li>
   {% endfor %}
@@ -57,7 +54,8 @@
 <p class="nhsuk-u-margin-bottom-1">By consent</p>
 <ul class="nhsuk-list">
   {% for key, item in CONSENT %}
-    <li>
+    {% set active = activeFilters.consent == key %}
+    <li {% if active %}class="app-active-filter"{% endif %}>
       <a href="?consent={{ key }}">{{ item }}</a>
     </li>
   {% endfor %}
