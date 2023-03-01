@@ -31,9 +31,17 @@
     }) }}
 {% endset %}
 
+{% set noResponseHtml %}
+  <p>No response yet</p>
+
+  <p class="nhsuk-u-margin-bottom-0">
+    <a href="#" class="nhsuk-button nhsuk-u-margin-bottom-2">Add consent</a>
+  </p>
+{% endset %}
+
 {{ card({
   heading: "Consent",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: consentHtml
+  description: consentHtml if child.consent.responded else noResponseHtml
 }) }}
