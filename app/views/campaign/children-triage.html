@@ -43,57 +43,8 @@
 
           <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-one-quarter">
-              {{ input({
-                label: {
-                  text: 'By name'
-                },
-                decorate: 'search'
-              }) }}
-
-              <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
-              <ul class="nhsuk-list">
-                <li>
-                  <a href="?medical=true">Yes</a>
-                </li>
-                <li>
-                  <a href="?medical=false">No notes</a>
-                </li>
-              </ul>
-
-              <p class="nhsuk-u-margin-bottom-1">By triage status</p>
-              <ul class="nhsuk-list">
-                {% for key, item in TRIAGE %}
-                  <li>
-                    <a href="?triage-status={{ key }}">{{ item }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-
-              <p class="nhsuk-u-margin-bottom-1">By year group</p>
-              <ul class="nhsuk-list">
-                {% for group in campaign.yearGroups %}
-                  <li>
-                    {% if filteredYearGroup.number == group.number %}
-                      <a class="app-u-inherit app-u-text-decoration-none nhsuk-u-font-weight-bold" href="?year={{ group.number }}">
-                        {{ group.name }}
-                      </a>
-                    {% else %}
-                      <a href="?year={{ group.number }}">
-                        {{ group.name }}
-                      </a>
-                    {% endif %}
-                  </li>
-                {% endfor %}
-              </ul>
-
-              <p class="nhsuk-u-margin-bottom-1">By consent</p>
-              <ul class="nhsuk-list">
-                {% for key, item in CONSENT %}
-                  <li>
-                    <a href="?consent={{ key }}">{{ item }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
+              {% set triaging = true %}
+              {% include 'campaign/_filters.html' %}
             </div>
             <div class="nhsuk-grid-column-three-quarters">
               {% if children | length %}
