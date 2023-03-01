@@ -9,7 +9,8 @@ const filters = {
   },
   'triage-status': (children, triageStatus, req, res) => {
     return children.filter((c) => {
-      const triageRecord = req.session.data.triage[res.locals.campaign.id]
+      const triage = req.session.data.triage
+      const triageRecord = triage && triage[res.locals.campaign.id]
       if (triageRecord && triageRecord[c.nhsNumber]) {
         return triageRecord[c.nhsNumber].status === TRIAGE[triageStatus]
       }
