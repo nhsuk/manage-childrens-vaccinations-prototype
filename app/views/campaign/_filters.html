@@ -1,0 +1,82 @@
+{{ input({
+  label: {
+    text: 'By name'
+  },
+  decorate: 'search'
+}) }}
+
+{% if triaging %}
+  <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
+  <ul class="nhsuk-list">
+    <li>
+      <a href="?medical=true">Yes</a>
+    </li>
+    <li>
+      <a href="?medical=false">No notes</a>
+    </li>
+  </ul>
+
+  <p class="nhsuk-u-margin-bottom-1">By triage status</p>
+  <ul class="nhsuk-list">
+    {% for key, item in TRIAGE %}
+      <li>
+        <a href="?triage-status={{ key }}">{{ item }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<p class="nhsuk-u-margin-bottom-1">By year group</p>
+<ul class="nhsuk-list">
+  {% for group in campaign.yearGroups %}
+    <li>
+      {% if filteredYearGroup.number == group.number %}
+        <a class="app-u-inherit app-u-text-decoration-none nhsuk-u-font-weight-bold" href="?year={{ group.number }}">
+          {{ group.name }}
+        </a>
+      {% else %}
+        <a href="?year={{ group.number }}">
+          {{ group.name }}
+        </a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% if not triaging %}
+<p class="nhsuk-u-margin-bottom-1">By outcome</p>
+<ul class="nhsuk-list">
+  {% for key, item in OUTCOME %}
+    <li>
+      <a href="?outcome={{ key }}">{{ item }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<p class="nhsuk-u-margin-bottom-1">By consent</p>
+<ul class="nhsuk-list">
+  {% for key, item in CONSENT %}
+    <li>
+      <a href="?consent={{ key }}">{{ item }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<script>
+    function filterTable() {
+      var inputValue = document.getElementById("search").value.toLowerCase();
+      var rows = document.getElementById("children").querySelectorAll("tbody tr");
+
+      for (var i = 0; i < rows.length; i++) {
+        var nameCell = rows[i].getElementsByTagName("td")[0];
+        var name = nameCell.textContent || nameCell.innerText;
+        if (name.toLowerCase().indexOf(inputValue) > -1) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+    document.getElementById("search").addEventListener("input", filterTable);
+  </script>
