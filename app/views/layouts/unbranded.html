@@ -5,3 +5,8 @@
 {% block footer %}{% endblock %}
 {% block nhsFont %}{% endblock %}
 {% block headIcons %}{% endblock %}
+
+{% block pageTitle %}
+  {{- "Error: " if errors -}}
+  {{- title + " - " if title -}}
+{% endblock %}
