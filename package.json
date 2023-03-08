@@ -9,7 +9,8 @@
   },
   "prototype": {
     "serviceName": "Record children’s vaccinations",
-    "defaultRigLayout": "layouts/default.html"
+    "defaultRigLayout": "layouts/default.html",
+    "defaultUnbrandedLayout": "layouts/unbranded.html"
   },
   "stylelint": {
     "extends": "stylelint-config-gds/scss"
