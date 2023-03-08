@@ -1,4 +1,7 @@
-# Record children’s vaccinations
+# Record children’s vaccinations prototype
+
+View the prototype:
+https://poc-prototype.herokuapp.com/
 
 A point of care (POC) prototype, built using the [NHS.UK Prototype Rig](https://github.com/x-govuk/nhsuk-prototype-rig).
 
@@ -8,18 +11,14 @@ Point of Care Systems record data when someone is vaccinated, including product 
 
 ## Requirements
 
-* Node.js v16
-* [Node version manager (NVM)](https://github.com/nvm-sh/nvm)
+Node.js v18
 
 ## Installation
 
 1. Clone this repository
 
-2. Use [NVM](https://github.com/nvm-sh/nvm) to run the correct Node version:\
-`nvm use`
-
-3. Install the dependencies:\
+2. Install the dependencies:\
 `npm install`
 
-4. Start the application:\
-`nvm use; npm start`
+3. Start the application:\
+`npm run dev`
