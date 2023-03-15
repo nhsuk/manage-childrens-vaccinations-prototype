@@ -16,7 +16,7 @@ export default (faker, type) => {
       questions = [
         allergy,
         medicalConditions,
-        { title: 'Medication', id: 'medication', question: 'Does your child take any regular medication, excluding contraception?', answer: 'No' }
+        { title: 'Medication', id: 'medication', question: 'Does your child take any regular medication?', answer: 'No' }
       ]
       break
     case '3-in-1 and MenACWY':
