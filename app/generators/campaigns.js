@@ -1,6 +1,5 @@
 import campaign from './campaign.js'
 import campaignInProgress from './campaign-in-progress.js'
-import campaignTriageInProgress from './campaign-triage-in-progress.js'
 import { DateTime } from 'luxon'
 
 export default (options) => {
@@ -13,7 +12,6 @@ export default (options) => {
   }
 
   campaigns.push(campaignInProgress(options.campaign))
-  campaigns.push(campaignTriageInProgress(options.campaign))
 
   return campaigns
     .sort((a, b) => DateTime.fromISO(a.date).valueOf() - DateTime.fromISO(b.date).valueOf())

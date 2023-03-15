@@ -17,7 +17,7 @@ export default (router) => {
   })
 
   router.get('/go/in-progress-triage', (req, res) => {
-    const campaignId = Object.values(req.session.data.campaigns).find(c => c.triageInProgress).id
+    const campaignId = Object.values(req.session.data.campaigns).filter(c => c.triageInProgress)[0].id
     res.redirect(`/campaign/${campaignId}/children-triage`)
   })
 }

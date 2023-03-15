@@ -7,8 +7,7 @@ export default (triageInProgess, consent) => {
       return faker.helpers.arrayElement([
         ...Array(10).fill(TRIAGE.TO_DO),
         ...Array(10).fill(TRIAGE.READY),
-        TRIAGE.NEEDS_FOLLOW_UP,
-        TRIAGE.DO_NOT_VACCINATE
+        TRIAGE.NEEDS_FOLLOW_UP
       ])
     } else {
       return TRIAGE.TO_DO

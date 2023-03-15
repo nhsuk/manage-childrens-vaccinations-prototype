@@ -1,4 +1,6 @@
-export default (faker, type, consent) => {
+import { TRIAGE } from '../enums.js'
+
+export default (faker, type, consent, triageStatus) => {
   let questions = []
   const allergy = { title: 'Allergies', id: 'allergy', question: 'Does your child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
   const medicalConditions = { title: 'Medical conditions', id: 'medical-conditions', question: 'Does your child have any existing medical conditions?', answer: 'No' }
@@ -30,7 +32,7 @@ export default (faker, type, consent) => {
 
   questions.push({ title: 'Anything else', id: 'anything-else', question: 'Is there anything else you think we should know?', answer: 'No' })
 
-  return enrichWithRealisticAnswers(faker, consent, {
+  return enrichWithRealisticAnswers(faker, consent, triageStatus, {
     hasAnswers: false,
     questions
   })
@@ -122,7 +124,8 @@ const realisticAnswers = {
   chronicIllness: {
     'medical-conditions': 'My child has a chronic illness and requires ongoing medical treatment.',
     immunosuppressant: 'My child takes immunosuppressant medication to manage their chronic illness and prevent complications.',
-    'anything-else': 'My child also has a history of hospitalizations due to their chronic illness.'
+    'anything-else': 'My child also has a history of hospitalizations due to their chronic illness.',
+    triage: 'Spoke with parent. Safe to vaccinate, but monitor for adverse reactions'
   },
   asthmaAndAllergies: {
     'medical-conditions': 'My child has asthma and multiple allergies, including environmental and food allergies.',
@@ -162,7 +165,7 @@ const realisticAnswers = {
   }
 }
 
-const enrichWithRealisticAnswers = (faker, consent, health) => {
+const enrichWithRealisticAnswers = (faker, consent, triageStatus, health) => {
   // Did not answer health questions as either
   // they refused consent or did not respond
   if (consent.refused || !consent.responded) {
@@ -180,11 +183,19 @@ const enrichWithRealisticAnswers = (faker, consent, health) => {
       q.details = realisticAnswers[answer][q.id]
       q.answer = 'Yes'
       health.hasAnswers = true
-
-      // Notes for when triaged elsewhere
-      health.inactiveTriage = realisticAnswers[answer].triage
     }
   })
+
+  if ([
+    TRIAGE.NEEDS_FOLLOW_UP,
+    TRIAGE.READY,
+    TRIAGE.DO_NOT_VACCINATE
+  ].includes(triageStatus)) {
+    health.triage = realisticAnswers[answer].triage
+  } else {
+    // Notes for when triaged elsewhere
+    health.inactiveTriage = realisticAnswers[answer].triage
+  }
 
   return health
 }
