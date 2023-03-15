@@ -1,4 +1,4 @@
-{% set triageStatus = data.triage[campaign.id][child.nhsNumber].status or child.triageStatus %}
+{% set triageStatus = child.triageStatus %}
 {% if triageStatus == TRIAGE.READY %}
   {% set icon = 'tick' %}
   {% set color = 'green' %}

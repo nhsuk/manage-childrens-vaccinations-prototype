@@ -36,7 +36,7 @@
           {% if child.consent.responded %}
             <div class="nhsuk-card">
               <div class="nhsuk-card__content">
-                <form method="post" action="/campaign/{{ campaign.id }}/children-triage?success={{ child.nhsNumber }}">
+                <form method="post">
                   <h2 class="nhsuk-heading-m">Triage</h2>
                   {{ textarea({
                     label: {

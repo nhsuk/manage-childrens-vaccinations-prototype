@@ -58,6 +58,22 @@ export default (router) => {
     res.redirect(res.locals.paths.next)
   })
 
+  router.post([
+    '/campaign/:campaignId/child-triage/:nhsNumber'
+  ], (req, res) => {
+    const child = res.locals.child
+    const nhsNumber = req.params.nhsNumber
+    const campaignId = req.params.campaignId
+    const triage = _.get(req.body, `triage.${campaignId}.${nhsNumber}`, {})
+
+    if (triage) {
+      child.triageStatus = triage.status
+      child.healthQuestions.triage = triage.notes
+    }
+
+    res.redirect(`/campaign/${campaignId}/children-triage?success=${nhsNumber}`)
+  })
+
   router.post('/campaign/:campaignId', (req, res, next) => {
     res.locals.campaign['available-offline'] = true
     next()
