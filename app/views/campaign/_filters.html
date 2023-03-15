@@ -10,10 +10,10 @@
 }) }}
 
 {% if triaging %}
-  <p class="nhsuk-u-margin-bottom-1">By medical notes</p>
+  <p class="nhsuk-u-margin-bottom-1">By notes</p>
   <ul class="nhsuk-list">
     <li {% if activeFilters.medical == "true" %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, 'medical', 'true') }}">Yes</a>
+      <a href="{{ filterPath(activeFilters, 'medical', 'true') }}">Has notes</a>
     </li>
     <li {% if activeFilters.medical == "false" %}class="app-active-filter"{% endif %}>
       <a href="{{ filterPath(activeFilters, 'medical', 'false') }}">No notes</a>
