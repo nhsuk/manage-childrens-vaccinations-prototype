@@ -36,7 +36,13 @@ export default (options) => {
 
   const days = faker.datatype.number({ min: 10, max: 35 })
   c.consentedDate = DateTime.local().minus({ days }).toISODate()
-  c.consentedMethod = faker.helpers.arrayElement(['Website', 'Website', 'Website', 'Website', 'Website', 'Text message', 'Telephone', 'In person', 'Paper'])
+  c.consentedMethod = faker.helpers.arrayElement([
+    ...Array(5).fill('Website'),
+    'Text message',
+    'Telephone',
+    'In person',
+    'Paper'
+  ])
 
   return c
 }
