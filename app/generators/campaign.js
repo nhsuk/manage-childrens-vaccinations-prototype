@@ -29,6 +29,11 @@ export default () => {
   const schoolObject = school(faker, type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.datatype.number({ min: 2, max: 100 })
+  const triageInProgress = daysUntil < 7
+  const campaignChildren = children({
+    count: 100,
+    child: { ...ageRange(type), triageInProgress }
+  })
 
   return {
     id: generateRandomString(3),
@@ -36,12 +41,13 @@ export default () => {
     location: schoolObject.name,
     date: DateTime.now().plus({ days: daysUntil }).toISODate() + 'T' + atTime,
     type,
+    triageInProgress,
     yearGroups: yearGroups(type),
     vaccines: vaccinesObject,
     school: schoolObject,
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',
     is3in1MenACWY: type === '3-in-1 and MenACWY',
-    children: children({ count: 100, child: ageRange(type) })
+    children: campaignChildren
   }
 }
