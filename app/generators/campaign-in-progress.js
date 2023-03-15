@@ -18,6 +18,12 @@ const setOutcome = (child, consent) => {
 const setTriageOutcome = (child, consent) => {
   if (consent === CONSENT.GIVEN) {
     child.triageStatus = TRIAGE.READY
+
+    // Activate triage notes
+    if (child.healthQuestions.inactiveTriage) {
+      child.healthQuestions.triage = child.healthQuestions.inactiveTriage
+      delete child.healthQuestions.inactiveTriage
+    }
   }
 }
 

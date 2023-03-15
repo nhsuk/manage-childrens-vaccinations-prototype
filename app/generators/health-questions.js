@@ -1,4 +1,4 @@
-export default (faker, type) => {
+export default (faker, type, consent) => {
   let questions = []
   const allergy = { title: 'Allergies', id: 'allergy', question: 'Does your child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
   const medicalConditions = { title: 'Medical conditions', id: 'medical-conditions', question: 'Does your child have any existing medical conditions?', answer: 'No' }
@@ -30,10 +30,8 @@ export default (faker, type) => {
 
   questions.push({ title: 'Anything else', id: 'anything-else', question: 'Is there anything else you think we should know?', answer: 'No' })
 
-  return enrichWithRealisticAnswers(faker, type, {
-    triageStatus: 'To do',
+  return enrichWithRealisticAnswers(faker, consent, {
     hasAnswers: false,
-    triage: false,
     questions
   })
 }
@@ -164,9 +162,15 @@ const realisticAnswers = {
   }
 }
 
-const enrichWithRealisticAnswers = (faker, type, health) => {
-  const triageNeeded = faker.helpers.maybe(() => true, { probability: 0.2 })
-  if (!triageNeeded) {
+const enrichWithRealisticAnswers = (faker, consent, health) => {
+  // Did not answer health questions as either
+  // they refused consent or did not respond
+  if (consent.refused || !consent.responded) {
+    return health
+  }
+
+  // Give health question responses to 20% of children who consent
+  if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
     return health
   }
 
@@ -176,7 +180,9 @@ const enrichWithRealisticAnswers = (faker, type, health) => {
       q.details = realisticAnswers[answer][q.id]
       q.answer = 'Yes'
       health.hasAnswers = true
-      health.triage = realisticAnswers[answer].triage
+
+      // Notes for when triaged elsewhere
+      health.inactiveTriage = realisticAnswers[answer].triage
     }
   })
 
