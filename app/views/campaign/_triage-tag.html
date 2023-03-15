@@ -2,8 +2,11 @@
 {% if triageStatus == TRIAGE.READY %}
   {% set icon = 'tick' %}
   {% set color = 'green' %}
-{% elif triageStatus == TRIAGE.CANNOT_TRIAGE_YET %}
+{% elif triageStatus == TRIAGE.NO_CONSENT_RESPONSE %}
   {% set color = 'white' %}
+{% elif triageStatus == TRIAGE.REFUSED_CONSENT %}
+  {% set icon = 'cross' %}
+  {% set color = 'red' %}
 {% elif triageStatus == TRIAGE.DO_NOT_VACCINATE %}
   {% set icon = 'cross' %}
   {% set color = 'red' %}

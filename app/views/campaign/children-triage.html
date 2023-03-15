@@ -52,7 +52,6 @@
                   <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                       <th class="govuk-table__header">Name</th>
-                      <th class="govuk-table__header">Consent</th>
                       <th class="govuk-table__header">Notes</th>
                       <th class="govuk-table__header" style="width: 180px">Triage status</th>
                     </tr>
@@ -67,15 +66,17 @@
                           {% endif %}
                         </td>
                         <td class="govuk-table__cell">
-                          {% set nothing = '---' %}
                           {% set consentText = child.consent.text if campaign.is3in1MenACWY else child.consent[campaign.type] %}
-                          {{ nothing if consentText == CONSENT.UNKNOWN else consentText }}
-                        </td>
-                        <td class="govuk-table__cell">
-                          {% if consentText == CONSENT.GIVEN and child.healthQuestions.hasAnswers %}
-                            Yes
-                          {% else %}
-                            {{ nothing }}
+                          {% set triageNotes = child.healthQuestions.triage and child.triageStatus == TRIAGE.READY %}
+                          {% if consentText == CONSENT.GIVEN %}
+                            {% if triageNotes and child.healthQuestions.hasAnswers %}
+                              Notes from<br />
+                              nurse and {{ child.parentOrGuardian.relationship | lower }}
+                            {% elseif triageNotes %}
+                              Notes from nurse
+                            {% elseif child.healthQuestions.hasAnswers %}
+                              Notes from {{ child.parentOrGuardian.relationship | lower }}
+                            {% endif %}
                           {% endif %}
                         </td>
                         <td class="govuk-table__cell">

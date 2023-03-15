@@ -1,8 +1,13 @@
 import { TRIAGE } from '../enums.js'
 
-export default (consented) => {
-  if (!consented) {
-    return TRIAGE.CANNOT_TRIAGE_YET
+export default (consent) => {
+  if (consent.consented) {
+    return TRIAGE.TO_DO
   }
-  return TRIAGE.TO_DO
+
+  if (consent.refused) {
+    return TRIAGE.REFUSED_CONSENT
+  }
+
+  return TRIAGE.NO_CONSENT_RESPONSE
 }
