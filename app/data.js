@@ -1,5 +1,6 @@
 import campaigns from './generators/campaigns.js'
 import vaccinationRecord from './generators/vaccination-record.js'
+import triageRecord from './generators/triage-record.js'
 import users from './generators/users.js'
 
 /**
@@ -20,6 +21,7 @@ export default {
   },
   campaigns: c,
   vaccination: vaccinationRecord(c),
+  triage: triageRecord(c),
   users: users({ count: 20 }),
   // Set feature flags using the `features` key
   features: {
