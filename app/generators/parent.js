@@ -1,11 +1,19 @@
 import person from './person.js'
 
 export default (faker, lastName) => {
-  const relationship = faker.helpers.arrayElement(['Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Parent', 'Guardian', 'Carer'])
+  const relationship = faker.helpers.arrayElement([
+    ...Array(10).fill('Parent'),
+    'Guardian',
+    'Carer'
+  ])
 
   // Do not match name if guardian or carer
   // 3 out of 4 parents with same surname as child
-  const lastNameToUse = relationship === 'Parent' ? faker.helpers.arrayElement([lastName, lastName, lastName, false]) : false
+  const lastNameToUse = relationship === 'Parent'
+    ? faker.helpers.arrayElement([
+      ...Array(3).fill(lastName), false
+    ])
+    : false
   const p = person(faker, false, lastNameToUse)
   const parent = p.sex === 'Female' ? 'Mum' : 'Dad'
 

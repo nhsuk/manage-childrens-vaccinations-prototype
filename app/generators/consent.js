@@ -28,23 +28,21 @@ export default (faker, type) => {
 
     return faker.helpers.arrayElement(
       [
-        yes,
-        yes,
-        yes,
-        yes,
-        yes,
+        ...Array(5).fill(yes),
         { '3-in-1': CONSENT.REFUSED, 'men-acwy': CONSENT.GIVEN, text: CONSENT.ONLY_MENACWY, responded: true, consented: true },
         { '3-in-1': CONSENT.GIVEN, 'men-acwy': CONSENT.REFUSED, text: CONSENT.ONLY_3_IN_1, responded: true, consented: true },
-        unknown,
-        unknown,
-        unknown,
-        no,
-        no
+        ...Array(5).fill(unknown),
+        ...Array(2).fill(no)
       ]
     )
   }
 
-  const r = faker.helpers.arrayElement([CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.GIVEN, CONSENT.UNKNOWN, CONSENT.UNKNOWN, CONSENT.UNKNOWN, CONSENT.REFUSED])
+  const r = faker.helpers.arrayElement([
+    ...Array(10).fill(CONSENT.GIVEN),
+    ...Array(5).fill(CONSENT.UNKNOWN),
+    CONSENT.REFUSED
+  ])
+
   return {
     [type]: r,
     text: r,
