@@ -8,6 +8,7 @@ import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
+import { OUTCOME } from '../enums.js'
 faker.locale = 'en_GB'
 
 const preferredName = (child) => {
@@ -28,9 +29,9 @@ export default (options) => {
   c.yearGroup = yearGroup(c.dob)
   c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consent(faker, options.type)
-  c.outcome = 'No outcome yet'
+  c.outcome = OUTCOME.NO_OUTCOME_YET
   c.seen = {}
-  c.healthQuestions = healthQuestions(faker, options.type)
+  c.healthQuestions = healthQuestions(faker, options.type, c.consent)
   c.triageStatus = triageStatus(c.consent)
 
   const days = faker.datatype.number({ min: 10, max: 35 })

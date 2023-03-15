@@ -6,12 +6,17 @@ import { CONSENT, TRIAGE } from '../enums.js'
 const setTriageOutcome = (child, consent) => {
   if (consent === CONSENT.GIVEN) {
     child.triageStatus = TRIAGE.READY
+
+    // Activate triage notes
+    if (child.healthQuestions.inactiveTriage) {
+      child.healthQuestions.triage = child.healthQuestions.inactiveTriage
+      delete child.healthQuestions.inactiveTriage
+    }
   }
 }
 
 export default (options) => {
   const c = campaign(options)
-
   c.triageInProgress = true
 
   // set a date that is next Monday
