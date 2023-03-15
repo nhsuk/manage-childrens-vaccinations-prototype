@@ -32,7 +32,7 @@ export default (options) => {
   c.outcome = OUTCOME.NO_OUTCOME_YET
   c.seen = {}
   c.healthQuestions = healthQuestions(faker, options.type, c.consent)
-  c.triageStatus = triageStatus(c.consent)
+  c.triageStatus = triageStatus(options.triageInProgress, c.consent)
 
   const days = faker.datatype.number({ min: 10, max: 35 })
   c.consentedDate = DateTime.local().minus({ days }).toISODate()
