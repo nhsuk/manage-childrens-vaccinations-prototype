@@ -1,0 +1,51 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Check and confirm answers" %}
+{% set buttonText = "Confirm" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {% set parentContactDetailsHtml %}
+    <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
+      {{ d(base + "parent.name") }}<br />
+      Telephone: {{ d(base + "parent.telephone") }}
+    </div>
+  {% endset %}
+
+  <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
+    <div class="nhsuk-card__content">
+      <h2 class="nhsuk-heading-m">Consent</h2>
+      {{ govukSummaryList({
+        classes: "app-u-frutiger app-summary-list--no-bottom-border",
+        rows: decorateRows([
+          {
+            key: 'Consent',
+            value: {
+              html: 'Given'
+            },
+            href: '#'
+          },
+          {
+            key: 'For',
+            value: child.fullName
+          },
+          {
+            key: 'By',
+            value: {
+              html: d(base + "parent.relationship") + parentContactDetailsHtml
+            },
+            href: '#'
+          }
+        ])
+      }) }}
+    </div>
+  </div>
+
+  <div class="nhsuk-u-margin-top-4">
+    {% set consentJourney = true %}
+    {% include "campaign/child/_health-notes-triage.html" %}
+
+    TODO: TRIAGE
+
+  </div>
+{% endblock %}

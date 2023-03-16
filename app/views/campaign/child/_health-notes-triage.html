@@ -1,24 +1,28 @@
 {% set healthNotes %}
+  {% if consentJourney %}
+    <p>
+      <a href="#">Change</a>
+    </p>
+  {% endif %}
   {% for question in child.healthQuestions.questions %}
     <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
       {{ question.question }}
     </h3>
 
-    <div
-      class="nhsuk-inset-text nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-4"
-      {% if question.answer == 'No' %}style="border-color: #d8dde0"{% endif %}
-    >
-      {% if question.details %}
-        <p>{{ question.answer }} – {{ question.details }}</p>
-      {% else %}
-        <p>{{ question.answer }}</p>
-      {% endif %}
+    <div class="nhsuk-u-margin-top-2 {% if not loop.last %}nhsuk-u-margin-bottom-4{% endif %}">
+      <p class="nhsuk-u-margin-bottom-0">
+        {% if question.details %}
+          {{ question.answer }} – {{ question.details }}
+        {% else %}
+          {{ question.answer }}
+        {% endif %}
+      </p>
     </div>
   {% endfor %}
 {% endset %}
 
 {{ card({
-  heading: "Medical history",
+  heading: "Health questions",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
   description: healthNotes

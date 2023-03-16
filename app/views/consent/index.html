@@ -1,0 +1,54 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Who are you trying to get consent from?" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {{ input({
+    label: {
+      text: "Full name"
+    },
+    decorate: base + "parent.name"
+  }) }}
+
+  {{ input({
+    label: {
+      text: "Telephone number"
+    },
+    decorate: base + "parent.telephone"
+  }) }}
+
+  {% set other %}
+    <p>They need parental responsibility to give consent.</p>
+    {{ input({
+      label: {
+        text: "Relationship to the child"
+      },
+      hint: {
+        text: 'For example, carer'
+      },
+      decorate: base + "parent.relationship-other"
+    }) }}
+  {% endset %}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        text: "Relationship to the child"
+      }
+    },
+    items: [
+      { text: 'Mum' },
+      { text: 'Dad' },
+      { text: 'Guardian' },
+      {
+        text: 'Other',
+        conditional: {
+          html: other
+        }
+      }
+    ],
+    decorate: base + "parent.relationship"
+  }) }}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Health questions" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {% for q in child.healthQuestions.questions %}
+    {% set giveDetailsHtml %}
+      {{ textarea({
+        label: {
+          text: "Give details"
+        },
+        decorate: base + "health.details." + q.id
+      }) }}
+    {% endset %}
+
+    {{ radios({
+      fieldset: {
+        legend: {
+          text: q.question
+        }
+      },
+      classes: "nhsuk-radios--inline",
+      items: [
+        {
+          text: 'Yes',
+          conditional: {
+            html: giveDetailsHtml
+          }
+        },
+        {
+          text: 'No'
+        }
+      ],
+      decorate: base + "health." + q.id
+    }) }}
+  {% endfor %}
+
+  {{ textarea({
+    label: {
+      text: "Triage notes (optional)"
+    },
+    rows: 5,
+    classes: "nhsuk-u-margin-bottom-0",
+    decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
+  }) }}
+{% endblock %}

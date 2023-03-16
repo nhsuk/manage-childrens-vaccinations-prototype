@@ -1,0 +1,8 @@
+{% extends "layouts/wizard.html" %}
+
+{% set title = "Did they get the vaccine?" %}
+
+{% block form %}
+  {% set consentJourney = true %}
+  {% include 'campaign/child/_action-vaccinate-options.html' %}
+{% endblock %}
