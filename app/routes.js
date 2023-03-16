@@ -6,6 +6,7 @@ import campaignRoutes from './routes/campaign.js'
 import userRoutes from './routes/user.js'
 import onlineOfflineRoutes from './routes/online-offline.js'
 import redirects from './routes/redirects.js'
+import consent from './routes/consent.js'
 
 const router = express.Router()
 
@@ -48,6 +49,7 @@ campaignRoutes(router)
 userRoutes(router)
 onlineOfflineRoutes(router, hasAnyOfflineChanges)
 redirects(router)
+consent(router)
 
 router.get('/dashboard', (req, res, next) => {
   res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
