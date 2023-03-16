@@ -22,7 +22,7 @@ const journeyForEverythingElse = (data, campaign, child) => {
 
   if (!hasConsent && askingForConsent) {
     return {
-      [`/vaccination/${campaignId}/${nhsNumber}/consent`]: {}
+      [`/consent/${campaignId}/${nhsNumber}`]: {}
     }
   }
 

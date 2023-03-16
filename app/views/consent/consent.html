@@ -1,0 +1,20 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Do they agree to them having both doses of the HPV vaccination?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "nhsuk-fieldset__legend--l"
+      }
+    },
+    items: [
+      { text: 'Yes, they agree' },
+      { text: 'No, they do not agree' }
+    ],
+    decorate: base + "consent"
+  }) }}
+
+{% endblock %}

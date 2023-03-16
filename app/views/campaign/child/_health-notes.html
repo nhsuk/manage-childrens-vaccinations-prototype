@@ -24,7 +24,7 @@
     text: "Show answers",
     attributes: {
       open: true
-    } if child.healthQuestions.contraindications,
+    } if child.healthQuestions.hasAnswers,
     HTML: healthNotes,
     classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
   }) }}

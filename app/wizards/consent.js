@@ -1,9 +1,4 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import _ from 'lodash'
-
-const getData = (data, keyPath) => {
-  return _.get(data, _.toPath(keyPath))
-}
 
 export default (req) => {
   const nhsNumber = req.params.nhsNumber
@@ -14,7 +9,12 @@ export default (req) => {
 
   const journey = {
     [`/campaign/${campaignId}/child/${nhsNumber}`]: {},
-    [basePath]: {}
+    [basePath]: {},
+    [`${basePath}/consent`]: {},
+    [`${basePath}/child-details`]: {},
+    [`${basePath}/details`]: {},
+    [`${basePath}/vaccinate`]: {},
+    [`/vaccination/${campaignId}/${nhsNumber}/details`]: {}
   }
 
   return wizard(journey, req)
