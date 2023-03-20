@@ -1,7 +1,7 @@
 {% extends "layouts/wizard.html" %}
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
-{% set consented = d(base + "consent") == "Yes" %}
+{% set consented = d(base + "consent") == CONSENT.GIVEN %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
@@ -21,9 +21,7 @@
         rows: decorateRows([
           {
             key: 'Consent',
-            value: {
-              html: "Given" if consented else "Refused"
-            },
+            value: d(base + "consent"),
             href: '#'
           },
           {

@@ -1,4 +1,5 @@
 import { wizard } from 'nhsuk-prototype-rig'
+import { CONSENT } from '../enums.js'
 
 export default (req) => {
   const nhsNumber = req.params.nhsNumber
@@ -12,7 +13,11 @@ export default (req) => {
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
         data: `${baseData}.consent`,
-        excludedValue: 'No'
+        value: CONSENT.GIVEN
+      },
+      [`${basePath}/confirm`]: {
+        data: `${baseData}.consent`,
+        value: CONSENT.UNKNOWN
       }
     },
     [`${basePath}/why-not-consenting`]: {
@@ -24,7 +29,7 @@ export default (req) => {
     [`${basePath}/confirm`]: {
       [`/campaign/${campaignId}/child/${nhsNumber}`]: {
         data: `${baseData}.consent`,
-        value: 'No'
+        excludedValue: CONSENT.GIVEN
       }
     },
     [`${basePath}/vaccinate`]: {
