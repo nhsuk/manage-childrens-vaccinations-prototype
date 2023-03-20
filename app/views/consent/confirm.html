@@ -1,6 +1,7 @@
 {% extends "layouts/wizard.html" %}
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
+{% set consented = d(base + "consent") == "Yes" %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
@@ -21,7 +22,7 @@
           {
             key: 'Consent',
             value: {
-              html: 'Given'
+              html: "Given" if consented else "Refused"
             },
             href: '#'
           },
@@ -35,17 +36,24 @@
               html: d(base + "parent.relationship") + parentContactDetailsHtml
             },
             href: '#'
-          }
+          },
+          {
+            key: 'Reason',
+            value: {
+              html: d(base + "no-consent-reason")
+            },
+            href: '#'
+          } if not consented
         ])
       }) }}
     </div>
   </div>
 
-  <div class="nhsuk-u-margin-top-4">
-    {% set consentJourney = true %}
-    {% include "campaign/child/_health-notes-triage.html" %}
-
-    TODO: TRIAGE
-
-  </div>
+  {% if consented %}
+    <div class="nhsuk-u-margin-top-4">
+      {% set consentJourney = true %}
+      {% include "campaign/child/_health-notes-triage.html" %}
+      TODO: TRIAGE
+    </div>
+  {% endif %}
 {% endblock %}
