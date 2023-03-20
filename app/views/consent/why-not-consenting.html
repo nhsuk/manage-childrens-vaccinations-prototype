@@ -1,0 +1,41 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Why do they not agree?" %}
+
+{% block form %}
+  {% set other %}
+    {{ input({
+      label: {
+        classes: "nhsuk-label--s nhsuk-u-margin-bottom-1",
+        text: "Give details"
+      },
+      decorate: base + "no-consent-reason-other"
+    }) }}
+  {% endset %}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--l",
+        text: title,
+        isPageHeading: true
+      }
+    },
+    items: [
+      { text: 'Vaccine contains gelatine from pigs' } if campaign.isFlu,
+      { text: 'Vaccine already received' },
+      { text: 'Vaccine will be given elsewhere' },
+      { text: 'Medical reasons' },
+      { text: 'Personal choice' },
+      {
+        divider: 'or'
+      },
+      {
+        text: 'Other',
+        conditional: {
+          html: other
+        }
+      }
+    ],
+    decorate: base + "no-consent-reason"
+  }) }}
+{% endblock %}

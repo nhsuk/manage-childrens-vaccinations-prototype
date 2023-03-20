@@ -18,7 +18,7 @@ export default (router) => {
   })
 
   router.post([
-    '/consent/:campaignId/:nhsNumber/child-details'
+    '/consent/:campaignId/:nhsNumber/health-questions'
   ], (req, res, next) => {
     const child = res.locals.child
     const healthAnswers = _.get(
