@@ -100,14 +100,21 @@ export default (router) => {
   router.all([
     '/campaign/:campaignId/children'
   ], (req, res, next) => {
+    const campaign = req.session.data.campaigns[req.params.campaignId]
+
     if (req.query.noConsent) {
       res.locals.noConsent = req.query.noConsent
       const nhsNumber = req.query.noConsent
-      const campaign = req.session.data.campaigns[req.params.campaignId]
       const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
       child.outcome = 'No consent'
       child.seen.isOffline = res.locals.isOffline
+      res.locals.successChild = child
+    } else if (res.locals.success) {
+      res.locals.successChild = campaign.children.find(c => {
+        return c.nhsNumber === req.query.success
+      })
     }
+
     next()
   })
 

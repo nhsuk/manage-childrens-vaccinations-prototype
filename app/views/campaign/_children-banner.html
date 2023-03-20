@@ -1,17 +1,20 @@
 {% if noConsent %}
   {% set html %}
-  {% if isOffline %}
-    <p class="govuk-notification-banner__heading">
-      Offline changes saved
-    </p>
+    {% if isOffline %}
+      <p class="govuk-notification-banner__heading">
+        Offline changes saved for {{ successChild.fullName }}
+      </p>
+      <p>
+        You will need to go online to sync your changes.
+      </p>
+    {% else %}
+      <p class="govuk-notification-banner__heading">
+        Outcome saved for {{ successChild.fullName }}
+      </p>
+    {% endif %}
     <p>
-      You will need to go online to sync your changes.
+      <a href="/campaign/{{ campaignId }}/child/{{ successChild.nhsNumber }}">View child record</a>
     </p>
-  {% else %}
-    <p class="govuk-notification-banner__heading">
-      Outcome saved
-    </p>
-  {% endif %}
   {% endset %}
 
   {{ govukNotificationBanner({
@@ -23,16 +26,19 @@
   {% set html %}
     {% if isOffline %}
       <p class="govuk-notification-banner__heading">
-        Offline changes saved
+        Offline changes saved for {{ successChild.fullName }}
       </p>
       <p>
         You will need to go online to sync your changes.
       </p>
     {% else %}
       <p class="govuk-notification-banner__heading">
-        Record saved
+        Record saved for {{ successChild.fullName }}
       </p>
     {% endif %}
+    <p>
+      <a href="/campaign/{{ campaignId }}/child/{{ successChild.nhsNumber }}">View child record</a>
+    </p>
   {% endset %}
 
   {{ govukNotificationBanner({
