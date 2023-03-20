@@ -13,11 +13,15 @@
     items: [
       {
         text: 'Yes, they agree',
-        value: 'Yes'
+        value: CONSENT.GIVEN
       },
       {
         text: 'No, they do not agree',
-        value: 'No'
+        value: CONSENT.REFUSED
+      },
+      {
+        text: 'No response',
+        value: CONSENT.UNKNOWN
       }
     ],
     decorate: base + "consent"

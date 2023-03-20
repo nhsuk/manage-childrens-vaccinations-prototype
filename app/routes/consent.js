@@ -1,5 +1,7 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
+import { CONSENT } from '../enums.js'
+import { DateTime } from 'luxon'
 
 export default (router) => {
   router.all([
@@ -45,6 +47,33 @@ export default (router) => {
         }
       }
     }
+
+    next()
+  })
+
+  // Copy consent values to the child object
+  router.post([
+    '/consent/:campaignId/:nhsNumber/confirm'
+  ], (req, res, next) => {
+    const child = res.locals.child
+    const campaign = res.locals.campaign
+    const campaignType = campaign.type
+    const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
+
+    child.consent[campaignType] = consentData.consent
+    child.consent.text = consentData.consent
+    child.consent.consented = consentData.consent === CONSENT.GIVEN
+    child.consent.refused = consentData.consent === CONSENT.REFUSED
+    child.consent.responded = !consentData.consent === CONSENT.UNKNOWN
+    child.consentedDate = DateTime.local().toISODate()
+    child.consentedMethod = 'Telephone'
+
+    child.parentOrGuardian.fullName = consentData.parent.name
+    child.parentOrGuardian.telephone = consentData.parent.telephone
+    child.parentOrGuardian.relationship =
+      (consentData.parent.relationship === 'Other' && consentData.parent['relationship-other'])
+        ? consentData.parent['relationship-other']
+        : consentData.parent.relationship
 
     next()
   })
