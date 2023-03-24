@@ -1,0 +1,30 @@
+{% extends "layouts/default.html" %}
+{% set title = "You’re back online" %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+              <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+
+              <p>{{ totalOfflineChangesCount }} offline changes need syncing.</p>
+
+              {{ button({
+                text: "Sync your changes",
+                href: "/synced-ok"
+              }) }}
+            </div>
+          </div>
+
+          <p>
+            <a href="#">Continue without syncing</a>
+          </p>
+          <p>You will need to sync your changes later.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}

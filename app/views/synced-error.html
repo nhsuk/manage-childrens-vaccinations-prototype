@@ -1,0 +1,27 @@
+{% extends "layouts/default.html" %}
+{% set title = "We could not sync 3 of your changes" %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+
+          <p>This can happen if:</p>
+
+          <ul class="nhsuk-list nhsuk-list--bullet">
+            <li>two people change the same record in different ways</li>
+          </ul>
+
+          <p>You need to review the changed records, and decide which version is correct.</p>
+
+          {{ button({
+            text: "Continue",
+            href: "/dashboard"
+          }) }}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}
