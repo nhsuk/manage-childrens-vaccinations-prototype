@@ -6,21 +6,39 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-6">{{ title | noOrphans | safe }}</h1>
+          <div id="syncing-changes">
+            <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-6">Syncing your changes</h1>
 
-          {{ details({
-            text: "See your synced changes",
-            HTML: "...",
-            classes: "nhsuk-u-margin-bottom-6"
-          }) }}
+            <svg class="loader" viewBox="0 0 50 50">
+              <circle class="circle" cx="25" cy="25" r="20" stroke="#005eb8" stroke-width="5" fill="none"></circle>
+            </svg>
+          </div>
 
-          {{ button({
-            text: "Continue",
-            href: "/dashboard",
-            classes: "nhsuk-u-margin-bottom-3"
-          }) }}
+          <div id="changes-synced" style="display: none">
+            <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-6">{{ title | noOrphans | safe }}</h1>
+            {{ details({
+              text: "See your synced changes",
+              HTML: "...",
+              classes: "nhsuk-u-margin-bottom-6"
+            }) }}
+
+            {{ button({
+              text: "Continue",
+              href: "/dashboard",
+              classes: "nhsuk-u-margin-bottom-3"
+            }) }}
+          </div>
         </div>
       </div>
     </main>
   </div>
+{% endblock %}
+
+{% block bodyEnd %}
+<script>
+  setTimeout(function() {
+    document.getElementById('syncing-changes').style.display = 'none';
+    document.getElementById('changes-synced').style.display = 'block';
+  }, 5000);
+</script>
 {% endblock %}
