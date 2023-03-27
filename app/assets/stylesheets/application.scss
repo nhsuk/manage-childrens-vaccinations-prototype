@@ -107,3 +107,33 @@ $color_app-pale-blue: #ccdff1;
     }
   }
 }
+
+@keyframes rotate {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes draw {
+  0% {
+      stroke-dashoffset: 125;
+  }
+  100% {
+      stroke-dashoffset: 0;
+  }
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+}
+
+.circle {
+  animation: draw 1.5s ease-in-out, pulse 10s ease-in;
+  animation-iteration-count: infinite, 1;
+  stroke-width: 10;
+  stroke-dasharray: 125;
+}
