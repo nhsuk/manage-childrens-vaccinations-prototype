@@ -15,6 +15,7 @@ import users from './generators/users.js'
 const c = campaigns({ count: 20 })
 
 export default {
+  support: 'record-childrens-vaccinations@service.nhs.uk',
   user: {
     name: 'Jane Doe',
     email: 'jane.doe@example.com'
