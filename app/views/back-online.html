@@ -8,7 +8,7 @@
         <div class="nhsuk-grid-column-full">
           <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-          <p>{{ totalOfflineChangesCount }} offline changes need syncing.</p>
+          <p>{{ totalOfflineChangesCount or 52 }} offline changes need syncing.</p>
 
           {{ button({
             text: "Sync your changes",
