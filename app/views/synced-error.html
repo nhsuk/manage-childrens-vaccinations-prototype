@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = "We could not sync 3 of your changes" %}
+{% set title = "There was a problem" %}
 
 {% block main %}
   <div class="nhsuk-width-container">
@@ -8,18 +8,40 @@
         <div class="nhsuk-grid-column-two-thirds">
           <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-          <p>This can happen if:</p>
+          <h2 class="nhsuk-heading-m">3 changes had a problem</h2>
 
-          <ul class="nhsuk-list nhsuk-list--bullet">
-            <li>two people change the same record in different ways</li>
-          </ul>
+          <p>Sometimes two people can change the same record in different ways, this can create a conflict that needs to be reconciled by our support team.</p>
 
-          <p>You need to review the changed records, and decide which version is correct.</p>
+          <p>These changes have been sent to our support team to investigate. They will review them and contact you if they need more information. Fixes are usually simple and quick.</p>
+
+          <p>You’ll get an email when the problems are fixed.</p>
+
+          <p>Your changes are safe and no data has been lost.</p>
+
+          {{ details({
+            text: "See which changes had a problem",
+            HTML: "...",
+            classes: "nhsuk-u-margin-bottom-6"
+          }) }}
+
+          <h2 class="nhsuk-heading-m">Everything else synced successfully</h2>
+
+          {{ details({
+            text: "See your synced changes",
+            HTML: "...",
+            classes: "nhsuk-u-margin-bottom-6"
+          }) }}
 
           {{ button({
-            text: "Continue",
+            classes: "nhsuk-u-margin-top-4",
+            text: "Finish",
             href: "/dashboard"
           }) }}
+
+          <p>
+            If you have any questions you can contact:<br >
+            <a href="#">{{ data.support }}</a>
+          </p>
         </div>
       </div>
     </main>
