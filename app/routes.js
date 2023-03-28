@@ -39,8 +39,6 @@ router.all('*', (req, res, next) => {
   res.locals.offlineUploaded = req.session.offlineUploaded
   res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
   res.locals.totalOfflineChangesCount = offlineChangesCount(req.session.data.campaigns)
-
-  res.locals.totalOfflineChangesCount = 100
   next()
 })
 
