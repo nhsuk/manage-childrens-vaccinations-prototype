@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = "There was a problem" %}
+{% set title = "3 changes had a problem" %}
 
 {% block main %}
   <div class="nhsuk-width-container">
@@ -8,27 +8,42 @@
         <div class="nhsuk-grid-column-two-thirds">
           <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-          <h2 class="nhsuk-heading-m">3 changes had a problem</h2>
+          <p>Sometimes, two people can change the same record in different ways. This creates a conflict.</p>
 
-          <p>Sometimes two people can change the same record in different ways, this can create a conflict that needs to be reconciled by our support team.</p>
+          <p>Our support team are now working to resolve the conflict. This is normally simple and quick.</p>
 
-          <p>These changes have been sent to our support team to investigate. They will review them and contact you if they need more information. Fixes are usually simple and quick.</p>
-
-          <p>You’ll get an email when the problems are fixed.</p>
+          <p>The team will get in touch if they need more information. They’ll also let you know when the problems are fixed.</p>
 
           <p>Your changes are safe and no data has been lost.</p>
 
+          {% set problemsHtml %}
+            <ul class="govuk-list">
+              <li><a href="#">Bobby Doe</a></li>
+              <li><a href="#">Sally Fields</a></li>
+              <li><a href="#">Jo Hendrix</a></li>
+            </ul>
+          {% endset %}
+
           {{ details({
             text: "See which changes had a problem",
-            HTML: "...",
+            HTML: problemsHtml,
             classes: "nhsuk-u-margin-bottom-6"
           }) }}
 
           <h2 class="nhsuk-heading-m">Everything else synced successfully</h2>
 
+          {% set everythingHtml %}
+            <ul class="govuk-list">
+              <li>
+                <a href="#">29 March – Hele’s Secondary School</a><br />
+                120 changes
+              </li>
+            </ul>
+          {% endset %}
+
           {{ details({
             text: "See your synced changes",
-            HTML: "...",
+            HTML: everythingHtml,
             classes: "nhsuk-u-margin-bottom-6"
           }) }}
 

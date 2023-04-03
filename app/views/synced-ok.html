@@ -16,11 +16,20 @@
 
           <div id="changes-synced" style="display: none">
             <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-6">{{ title | noOrphans | safe }}</h1>
-            {{ details({
-              text: "See your synced changes",
-              HTML: "...",
-              classes: "nhsuk-u-margin-bottom-6"
-            }) }}
+            {% set everythingHtml %}
+            <ul class="govuk-list">
+              <li>
+                <a href="#">29 March – Hele’s Secondary School</a><br />
+                120 changes
+              </li>
+            </ul>
+          {% endset %}
+
+          {{ details({
+            text: "See your synced changes",
+            HTML: everythingHtml,
+            classes: "nhsuk-u-margin-bottom-6"
+          }) }}
 
             {{ button({
               text: "Continue",
