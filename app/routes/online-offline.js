@@ -1,5 +1,4 @@
 const goOffline = (session) => {
-  session.offlineUploaded = false
   session.data.features.offline.on = true
 }
 
@@ -13,8 +12,6 @@ const goOnline = (req, hasAnyOfflineChanges) => {
       .forEach(child => {
         child.seen.isOffline = false
       })
-
-    req.session.offlineUploaded = true
   }
 
   req.session.data.features.offline.on = false
@@ -23,7 +20,7 @@ const goOnline = (req, hasAnyOfflineChanges) => {
 export default (router, hasAnyOfflineChanges) => {
   router.post(['/scenario-office', '/scenario-back-online'], (req, res) => {
     goOnline(req, hasAnyOfflineChanges)
-    res.redirect('/dashboard')
+    hasAnyOfflineChanges ? res.redirect('/back-online') : res.redirect('/dashboard')
   })
 
   router.post('/scenario-offline', (req, res) => {
@@ -33,11 +30,6 @@ export default (router, hasAnyOfflineChanges) => {
 
   router.get('/go-offline', (req, res) => {
     goOffline(req.session)
-    res.redirect('back')
-  })
-
-  router.get('/dismiss-upload', (req, res) => {
-    req.session.offlineUploaded = false
     res.redirect('back')
   })
 
