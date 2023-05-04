@@ -1,0 +1,34 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Are they Gillick competent?" %}
+
+{% block form %}
+  {{ radios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "nhsuk-fieldset__legend--l"
+      }
+    },
+    items: [
+      {
+        text: 'Yes, they are Gillick competent',
+        value: 'Yes'
+      },
+      {
+        text: 'No'
+      }
+    ],
+    decorate: base + "gillick-competent"
+  }) }}
+
+  {{ textarea({
+    label: {
+      text: 'Give details of your assessment'
+    },
+    rows: 10,
+    name: "notes",
+    classes: "nhsuk-u-margin-bottom-0",
+    decorate: ["vaccination", campaign.id, child.nhsNumber, "notes"]
+  }) }}
+{% endblock %}
