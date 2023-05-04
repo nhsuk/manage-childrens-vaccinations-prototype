@@ -1,0 +1,45 @@
+{% extends "layouts/default.html" %}
+{% set title = "You’ll need to use a code to make offline changes" %}
+
+{% block main %}
+  <div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="main-content" role="main">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+
+              <p>Make a copy of this code and keep it safe, we will ask you for it when you are working offline.</p>
+
+              <div class="nhsuk-card nhsuk-u-margin-bottom-4">
+                <div class="nhsuk-card__content">
+                  <h3 class="nhsuk-card__heading nhsuk-u-margin-bottom-1">
+                    tomato-lettuce-pear
+                  </h3>
+                  <p class="nhsuk-u-margin-top-0">
+                    <a href="#">Get a new code</a>
+                  </p>
+                </div>
+              </div>
+
+              {{ input({
+                label: {
+                  text: "Confirm your code",
+                  classes: "nhsuk-label--s nhsuk-u-margin-bottom-2"
+                },
+                type: "text",
+                classes: "nhsuk-input--width-20",
+                decorate: "confirm-offline-password"
+              }) }}
+
+              {{ button({
+                text: "Confirm"
+              }) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}
