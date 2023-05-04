@@ -38,7 +38,16 @@ export default (req) => {
         value: 'No'
       }
     },
-    [`/vaccination/${campaignId}/${nhsNumber}/details`]: {}
+    [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
+
+    [`/campaign/${campaignId}/child/${nhsNumber}?gillick`]: {},
+    [`${basePath}/gillick`]: {
+      [`${basePath}/health-questions`]: {
+        data: `${baseData}.gillick-competent`,
+        value: 'Yes'
+      },
+      [`/campaign/${campaignId}/child/${nhsNumber}`]: true
+    }
   }
 
   return wizard(journey, req)

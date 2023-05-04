@@ -21,6 +21,13 @@ const journeyForEverythingElse = (data, campaign, child) => {
   }
 
   if (!hasConsent && askingForConsent) {
+    const consentType = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`)
+    if (consentType === 'Gillick') {
+      return {
+        [`/consent/${campaignId}/${nhsNumber}/gillick`]: {}
+      }
+    }
+
     return {
       [`/consent/${campaignId}/${nhsNumber}`]: {}
     }
