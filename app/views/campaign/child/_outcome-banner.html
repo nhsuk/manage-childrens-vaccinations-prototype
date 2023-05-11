@@ -21,6 +21,9 @@
 {% elif consent == 'Unknown' %}
   {% set consentText %}
     No-one responded to our requests for consent
+    {% if child.assessedAsNotGillickCompetent %}
+    . When assessed, the child was not Gillick competent.
+    {% endif %}
   {% endset %}
 {% endif %}
 

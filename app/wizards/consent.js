@@ -1,7 +1,7 @@
 import { wizard } from 'nhsuk-prototype-rig'
 import { CONSENT } from '../enums.js'
 
-export default (req) => {
+export default (req, res) => {
   const nhsNumber = req.params.nhsNumber
   const campaignId = req.params.campaignId
   const basePath = `/consent/${campaignId}/${nhsNumber}`
@@ -46,7 +46,12 @@ export default (req) => {
         data: `${baseData}.gillick-competent`,
         value: 'Yes'
       },
-      [`/campaign/${campaignId}/child/${nhsNumber}`]: true
+      [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
+        res.locals.child.outcome = 'No consent'
+        res.locals.child.assessedAsNotGillickCompetent = true
+        res.locals.child.seen.isOffline = res.locals.isOffline
+        return true
+      }
     }
   }
 

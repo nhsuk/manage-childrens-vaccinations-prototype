@@ -13,7 +13,7 @@ export default (router) => {
 
     res.locals.campaign = campaign
     res.locals.child = campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
-    res.locals.paths = wizard(req)
+    res.locals.paths = wizard(req, res)
     res.locals.base = `consent.${campaign.id}.${req.params.nhsNumber}.`
 
     next()
