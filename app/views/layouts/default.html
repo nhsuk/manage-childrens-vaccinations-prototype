@@ -97,4 +97,7 @@
   {% if vaccinationRecord %}
     <script>console.log('Vaccination record', {{ vaccinationRecord | dump | safe }});</script>
   {% endif %}
+  {% if consentRecord %}
+    <script>console.log('Consent record', {{ consentRecord | dump | safe }});</script>
+  {% endif %}
 {% endblock %}

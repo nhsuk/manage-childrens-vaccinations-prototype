@@ -1,0 +1,40 @@
+{% set consentHtml %}
+  {% set isGillickCompetent = consentRecord['gillick-competent'] === 'Yes' %}
+
+  {{ summaryList({
+    classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+    rows: decorateRows([
+      {
+        key: 'Assessment',
+        value: {
+          html: 'Assessed by ' + data.user.name + '<br />' + ("today" | govukDate)
+        }
+      },
+      {
+        key: "Consent",
+        value: "Given by child"
+      } if isGillickCompetent,
+      {
+        key: 'Gillick competent',
+        value: {
+          html: consentRecord['gillick-competent']
+        }
+      } if consentRecord and consentRecord['gillick-competent'],
+      {
+        key: 'Details',
+        value: {
+          html: consentRecord['gillick-assessment']
+        }
+      } if consentRecord and consentRecord['gillick-assessment']
+    ])
+  }) }}
+{% endset %}
+
+{% if consentRecord and consentRecord['gillick-competent'] %}
+  {{ card({
+    heading: "Gillick competence",
+    headingLevel: "2",
+    headingClasses: "nhsuk-heading-m",
+    description: consentHtml
+  }) }}
+{% endif %}

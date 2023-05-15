@@ -48,6 +48,7 @@ export default (router) => {
       res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     }
 
+    res.locals.consentRecord = _.get(req.session.data, `consent.${req.params.campaignId}.${req.params.nhsNumber}`)
     res.locals.paths = vaccination(req)
     next()
   })
