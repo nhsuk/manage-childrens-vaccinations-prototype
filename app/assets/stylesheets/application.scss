@@ -77,6 +77,12 @@ $color_app-pale-blue: #ccdff1;
   }
 }
 
+.app-table--no-bottom-border {
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
 .app-notification-banner {
   border-color: $color_nhsuk-blue;
 
