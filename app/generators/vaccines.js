@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
+import { faker } from '@faker-js/faker'
+faker.locale = 'en_GB'
 
-const getBatches = (faker) => {
+const getBatches = () => {
   const batches = []
   const count = faker.datatype.number({ min: 1, max: 3 })
   const prefix = faker.random.alpha({ casing: 'upper', count: 2 })
@@ -20,7 +22,7 @@ const summarise = (v) => {
   v.summary = `${v.vaccine} (${brand}, ${v.batches[0].name})`
 }
 
-export default (faker, type) => {
+export default (type) => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1107978/Influenza-green-book-chapter19-16September22.pdf
   const fluVaccines = [
     {
@@ -81,6 +83,9 @@ export default (faker, type) => {
     case '3-in-1 and MenACWY':
       vacs = dptVaccines.concat(menAcwyVaccines)
       break
+    default:
+      // concatenate all types
+      vacs = fluVaccines.concat(hpvVaccines, dptVaccines, menAcwyVaccines)
   }
 
   vacs.forEach(vaccine => {

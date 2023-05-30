@@ -23,9 +23,7 @@ const ageRange = (type) => {
 }
 
 export default () => {
-  // const type = faker.helpers.arrayElement(['Flu', 'HPV', '3-in-1 and MenACWY'])
   const type = 'HPV'
-  const vaccinesObject = vaccines(faker, type)
   const schoolObject = school(faker, type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.datatype.number({ min: 2, max: 100 })
@@ -43,7 +41,7 @@ export default () => {
     type,
     triageInProgress,
     yearGroups: yearGroups(type),
-    vaccines: vaccinesObject,
+    vaccines: vaccines(type),
     school: schoolObject,
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',

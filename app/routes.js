@@ -7,6 +7,7 @@ import userRoutes from './routes/user.js'
 import onlineOfflineRoutes from './routes/online-offline.js'
 import redirects from './routes/redirects.js'
 import consent from './routes/consent.js'
+import vaccineBatchRoutes from './routes/vaccine-batches.js'
 
 const router = express.Router()
 
@@ -49,6 +50,7 @@ userRoutes(router)
 onlineOfflineRoutes(router, hasAnyOfflineChanges)
 redirects(router)
 consent(router)
+vaccineBatchRoutes(router)
 
 router.get('/dashboard', (req, res, next) => {
   res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
