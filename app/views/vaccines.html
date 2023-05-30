@@ -3,18 +3,8 @@
 
 {% block pageNavigation %}
   {{ breadcrumb({
-    items: [
-      {
-        text: "Home",
-        href: "/dashboard"
-      },
-      {
-        text: "School sessions",
-        href: "/school-sessions"
-      }
-    ],
-    text: campaign.title,
-    href: "/campaign/" + campaign.id
+    text: "Home",
+    href: "/dashboard"
   }) }}
 {% endblock %}
 
@@ -22,29 +12,6 @@
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      {% if success %}
-        {% set html %}
-          {% if isOffline %}
-            <p class="govuk-notification-banner__heading">
-              Offline changes saved
-            </p>
-            <p>
-              You will need to go online to sync your changes.
-            </p>
-          {% else %}
-            <p class="govuk-notification-banner__heading">
-              Record saved
-            </p>
-          {% endif %}
-        {% endset %}
-
-        {{ govukNotificationBanner({
-          html: html,
-          classes: "app-u-frutiger",
-          type: "success"
-        }) }}
-      {% endif %}
-
       <h1 class="nhsuk-heading-l">
         {{ title | noOrphans | safe }}
       </h1>
@@ -53,7 +20,7 @@
         <div class="nhsuk-grid-column-two-thirds">
           <div class="nhsuk-card">
             <div class="nhsuk-card__content">
-              {% for vaccine in campaign.vaccines %}
+              {% for vaccine in data.vaccines %}
                 <h2 class="nhsuk-heading-m">{{ vaccine.brand }} ({{ vaccine.vaccine }})</h2>
 
                 {% set batchesHtml %}
