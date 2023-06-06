@@ -63,9 +63,28 @@ export default (router) => {
       .values(req.session.data.vaccines.batches)
       .filter(b => b.vaccine === campaignType)
 
-    console.log(campaignType, req.session.data.vaccines.batches, batchesForCampaign, batchesForCampaign.map(v => v.name))
-
     res.locals.batchItems = batchesForCampaign.map(v => v.name)
+    next()
+  })
+
+  router.all([
+    '/vaccination/:campaignId/:nhsNumber/which-batch'
+  ], (req, res, next) => {
+    const body = req.body
+
+    // Set today's default batch
+    // Look at all `todays-batch-` fields and find the first one that has a value
+    const todaysBatch = Object
+      .keys(body)
+      .filter(k => k.startsWith('todays-batch'))
+      .map(k => body[k])
+      .filter(v => Array.isArray(v) && v.length > 0)
+      .flat()
+
+    if (todaysBatch.length > 0) {
+      req.session.data['todays-batch'] = todaysBatch[0]
+    }
+
     next()
   })
 
@@ -75,6 +94,11 @@ export default (router) => {
     res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     res.locals.menACWYVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+
+    if (!res.locals.vaccinationRecord.batch) {
+      res.locals.vaccinationRecord.batch = req.session.data['todays-batch']
+    }
+
     next()
   })
 
