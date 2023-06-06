@@ -56,6 +56,21 @@ export default (router) => {
   })
 
   router.all([
+    '/vaccination/:campaignId/:nhsNumber/which-batch'
+  ], (req, res, next) => {
+    res.locals.batchItems = res.locals.campaign.vaccines[0].batches.map(v => {
+      return {
+        text: `${v.name} (${v.expiry})`,
+        value: v.name
+      }
+    })
+
+    res.locals.batchItems.push({ divider: 'or' })
+    res.locals.batchItems.push({ text: 'A batch that’s not in this list' })
+    next()
+  })
+
+  router.all([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
     res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
