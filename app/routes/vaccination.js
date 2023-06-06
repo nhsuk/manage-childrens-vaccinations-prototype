@@ -58,15 +58,14 @@ export default (router) => {
   router.all([
     '/vaccination/:campaignId/:nhsNumber/which-batch'
   ], (req, res, next) => {
-    res.locals.batchItems = res.locals.campaign.vaccines[0].batches.map(v => {
-      return {
-        text: `${v.name} (${v.expiry})`,
-        value: v.name
-      }
-    })
+    const campaignType = res.locals.campaign.type
+    const batchesForCampaign = Object
+      .values(req.session.data.vaccines.batches)
+      .filter(b => b.vaccine === campaignType)
 
-    res.locals.batchItems.push({ divider: 'or' })
-    res.locals.batchItems.push({ text: 'A batch that’s not in this list' })
+    console.log(campaignType, req.session.data.vaccines.batches, batchesForCampaign, batchesForCampaign.map(v => v.name))
+
+    res.locals.batchItems = batchesForCampaign.map(v => v.name)
     next()
   })
 
@@ -102,6 +101,7 @@ export default (router) => {
 
     if (vaccineGiven) {
       res.locals.child.outcome = 'Vaccinated'
+      res.locals.child.batch = res.locals.vaccinationRecord.batch
       res.locals.child.seen = { text: 'Vaccinated', given: vaccineGiven }
     } else {
       res.locals.child.outcome = 'Could not vaccinate'

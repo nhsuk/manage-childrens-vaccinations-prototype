@@ -10,11 +10,11 @@ const getBatches = () => {
   for (let i = 0; i < count; i++) {
     const name = `${prefix}${faker.phone.number('####')}`
     const daysUntilExpiry = faker.datatype.number({ min: 10, max: 50 })
-    const expiry = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
-    const day = expiry.split('-')[2]
-    const month = expiry.split('-')[1]
-    const year = expiry.split('-')[0]
-    batches[name] = { name, expiry: { year, month, day } }
+    const expiryDate = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
+    const day = expiryDate.split('-')[2]
+    const month = expiryDate.split('-')[1]
+    const year = expiryDate.split('-')[0]
+    batches[name] = { name, expiryDate, expiry: { year, month, day } }
   }
 
   return batches
@@ -25,7 +25,7 @@ const summarise = (v) => {
   v.summary = `${v.vaccine} (${brand})`
 }
 
-export default (type) => {
+export default () => {
   // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1107978/Influenza-green-book-chapter19-16September22.pdf
   const fluVaccines = [
     {
@@ -80,26 +80,8 @@ export default (type) => {
     }
   ]
 
-  let vacs
-  switch (type) {
-    case 'Flu':
-      vacs = fluVaccines
-      break
-    case 'HPV':
-      vacs = hpvVaccines
-      break
-    case '3-in-1 and MenACWY':
-      vacs = dptVaccines.concat(menAcwyVaccines)
-      break
-    default:
-      // concatenate all types
-      vacs = fluVaccines.concat(hpvVaccines, dptVaccines, menAcwyVaccines)
-  }
-
-  vacs.forEach(vaccine => {
-    vaccine.type = type
-    summarise(vaccine)
-  })
+  const vacs = fluVaccines.concat(hpvVaccines, dptVaccines, menAcwyVaccines)
+  vacs.forEach(vaccine => summarise(vaccine))
 
   const allBatches = {}
 

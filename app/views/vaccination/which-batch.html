@@ -39,6 +39,25 @@
     {{ default | safe }}
   {% endset %}
 
+  {% set items = [] %}
+  {% for batchKey in batchItems %}
+    {% set batch = data.vaccines.batches[batchKey] %}
+    {% set items = (items.push({
+      text: batch.name + ' (expires ' + batch.expiryDate | govukDate + ')',
+      value: batchKey,
+      conditional: {
+        html: default
+      }
+    }), items) %}
+  {% endfor %}
+
+  {% set items = (items.push({ divider: 'or' }, {
+    text: 'A batch that’s not in this list',
+    conditional: {
+      html: otherBatch
+    }
+  }), items) %}
+
   {{ radios({
     fieldset: {
       legend: {
@@ -46,28 +65,8 @@
         text: title
       }
     },
-    items: [
-      {
-        text: 'GT1217 (10 July 2023)',
-        conditional: {
-          html: default
-        }
-      },
-      {
-        text: 'GT2237 (1 August 2023)',
-        conditional: {
-          html: default
-        }
-      },
-      { divider: 'or' },
-      {
-        text: 'A batch that’s not in this list',
-        conditional: {
-          html: otherBatch
-        }
-      }
-    ],
-    decorate: "batch"
+    items: items,
+    decorate: [dataLocation, campaign.id, child.nhsNumber, "batch"]
   }) }}
 
 {% endblock %}

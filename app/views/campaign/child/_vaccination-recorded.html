@@ -1,12 +1,13 @@
 {% set vaccineRecorded %}
   <p><a href="#">Change</a></p>
+  {% set batch = data.vaccines.batches[vaccinationRecord.batch] %}
 
   {{ govukSummaryList({
     classes: "app-u-frutiger app-summary-list--no-bottom-border  nhsuk-u-margin-bottom-0",
     rows: decorateRows([
       {
         key: 'Vaccine',
-        value: vaccinationRecord.batch.summary
+        value: batch.summary
       },
       {
         key: 'Dose',
@@ -19,11 +20,11 @@
       {
         key: 'Site',
         value: 'Nasal'
-      } if vaccineGiven and vaccinationRecord.batch.isNasal,
+      } if vaccineGiven and batch.isNasal,
       {
         key: 'Site',
         value: vaccinationRecord.where
-      } if vaccineGiven and not vaccinationRecord.batch.isNasal,
+      } if vaccineGiven and not batch.isNasal,
       {
         key: 'Reason',
         value: vaccinationRecord['why-not-given']

@@ -22,7 +22,7 @@ export default (campaigns, batches) => {
     vr[campaignId][child.nhsNumber] = {
       given: 'Yes',
       where: 'Left arm',
-      batch
+      batch: batch.name
     }
   })
 
