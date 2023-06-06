@@ -3,15 +3,18 @@ import { faker } from '@faker-js/faker'
 faker.locale = 'en_GB'
 
 const getBatches = () => {
-  const batches = []
-  const count = faker.datatype.number({ min: 1, max: 3 })
+  const batches = {}
+  const count = faker.datatype.number({ min: 2, max: 5 })
   const prefix = faker.random.alpha({ casing: 'upper', count: 2 })
 
   for (let i = 0; i < count; i++) {
     const name = `${prefix}${faker.phone.number('####')}`
     const daysUntilExpiry = faker.datatype.number({ min: 10, max: 50 })
     const expiry = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
-    batches.push({ name, expiry })
+    const day = expiry.split('-')[2]
+    const month = expiry.split('-')[1]
+    const year = expiry.split('-')[0]
+    batches[name] = { name, expiry: { year, month, day } }
   }
 
   return batches
@@ -19,7 +22,7 @@ const getBatches = () => {
 
 const summarise = (v) => {
   const brand = v.method === 'Nasal spray' ? v.brand + ' nasal spray' : v.brand
-  v.summary = `${v.vaccine} (${brand}, ${v.batches[0].name})`
+  v.summary = `${v.vaccine} (${brand})`
 }
 
 export default (type) => {
@@ -93,5 +96,18 @@ export default (type) => {
     summarise(vaccine)
   })
 
-  return vacs
+  const allBatches = {}
+
+  vacs.flatMap(v => v.batches).forEach(batches => {
+    Object.keys(batches).forEach(name => {
+      const batch = batches[name]
+      batch.vaccine = vacs.find(v => v.batches[name]).vaccine
+      batch.brand = vacs.find(v => v.batches[name]).brand
+      batch.method = vacs.find(v => v.batches[name]).method
+
+      allBatches[name] = batch
+    })
+  })
+
+  return { batches: allBatches, brands: vacs }
 }
