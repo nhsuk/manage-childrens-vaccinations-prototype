@@ -2,14 +2,7 @@
 {% set title = "Which batch did you use?" %}
 
 {% block form %}
-  {% set default %}
-    {{ checkboxes({
-      items: [
-        { text: 'Default to this batch for today' }
-      ],
-      decorate: "batch-default"
-    }) }}
-  {% endset %}
+  {% set defaulText = 'Default to this batch for today' %}
 
   {% set otherBatch %}
     {{ input({
@@ -17,9 +10,8 @@
         text: 'Batch',
         classes: 'nhsuk-label--s nhsuk-u-margin-bottom-1'
       },
-      value: batch.name,
       classes: 'nhsuk-input--width-10',
-      decorate: "users.new.fullName"
+      decorate: "other-batch-name"
     }) }}
 
     {{ dateInput({
@@ -30,13 +22,17 @@
         }
       },
       hint: {
-        text: "For example, 27 10 2023"
+        text: "For example, 31 12 2023"
       },
-      value: batch.expiry,
-      decorate: "expiry"
+      decorate: "other-batch-expiry"
     }) }}
 
-    {{ default | safe }}
+    {{ checkboxes({
+      items: [
+        { text: defaulText, value: "other-batch" }
+      ],
+      decorate: "todays-batch-other"
+    }) }}
   {% endset %}
 
   {% set items = [] %}
@@ -46,7 +42,12 @@
       text: batch.name + ' (expires ' + batch.expiryDate | govukDate + ')',
       value: batchKey,
       conditional: {
-        html: default
+        html: checkboxes({
+                items: [
+                  { text: defaulText, value: batchKey }
+                ],
+                decorate: "todays-batch-" + batchKey
+              })
       }
     }), items) %}
   {% endfor %}
