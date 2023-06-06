@@ -35,7 +35,7 @@
                 </tr>
               </thead>
               <tbody class="govuk-table__body">
-                {% for key, batch in data.vaccines.batches %}
+                {% for batch in batches %}
                   {% if batch.brand == vaccine.brand %}
                   <tr class="govuk-table__row">
                     <td class="govuk-table__cell">{{ batch.name }}</td>
