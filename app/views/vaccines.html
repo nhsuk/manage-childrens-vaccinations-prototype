@@ -8,7 +8,6 @@
   }) }}
 {% endblock %}
 
-
 {% block main %}
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
@@ -18,7 +17,7 @@
 
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          {% for vaccine in data.vaccines %}
+          {% for vaccine in data.vaccines.brands %}
           <div class="nhsuk-card">
             <div class="nhsuk-card__content">
             <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">{{ vaccine.brand }} ({{ vaccine.vaccine }})</h2>
@@ -36,17 +35,19 @@
                 </tr>
               </thead>
               <tbody class="govuk-table__body">
-                {% for batch in vaccine.batches %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">{{ batch.name }}</td>
-                  <td class="govuk-table__cell">{{ batch.expiry | govukDate }}</td>
-                  <td class="govuk-table__cell nhsuk-u-text-align-right">
-                    <a href="/vaccines/{{ batch.name }}">Change</a>
-                  </td>
-                  <td class="govuk-table__cell nhsuk-u-text-align-right">
-                    <a href="#">Move&nbsp;to&nbsp;archive</a>
-                  </td>
-                </tr>
+                {% for key, batch in data.vaccines.batches %}
+                  {% if batch.brand == vaccine.brand %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ batch.name }}</td>
+                    <td class="govuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
+                    <td class="govuk-table__cell nhsuk-u-text-align-right">
+                      <a href="/vaccines/{{ batch.name }}">Change</a>
+                    </td>
+                    <td class="govuk-table__cell nhsuk-u-text-align-right">
+                      <a href="#">Move&nbsp;to&nbsp;archive</a>
+                    </td>
+                  </tr>
+                  {% endif %}
                 {% endfor %}
               </tbody>
             </table>
