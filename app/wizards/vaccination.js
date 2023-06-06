@@ -8,6 +8,7 @@ const getData = (data, keyPath) => {
 const journeyForEverythingElse = (data, campaign, child) => {
   const nhsNumber = child.nhsNumber
   const campaignId = campaign.id
+  const hasDefaultBatch = !!data.todaysBatch
   const isUnknown = child.consent.unknown || child.consent[campaign.type] === 'Unknown'
   const refused = child.consent.refusedBoth || child.consent[campaign.type] === 'Refused'
   const hasConsent = !(isUnknown || refused)
@@ -36,6 +37,12 @@ const journeyForEverythingElse = (data, campaign, child) => {
   if (!hasConsent && !askingForConsent) {
     return {
       [`/campaign/${campaignId}/children?noConsent=${nhsNumber}`]: {}
+    }
+  }
+
+  if (!hasDefaultBatch) {
+    return {
+      [`/vaccination/${campaignId}/${nhsNumber}/which-batch`]: {}
     }
   }
 
