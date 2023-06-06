@@ -6,7 +6,7 @@
     rows: decorateRows([
       {
         key: 'Vaccine',
-        value: campaign.vaccines[0].summary
+        value: vaccinationRecord.batch.summary
       },
       {
         key: 'Dose',
@@ -19,11 +19,11 @@
       {
         key: 'Site',
         value: 'Nasal'
-      } if vaccineGiven and campaign.vaccines[0].method == "Nasal spray",
+      } if vaccineGiven and vaccinationRecord.batch.isNasal,
       {
         key: 'Site',
         value: vaccinationRecord.where
-      } if vaccineGiven and campaign.vaccines[0].method == "Injection",
+      } if vaccineGiven and not vaccinationRecord.batch.isNasal,
       {
         key: 'Reason',
         value: vaccinationRecord['why-not-given']

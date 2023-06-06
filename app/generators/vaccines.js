@@ -33,12 +33,14 @@ export default (type) => {
       brand: 'Fluenz Tetra',
       method: 'Nasal spray',
       isNasal: true,
+      isFlu: true,
       batches: getBatches(faker)
     },
     {
       vaccine: 'Flu',
       brand: 'Fluarix Tetra',
       method: 'Injection',
+      isFlu: true,
       batches: getBatches(faker)
     }
   ]
@@ -49,6 +51,7 @@ export default (type) => {
       vaccine: 'HPV',
       brand: 'Gardasil 9',
       method: 'Injection',
+      isHPV: true,
       batches: getBatches(faker)
     }
   ]
@@ -60,6 +63,7 @@ export default (type) => {
       vaccine: '3-in-1',
       brand: 'Revaxis',
       method: 'Injection',
+      is3in1: true,
       batches: getBatches(faker)
     }
   ]
@@ -71,6 +75,7 @@ export default (type) => {
       vaccine: 'MenACWY',
       brand: 'Nimenrix',
       method: 'Injection',
+      isMenACWY: true,
       batches: getBatches(faker)
     }
   ]
@@ -100,11 +105,14 @@ export default (type) => {
 
   vacs.flatMap(v => v.batches).forEach(batches => {
     Object.keys(batches).forEach(name => {
-      const batch = batches[name]
-      batch.vaccine = vacs.find(v => v.batches[name]).vaccine
-      batch.brand = vacs.find(v => v.batches[name]).brand
-      batch.method = vacs.find(v => v.batches[name]).method
+      const batch = {
+        ...batches[name],
+        ...vacs.find(v => v.batches[name])
+      }
 
+      batch.summary = batch.summary.replace(')', `, ${name})`)
+
+      delete batch.batches
       allBatches[name] = batch
     })
   })
