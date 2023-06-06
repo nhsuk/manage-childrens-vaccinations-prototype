@@ -2,7 +2,7 @@ import campaigns from './generators/campaigns.js'
 import vaccinationRecord from './generators/vaccination-record.js'
 import triageRecord from './generators/triage-record.js'
 import users from './generators/users.js'
-import vaccines from './generators/vaccines.js'
+import vaccineGenerator from './generators/vaccines.js'
 
 /**
  * Default values for user session data
@@ -14,6 +14,7 @@ import vaccines from './generators/vaccines.js'
  */
 
 const c = campaigns({ count: 20 })
+const vaccines = vaccineGenerator()
 
 export default {
   support: 'record-childrens-vaccinations@service.nhs.uk',
@@ -22,8 +23,8 @@ export default {
     email: 'jane.doe@example.com'
   },
   campaigns: c,
-  vaccines: vaccines(),
-  vaccination: vaccinationRecord(c),
+  vaccines,
+  vaccination: vaccinationRecord(c, vaccines.batches),
   triage: triageRecord(c),
   users: users({ count: 20 }),
   // Set feature flags using the `features` key

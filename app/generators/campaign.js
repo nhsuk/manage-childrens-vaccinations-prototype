@@ -1,6 +1,5 @@
 import school from './school.js'
 import children from './children.js'
-import vaccines from './vaccines.js'
 import yearGroups from './year-groups.js'
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
@@ -41,7 +40,6 @@ export default () => {
     type,
     triageInProgress,
     yearGroups: yearGroups(type),
-    vaccines: vaccines(type),
     school: schoolObject,
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',
