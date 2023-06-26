@@ -1,23 +1,22 @@
 {% set consent = child.consent[campaign.type] %}
-{% if consent == CONSENT.GIVEN %}
-  {% set color = 'green' %}
-  {% set text %}
-    Their {{ child.parentOrGuardian.relationship | lower }} has given consent
-  {% endset %}
-{% elif consent == CONSENT.REFUSED %}
-  {% set color = 'red' %}
+{% if consent == CONSENT.REFUSED %}
+  {% set color = 'orange' %}
   {% set text %}
     Their {{ child.parentOrGuardian.relationship | lower }} has refused to give consent
   {% endset %}
+  {% set action = ACTION_NEEDED.CHECK_REFUSAL %}
 {% elif consent == CONSENT.UNKNOWN %}
-  {% set color = 'blue' %}
+  {% set color = 'yellow' %}
   {% set text %}
     No-one responded to our requests for consent
   {% endset %}
+  {% set action = ACTION_NEEDED.GET_CONSENT %}
 {% endif %}
 
+{% if text %}
 <div class="app-consent-banner app-consent-banner--{{ color }} nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
-  <span class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
+  <span class="nhsuk-heading-m nhsuk-u-margin-bottom-2">
     {{ text }}
   </span>
 </div>
+{% endif %}
