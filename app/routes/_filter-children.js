@@ -76,8 +76,10 @@ export default (req, res) => {
 
     // let filteredChildren = children
     for (const f in activeFilters) {
-      vaccinatedChildren = filter(vaccinatedChildren, f, activeFilters[f], req, res)
-      couldNotVaccinateChildren = filter(couldNotVaccinateChildren, f, activeFilters[f], req, res)
+      if (f === 'year') {
+        vaccinatedChildren = filter(vaccinatedChildren, f, activeFilters[f], req, res)
+        couldNotVaccinateChildren = filter(couldNotVaccinateChildren, f, activeFilters[f], req, res)
+      }
       actionNeededChildren = filter(actionNeededChildren, f, activeFilters[f], req, res)
       // filteredChildren = filter(filteredChildren, f, activeFilters[f], req, res)
     }
