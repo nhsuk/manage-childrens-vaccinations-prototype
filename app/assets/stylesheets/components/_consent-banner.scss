@@ -6,6 +6,11 @@
     vertical-align: bottom;
   }
 
+  &--white {
+    border: 1px solid $nhsuk-border-color;
+    background-color: #ffffff;
+  }
+
   &--green {
     color: #004c23;
     border: 1px solid #004c23;
@@ -28,5 +33,11 @@
     color: #004281;
     border: 1px solid #004281;
     background-color: #ccdff1;
+  }
+
+  &--yellow {
+    color: #4d4712;
+    border: 1px solid #4d4712;
+    background-color: #fff59d;
   }
 }
