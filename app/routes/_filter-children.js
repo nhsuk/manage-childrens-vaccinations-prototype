@@ -60,6 +60,8 @@ export default (req, res) => {
     ...filter(children, 'actionTaken', 'REFUSED_CONSENT')
   ]
 
+  couldNotVaccinateChildren = couldNotVaccinateChildren.sort((a, b) => a.fullName.localeCompare(b.fullName))
+
   let actionNeededChildren = children.filter((c) => {
     return !vaccinatedChildren.includes(c) &&
       !couldNotVaccinateChildren.includes(c)
