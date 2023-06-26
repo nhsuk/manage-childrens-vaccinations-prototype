@@ -8,11 +8,21 @@ import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
-import { OUTCOME } from '../enums.js'
+import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
 faker.locale = 'en_GB'
 
 const preferredName = (child) => {
   return `${child.firstName} ${faker.name.lastName()}`
+}
+
+const setActions = (child, consent) => {
+  if (consent === CONSENT.REFUSED) {
+    child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+  } else if (consent === CONSENT.UNKNOWN) {
+    child.actionNeeded = ACTION_NEEDED.GET_CONSENT
+  } else if (consent === CONSENT.GIVEN) {
+    child.actionNeeded = ACTION_NEEDED.TRIAGE
+  }
 }
 
 export default (options) => {
@@ -30,6 +40,10 @@ export default (options) => {
   c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consent(faker, options.type)
   c.outcome = OUTCOME.NO_OUTCOME_YET
+
+  setActions(c, c.consent[options.type])
+  c.actionTaken = null
+
   c.seen = {}
   c.triageStatus = triageStatus(options.triageInProgress, c.consent)
   c.healthQuestions = healthQuestions(faker, options.type, c.consent, c.triageStatus)
