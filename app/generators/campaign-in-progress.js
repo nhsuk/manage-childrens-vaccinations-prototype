@@ -6,18 +6,25 @@ import { CONSENT, OUTCOME, TRIAGE, ACTION_NEEDED, ACTION_TAKEN } from '../enums.
 
 const setActions = (child, consent) => {
   if (consent === CONSENT.REFUSED) {
-    child.outcome = OUTCOME.NO_CONSENT
-    child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+    const checkedRefusal = faker.helpers.maybe(() => true, { probability: 0.2 })
+    child.outcome = checkedRefusal ? OUTCOME.NO_CONSENT : OUTCOME.NO_OUTCOME_YET
+
+    if (checkedRefusal) {
+      child.actionTaken = ACTION_TAKEN.REFUSED_CONSENT
+    } else {
+      child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+    }
   }
 
   if (consent === CONSENT.UNKNOWN) {
-    child.outcome = OUTCOME.NO_CONSENT
-    child.actionNeeded = ACTION_NEEDED.GET_CONSENT
-  }
+    const attemptedToGetConsent = faker.helpers.maybe(() => true, { probability: 0.2 })
+    child.outcome = attemptedToGetConsent ? OUTCOME.NO_CONSENT : OUTCOME.NO_OUTCOME_YET
 
-  if (consent === CONSENT.REFUSED || consent === CONSENT.UNKNOWN) {
-    child.outcome = OUTCOME.NO_CONSENT
-    child.actionNeeded = ACTION_NEEDED.GET_CONSENT
+    if (attemptedToGetConsent) {
+      child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
+    } else {
+      child.actionNeeded = ACTION_NEEDED.GET_CONSENT
+    }
   }
 
   if (consent === CONSENT.GIVEN) {

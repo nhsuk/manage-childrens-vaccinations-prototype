@@ -56,7 +56,8 @@ export default (req, res) => {
   let vaccinatedChildren = filter(children, 'actionTaken', 'VACCINATED')
   let couldNotVaccinateChildren = [
     ...filter(children, 'actionTaken', 'COULD_NOT_VACCINATE'),
-    ...filter(children, 'actionTaken', 'COULD_NOT_GET_CONSENT')
+    ...filter(children, 'actionTaken', 'COULD_NOT_GET_CONSENT'),
+    ...filter(children, 'actionTaken', 'REFUSED_CONSENT')
   ]
 
   let actionNeededChildren = children.filter((c) => {
