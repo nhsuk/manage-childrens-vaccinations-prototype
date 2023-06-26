@@ -33,6 +33,10 @@
           {% else %}
             {% include 'campaign/child/_outcome-banner.html' %}
           {% endif %}
+
+          {% if child.consent.responded %}
+            {% include 'campaign/child/_consent-triage.html' %}
+          {% endif %}
         </div>
       </div>
 
