@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set children = filteredChildren or campaign.children %}
+{% set children = filteredChildren.actionNeeded %}
 
 {% if filteredYearGroup %}
   {% set caption = "Triage" %}
@@ -53,11 +53,11 @@
                     <tr class="govuk-table__row">
                       <th class="govuk-table__header">Name</th>
                       <th class="govuk-table__header">Notes</th>
-                      <th class="govuk-table__header" style="width: 180px">Triage status</th>
+                      <th class="govuk-table__header" style="width: 180px">Action needed</th>
                     </tr>
                   </thead>
                   <tbody class="govuk-table__body">
-                    {% for child in (filteredChildren or campaign.children) %}
+                    {% for child in children %}
                       <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                           <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
@@ -80,7 +80,7 @@
                           {% endif %}
                         </td>
                         <td class="govuk-table__cell">
-                          {% include('campaign/_triage-tag.html') %}
+                          {{ appActionNeededTag(child.actionNeeded) }}
                         </td>
                       </tr>
                     {% endfor %}
