@@ -1,13 +1,12 @@
 {%- from "_components/icon/macro.njk" import appIcon -%}
 {% if action == ACTION_TAKEN.VACCINATED %}
-  {% set icon = 'tick' %}
   {% set color = 'green' %}
 {% elif action == ACTION_TAKEN.COULD_NOT_GET_CONSENT %}
-  {% set icon = 'cross' %}
   {% set color = 'red' %}
 {% elif action == ACTION_TAKEN.COULD_NOT_VACCINATE %}
-  {% set icon = 'cross' %}
   {% set color = 'orange' %}
+{% elif action == ACTION_TAKEN.REFUSED_CONSENT %}
+  {% set color = 'red' %}
 {% else %}
   {% set color = 'white' %}
 {% endif %}
