@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import filterChildren from './_filter-children.js'
 import { vaccination } from '../wizards/vaccination.js'
+import { ACTION_TAKEN } from '../enums.js'
 
 const offlineChangesCount = (campaign) => {
   const offlineCount = campaign.children.reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
@@ -23,14 +24,6 @@ export default (router) => {
       campaign.hadOfflineChanges = true
     }
 
-    next()
-  })
-
-  router.all([
-    '/campaign/:campaignId/children',
-    '/campaign/:campaignId/children-triage'
-  ], (req, res, next) => {
-    res.locals.filteredChildren = filterChildren(req, res)
     next()
   })
 
@@ -111,6 +104,7 @@ export default (router) => {
       res.locals.noConsent = req.query.noConsent
       const nhsNumber = req.query.noConsent
       const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
+      child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
       child.outcome = 'No consent'
       child.seen.isOffline = res.locals.isOffline
       res.locals.successChild = child
@@ -120,6 +114,14 @@ export default (router) => {
       })
     }
 
+    next()
+  })
+
+  router.all([
+    '/campaign/:campaignId/children',
+    '/campaign/:campaignId/children-triage'
+  ], (req, res, next) => {
+    res.locals.filteredChildren = filterChildren(req, res)
     next()
   })
 
