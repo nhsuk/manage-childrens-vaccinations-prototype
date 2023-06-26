@@ -1,3 +1,18 @@
+export const ACTION_NEEDED = {
+  VACCINATE: 'Vaccinate',
+  GET_CONSENT: 'Get consent',
+  CHECK_REFUSAL: 'Check refusal',
+  TRIAGE: 'Triage',
+  FOLLOW_UP: 'Triage: Follow up'
+}
+
+export const ACTION_TAKEN = {
+  VACCINATED: 'Vaccinated',
+  COULD_NOT_GET_CONSENT: 'Unable to get consent',
+  COULD_NOT_VACCINATE: 'Could not vaccinate',
+  REFUSED_CONSENT: 'Refused consent'
+}
+
 export const TRIAGE = {
   TO_DO: 'To do',
   NEEDS_FOLLOW_UP: 'Needs follow up',
