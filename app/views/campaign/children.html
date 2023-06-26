@@ -1,6 +1,4 @@
 {% extends "layouts/default.html" %}
-{% set children = filteredChildren or campaign.children %}
-
 {% if filteredYearGroup %}
   {% set caption = "Record vaccinations" %}
   {% set title = filteredYearGroup.name %}
@@ -41,55 +39,49 @@
             {{ title | noOrphans | safe }}
           </h1>
 
-          <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-one-quarter">
-              {% include 'campaign/_filters.html' %}
-            </div>
-            <div class="nhsuk-grid-column-three-quarters">
-              {% if children | length %}
-                <table class="nhsuk-table app-children-table" id="children">
-                  <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header">Name</th>
-                      <th class="govuk-table__header">Date of birth</th>
-                      <th class="govuk-table__header">Consent</th>
-                      <th class="govuk-table__header" style="width: 200px">Outcome</th>
-                    </tr>
-                  </thead>
-                  <tbody class="govuk-table__body">
-                    {% for child in children %}
-                      <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                          <a href="/campaign/{{ campaign.id }}/child/{{ child.nhsNumber }}">{{ child.fullName }}</a>
-                          {% if child.preferredName %}
-                            <br />Known as: {{ child.preferredName }}
-                          {% endif %}
-                        </td>
-                        <td class="govuk-table__cell" style="width: 150px">
-                          {{ child.dob | govukDate('truncate') }}
-                        </td>
-                        <td class="govuk-table__cell">
-                          {% set consentText = child.consent.text if campaign.is3in1MenACWY else child.consent[campaign.type] %}
-                          {{ consentText }}
-                        </td>
-                        <td class="govuk-table__cell">
-                          {{ appOutcomeTag(child.outcome) }}
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              {% else %}
-                <div style="margin-top: 32px; border: 2px solid #b1b4b6; min-height: 300px">
-                  <div class="nhsuk-card__content">
-                    <h2 class="nhsuk-heading-l">No results</h2>
-                    <p>We couldn’t find any children that matched your filters.</p>
-                    <p><a href="?">Remove filter</a></p>
-                  </div>
-                </div>
-              {% endif %}
-            </div>
-          </div>
+          {% set actionNeeded %}
+            {% set children = filteredChildren.actionNeeded %}
+            {% set isActionNeeded = true %}
+            {% include 'campaign/_children-tab.html' %}
+          {% endset %}
+
+          {% set vaccinated %}
+            {% set children = filteredChildren.vaccinated %}
+            {% set isActionNeeded = false %}
+            {% include 'campaign/_children-tab.html' %}
+          {% endset %}
+
+          {% set notVaccinated %}
+            {% set children = filteredChildren.notVaccinated %}
+            {% set isActionNeeded = false %}
+            {% include 'campaign/_children-tab.html' %}
+          {% endset %}
+
+          {{ tabs({
+            items: [
+            {
+              label: "Action needed",
+              id: "action-needed",
+              panel: {
+                html: actionNeeded
+                }
+              },
+              {
+                label: "Vaccinated",
+                id: "vaccinated",
+                panel: {
+                  html: vaccinated
+                }
+              },
+              {
+                label: "Not vaccinated",
+                id: "not-vaccinated",
+                panel: {
+                  html: notVaccinated
+                }
+              }
+            ]
+          }) }}
         </div>
       </div>
     </main>
