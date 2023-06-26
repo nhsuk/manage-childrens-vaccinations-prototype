@@ -1,4 +1,4 @@
-import { TRIAGE, OUTCOME, CONSENT } from '../enums.js'
+import { TRIAGE, OUTCOME, CONSENT, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
 import _ from 'lodash'
 
 const filters = {
@@ -16,6 +16,16 @@ const filters = {
       }
 
       return c.triageStatus === TRIAGE[triageStatus]
+    })
+  },
+  actionNeeded: (children, action) => {
+    return children.filter((c) => {
+      return c.actionNeeded === ACTION_NEEDED[action]
+    })
+  },
+  actionTaken: (children, action) => {
+    return children.filter((c) => {
+      return c.actionTaken === ACTION_TAKEN[action]
     })
   },
   outcome: (children, outcome) => {
@@ -43,6 +53,16 @@ const filter = (children, filterName, value, req, res) => {
 export default (req, res) => {
   const query = req.query
   const children = res.locals.campaign.children
+  let vaccinatedChildren = filter(children, 'actionTaken', 'VACCINATED')
+  let couldNotVaccinateChildren = [
+    ...filter(children, 'actionTaken', 'COULD_NOT_VACCINATE'),
+    ...filter(children, 'actionTaken', 'COULD_NOT_GET_CONSENT')
+  ]
+
+  let actionNeededChildren = children.filter((c) => {
+    return !vaccinatedChildren.includes(c) &&
+      !couldNotVaccinateChildren.includes(c)
+  })
 
   const activeFilters = Object.keys(filters).reduce((acc, f) => {
     if (query[f]) {
@@ -51,16 +71,21 @@ export default (req, res) => {
     return acc
   }, {})
 
-  if (_.isEmpty(activeFilters)) {
-    return false
+  if (!_.isEmpty(activeFilters)) {
+    res.locals.activeFilters = activeFilters
+
+    // let filteredChildren = children
+    for (const f in activeFilters) {
+      vaccinatedChildren = filter(vaccinatedChildren, f, activeFilters[f], req, res)
+      couldNotVaccinateChildren = filter(couldNotVaccinateChildren, f, activeFilters[f], req, res)
+      actionNeededChildren = filter(actionNeededChildren, f, activeFilters[f], req, res)
+      // filteredChildren = filter(filteredChildren, f, activeFilters[f], req, res)
+    }
   }
 
-  res.locals.activeFilters = activeFilters
-
-  let filteredChildren = children
-  for (const f in activeFilters) {
-    filteredChildren = filter(filteredChildren, f, activeFilters[f], req, res)
+  return {
+    actionNeeded: actionNeededChildren,
+    vaccinated: vaccinatedChildren,
+    notVaccinated: couldNotVaccinateChildren
   }
-
-  return filteredChildren
 }

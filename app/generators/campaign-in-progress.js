@@ -2,22 +2,35 @@ import campaign from './campaign.js'
 import _ from 'lodash'
 import { DateTime } from 'luxon'
 import { faker } from '@faker-js/faker'
-import { CONSENT, OUTCOME, TRIAGE } from '../enums.js'
+import { CONSENT, OUTCOME, TRIAGE, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
 
-const setOutcome = (child, consent) => {
+const setActions = (child, consent) => {
+  if (consent === CONSENT.REFUSED) {
+    child.outcome = OUTCOME.NO_CONSENT
+    child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+  }
+
+  if (consent === CONSENT.UNKNOWN) {
+    child.outcome = OUTCOME.NO_CONSENT
+    child.actionNeeded = ACTION_NEEDED.GET_CONSENT
+  }
+
   if (consent === CONSENT.REFUSED || consent === CONSENT.UNKNOWN) {
     child.outcome = OUTCOME.NO_CONSENT
+    child.actionNeeded = ACTION_NEEDED.GET_CONSENT
   }
 
   if (consent === CONSENT.GIVEN) {
     const couldNotVaccinate = faker.helpers.maybe(() => OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 })
     child.outcome = couldNotVaccinate || OUTCOME.VACCINATED
+    child.actionTaken = couldNotVaccinate ? ACTION_TAKEN.COULD_NOT_VACCINATE : ACTION_TAKEN.VACCINATED
   }
 }
 
 const setTriageOutcome = (child, consent) => {
   if (consent === CONSENT.GIVEN) {
     child.triageStatus = TRIAGE.READY
+    child.actionNeeded = ACTION_NEEDED.VACCINATE
 
     // Activate triage notes
     if (child.healthQuestions.inactiveTriage) {
@@ -39,7 +52,7 @@ export default (options) => {
   })
 
   _.sampleSize(c.children, 50).forEach(child => {
-    setOutcome(child, child.consent[c.type])
+    setActions(child, child.consent[c.type])
   })
 
   return c
