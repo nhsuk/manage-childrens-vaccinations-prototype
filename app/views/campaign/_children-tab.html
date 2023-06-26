@@ -9,7 +9,13 @@
           <tr class="govuk-table__row">
             <th class="govuk-table__header">Name</th>
             <th class="govuk-table__header">Date of birth</th>
-            <th class="govuk-table__header" style="width: 200px">Action needed</th>
+            <th class="govuk-table__header" style="width: 200px">
+              {% if isActionNeeded %}
+                Action needed
+              {% else %}
+                Outcome
+              {% endif %}
+            </th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
