@@ -1,4 +1,5 @@
 import { vaccination } from '../wizards/vaccination.js'
+import { ACTION_TAKEN } from '../enums.js'
 import _ from 'lodash'
 
 export default (router) => {
@@ -124,10 +125,12 @@ export default (router) => {
     const vaccineGiven = res.locals.vaccinationRecord.given !== 'No'
 
     if (vaccineGiven) {
+      res.locals.child.actionTaken = ACTION_TAKEN.VACCINATED
       res.locals.child.outcome = 'Vaccinated'
       res.locals.child.batch = res.locals.vaccinationRecord.batch
       res.locals.child.seen = { text: 'Vaccinated', given: vaccineGiven }
     } else {
+      res.locals.child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
       res.locals.child.outcome = 'Could not vaccinate'
       res.locals.child.seen = { text: 'Vaccine not given', given: vaccineGiven }
     }
