@@ -43,18 +43,18 @@
   {% endfor %}
 </ul>
 
-{% if not triaging %}
-<p class="nhsuk-u-margin-bottom-1">By outcome</p>
+{% if isActionNeeded %}
+<p class="nhsuk-u-margin-bottom-1">By action needed</p>
 <ul class="nhsuk-list">
-  {% for key, item in OUTCOME %}
-    {% set active = activeFilters.outcome == key %}
+  {% for key, item in ACTION_NEEDED %}
+    {% set active = activeFilters.actionNeeded == key %}
     <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, 'outcome', key) }}">{{ item }}</a>
+      <a href="{{ filterPath(activeFilters, 'actionNeeded', key) }}">{{ item }}</a>
     </li>
   {% endfor %}
 </ul>
 {% endif %}
-
+{#
 <p class="nhsuk-u-margin-bottom-1">By consent</p>
 <ul class="nhsuk-list">
   {% for key, item in CONSENT %}
@@ -63,7 +63,7 @@
       <a href="{{ filterPath(activeFilters, 'consent', key) }}">{{ item }}</a>
     </li>
   {% endfor %}
-</ul>
+</ul> #}
 
 <script>
     function filterTable() {
