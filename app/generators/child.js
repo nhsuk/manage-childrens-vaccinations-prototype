@@ -6,6 +6,7 @@ import triageStatus from './triage-status.js'
 import gp from './gp.js'
 import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
+import triageNeeded from './triage-needed.js'
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
@@ -21,7 +22,29 @@ const setActions = (child, consent) => {
   } else if (consent === CONSENT.UNKNOWN) {
     child.actionNeeded = ACTION_NEEDED.GET_CONSENT
   } else if (consent === CONSENT.GIVEN) {
-    child.actionNeeded = ACTION_NEEDED.TRIAGE
+    child.actionNeeded = ACTION_NEEDED.VACCINATE
+  }
+}
+
+const handleInProgressTriage = (child) => {
+  // Only relevant to children needing triage
+  if (!child.needsTriage) return
+
+  // Only half done
+  if (faker.helpers.maybe(() => true, { probability: 0.5 })) return
+
+  // Activate triage notes
+  if (child.healthQuestions.inactiveTriage) {
+    child.healthQuestions.triage = child.healthQuestions.inactiveTriage
+    delete child.healthQuestions.inactiveTriage
+  }
+
+  // A small number need follow-ups
+  if (faker.helpers.maybe(() => true, { probability: 0.2 })) {
+    child.actionNeeded = ACTION_NEEDED.FOLLOW_UP
+  } else {
+    child.triageCompleted = true
+    child.actionNeeded = ACTION_NEEDED.VACCINATE
   }
 }
 
@@ -46,7 +69,11 @@ export default (options) => {
 
   c.seen = {}
   c.triageStatus = triageStatus(options.triageInProgress, c.consent)
-  c.healthQuestions = healthQuestions(faker, options.type, c.consent, c.triageStatus)
+  c.healthQuestions = healthQuestions(faker, options.type, c)
+  triageNeeded(faker, c)
+  if (options.triageInProgress) {
+    handleInProgressTriage(c)
+  }
 
   const days = faker.datatype.number({ min: 10, max: 35 })
   c.consentedDate = DateTime.local().minus({ days }).toISODate()

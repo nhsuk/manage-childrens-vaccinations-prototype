@@ -28,6 +28,21 @@ const filters = {
       return c.actionTaken === ACTION_TAKEN[action]
     })
   },
+  noTriageNeeded: (children) => {
+    return children.filter((c) => {
+      return !c.needsTriage
+    })
+  },
+  triageNeeded: (children) => {
+    return children.filter((c) => {
+      return c.needsTriage && !c.triageCompleted
+    })
+  },
+  triageCompleted: (children) => {
+    return children.filter((c) => {
+      return c.triageCompleted
+    })
+  },
   outcome: (children, outcome) => {
     return children.filter((c) => {
       return c.outcome === OUTCOME[outcome]
@@ -50,6 +65,10 @@ const filter = (children, filterName, value, req, res) => {
   return filters[filterName](children, value, req, res)
 }
 
+const sort = (children) => {
+  return children.sort((a, b) => a.fullName.localeCompare(b.fullName))
+}
+
 export default (req, res) => {
   const query = req.query
   const children = res.locals.campaign.children
@@ -60,7 +79,11 @@ export default (req, res) => {
     ...filter(children, 'actionTaken', 'REFUSED_CONSENT')
   ]
 
-  couldNotVaccinateChildren = couldNotVaccinateChildren.sort((a, b) => a.fullName.localeCompare(b.fullName))
+  couldNotVaccinateChildren = sort(couldNotVaccinateChildren)
+
+  let noTriageNeededChildren = filter(children, 'noTriageNeeded')
+  let triageNeededChildren = filter(children, 'triageNeeded')
+  let triageCompletedChildren = filter(children, 'triageCompleted')
 
   let actionNeededChildren = children.filter((c) => {
     return !vaccinatedChildren.includes(c) &&
@@ -82,15 +105,20 @@ export default (req, res) => {
       if (f === 'year') {
         vaccinatedChildren = filter(vaccinatedChildren, f, activeFilters[f], req, res)
         couldNotVaccinateChildren = filter(couldNotVaccinateChildren, f, activeFilters[f], req, res)
+        triageNeededChildren = filter(triageNeededChildren, f, activeFilters[f], req, res)
+        triageCompletedChildren = filter(triageCompletedChildren, f, activeFilters[f], req, res)
+        noTriageNeededChildren = filter(noTriageNeededChildren, f, activeFilters[f], req, res)
       }
       actionNeededChildren = filter(actionNeededChildren, f, activeFilters[f], req, res)
-      // filteredChildren = filter(filteredChildren, f, activeFilters[f], req, res)
     }
   }
 
   return {
     actionNeeded: actionNeededChildren,
     vaccinated: vaccinatedChildren,
-    notVaccinated: couldNotVaccinateChildren
+    notVaccinated: couldNotVaccinateChildren,
+    triageNeeded: triageNeededChildren,
+    triageCompleted: triageCompletedChildren,
+    noTriageNeeded: noTriageNeededChildren
   }
 }

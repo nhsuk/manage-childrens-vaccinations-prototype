@@ -9,9 +9,16 @@ export const ACTION_NEEDED = {
 
 export const ACTION_TAKEN = {
   VACCINATED: 'Vaccinated',
+  DO_NOT_VACCINATE: 'Do not vaccinate',
   COULD_NOT_GET_CONSENT: 'Unable to get consent',
   COULD_NOT_VACCINATE: 'Could not vaccinate',
   REFUSED_CONSENT: 'Refused consent'
+}
+
+export const TRIAGE_REASON = {
+  HAS_NOTES: 'Notes need triage',
+  INCONSISTENT_CONSENT: 'Conflicting consent',
+  CHECK_CONSENTER: 'Check parental responsibility'
 }
 
 export const TRIAGE = {
