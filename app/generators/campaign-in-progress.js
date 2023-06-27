@@ -35,8 +35,9 @@ const setActions = (child, consent) => {
 }
 
 const setTriageOutcome = (child, consent) => {
-  if (consent === CONSENT.GIVEN) {
+  if (consent === CONSENT.GIVEN && child.needsTriage) {
     child.triageStatus = TRIAGE.READY
+    child.triageCompleted = true
     child.actionNeeded = ACTION_NEEDED.VACCINATE
 
     // Activate triage notes

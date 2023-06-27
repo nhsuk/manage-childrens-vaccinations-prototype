@@ -1,6 +1,4 @@
-import { TRIAGE } from '../enums.js'
-
-export default (faker, type, consent, triageStatus) => {
+export default (faker, type, child) => {
   let questions = []
   const allergy = { title: 'Allergies', id: 'allergy', question: 'Does the child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
   const medicalConditions = { title: 'Medical conditions', id: 'medical-conditions', question: 'Does the child have any existing medical conditions?', answer: 'No' }
@@ -32,7 +30,7 @@ export default (faker, type, consent, triageStatus) => {
 
   questions.push({ title: 'Anything else', id: 'anything-else', question: 'Is there anything else we should know?', answer: 'No' })
 
-  return enrichWithRealisticAnswers(faker, consent, triageStatus, {
+  return enrichWithRealisticAnswers(faker, child, {
     hasAnswers: false,
     questions
   })
@@ -165,14 +163,14 @@ const realisticAnswers = {
   }
 }
 
-const enrichWithRealisticAnswers = (faker, consent, triageStatus, health) => {
+const enrichWithRealisticAnswers = (faker, child, health) => {
   // Did not answer health questions as either
   // they refused consent or did not respond
-  if (consent.refused || !consent.responded) {
+  if (child.consent.refused || !child.consent.responded) {
     return health
   }
 
-  // Give health question responses to 20% of children who consent
+  // Do not give health question responses to 80% of children who consent
   if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
     return health
   }
@@ -186,16 +184,7 @@ const enrichWithRealisticAnswers = (faker, consent, triageStatus, health) => {
     }
   })
 
-  if ([
-    TRIAGE.NEEDS_FOLLOW_UP,
-    TRIAGE.READY,
-    TRIAGE.DO_NOT_VACCINATE
-  ].includes(triageStatus)) {
-    health.triage = realisticAnswers[answer].triage
-  } else {
-    // Notes for when triaged elsewhere
-    health.inactiveTriage = realisticAnswers[answer].triage
-  }
-
+  // Activate elsewhere in generation process
+  health.inactiveTriage = realisticAnswers[answer].triage
   return health
 }
