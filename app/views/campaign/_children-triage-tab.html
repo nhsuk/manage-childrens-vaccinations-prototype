@@ -22,7 +22,7 @@
           {% for child in children %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <a href="/campaign/{{ campaign.id }}/child/{{ child.nhsNumber }}">{{ child.fullName }}</a>
+                <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
                 {% if child.preferredName %}
                   <br />Known as: {{ child.preferredName }}
                 {% endif %}
