@@ -14,6 +14,10 @@
           value: child.parentOrGuardian.relationship
         },
         {
+          key: "Reason for refusal",
+          value: "Personal choice"
+        } if not consented,
+        {
           key: child.parentOrGuardian.relationship,
           value: {
             html: child.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
