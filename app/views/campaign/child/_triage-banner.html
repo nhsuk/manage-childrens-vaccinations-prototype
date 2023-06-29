@@ -1,0 +1,35 @@
+{% set color = 'blue '%}
+{% set heading = 'Triage needed'%}
+
+{% if child.actionNeeded == ACTION_NEEDED.FOLLOW_UP %}
+  {% set color = 'aqua-green' %}
+  {% set heading = 'Triage follow-up needed' %}
+{% endif %}
+
+{% if child.actionNeeded == ACTION_NEEDED.VACCINATE %}
+  {% set color = 'purple' %}
+  {% set heading = 'Ready to vaccinate' %}
+  {% set text = 'Jane Doe decided that '+ child.fullName +' can be vaccinated.' %}
+{% endif %}
+
+{% if child.actionTaken == ACTION_TAKEN.DO_NOT_VACCINATE %}
+  {% set color = 'red' %}
+  {% set heading = 'Do not vaccinate' %}
+  {% set text = 'Jane Doe decided that '+ child.fullName +' should not be vaccinated.' %}
+{% endif %}
+
+<div class="app-consent-banner app-consent-banner--{{ color }} nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
+  <span class="nhsuk-heading-m nhsuk-u-margin-bottom-2">
+    {{ heading }}
+  </span>
+
+  {% if text %}
+    <p class="nhsuk-u-margin-bottom-2">{{ text }}</p>
+  {% else %}
+    <ul class="nhsuk-list nhsuk-u-margin-bottom-2">
+    {% for r in child.triageReasons %}
+      <li>{{ r }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+</div>

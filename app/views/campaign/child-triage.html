@@ -25,8 +25,11 @@
 
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          {% include 'campaign/child/_details.html' %}
+          {% if child.needsTriage %}
+            {% include 'campaign/child/_triage-banner.html' %}
+          {% endif %}
 
+          {% include 'campaign/child/_details.html' %}
           {% include 'campaign/child/_consent-triage.html' %}
 
           {% if consented %}
@@ -38,6 +41,14 @@
               <div class="nhsuk-card__content">
                 <form method="post">
                   <h2 class="nhsuk-heading-m">Triage</h2>
+
+                  <p class="nhsuk-u-margin-bottom-0">Triage is needed because of:</p>
+                  <ul class="nhsuk-list nhsuk-list--bulleted">
+                  {% for r in child.triageReasons %}
+                    <li>{{ r }}</li>
+                  {% endfor %}
+                  </ul>
+
                   {{ textarea({
                     label: {
                       text: "Triage notes"

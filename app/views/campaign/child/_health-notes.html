@@ -11,9 +11,18 @@
 {% endset %}
 
 {% set healthNotes %}
-  {% if child.healthQuestions.triage %}
-    <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage notes</h2>
-    <p>{{ child.healthQuestions.triage }}</p>
+  {% if child.needsTriage %}
+    {% if child.triageCompleted and child.healthQuestions.triage %}
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage notes</h2>
+      <p>{{ child.healthQuestions.triage }}</p>
+    {% else %}
+      <p>Triage needed:</p>
+      <ul class="njsuk-list njsuk-list--bullet">
+        {% for r in child.triageReasons %}
+          <li>{{ r }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
 
     <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Medical history answers</h2>
   {% else %}
