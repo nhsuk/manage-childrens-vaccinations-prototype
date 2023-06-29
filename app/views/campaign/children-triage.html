@@ -46,6 +46,12 @@
             {% include 'campaign/_children-triage-tab.html' %}
           {% endset %}
 
+          {% set chaseConsent %}
+            {% set children = filteredChildren.chaseConsent %}
+            {% set isReasonNeeded = false %}
+            {% include 'campaign/_children-triage-tab.html' %}
+          {% endset %}
+
           {% set triageComplete %}
             {% set children = filteredChildren.triageCompleted %}
             {% set isReasonNeeded = true %}
@@ -72,6 +78,13 @@
                 id: "triage-complete",
                 panel: {
                   html: triageComplete
+                }
+              },
+              {
+                label: "Get consent",
+                id: "get-consent",
+                panel: {
+                  html: chaseConsent
                 }
               },
               {
