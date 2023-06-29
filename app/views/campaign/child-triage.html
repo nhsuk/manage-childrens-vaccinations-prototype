@@ -27,6 +27,8 @@
         <div class="nhsuk-grid-column-two-thirds">
           {% if child.needsTriage %}
             {% include 'campaign/child/_triage-banner.html' %}
+          {% elseif not child.consent.responded or child.consent.refused %}
+            {% include 'campaign/child/_consent-banner.html' %}
           {% endif %}
 
           {% include 'campaign/child/_details.html' %}
@@ -42,12 +44,14 @@
                 <form method="post">
                   <h2 class="nhsuk-heading-m">Triage</h2>
 
-                  <p class="nhsuk-u-margin-bottom-0">Triage is needed because of:</p>
-                  <ul class="nhsuk-list nhsuk-list--bulleted">
-                  {% for r in child.triageReasons %}
-                    <li>{{ r }}</li>
-                  {% endfor %}
-                  </ul>
+                  {% if child.needsTriage %}
+                    <p class="nhsuk-u-margin-bottom-0">Triage is needed because of:</p>
+                    <ul class="nhsuk-list nhsuk-list--bulleted">
+                    {% for r in child.triageReasons %}
+                      <li>{{ r }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
 
                   {{ textarea({
                     label: {
