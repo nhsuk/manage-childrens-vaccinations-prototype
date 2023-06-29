@@ -25,7 +25,7 @@ export const TRIAGE = {
   TO_DO: 'To do',
   NEEDS_FOLLOW_UP: 'Needs follow up',
   NO_CONSENT_RESPONSE: 'No response',
-  READY: 'Ready for session',
+  READY: 'Ready to vaccinate',
   DO_NOT_VACCINATE: 'Do not vaccinate',
   REFUSED_CONSENT: 'Refused consent'
 }

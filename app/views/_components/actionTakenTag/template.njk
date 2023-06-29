@@ -7,6 +7,8 @@
   {% set color = 'orange' %}
 {% elif action == ACTION_TAKEN.REFUSED_CONSENT %}
   {% set color = 'red' %}
+{% elif action == ACTION_TAKEN.DO_NOT_VACCINATE %}
+  {% set color = 'red' %}
 {% else %}
   {% set color = 'white' %}
 {% endif %}

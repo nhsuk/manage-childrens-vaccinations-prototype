@@ -40,7 +40,11 @@
                 </td>
               {% endif %}
               <td class="govuk-table__cell">
-                {{ appActionNeededTag(child.actionNeeded) }}
+                {% if child.actionTaken == ACTION_TAKEN.DO_NOT_VACCINATE %}
+                  {{ appActionTakenTag(child.actionTaken) }}
+                {% else %}
+                  {{ appActionNeededTag(child.actionNeeded) }}
+                {% endif %}
               </td>
             </tr>
           {% endfor %}
