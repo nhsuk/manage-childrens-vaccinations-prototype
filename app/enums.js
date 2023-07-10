@@ -3,7 +3,7 @@ export const ACTION_NEEDED = {
   GET_CONSENT: 'Get consent',
   CHECK_REFUSAL: 'Check refusal',
   TRIAGE: 'Triage',
-  FOLLOW_UP: 'Triage: follow up',
+  FOLLOW_UP: 'Triage started',
   NONE: 'No action needed'
 }
 
