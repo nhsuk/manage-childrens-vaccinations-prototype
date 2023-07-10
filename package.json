@@ -8,7 +8,7 @@
     "node": "^16 || ^18"
   },
   "prototype": {
-    "serviceName": "Record children’s vaccinations",
+    "serviceName": "Manage vaccinations for school-aged children",
     "defaultRigLayout": "layouts/default.html",
     "defaultUnbrandedLayout": "layouts/unbranded.html"
   },

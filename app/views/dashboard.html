@@ -1,5 +1,5 @@
 {% extends "layouts/default.html" %}
-{% set title = "Record children’s vaccinations" %}
+{% set title = "Manage vaccinations for school-aged children" %}
 
 {% block main %}
   <div class="nhsuk-width-container">
@@ -14,7 +14,12 @@
             }) }}
           {% endif %}
 
-          <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
+          <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-two-thirds">
+              <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
+            </div>
+          </div>
+
 
           <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
             <a href="/school-sessions">School sessions</a>
