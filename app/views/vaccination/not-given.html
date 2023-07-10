@@ -28,8 +28,12 @@
         value: child.fullName + ' has already had the vaccine'
       },
       {
-        text: 'They were absent',
-        value: child.fullName + ' was absent'
+        text: 'They were absent from school',
+        value: child.fullName + ' was absent from school'
+      },
+      {
+        text: 'They were absent from the session',
+        value: child.fullName + ' was absent from the session'
       }
     ],
     decorate: [dataLocation, campaign.id, child.nhsNumber, "why-not-given"]
