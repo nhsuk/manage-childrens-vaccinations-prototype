@@ -1,0 +1,60 @@
+{% extends "layouts/wizard.html" %}
+{% set title = "Tell us how the vaccination was given" %}
+
+{% block form %}
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "How was the vaccination given?"
+      }
+    },
+    items: [
+      {
+        text: 'Intramuscular (IM)'
+      },
+      {
+        text: 'Subcutaneous'
+      }
+    ],
+    decorate: [dataLocation, campaign.id, child.nhsNumber, "how-given"]
+  }) }}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Site"
+      }
+    },
+    items: [
+      {
+        text: 'Left arm (upper position)'
+      },
+      {
+        text: 'Left arm (lower position)'
+      },
+      {
+        text: 'Right arm (upper position)'
+      },
+      {
+        text: 'Right arm (lower position)'
+      },
+      {
+        text: 'Left thigh'
+      },
+      {
+        text: 'Right thigh'
+      },
+      {
+        text: 'Left buttock'
+      },
+      {
+        text: 'Right buttock'
+      }
+    ],
+    decorate: [dataLocation, campaign.id, child.nhsNumber, "site"]
+  }) }}
+{% endblock %}

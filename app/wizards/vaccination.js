@@ -14,6 +14,9 @@ const journeyForEverythingElse = (data, campaign, child) => {
   const hasConsent = !(isUnknown || refused)
   const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
   const askForNoReason = getData(data, `vaccination.${campaignId}.${nhsNumber}.given`) === 'No'
+  const isOtherSite = getData(data, `vaccination.${campaignId}.${nhsNumber}.where`) === 'Other'
+
+  const journey = {}
 
   if (hasConsent && askForNoReason) {
     return {
@@ -40,13 +43,15 @@ const journeyForEverythingElse = (data, campaign, child) => {
     }
   }
 
-  if (!hasDefaultBatch) {
-    return {
-      [`/vaccination/${campaignId}/${nhsNumber}/which-batch`]: {}
-    }
+  if (isOtherSite) {
+    journey[`/vaccination/${campaignId}/${nhsNumber}/other-site`] = {}
   }
 
-  return {}
+  if (!hasDefaultBatch) {
+    journey[`/vaccination/${campaignId}/${nhsNumber}/which-batch`] = {}
+  }
+
+  return journey
 }
 
 const journeyFor3in1MenAcwy = (data, campaignId, child) => {
