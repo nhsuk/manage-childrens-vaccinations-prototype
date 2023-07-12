@@ -60,6 +60,9 @@ export default (router) => {
     const campaignType = campaign.type
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
 
+    const gillickCompetent = consentData['gillick-competent'] === 'Yes'
+    const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
+
     child.consent[campaignType] = consentData.consent
     child.consent.text = consentData.consent
     child.consent.consented = consentData.consent === CONSENT.GIVEN
@@ -68,14 +71,18 @@ export default (router) => {
     child.consentedDate = DateTime.local().toISODate()
     child.consentedMethod = 'Telephone'
 
-    child.parentOrGuardian.fullName = consentData.parent.name
-    child.parentOrGuardian.telephone = consentData.parent.telephone
-    child.parentOrGuardian.relationship =
-      (consentData.parent.relationship === 'Other' && consentData.parent['relationship-other'])
-        ? consentData.parent['relationship-other']
-        : consentData.parent.relationship
+    if (gillickCompetent || assessedAsNotGillickCompetent) {
+      next()
+    } else {
+      child.parentOrGuardian.fullName = consentData.parent.name
+      child.parentOrGuardian.telephone = consentData.parent.telephone
+      child.parentOrGuardian.relationship =
+        (consentData.parent.relationship === 'Other' && consentData.parent['relationship-other'])
+          ? consentData.parent['relationship-other']
+          : consentData.parent.relationship
 
-    next()
+      next()
+    }
   })
 
   router.all([
