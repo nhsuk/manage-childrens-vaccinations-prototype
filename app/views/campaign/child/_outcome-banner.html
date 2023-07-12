@@ -13,7 +13,11 @@
 
 {% if consent == 'Given' %}
   {% set consentText %}
-    Their {{ child.parentOrGuardian.relationship | lower }} gave consent
+    {% if isGillickCompetent %}
+      The child was assessed as Gillick competent and they gave consent.
+    {% else %}
+      Their {{ child.parentOrGuardian.relationship | lower }} gave consent
+    {% endif %}
   {% endset %}
 {% elif consent == 'Refused' %}
   {% set consentText %}
