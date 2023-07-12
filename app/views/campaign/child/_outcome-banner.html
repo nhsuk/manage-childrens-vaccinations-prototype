@@ -1,12 +1,13 @@
 {% set outcome = child.outcome %}
 {% set consent = child.consent[campaign.type] %}
+{% set isGillickCompetent = consentRecord['gillick-competent'] === 'Yes' %}
 
-{% if outcome == 'Vaccinated' %}
+{% if child.actionTaken == ACTION_TAKEN.VACCINATED %}
   {% set color = 'green' %}
-{% elif outcome == 'No consent' %}
+{% elif child.actionTaken == ACTION_TAKEN.COULD_NOT_GET_CONSENT %}
   {% set color = 'red' %}
   {% set outcomeText = 'Not vaccinated' %}
-{% elif outcome == 'Could not vaccinate' %}
+{% else %}
   {% set color = 'orange' %}
 {% endif %}
 
@@ -20,9 +21,12 @@
   {% endset %}
 {% elif consent == 'Unknown' %}
   {% set consentText %}
-    No-one responded to our requests for consent
-    {% if child.assessedAsNotGillickCompetent %}
-    . When assessed, the child was not Gillick competent.
+    No-one responded to our requests for consent{% if child.assessedAsNotGillickCompetent %}.
+      {% if isGillickCompetent %}
+        The child was assessed as Gillick competent, but they refused consent.
+      {% else %}
+        When assessed, the child was not Gillick competent.
+      {% endif %}
     {% endif %}
   {% endset %}
 {% endif %}
@@ -39,7 +43,7 @@
   </span>
   <p class="nhsuk-u-margin-top-2">
     {{ reasonText | safe }}
-    {{ consentText }}
+    {{ consentText | safe }}
   </p>
   <p class="nhsuk-u-margin-bottom-1">
     <a href="#" class="app-u-inherit">Change outcome</a>

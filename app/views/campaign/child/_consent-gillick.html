@@ -1,4 +1,7 @@
 {% set consentHtml %}
+  <p>
+    <a href="#">Change</a>
+  </p>
   {% set isGillickCompetent = consentRecord['gillick-competent'] === 'Yes' %}
 
   {{ summaryList({
@@ -11,10 +14,6 @@
         }
       },
       {
-        key: "Consent",
-        value: "Given by child"
-      } if isGillickCompetent,
-      {
         key: 'Gillick competent',
         value: {
           html: consentRecord['gillick-competent']
@@ -25,7 +24,15 @@
         value: {
           html: consentRecord['gillick-assessment']
         }
-      } if consentRecord and consentRecord['gillick-assessment']
+      } if consentRecord and consentRecord['gillick-assessment'],
+      {
+        key: "Consent",
+        value: "Given by child" if consentRecord.consent === CONSENT.GIVEN else "Refused by child"
+      } if consentRecord and isGillickCompetent,
+      {
+        key: "Consent",
+        value: "Could not get consent"
+      } if not isGillickCompetent
     ])
   }) }}
 {% endset %}
