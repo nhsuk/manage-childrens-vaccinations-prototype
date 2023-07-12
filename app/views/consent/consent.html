@@ -1,5 +1,10 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Do they agree to them having both doses of the HPV vaccination?" %}
+{% set isGillickCompetent = d(base + "gillick-competent") === 'Yes' %}
+{% if isGillickCompetent %}
+  {% set title = "Do they agree to having both doses of the HPV vaccination?" %}
+{% else %}
+  {% set title = "Do they agree to them having both doses of the HPV vaccination?" %}
+{% endif %}
 
 {% block form %}
   {{ radios({
@@ -22,7 +27,7 @@
       {
         text: 'No response',
         value: CONSENT.UNKNOWN
-      }
+      } if not isGillickCompetent
     ],
     decorate: base + "consent"
   }) }}

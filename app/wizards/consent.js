@@ -1,5 +1,5 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import { CONSENT } from '../enums.js'
+import { CONSENT, ACTION_TAKEN } from '../enums.js'
 
 export default (req, res) => {
   const nhsNumber = req.params.nhsNumber
@@ -43,13 +43,26 @@ export default (req, res) => {
     [`/campaign/${campaignId}/child/${nhsNumber}?gillick`]: {},
     [`${basePath}/pre-gillick`]: {},
     [`${basePath}/gillick`]: {
-      [`${basePath}/health-questions`]: {
+      [`${basePath}/consent`]: {
         data: `${baseData}.gillick-competent`,
         value: 'Yes'
       },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
         res.locals.child.outcome = 'No consent'
+        res.locals.child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
         res.locals.child.assessedAsNotGillickCompetent = true
+        res.locals.child.seen.isOffline = res.locals.isOffline
+        return true
+      }
+    },
+    [`${basePath}/consent`]: {
+      [`${basePath}/health-questions`]: {
+        data: `${baseData}.consent`,
+        value: CONSENT.GIVEN
+      },
+      [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
+        res.locals.child.outcome = 'No consent'
+        res.locals.child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
         res.locals.child.seen.isOffline = res.locals.isOffline
         return true
       }
