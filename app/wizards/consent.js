@@ -41,6 +41,7 @@ export default (req, res) => {
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
 
     [`/campaign/${campaignId}/child/${nhsNumber}?gillick`]: {},
+    [`${basePath}/pre-gillick`]: {},
     [`${basePath}/gillick`]: {
       [`${basePath}/health-questions`]: {
         data: `${baseData}.gillick-competent`,
