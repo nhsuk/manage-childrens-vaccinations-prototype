@@ -1,6 +1,21 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Are they Gillick competent?" %}
+{% set title = "Assessing Gillick competence" %}
+{% set buttonText = "Give your assessment" %}
 
 {% block form %}
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+
+  <p>
+    Can the young person tell you:
+  </p>
+
+  <ul class="nhsuk-list nhsuk-list--bullet">
+    <li>which vaccination they will have and how many doses they need</li>
+    <li>which disease the vaccination protects against</li>
+    <li>what could happen if they got the disease</li>
+    <li>how the injection will be given</li>
+    <li>which side effects they might experience</li>
+  </ul>
+
+  <p>Before you make your assessement, you should give the young person a chance to ask questions.</p>
 {% endblock %}
