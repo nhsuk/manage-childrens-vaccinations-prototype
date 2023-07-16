@@ -36,12 +36,7 @@
     }) }}
   {% endfor %}
 
-  {{ textarea({
-    label: {
-      text: "Triage notes (optional)"
-    },
-    rows: 5,
-    classes: "nhsuk-u-margin-bottom-0",
-    decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
-  }) }}
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-top-8">Triage</h2>
+  {% set showKeepInTriage = isTriage %}
+  {% include "campaign/child/_triage-fields.html" %}
 {% endblock %}
