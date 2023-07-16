@@ -1,6 +1,6 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
-import { CONSENT } from '../enums.js'
+import { CONSENT, ACTION_NEEDED } from '../enums.js'
 import { DateTime } from 'luxon'
 
 export default (router) => {
@@ -100,6 +100,7 @@ export default (router) => {
 
     if (child.consent.refused) {
       child.actionTaken = 'Do not vaccinate'
+      child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
     }
 
     if (gillickCompetent || assessedAsNotGillickCompetent) {
