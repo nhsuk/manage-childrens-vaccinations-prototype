@@ -15,7 +15,7 @@
         },
         {
           key: "Reason for refusal",
-          value: "Personal choice"
+          value: child.consent.reason or "Personal choice"
         } if not consented,
         {
           key: child.parentOrGuardian.relationship,
