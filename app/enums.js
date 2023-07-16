@@ -49,3 +49,12 @@ export const MEDICAL = {
   YES: 'Yes',
   NO: 'No medical notes'
 }
+
+export const REFUSAL_REASON = {
+  GELATINE: 'Vaccine contains gelatine from pigs',
+  ALREADY_GIVEN: 'Vaccine already received',
+  GETTING_ELSEWHERE: 'Vaccine will be given elsewhere',
+  MEDICAL: 'Medical reasons',
+  PERSONAL: 'Personal choice',
+  OTHER: 'Other'
+}

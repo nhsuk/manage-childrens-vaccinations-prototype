@@ -1,4 +1,4 @@
-import { CONSENT } from '../enums.js'
+import { CONSENT, REFUSAL_REASON } from '../enums.js'
 
 export default (faker, type) => {
   if (type === '3-in-1 and MenACWY') {
@@ -43,11 +43,23 @@ export default (faker, type) => {
     CONSENT.REFUSED
   ])
 
+  let reason = null
+  if (r === CONSENT.REFUSED) {
+    let availableReasons = Object.values(REFUSAL_REASON)
+    if (type !== 'Flu') {
+      availableReasons = availableReasons.filter(a => {
+        return a !== REFUSAL_REASON.GELATINE
+      })
+    }
+    reason = faker.helpers.arrayElement(availableReasons)
+  }
+
   return {
     [type]: r,
     text: r,
     refused: r === CONSENT.REFUSED,
     consented: r === CONSENT.GIVEN,
-    responded: r !== CONSENT.UNKNOWN
+    responded: r !== CONSENT.UNKNOWN,
+    reason
   }
 }
