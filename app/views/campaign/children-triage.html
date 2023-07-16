@@ -67,28 +67,28 @@
           {{ tabs({
             items: [
               {
-                label: "Needs triage",
+                label: "Needs triage (" + filteredChildren.triageNeeded.length + ")",
                 id: "needs-triage",
                 panel: {
                   html: needsTriage
                 }
               },
               {
-                label: "Triage complete",
+                label: "Triage complete (" + filteredChildren.triageCompleted.length + ")",
                 id: "triage-complete",
                 panel: {
                   html: triageComplete
                 }
               },
               {
-                label: "Get consent",
+                label: "Get consent (" + filteredChildren.chaseConsent.length + ")",
                 id: "get-consent",
                 panel: {
                   html: chaseConsent
                 }
               },
               {
-                label: "No triage needed",
+                label: "No triage needed (" + filteredChildren.noTriageNeeded.length + ")",
                 id: "no-triage-needed",
                 panel: {
                   html: noTriageNeeded

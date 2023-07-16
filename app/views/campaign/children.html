@@ -60,21 +60,21 @@
           {{ tabs({
             items: [
               {
-                label: "Action needed",
+                label: "Action needed (" + filteredChildren.actionNeeded.length + ")",
                 id: "action-needed",
                 panel: {
                   html: actionNeeded
                 }
               },
               {
-                label: "Vaccinated",
+                label: "Vaccinated (" + filteredChildren.vaccinated.length + ")",
                 id: "vaccinated",
                 panel: {
                   html: vaccinated
                 }
               },
               {
-                label: "Not vaccinated",
+                label: "Not vaccinated (" + filteredChildren.notVaccinated.length + ")",
                 id: "not-vaccinated",
                 panel: {
                   html: notVaccinated
