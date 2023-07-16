@@ -5,6 +5,8 @@ import { DateTime } from 'luxon'
 
 export default (router) => {
   router.all([
+    '/triage-consent/:campaignId/:nhsNumber',
+    '/triage-consent/:campaignId/:nhsNumber/:view',
     '/consent/:campaignId/:nhsNumber',
     '/consent/:campaignId/:nhsNumber/:view'
   ], (req, res, next) => {
@@ -13,13 +15,28 @@ export default (router) => {
 
     res.locals.campaign = campaign
     res.locals.child = campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
-    res.locals.paths = wizard(req, res)
     res.locals.base = `consent.${campaign.id}.${req.params.nhsNumber}.`
+    next()
+  })
 
+  router.all([
+    '/triage-consent/:campaignId/:nhsNumber',
+    '/triage-consent/:campaignId/:nhsNumber/:view'
+  ], (req, res, next) => {
+    res.locals.paths = wizard(req, res, true)
+    next()
+  })
+
+  router.all([
+    '/consent/:campaignId/:nhsNumber',
+    '/consent/:campaignId/:nhsNumber/:view'
+  ], (req, res, next) => {
+    res.locals.paths = wizard(req, res, false)
     next()
   })
 
   router.post([
+    '/triage-consent/:campaignId/:nhsNumber/health-questions',
     '/consent/:campaignId/:nhsNumber/health-questions'
   ], (req, res, next) => {
     const child = res.locals.child
@@ -53,6 +70,7 @@ export default (router) => {
 
   // Copy consent values to the child object
   router.post([
+    '/triage-consent/:campaignId/:nhsNumber/confirm',
     '/consent/:campaignId/:nhsNumber/confirm'
   ], (req, res, next) => {
     const child = res.locals.child
@@ -86,6 +104,7 @@ export default (router) => {
   })
 
   router.all([
+    '/triage-consent/:campaignId/:nhsNumber/details',
     '/consent/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
     // set the medical health question options for the summary list
@@ -107,18 +126,22 @@ export default (router) => {
   })
 
   router.get([
+    '/triage-consent/:campaignId/:nhsNumber',
     '/consent/:campaignId/:nhsNumber'
   ], (_req, res) => {
     res.render('consent/index')
   })
 
   router.get([
+    '/triage-consent/:campaignId/:nhsNumber/:view',
     '/consent/:campaignId/:nhsNumber/:view'
   ], (req, res) => {
     res.render(`consent/${req.params.view}`)
   })
 
   router.post([
+    '/triage-consent/:campaignId/:nhsNumber',
+    '/triage-consent/:campaignId/:nhsNumber/:view',
     '/consent/:campaignId/:nhsNumber',
     '/consent/:campaignId/:nhsNumber/:view'
   ], (_req, res) => {
