@@ -21,16 +21,16 @@
       }
     },
     items: [
-      { text: 'Vaccine contains gelatine from pigs' } if campaign.isFlu,
-      { text: 'Vaccine already received' },
-      { text: 'Vaccine will be given elsewhere' },
-      { text: 'Medical reasons' },
-      { text: 'Personal choice' },
+      { text: REFUSAL_REASON.GELATINE } if campaign.isFlu,
+      { text: REFUSAL_REASON.ALREADY_GIVEN },
+      { text: REFUSAL_REASON.GETTING_ELSEWHERE },
+      { text: REFUSAL_REASON.MEDICAL },
+      { text: REFUSAL_REASON.PERSONAL },
       {
         divider: 'or'
       },
       {
-        text: 'Other',
+        text: REFUSAL_REASON.OTHER,
         conditional: {
           html: other
         }
