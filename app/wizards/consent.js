@@ -48,7 +48,7 @@ export default (req, res, isTriage) => {
     [`/campaign/${campaignId}/child/${nhsNumber}?gillick`]: {},
     [`${basePath}/pre-gillick`]: {},
     [`${basePath}/gillick`]: {
-      [`${basePath}/consent`]: {
+      [`${basePath}/consent?gillick`]: {
         data: `${baseData}.gillick-competent`,
         value: 'Yes'
       },
@@ -60,7 +60,7 @@ export default (req, res, isTriage) => {
         return true
       }
     },
-    [`${basePath}/consent`]: {
+    [`${basePath}/consent?gillick`]: {
       [`${basePath}/health-questions`]: {
         data: `${baseData}.consent`,
         value: CONSENT.GIVEN
