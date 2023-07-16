@@ -1,14 +1,16 @@
 import { wizard } from 'nhsuk-prototype-rig'
 import { CONSENT, ACTION_TAKEN } from '../enums.js'
 
-export default (req, res) => {
+export default (req, res, isTriage) => {
   const nhsNumber = req.params.nhsNumber
   const campaignId = req.params.campaignId
-  const basePath = `/consent/${campaignId}/${nhsNumber}`
+  const triagePath = isTriage ? 'triage-consent' : 'consent'
+  const childPath = isTriage ? 'child-triage' : 'child'
+  const basePath = `/${triagePath}/${campaignId}/${nhsNumber}`
   const baseData = `consent.${campaignId}.${nhsNumber}`
 
   const journey = {
-    [`/campaign/${campaignId}/child/${nhsNumber}`]: {},
+    [`/campaign/${campaignId}/${childPath}/${nhsNumber}`]: {},
     [basePath]: {},
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
@@ -27,6 +29,9 @@ export default (req, res) => {
       [`${basePath}/confirm`]: true
     },
     [`${basePath}/confirm`]: {
+      [`/campaign/${campaignId}/child-triage/${nhsNumber}`]: () => {
+        return isTriage
+      },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: {
         data: `${baseData}.consent`,
         excludedValue: CONSENT.GIVEN
