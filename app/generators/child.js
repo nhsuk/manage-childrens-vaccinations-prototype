@@ -84,9 +84,6 @@ export default (options) => {
     'Paper'
   ])
 
-  if (c.consent.responded) {
-    c.parentOrGuardian = parent(faker, c.lastName)
-  }
-
+  c.parentOrGuardian = c.consent.responded ? parent(faker, c.lastName) : {}
   return c
 }
