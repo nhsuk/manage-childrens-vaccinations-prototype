@@ -57,7 +57,7 @@
           value: {
             html: child.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
           }
-        } if not triaging
+        } if child.parentOrGuardian.relationship and not triaging
       ])
     }) }}
   </div>
