@@ -63,7 +63,34 @@
     <div class="nhsuk-u-margin-top-4">
       {% set consentJourney = true %}
       {% include "campaign/child/_health-notes-triage.html" %}
-      TODO: TRIAGE NOTES DO NOT SHOW YET
+    </div>
+
+    <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-heading-m">Triage</h2>
+        {% set triageNotes = d("triage." + campaign.id + "." + child.nhsNumber + ".notes") or 'No notes' %}
+        {% set triageStatus = d("triage." + campaign.id + "." + child.nhsNumber + ".status") or 'Vaccinate' %}
+
+        {% if triageStatus === TRIAGE.NEEDS_FOLLOW_UP %}
+          {% set triageStatus = 'Keep in triage' %}
+        {% endif %}
+
+        {{ govukSummaryList({
+          classes: "app-u-frutiger app-summary-list--no-bottom-border",
+          rows: decorateRows([
+            {
+              key: 'Triage notes',
+              value: triageNotes,
+              href: '#'
+            },
+            {
+              key: 'Status',
+              value: triageStatus,
+              href: '#'
+            }
+          ])
+        }) }}
+      </div>
     </div>
   {% endif %}
 {% endblock %}
