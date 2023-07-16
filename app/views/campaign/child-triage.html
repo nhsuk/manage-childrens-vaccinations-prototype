@@ -53,36 +53,8 @@
                     </ul>
                   {% endif %}
 
-                  {{ textarea({
-                    label: {
-                      text: "Triage notes"
-                    },
-                    rows: 5,
-                    classes: "nhsuk-u-margin-bottom-0",
-                    decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
-                  }) }}
-
-                  {{ radios({
-                    fieldset: {
-                      legend: {
-                        text: "Triage status"
-                      }
-                    },
-                    classes: "nhsuk-u-margin-bottom-0",
-                    items: [
-                      {
-                        text: TRIAGE.READY
-                      },
-                      {
-                        text: TRIAGE.DO_NOT_VACCINATE
-                      },
-                      {
-                        text: 'Keep in triage',
-                        value: TRIAGE.NEEDS_FOLLOW_UP
-                      }
-                    ],
-                    decorate: ["triage", campaign.id, child.nhsNumber, "status"]
-                  }) }}
+                  {% set showKeepInTriage = true %}
+                  {% include 'campaign/child/_triage-fields.html' %}
 
                   {{ button({
                     text: "Save triage"
