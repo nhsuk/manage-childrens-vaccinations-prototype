@@ -5,7 +5,7 @@ export default (faker, child) => {
   child.needsTriage = false
   if (!child.consent.consented) return
 
-  if (child.parentOrGuardian.queryRelationship) {
+  if (child.parentOrGuardian && child.parentOrGuardian.queryRelationship) {
     child.needsTriage = true
     child.actionNeeded = ACTION_NEEDED.TRIAGE
     reasons.push(TRIAGE_REASON.CHECK_CONSENTER)

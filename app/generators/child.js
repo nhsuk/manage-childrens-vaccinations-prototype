@@ -60,7 +60,6 @@ export default (options) => {
   c.dob = dateOfBirth(faker, options)
   c.age = age(c.dob)
   c.yearGroup = yearGroup(c.dob)
-  c.parentOrGuardian = parent(faker, c.lastName)
   c.consent = consent(faker, options.type)
   c.outcome = OUTCOME.NO_OUTCOME_YET
 
@@ -84,6 +83,10 @@ export default (options) => {
     'In person',
     'Paper'
   ])
+
+  if (c.consent.responded) {
+    c.parentOrGuardian = parent(faker, c.lastName)
+  }
 
   return c
 }
