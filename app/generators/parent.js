@@ -29,5 +29,6 @@ export default (faker, lastName) => {
   p.relationship = relationship === 'Parent' ? parent : relationship
   p.email = faker.internet.email(p.firstName, p.lastName)
 
+  delete p.sex
   return p
 }
