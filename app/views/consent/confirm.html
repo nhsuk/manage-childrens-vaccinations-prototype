@@ -2,6 +2,7 @@
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
 {% set consented = d(base + "consent") == CONSENT.GIVEN %}
+{% set refused = d(base + "consent") == CONSENT.REFUSED %}
 {% set isGillickCompetent = d(base + "gillick-competent") === 'Yes' %}
 
 {% block form %}
@@ -28,7 +29,12 @@
             key: 'Consent',
             value: d(base + "consent"),
             href: '#'
-          },
+          } if consented or refused,
+          {
+            key: 'Consent',
+            value: 'No response',
+            href: '#'
+          } if not (consented or refused),
           {
             key: 'For',
             value: child.fullName
@@ -46,7 +52,7 @@
               html: d(base + "no-consent-reason")
             },
             href: '#'
-          } if not consented
+          } if refused
         ])
       }) }}
     </div>
