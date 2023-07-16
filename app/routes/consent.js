@@ -23,6 +23,7 @@ export default (router) => {
     '/triage-consent/:campaignId/:nhsNumber',
     '/triage-consent/:campaignId/:nhsNumber/:view'
   ], (req, res, next) => {
+    res.locals.isTriage = true
     res.locals.paths = wizard(req, res, true)
     next()
   })
@@ -85,9 +86,21 @@ export default (router) => {
     child.consent.text = consentData.consent
     child.consent.consented = consentData.consent === CONSENT.GIVEN
     child.consent.refused = consentData.consent === CONSENT.REFUSED
-    child.consent.responded = !consentData.consent === CONSENT.UNKNOWN
+    child.consent.responded = consentData.consent !== CONSENT.UNKNOWN
     child.consentedDate = DateTime.local().toISODate()
     child.consentedMethod = 'Telephone'
+
+    if (child.consent.consented) {
+      child.actionNeeded = 'Vaccinate'
+      child.actionTaken = null
+      if (res.locals.isTriage) {
+        child.triageCompleted = true
+      }
+    }
+
+    if (child.consent.refused) {
+      child.actionTaken = 'Do not vaccinate'
+    }
 
     if (gillickCompetent || assessedAsNotGillickCompetent) {
       next()
