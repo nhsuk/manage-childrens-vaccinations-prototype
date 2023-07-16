@@ -1,6 +1,6 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
-import { CONSENT, ACTION_NEEDED } from '../enums.js'
+import { CONSENT, ACTION_NEEDED, ACTION_TAKEN, TRIAGE, TRIAGE_REASON } from '../enums.js'
 import { DateTime } from 'luxon'
 
 export default (router) => {
@@ -78,7 +78,7 @@ export default (router) => {
     const campaign = res.locals.campaign
     const campaignType = campaign.type
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
-
+    const triageData = req.session.data.triage[req.params.campaignId][req.params.nhsNumber]
     const gillickCompetent = consentData['gillick-competent'] === 'Yes'
     const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
 
@@ -90,8 +90,26 @@ export default (router) => {
     child.consentedDate = DateTime.local().toISODate()
     child.consentedMethod = 'Telephone'
 
-    if (child.consent.consented) {
-      child.actionNeeded = 'Vaccinate'
+    if (child.consent.consented && triageData && triageData.status) {
+      child.triageStatus = triageData.status
+      child.healthQuestions.triage = triageData.notes
+      if (triageData.status === TRIAGE.READY) {
+        child.actionNeeded = ACTION_NEEDED.VACCINATE
+        child.triageCompleted = true
+      } else if (triageData.status === TRIAGE.NEEDS_FOLLOW_UP) {
+        child.actionNeeded = ACTION_NEEDED.FOLLOW_UP
+        child.needsTriage = true
+        child.triageReasons = [TRIAGE_REASON.NURSE_REQUESTED]
+        child.triageCompleted = false
+      } else if (triageData.status === TRIAGE.DO_NOT_VACCINATE) {
+        child.actionNeeded = ACTION_NEEDED.NONE
+        child.actionTaken = ACTION_TAKEN.DO_NOT_VACCINATE
+        child.needsTriage = true
+        child.triageReasons = [TRIAGE_REASON.NURSE_REQUESTED]
+        child.triageCompleted = true
+      }
+    } else if (child.consent.consented) {
+      child.actionNeeded = ACTION_NEEDED.VACCINATE
       child.actionTaken = null
       if (res.locals.isTriage) {
         child.triageCompleted = true

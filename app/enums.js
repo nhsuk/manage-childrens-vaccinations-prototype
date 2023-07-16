@@ -18,7 +18,8 @@ export const ACTION_TAKEN = {
 export const TRIAGE_REASON = {
   HAS_NOTES: 'Notes need triage',
   INCONSISTENT_CONSENT: 'Conflicting consent',
-  CHECK_CONSENTER: 'Check parental responsibility'
+  CHECK_CONSENTER: 'Check parental responsibility',
+  NURSE_REQUESTED: 'Nurse requested'
 }
 
 export const TRIAGE = {
