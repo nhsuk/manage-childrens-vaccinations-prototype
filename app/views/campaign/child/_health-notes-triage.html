@@ -19,6 +19,17 @@
       </p>
     </div>
   {% endfor %}
+  {% if consentJourney and triageRecord.notes %}
+    <h3 class="nhsuk-heading-xs nhsuk-u-margin-top-8 nhsuk-u-margin-bottom-0">
+      Triage notes
+    </h3>
+
+    <div class="nhsuk-u-margin-top-2">
+      <p class="nhsuk-u-margin-bottom-0">
+        {{ triageRecord.notes }}
+      </p>
+    </div>
+  {% endif %}
 {% endset %}
 
 {{ card({

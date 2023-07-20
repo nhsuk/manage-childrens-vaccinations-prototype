@@ -62,8 +62,8 @@
   {% if consented %}
     <div class="nhsuk-u-margin-top-4">
       {% set consentJourney = true %}
+      {% set triageRecord = d('triage.' + campaign.id + '.' + child.nhsNumber) %}
       {% include "campaign/child/_health-notes-triage.html" %}
-      TODO: TRIAGE NOTES DO NOT SHOW YET
     </div>
   {% endif %}
 {% endblock %}
