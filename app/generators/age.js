@@ -17,10 +17,10 @@ for (let i = 0; i < 13; i++) {
 }
 
 export const dateOfBirth = (faker, options) => {
-  return faker.date.between(
-    yearGroups[options.maxYearGroup].start,
-    yearGroups[options.minYearGroup].end
-  )
+  return faker.date.between({
+    from: yearGroups[options.maxYearGroup].start,
+    to: yearGroups[options.minYearGroup].end
+  })
 }
 
 export const yearGroup = (dob) => {

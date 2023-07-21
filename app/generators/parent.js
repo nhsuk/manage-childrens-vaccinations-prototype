@@ -27,7 +27,10 @@ export default (faker, lastName) => {
 
   p.telephone = faker.phone.number('07#########')
   p.relationship = relationship === 'Parent' ? parent : relationship
-  p.email = faker.internet.email(p.firstName, p.lastName)
+  p.email = faker.internet.email({
+    firstName: p.firstName,
+    lastName: p.lastName
+  })
 
   delete p.sex
   return p
