@@ -11,9 +11,9 @@ export default (faker, isChild, lastName) => {
   const sex = faker.helpers.arrayElement(['Male', 'Female'])
   const firstName = isChild
     ? faker.helpers.arrayElement(getChildNames(sex))
-    : faker.name.firstName(sex.toLowerCase())
+    : faker.person.firstName(sex.toLowerCase())
 
-  lastName = lastName || faker.name.lastName(sex)
+  lastName = lastName || faker.person.lastName(sex)
   const fullName = `${firstName} ${lastName}`
 
   return {

@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
-import { faker } from '@faker-js/faker'
-faker.locale = 'en_GB'
+import { fakerEN_GB as faker } from '@faker-js/faker'
 
 const getBatches = () => {
   const batches = {}

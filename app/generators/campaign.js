@@ -1,9 +1,8 @@
 import school from './school.js'
 import children from './children.js'
 import yearGroups from './year-groups.js'
-import { faker } from '@faker-js/faker'
+import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
-faker.locale = 'en_GB'
 
 const generateRandomString = (length) => {
   length = length || 3
