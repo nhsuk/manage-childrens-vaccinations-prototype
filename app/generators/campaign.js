@@ -24,7 +24,7 @@ export default () => {
   const type = faker.helpers.arrayElement(['HPV', 'Flu']) // exclude 3-in-1 and MenACWY for now, as the design is not ready
   const schoolObject = school(faker, type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
-  const daysUntil = faker.datatype.number({ min: 2, max: 100 })
+  const daysUntil = faker.number.int({ min: 2, max: 100 })
   const triageInProgress = daysUntil < 28
   const campaignChildren = children({
     count: 100,

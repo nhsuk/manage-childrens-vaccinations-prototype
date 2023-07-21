@@ -73,7 +73,7 @@ export default (options) => {
     handleInProgressTriage(c)
   }
 
-  const days = faker.datatype.number({ min: 10, max: 35 })
+  const days = faker.number.int({ min: 10, max: 35 })
   c.consentedDate = DateTime.local().minus({ days }).toISODate()
   c.consentedMethod = faker.helpers.arrayElement([
     ...Array(5).fill('Website'),

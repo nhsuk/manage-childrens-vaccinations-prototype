@@ -3,12 +3,12 @@ import { fakerEN_GB as faker } from '@faker-js/faker'
 
 const getBatches = () => {
   const batches = {}
-  const count = faker.datatype.number({ min: 2, max: 5 })
-  const prefix = faker.random.alpha({ casing: 'upper', count: 2 })
+  const count = faker.number.int({ min: 2, max: 5 })
+  const prefix = faker.string.alpha({ casing: 'upper', count: 2 })
 
   for (let i = 0; i < count; i++) {
     const name = `${prefix}${faker.phone.number('####')}`
-    const daysUntilExpiry = faker.datatype.number({ min: 10, max: 50 })
+    const daysUntilExpiry = faker.number.int({ min: 10, max: 50 })
     const expiryDate = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
     const day = expiryDate.split('-')[2]
     const month = expiryDate.split('-')[1]
