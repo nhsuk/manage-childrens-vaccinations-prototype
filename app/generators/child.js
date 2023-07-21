@@ -7,13 +7,12 @@ import gp from './gp.js'
 import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
 import triageNeeded from './triage-needed.js'
-import { faker } from '@faker-js/faker'
+import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
-faker.locale = 'en_GB'
 
 const preferredName = (child) => {
-  return `${child.firstName} ${faker.name.lastName()}`
+  return `${child.firstName} ${faker.person.lastName()}`
 }
 
 const setActions = (child, consent) => {
