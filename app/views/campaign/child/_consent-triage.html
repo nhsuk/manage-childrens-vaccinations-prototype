@@ -51,23 +51,26 @@
 }) }}
 
 {% if not child.consent.responded %}
-  <div class="nhsuk-card">
-    <div class="nhsuk-card__content">
-      <h2 class="nhsuk-heading-m">Triage</h2>
+  <form method="post">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-heading-m">Triage</h2>
 
-      {{ textarea({
-        label: {
-          text: "Triage notes"
-        },
-        rows: 5,
-        classes: "nhsuk-u-margin-bottom-0",
-        decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
-      }) }}
+        {{ textarea({
+            label: {
+            text: "Triage notes"
+          },
+          rows: 5,
+          classes: "nhsuk-u-margin-bottom-0",
+          decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
+        }) }}
 
-      {{ button({
-        text: "Add notes",
-        classes: "nhsuk-button--secondary"
-      }) }}
+        {{ button({
+          text: "Add notes",
+          classes: "nhsuk-button--secondary"
+        }) }}
+      </div>
     </div>
-  </div>
+  </form>
+
 {% endif %}
