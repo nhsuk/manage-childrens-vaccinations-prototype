@@ -75,7 +75,7 @@ export default (router) => {
       }
     }
 
-    res.redirect(`/campaign/${campaignId}/children-triage?success=${nhsNumber}`)
+    res.redirect(`/campaign/${campaignId}/children-triage?success=${nhsNumber}&area=triage`)
   })
 
   router.post('/campaign/:campaignId', (req, res, next) => {
@@ -132,6 +132,14 @@ export default (router) => {
     '/campaign/:campaignId/children-triage'
   ], (req, res, next) => {
     res.locals.filteredChildren = filterChildren(req, res)
+
+    if (res.locals.success) {
+      const campaign = req.session.data.campaigns[req.params.campaignId]
+      res.locals.successChild = campaign.children.find(c => {
+        return c.nhsNumber === req.query.success
+      })
+      res.locals.area = req.query.area
+    }
     next()
   })
 
