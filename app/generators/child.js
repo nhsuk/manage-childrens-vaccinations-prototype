@@ -72,14 +72,6 @@ export default (options) => {
     handleInProgressTriage(c)
   }
 
-  c.consentedMethod = faker.helpers.arrayElement([
-    ...Array(5).fill('Website'),
-    'Text message',
-    'Telephone',
-    'In person',
-    'Paper'
-  ])
-
   c.parentOrGuardian = c.consent.responded ? parent(faker, c.lastName) : {}
   return c
 }

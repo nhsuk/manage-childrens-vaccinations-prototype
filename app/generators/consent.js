@@ -57,6 +57,14 @@ export default (faker, type) => {
 
   const days = faker.number.int({ min: 10, max: 35 })
 
+  const method = faker.helpers.arrayElement([
+    ...Array(5).fill('Website'),
+    'Text message',
+    'Telephone',
+    'In person',
+    'Paper'
+  ])
+
   return {
     [type]: r,
     text: r,
@@ -64,6 +72,7 @@ export default (faker, type) => {
     consented: r === CONSENT.GIVEN,
     responded: r !== CONSENT.UNKNOWN,
     date: DateTime.local().minus({ days }).toISODate(),
+    method: method,
     reason
   }
 }
