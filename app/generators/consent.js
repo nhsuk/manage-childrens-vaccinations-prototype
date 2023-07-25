@@ -1,4 +1,5 @@
 import { CONSENT, REFUSAL_REASON } from '../enums.js'
+import { DateTime } from 'luxon'
 
 export default (faker, type) => {
   if (type === '3-in-1 and MenACWY') {
@@ -54,12 +55,15 @@ export default (faker, type) => {
     reason = faker.helpers.arrayElement(availableReasons)
   }
 
+  const days = faker.number.int({ min: 10, max: 35 })
+
   return {
     [type]: r,
     text: r,
     refused: r === CONSENT.REFUSED,
     consented: r === CONSENT.GIVEN,
     responded: r !== CONSENT.UNKNOWN,
+    date: DateTime.local().minus({ days }).toISODate(),
     reason
   }
 }
