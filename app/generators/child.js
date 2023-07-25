@@ -1,5 +1,4 @@
 import person from './person.js'
-import parent from './parent.js'
 import address from './address.js'
 import consent from './consent.js'
 import triageStatus from './triage-status.js'
@@ -58,7 +57,7 @@ export default (options) => {
   c.dob = dateOfBirth(faker, options)
   c.age = age(c.dob)
   c.yearGroup = yearGroup(c.dob)
-  c.consent = consent(faker, options.type)
+  c.consent = consent(faker, options.type, c.lastName)
   c.outcome = OUTCOME.NO_OUTCOME_YET
 
   setActions(c, c.consent[options.type])
@@ -72,6 +71,5 @@ export default (options) => {
     handleInProgressTriage(c)
   }
 
-  c.parentOrGuardian = c.consent.responded ? parent(faker, c.lastName) : {}
   return c
 }

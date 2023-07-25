@@ -1,7 +1,8 @@
 import { CONSENT, REFUSAL_REASON } from '../enums.js'
 import { DateTime } from 'luxon'
+import parent from './parent.js'
 
-export default (faker, type) => {
+export default (faker, type, childsLastName) => {
   if (type === '3-in-1 and MenACWY') {
     const yes = {
       '3-in-1': CONSENT.GIVEN,
@@ -65,6 +66,8 @@ export default (faker, type) => {
     'Paper'
   ])
 
+  const parentOrGuardian = r !== CONSENT.UNKNOWN ? parent(faker, childsLastName) : {}
+
   return {
     [type]: r,
     text: r,
@@ -73,6 +76,7 @@ export default (faker, type) => {
     responded: r !== CONSENT.UNKNOWN,
     date: DateTime.local().minus({ days }).toISODate(),
     method: method,
+    parentOrGuardian: parentOrGuardian,
     reason
   }
 }

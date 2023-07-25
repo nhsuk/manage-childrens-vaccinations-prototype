@@ -1,7 +1,7 @@
 {% set parentContactDetailsHtml %}
   <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-    Telephone: {{ child.parentOrGuardian.telephone }}<br />
-    Email: {{ child.parentOrGuardian.email }}
+    Telephone: {{ child.consent.parentOrGuardian.telephone }}<br />
+    Email: {{ child.consent.parentOrGuardian.email }}
   </div>
 {% endset %}
 
@@ -11,16 +11,16 @@
       rows: decorateRows([
         {
           key: "Given by" if consented else "Refused by",
-          value: child.parentOrGuardian.relationship
+          value: child.consent.parentOrGuardian.relationship
         },
         {
           key: "Reason for refusal",
           value: child.consent.reason or "Personal choice"
         } if not consented,
         {
-          key: child.parentOrGuardian.relationship,
+          key: child.consent.parentOrGuardian.relationship,
           value: {
-            html: child.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
+            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
           }
         },
         {

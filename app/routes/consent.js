@@ -125,9 +125,9 @@ export default (router) => {
     if (gillickCompetent || assessedAsNotGillickCompetent) {
       next()
     } else {
-      child.parentOrGuardian.fullName = consentData.parent.name
-      child.parentOrGuardian.telephone = consentData.parent.telephone
-      child.parentOrGuardian.relationship =
+      child.consent.parentOrGuardian.fullName = consentData.parent.name
+      child.consent.parentOrGuardian.telephone = consentData.parent.telephone
+      child.consent.parentOrGuardian.relationship =
         (consentData.parent.relationship === 'Other' && consentData.parent['relationship-other'])
           ? consentData.parent['relationship-other']
           : consentData.parent.relationship
