@@ -5,8 +5,8 @@
     </h2>
     {% set parentContactDetailsHtml %}
       <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-        Telephone: {{ child.parentOrGuardian.telephone }}<br />
-        Email: {{ child.parentOrGuardian.email }}
+        Telephone: {{ child.consent.parentOrGuardian.telephone }}<br />
+        Email: {{ child.consent.parentOrGuardian.email }}
       </div>
     {% endset %}
 
@@ -53,11 +53,11 @@
           }
         } if responded,
         {
-          key: child.parentOrGuardian.relationship,
+          key: child.consent.parentOrGuardian.relationship,
           value: {
-            html: child.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
+            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
           }
-        } if child.parentOrGuardian.relationship and not triaging
+        } if child.consent.parentOrGuardian.relationship and not triaging
       ])
     }) }}
   </div>
