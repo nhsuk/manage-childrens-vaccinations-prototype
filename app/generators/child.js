@@ -8,7 +8,6 @@ import healthQuestions from './health-questions.js'
 import { dateOfBirth, yearGroup, age } from './age.js'
 import triageNeeded from './triage-needed.js'
 import { fakerEN_GB as faker } from '@faker-js/faker'
-import { DateTime } from 'luxon'
 import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
 
 const preferredName = (child) => {
@@ -73,8 +72,6 @@ export default (options) => {
     handleInProgressTriage(c)
   }
 
-  const days = faker.number.int({ min: 10, max: 35 })
-  c.consentedDate = DateTime.local().minus({ days }).toISODate()
   c.consentedMethod = faker.helpers.arrayElement([
     ...Array(5).fill('Website'),
     'Text message',

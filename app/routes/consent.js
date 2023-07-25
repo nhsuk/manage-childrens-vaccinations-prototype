@@ -87,7 +87,7 @@ export default (router) => {
     child.consent.consented = consentData.consent === CONSENT.GIVEN
     child.consent.refused = consentData.consent === CONSENT.REFUSED
     child.consent.responded = consentData.consent !== CONSENT.UNKNOWN
-    child.consentedDate = DateTime.local().toISODate()
+    child.consent.date = DateTime.local().toISODate()
     child.consentedMethod = 'Telephone'
 
     if (child.consent.consented && triageData && triageData.status) {
