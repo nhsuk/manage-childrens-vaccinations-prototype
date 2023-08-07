@@ -33,7 +33,7 @@
     "luxon": "^3.2.1",
     "nhsuk-prototype-rig": "^0.0.6",
     "npm-run-all": "^4.1.5",
-    "rollup": "^3.27.0",
+    "rollup": "^3.27.2",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-scss": "3.0.0",
     "sass": "^1.64.1"
