@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@rollup/plugin-commonjs": "^25.0.3",
+    "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "luxon": "^3.2.1",
     "nhsuk-prototype-rig": "^0.0.6",
