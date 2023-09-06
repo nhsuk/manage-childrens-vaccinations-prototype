@@ -30,7 +30,7 @@ const filters = {
   },
   noTriageNeeded: (children) => {
     return children.filter((c) => {
-      return !c.needsTriage && c.consent.responded
+      return !c.needsTriage && c.consent.consented
     })
   },
   triageNeeded: (children) => {
@@ -82,10 +82,13 @@ export default (req, res) => {
 
   couldNotVaccinateChildren = sort(couldNotVaccinateChildren)
 
-  let chaseConsentChildren = filter(children, 'actionNeeded', 'GET_CONSENT')
-  let noTriageNeededChildren = filter(children, 'noTriageNeeded')
+  const getConsentChildren = filter(children, 'actionNeeded', 'GET_CONSENT')
+  const checkRefusalChildren = filter(children, 'actionNeeded', 'CHECK_REFUSAL')
+
   let triageNeededChildren = filter(children, 'triageNeeded')
   let triageCompletedChildren = filter(children, 'triageCompleted')
+  let chaseConsentChildren = sort([...getConsentChildren, ...checkRefusalChildren])
+  let noTriageNeededChildren = filter(children, 'noTriageNeeded')
 
   let actionNeededChildren = children.filter((c) => {
     return !vaccinatedChildren.includes(c) &&
