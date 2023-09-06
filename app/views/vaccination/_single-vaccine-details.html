@@ -12,8 +12,6 @@
 {% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
 {% set basePath = rootPath + campaign.id + '/' + child.nhsNumber %}
 
-{{ vaccine.summary }}
-
 {{ govukSummaryList({
   classes: "app-u-frutiger app-summary-list--no-bottom-border",
   rows: decorateRows([
@@ -31,6 +29,11 @@
       href: "#"
     } if type == "HPV",
     {
+      key: "Dose",
+      value: "Half" if vaccinationRecord.given == "Half" else "Full",
+      href: "#"
+    } if type == "Flu",
+    {
       key: "Brand",
       value: brand,
       href: "#"
@@ -43,12 +46,12 @@
     {
       key: 'Site',
       value: 'Nasal'
-    } if vaccineGiven and vaccine.isNasal,
+    } if vaccineGiven and batch.isNasal,
     {
       key: 'Site',
       value: vaccinationRecord.where,
       href: basePath + '/has-it-been-given'
-    } if vaccineGiven and not vaccine.isNasal,
+    } if vaccineGiven and not batch.isNasal,
     {
       key: 'Reason',
       value: vaccinationRecord['why-not-given'],

@@ -31,12 +31,17 @@
       }
     },
     items: [{
-      text: "Yes, they had the " + type + " vaccine",
+      text:
+        "Yes, they got the full dose" if campaign.isFlu else
+        "Yes, they got the " + type + " vaccine",
       value: "Yes",
       conditional: {
         html: where
       } if campaign.vaccines[0].method == "Injection"
     }, {
+      text: "Yes, they got half a dose",
+      value: "Half"
+    } if campaign.isFlu, {
       text: "No, they did not get the vaccine",
       value: "No"
     }],
