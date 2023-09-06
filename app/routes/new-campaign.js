@@ -1,5 +1,5 @@
 import { newCampaignWizard } from '../wizards/new-campaign.js'
-import { isoDateFromDateInput } from 'nhsuk-prototype-rig/lib/filters/date.js'
+import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
 import { faker } from '@faker-js/faker'
 import vaccines from '../generators/vaccines.js'
 import yearGroups from '../generators/year-groups.js'
