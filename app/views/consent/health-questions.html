@@ -2,7 +2,7 @@
 {% set title = "Health questions" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ caption: child.fullName, title: title }) }}
 
   {% for q in child.healthQuestions.questions %}
     {% set giveDetailsHtml %}

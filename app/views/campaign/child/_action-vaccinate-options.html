@@ -10,11 +10,12 @@
   }) }}
 {% endset %}
 
+{% set title = "Did they get the " + ("flu" if campaign.type == "Flu" else campaign.type) + " vaccine?" %}
+
 {{ radios({
   fieldset: {
     legend: {
-      text: "Did they get the " + (campaign.type | lower if campaign.type == 'Flu' else campaign.type) + " vaccine?",
-      isPageHeading: true,
+      text: appHeading({ caption: child.fullName, title: title }),
       classes: "nhsuk-fieldset__legend--l"
     }
   } if consentJourney,

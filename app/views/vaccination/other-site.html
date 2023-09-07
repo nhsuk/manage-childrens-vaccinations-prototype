@@ -2,7 +2,7 @@
 {% set title = "Tell us how the vaccination was given" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ caption: child.fullName, title: title }) }}
 
   {{ radios({
     fieldset: {
