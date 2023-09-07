@@ -13,18 +13,23 @@
 {{ radios({
   fieldset: {
     legend: {
-      text: "Did they get the " + (campaign.type | lower if campaign.type == 'Flu' else campaign.type) + " vaccine?",
+      text: "Did they get the " + ("flu" if campaign.isFlu else campaign.type) + " vaccine?",
       isPageHeading: true,
       classes: "nhsuk-fieldset__legend--l"
     }
   } if consentJourney,
   items: [{
-    text: "Yes, they got the " + (campaign.type | lower if campaign.type == 'Flu' else campaign.type) + " vaccine",
+    text:
+      "Yes, they got the full dose" if campaign.isFlu else
+      "Yes, they got the " + campaign.type + " vaccine",
     value: "Yes",
     conditional: {
       html: where
     } if not campaign.isFlu
   }, {
+    text: "Yes, they got half a dose",
+    value: "Half"
+  } if campaign.isFlu, {
     text: "No, they did not get it",
     value: "No"
   }],
