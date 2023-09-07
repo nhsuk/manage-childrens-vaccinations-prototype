@@ -2,7 +2,7 @@
 {% set title = "Who are you trying to get consent from?" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ caption: child.fullName, title: title }) }}
 
   {{ input({
     label: {

@@ -5,8 +5,7 @@
   {{ radios({
     fieldset: {
       legend: {
-        text: title,
-        isPageHeading: true,
+        text: appHeading({ caption: child.fullName, title: title }),
         classes: "nhsuk-fieldset__legend--l"
       }
     },
