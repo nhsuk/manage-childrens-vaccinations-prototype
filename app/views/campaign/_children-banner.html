@@ -18,9 +18,8 @@
   {% endset %}
 
   {{ govukNotificationBanner({
-  html: html,
-  classes: "app-u-frutiger",
-  type: "success"
+    html: html,
+    type: "success"
   }) }}
 {% elseif success %}
   {% set html %}
@@ -43,7 +42,6 @@
 
   {{ govukNotificationBanner({
     html: html,
-    classes: "app-u-frutiger",
     type: "success"
   }) }}
 {% endif %}

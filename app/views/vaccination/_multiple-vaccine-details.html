@@ -2,7 +2,7 @@
 {% set 3in1VaccineGiven = "3-in-1" in vaccinationRecord["multi-given"] %}
 
 {{ govukSummaryList({
-  classes: "app-u-frutiger app-summary-list--no-bottom-border",
+  classes: "app-summary-list--no-bottom-border",
   rows: decorateRows([
     {
       key: "Child",
@@ -39,7 +39,7 @@
 
 {% if child.consent["men-acwy"] == "Yes" or menACWYVaccineGiven %}
   {{ govukSummaryList({
-    classes: "app-u-frutiger app-summary-list--no-bottom-border",
+    classes: "app-summary-list--no-bottom-border",
     rows: decorateRows([
       {
         key: "Brand",
@@ -80,7 +80,7 @@
 
 {% if child.consent["3-in-1"] == "Yes" or 3in1VaccineGiven %}
   {{ govukSummaryList({
-    classes: "app-u-frutiger app-summary-list--no-bottom-border",
+    classes: "app-summary-list--no-bottom-border",
     rows: decorateRows([
       {
         key: "Brand",

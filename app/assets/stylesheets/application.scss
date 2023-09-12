@@ -1,4 +1,5 @@
 // GOV.UK Frontend options
+$govuk-font-family: "Frutiger W01", Arial, sans-serif;
 $govuk-global-styles: false;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/govuk/assets/";
@@ -53,11 +54,6 @@ $color_app-pale-blue: #ccdff1;
 
 .app-u-text-decoration-none {
   text-decoration: none !important;
-}
-
-.app-u-frutiger,
-.app-u-frutiger * {
-  font-family: "Frutiger W01", Arial, sans-serif !important
 }
 
 .app-summary-list--no-bottom-border {
