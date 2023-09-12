@@ -24,7 +24,7 @@
               <td class="govuk-table__cell">
                 <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
                 {% if child.preferredName %}
-                  <br />Known as: {{ child.preferredName }}
+                  <br>Known as: {{ child.preferredName }}
                 {% endif %}
               </td>
               {% if isReasonNeeded %}
