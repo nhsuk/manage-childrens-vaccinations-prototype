@@ -79,13 +79,13 @@
             </div>
 
             {% if child.seen.isOffline %}
-              <hr />
+              <hr>
               <h2 class="nhsuk-heading-s">You made changes offline</h2>
               <p>Your changes will automatically sync when you’re back online.</p>
             {% endif %}
 
             {% if child.hadOfflineChanges and not child.seen.isOffline %}
-              <hr />
+              <hr>
               <h2 class="nhsuk-heading-s">Your changes were synced</h2>
               <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
               <p><a href="#">Hide this message</a></p>
