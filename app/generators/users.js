@@ -10,7 +10,8 @@ export default (options) => {
     p.email = faker.internet.email({
       firstName: p.firstName.toLowerCase(),
       lastName: p.lastName.toLowerCase(),
-      provider: 'sais.nhs.uk'}).replace('_', '.')
+      provider: 'sais.nhs.uk'
+    }).replace('_', '.')
 
     users.push(p)
   }

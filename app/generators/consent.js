@@ -75,8 +75,8 @@ export default (faker, type, childsLastName) => {
     consented: r === CONSENT.GIVEN,
     responded: r !== CONSENT.UNKNOWN,
     date: DateTime.local().minus({ days }).toISODate(),
-    method: method,
-    parentOrGuardian: parentOrGuardian,
+    method,
+    parentOrGuardian,
     reason
   }
 }
