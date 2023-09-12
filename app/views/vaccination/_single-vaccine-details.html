@@ -8,7 +8,6 @@
 {% endif %}
 {% set batchKey = vaccinationRecord.batch %}
 {% set batch = data.vaccines.batches[batchKey] %}
-{% set brand = batch.brand + " (Nasal spray)" if batch.isNasal else batch.brand + " (Injection)" %}
 {% set vaccineGiven = vaccinationRecord["given"] !== "No" %}
 {% set basePath = rootPath + campaign.id + "/" + child.nhsNumber %}
 
@@ -32,7 +31,7 @@
     } if type == "HPV",
     {
       key: "Brand",
-      value: brand,
+      value: batch.brand + " (" + batch.method + ")",
       href: "#"
     },
     {
@@ -43,12 +42,12 @@
     {
       key: "Site",
       value: "Nasal"
-    } if vaccineGiven and vaccine.isNasal,
+    } if vaccineGiven and batch.method == "Nasal spray",
     {
       key: "Site",
       value: vaccinationRecord.where,
       href: basePath + "/has-it-been-given"
-    } if vaccineGiven and not vaccine.isNasal,
+    } if vaccineGiven and batch.method != "Nasal spray",
     {
       key: "Reason",
       value: vaccinationRecord["why-not-given"],

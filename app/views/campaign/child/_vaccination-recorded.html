@@ -20,11 +20,11 @@
       {
         key: "Site",
         value: "Nasal"
-      } if vaccineGiven and batch.isNasal,
+      } if vaccineGiven and batch.method == "Nasal spray",
       {
         key: "Site",
         value: vaccinationRecord.where
-      } if vaccineGiven and not batch.isNasal,
+      } if vaccineGiven and batch.method != "Nasal spray",
       {
         key: "Reason",
         value: vaccinationRecord["why-not-given"]

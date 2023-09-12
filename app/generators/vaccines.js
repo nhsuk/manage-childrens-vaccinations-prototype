@@ -31,7 +31,6 @@ export default () => {
       vaccine: 'Flu',
       brand: 'Fluenz Tetra',
       method: 'Nasal spray',
-      isNasal: true,
       isFlu: true,
       batches: getBatches(faker)
     },
