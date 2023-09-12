@@ -1,6 +1,10 @@
 .app-offline-indicator {
   background: $color_app-pale-blue;
   padding: nhsuk-spacing(3) 0 nhsuk-spacing(3);
+
+  .nhsuk-link {
+    color: $nhsuk-text-color;
+  }
 }
 
 .app-changes-synced-indicator {

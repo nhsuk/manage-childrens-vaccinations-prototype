@@ -1,11 +1,14 @@
 // GOV.UK Frontend options
-$govuk-font-family: "Frutiger W01", Arial, sans-serif;
+$govuk-font-family: "Frutiger W01", arial, sans-serif;
 $govuk-global-styles: false;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/govuk/assets/";
+
+// App variables
+// stylelint-disable scss/dollar-variable-pattern
 $color_app-pale-blue: #ccdff1;
 
-@import 'node_modules/nhsuk-frontend/packages/nhsuk';
+@import "node_modules/nhsuk-frontend/packages/nhsuk";
 
 // Import GOV.UK Frontend
 @import "govuk-frontend/govuk/all";
@@ -13,12 +16,14 @@ $color_app-pale-blue: #ccdff1;
 // Import GOV.UK Prototype Components
 @import "@x-govuk/govuk-prototype-components/x-govuk/all";
 
-// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
-@import "_unbranded.scss";
-@import "_email.scss";
-@import "_offline.scss";
-@import "components/_consent-banner.scss";
-@import "components/_outcome-tag.scss";
+// Import app components
+@import "components/consent-banner";
+@import "components/outcome-tag";
+
+// Import app layouts
+@import "unbranded";
+@import "email";
+@import "offline";
 
 .app-scenario {
   background: $color_nhsuk-grey-5;
@@ -42,18 +47,6 @@ $color_app-pale-blue: #ccdff1;
   &:hover {
     text-decoration: underline;
   }
-}
-
-.app-u-white {
-  color: $color_nhsuk-white;
-}
-
-.app-u-inherit {
-  color: inherit !important;
-}
-
-.app-u-text-decoration-none {
-  text-decoration: none !important;
 }
 
 .app-summary-list--no-bottom-border {
@@ -112,19 +105,21 @@ $color_app-pale-blue: #ccdff1;
 
 @keyframes rotate {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
+
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes draw {
   0% {
-      stroke-dashoffset: 125;
+    stroke-dashoffset: 125;
   }
+
   100% {
-      stroke-dashoffset: 0;
+    stroke-dashoffset: 0;
   }
 }
 

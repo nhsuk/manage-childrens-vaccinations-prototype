@@ -1,6 +1,10 @@
 .app-consent-banner {
   padding: nhsuk-spacing(3) nhsuk-spacing(5);
 
+  .nhsuk-link {
+    color: inherit;
+  }
+
   .nhsuk-icon__tick,
   .nhsuk-icon__cross {
     vertical-align: bottom;
