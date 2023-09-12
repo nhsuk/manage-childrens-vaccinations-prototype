@@ -1,8 +1,6 @@
-{% set healthNotes %}
+{% set cardDescription %}
   {% if consentJourney %}
-    <p>
-      <a href="#">Change</a>
-    </p>
+    <p><a href="#">Change</a></p>
   {% endif %}
   {% for question in child.healthQuestions.questions %}
     <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
@@ -25,5 +23,5 @@
   heading: "Health questions",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: healthNotes
+  description: cardDescription
 }) }}

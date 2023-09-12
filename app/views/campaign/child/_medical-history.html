@@ -1,4 +1,4 @@
-{% set healthNotes %}
+{% set detailsHtml %}
   {% for question in child.healthQuestions.questions %}
     <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
       {{ question.question }}
@@ -10,13 +10,11 @@
   {% endfor %}
 {% endset %}
 
-{% set healthNotes %}
+{% set cardDescription %}
   {{ details({
     text: "Show answers",
-    attributes: {
-      open: true
-    } if child.healthQuestions.hasAnswers,
-    HTML: healthNotes,
+    attributes: { open: true } if child.healthQuestions.hasAnswers,
+    HTML: detailsHtml,
     classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
   }) }}
 
@@ -41,5 +39,5 @@
   heading: "Medical history",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: healthNotes
+  description: cardDescription
 }) }}
