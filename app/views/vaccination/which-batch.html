@@ -2,15 +2,15 @@
 {% set title = "Which batch did you use?" %}
 
 {% block form %}
-  {% set defaulText = 'Default to this batch for today' %}
+  {% set defaulText = "Default to this batch for today" %}
 
   {% set otherBatch %}
     {{ input({
       label: {
-        text: 'Batch',
-        classes: 'nhsuk-label--s nhsuk-u-margin-bottom-1'
+        text: "Batch",
+        classes: "nhsuk-label--s nhsuk-u-margin-bottom-1"
       },
-      classes: 'nhsuk-input--width-10',
+      classes: "nhsuk-input--width-10",
       decorate: "other-batch-name"
     }) }}
 
@@ -39,7 +39,7 @@
   {% for batchKey in batchItems %}
     {% set batch = data.vaccines.batches[batchKey] %}
     {% set items = (items.push({
-      text: batch.name + ' (expires ' + batch.expiryDate | govukDate + ')',
+      text: batch.name + " (expires " + batch.expiryDate | govukDate + ")",
       value: batchKey,
       conditional: {
         html: checkboxes({
@@ -52,8 +52,8 @@
     }), items) %}
   {% endfor %}
 
-  {% set items = (items.push({ divider: 'or' }, {
-    text: 'A batch that’s not in this list',
+  {% set items = (items.push({ divider: "or" }, {
+    text: "A batch that’s not in this list",
     conditional: {
       html: otherBatch
     }

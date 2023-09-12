@@ -37,7 +37,7 @@
       </p>
     {% endif %}
     <p>
-      <a href="/campaign/{{ campaign.id }}/{{ 'child-triage' if area == 'triage' else 'child' }}/{{ successChild.nhsNumber or success }}">View child record</a>
+      <a href="/campaign/{{ campaign.id }}/{{ "child-triage" if area == "triage" else "child" }}/{{ successChild.nhsNumber or success }}">View child record</a>
     </p>
   {% endset %}
 

@@ -5,7 +5,7 @@
   </h2>
 </div>
 {% else %}
-  {% if child.consent['men-acwy'] == CONSENT.GIVEN %}
+  {% if child.consent["men-acwy"] == CONSENT.GIVEN %}
   <div class="app-consent-banner app-consent-banner--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
     <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
       MenACWY consent given by {{ child.consent.parentOrGuardian.relationship | lower }}
@@ -19,7 +19,7 @@
   </div>
   {% endif %}
 
-  {% if child.consent['3-in-1'] == CONSENT.GIVEN %}
+  {% if child.consent["3-in-1"] == CONSENT.GIVEN %}
   <div class="app-consent-banner app-consent-banner--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
     <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
       3 in 1 consent given by {{ child.consent.parentOrGuardian.relationship | lower }}

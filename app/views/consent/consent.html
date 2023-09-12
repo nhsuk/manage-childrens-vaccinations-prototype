@@ -1,5 +1,5 @@
 {% extends "layouts/wizard.html" %}
-{% set isGillickCompetent = d(base + "gillick-competent") === 'Yes' %}
+{% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
 {% if isGillickCompetent %}
   {% set title = "Do they agree to having both doses of the HPV vaccination?" %}
 {% else %}
@@ -16,15 +16,15 @@
     },
     items: [
       {
-        text: 'Yes, they agree',
+        text: "Yes, they agree",
         value: CONSENT.GIVEN
       },
       {
-        text: 'No, they do not agree',
+        text: "No, they do not agree",
         value: CONSENT.REFUSED
       },
       {
-        text: 'No response',
+        text: "No response",
         value: CONSENT.UNKNOWN
       } if not isGillickCompetent
     ],

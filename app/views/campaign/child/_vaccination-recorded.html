@@ -6,44 +6,44 @@
     classes: "app-u-frutiger app-summary-list--no-bottom-border  nhsuk-u-margin-bottom-0",
     rows: decorateRows([
       {
-        key: 'Vaccine',
+        key: "Vaccine",
         value: batch.summary
       },
       {
-        key: 'Dose',
-        value: '1 of 2'
+        key: "Dose",
+        value: "1 of 2"
       } if vaccineGiven and campaign.type == "HPV",
       {
-        key: 'Vaccine given?',
+        key: "Vaccine given?",
         value: vaccinationRecord.given
       },
       {
-        key: 'Site',
-        value: 'Nasal'
+        key: "Site",
+        value: "Nasal"
       } if vaccineGiven and batch.isNasal,
       {
-        key: 'Site',
+        key: "Site",
         value: vaccinationRecord.where
       } if vaccineGiven and not batch.isNasal,
       {
-        key: 'Reason',
-        value: vaccinationRecord['why-not-given']
+        key: "Reason",
+        value: vaccinationRecord["why-not-given"]
       } if not vaccineGiven,
       {
-        key: 'Date',
-        value: 'Today (' + "today" | govukDate + ')'
+        key: "Date",
+        value: "Today (" + "today" | govukDate + ")"
       },
       {
-        key: 'Time',
-        value: 'now' | govukTime
+        key: "Time",
+        value: "now" | govukTime
       } if vaccineGiven,
       {
-        key: 'Location',
+        key: "Location",
         value: campaign.location
       },
       {
-        key: 'Vaccinator',
-        value: 'You (' + data.user.name + ')'
+        key: "Vaccinator",
+        value: "You (" + data.user.name + ")"
       }
     ])
   }) }}

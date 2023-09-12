@@ -1,16 +1,16 @@
-{% set rootPath = '/vaccination/' %}
+{% set rootPath = "/vaccination/" %}
 {% set index = 0 %}
 {% if 3in1VaccinationRecord %}
-  {% set rootPath = '/3-in-1-vaccination/' %}
+  {% set rootPath = "/3-in-1-vaccination/" %}
 {% elseif menACWYVaccinationRecord %}
-  {% set rootPath = '/men-acwy-vaccination/' %}
+  {% set rootPath = "/men-acwy-vaccination/" %}
   {% set index = 1 %}
 {% endif %}
 {% set batchKey = vaccinationRecord.batch %}
 {% set batch = data.vaccines.batches[batchKey] %}
-{% set brand = batch.brand + ' (Nasal spray)' if batch.isNasal else batch.brand + ' (Injection)' %}
-{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
-{% set basePath = rootPath + campaign.id + '/' + child.nhsNumber %}
+{% set brand = batch.brand + " (Nasal spray)" if batch.isNasal else batch.brand + " (Injection)" %}
+{% set vaccineGiven = vaccinationRecord["given"] !== "No" %}
+{% set basePath = rootPath + campaign.id + "/" + child.nhsNumber %}
 
 {{ vaccine.summary }}
 
@@ -18,7 +18,7 @@
   classes: "app-u-frutiger app-summary-list--no-bottom-border",
   rows: decorateRows([
     {
-      key: 'Child',
+      key: "Child",
       value: child.fullName
     },
     {
@@ -37,42 +37,42 @@
     },
     {
       key: "Batch",
-      value: batch.name + ' (expires ' + (batch.expiryDate | govukDate('truncate')) + ')',
+      value: batch.name + " (expires " + (batch.expiryDate | govukDate("truncate")) + ")",
       href: "#"
     },
     {
-      key: 'Site',
-      value: 'Nasal'
+      key: "Site",
+      value: "Nasal"
     } if vaccineGiven and vaccine.isNasal,
     {
-      key: 'Site',
+      key: "Site",
       value: vaccinationRecord.where,
-      href: basePath + '/has-it-been-given'
+      href: basePath + "/has-it-been-given"
     } if vaccineGiven and not vaccine.isNasal,
     {
-      key: 'Reason',
-      value: vaccinationRecord['why-not-given'],
-      href: basePath + '/not-given'
+      key: "Reason",
+      value: vaccinationRecord["why-not-given"],
+      href: basePath + "/not-given"
     } if not vaccineGiven,
     {
-      key: 'Date',
-      value: 'Today (' + "today" | govukDate + ')',
-      href: '#'
+      key: "Date",
+      value: "Today (" + "today" | govukDate + ")",
+      href: "#"
     },
     {
-      key: 'Time',
-      value: 'now' | govukTime,
-      href: '#'
+      key: "Time",
+      value: "now" | govukTime,
+      href: "#"
     } if vaccineGiven,
     {
-      key: 'Location',
+      key: "Location",
       value: campaign.location,
-      href: '#'
+      href: "#"
     },
     {
-      key: 'Vaccinator',
-      value: 'You (' + data.user.name + ')',
-      href: '#'
+      key: "Vaccinator",
+      value: "You (" + data.user.name + ")",
+      href: "#"
     }
   ])
 }) }}

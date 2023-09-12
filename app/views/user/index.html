@@ -22,21 +22,21 @@
           <form method="post" action="/manage-users?success={{ user.id }}">
             {{ input({
               label: {
-                text: 'Name'
+                text: "Name"
               },
               decorate: "users." + user.id + ".fullName"
             }) }}
 
             {{ input({
               label: {
-                text: 'Email address'
+                text: "Email address"
               },
               decorate: "users." + user.id + ".email"
             }) }}
 
             {{ button({
-              text: 'Save changes',
-              classes: 'nhsuk-u-margin-top-3'
+              text: "Save changes",
+              classes: "nhsuk-u-margin-top-3"
             }) }}
           </form>
 
