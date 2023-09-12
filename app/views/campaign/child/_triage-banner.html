@@ -1,21 +1,21 @@
-{% set color = 'blue '%}
-{% set heading = 'Triage needed'%}
+{% set color = "blue "%}
+{% set heading = "Triage needed"%}
 
 {% if child.actionNeeded == ACTION_NEEDED.FOLLOW_UP %}
-  {% set color = 'aqua-green' %}
-  {% set heading = 'Triage started' %}
+  {% set color = "aqua-green" %}
+  {% set heading = "Triage started" %}
 {% endif %}
 
 {% if child.actionNeeded == ACTION_NEEDED.VACCINATE %}
-  {% set color = 'purple' %}
-  {% set heading = 'Ready to vaccinate' %}
-  {% set text = 'Jane Doe decided that '+ child.fullName +' can be vaccinated.' %}
+  {% set color = "purple" %}
+  {% set heading = "Ready to vaccinate" %}
+  {% set text = "Jane Doe decided that " + child.fullName + " can be vaccinated." %}
 {% endif %}
 
 {% if child.actionTaken == ACTION_TAKEN.DO_NOT_VACCINATE %}
-  {% set color = 'red' %}
-  {% set heading = 'Do not vaccinate' %}
-  {% set text = 'Jane Doe decided that '+ child.fullName +' should not be vaccinated.' %}
+  {% set color = "red" %}
+  {% set heading = "Do not vaccinate" %}
+  {% set text = "Jane Doe decided that " + child.fullName + " should not be vaccinated." %}
 {% endif %}
 
 <div class="app-consent-banner app-consent-banner--{{ color }} nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">

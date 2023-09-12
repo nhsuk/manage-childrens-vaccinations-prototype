@@ -8,28 +8,28 @@
   {{ summaryList({
     rows: decorateRows([
       {
-        key: 'Activity',
+        key: "Activity",
         data: "day-setup.where",
-        href: '/day-setup/where'
+        href: "/day-setup/where"
       },
       {
-        key: 'Vaccinator',
+        key: "Vaccinator",
         data: "day-setup.vaccinator",
-        href: '/day-setup/who'
+        href: "/day-setup/who"
       },
       {
-        key: 'Vaccines',
+        key: "Vaccines",
         value: {
-          html: d("day-setup.vaccines") | join('<br>')
+          html: d("day-setup.vaccines") | join("<br>")
         },
-        href: '/day-setup/what'
+        href: "/day-setup/what"
       },
       {
-        key: 'Batches',
+        key: "Batches",
         value: {
-          html: d("day-setup.batches") | join('<br>')
+          html: d("day-setup.batches") | join("<br>")
         },
-        href: '/day-setup/batches'
+        href: "/day-setup/batches"
       }
     ])
   }) }}

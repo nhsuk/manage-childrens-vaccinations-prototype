@@ -2,29 +2,29 @@
   <p>
     <a href="#">Change</a>
   </p>
-  {% set isGillickCompetent = consentRecord['gillick-competent'] === 'Yes' %}
+  {% set isGillickCompetent = consentRecord["gillick-competent"] === "Yes" %}
 
   {{ summaryList({
     classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
     rows: decorateRows([
       {
-        key: 'Assessment',
+        key: "Assessment",
         value: {
-          html: 'Assessed by ' + data.user.name + '<br />' + ("today" | govukDate)
+          html: "Assessed by " + data.user.name + "<br />" + ("today" | govukDate)
         }
       },
       {
-        key: 'Gillick competent',
+        key: "Gillick competent",
         value: {
-          html: consentRecord['gillick-competent']
+          html: consentRecord["gillick-competent"]
         }
-      } if consentRecord and consentRecord['gillick-competent'],
+      } if consentRecord and consentRecord["gillick-competent"],
       {
-        key: 'Details',
+        key: "Details",
         value: {
-          html: consentRecord['gillick-assessment']
+          html: consentRecord["gillick-assessment"]
         }
-      } if consentRecord and consentRecord['gillick-assessment'],
+      } if consentRecord and consentRecord["gillick-assessment"],
       {
         key: "Consent",
         value: "Given by child" if consentRecord.consent === CONSENT.GIVEN else "Refused by child"
@@ -37,7 +37,7 @@
   }) }}
 {% endset %}
 
-{% if consentRecord and consentRecord['gillick-competent'] %}
+{% if consentRecord and consentRecord["gillick-competent"] %}
   {{ card({
     heading: "Gillick competence",
     headingLevel: "2",

@@ -2,7 +2,7 @@
 {% set index = 1 if isMenACWY else 0 %}
 {% set vaccine = campaign.vaccines[index] %}
 {% set batch = vaccine.batches[0] %}
-{% set brand = vaccine.brand + ' (Nasal spray)' if vaccine.isNasal else vaccine.brand + ' (Injection)' %}
+{% set brand = vaccine.brand + " (Nasal spray)" if vaccine.isNasal else vaccine.brand + " (Injection)" %}
 {% set title = "Record " + type + " vaccination" %}
 
 {% block form %}
@@ -26,7 +26,7 @@
         },
         {
           key: "Batch",
-          value: batch.name + ' (expires ' + (batch.expiry | govukDate('truncate')) + ')'
+          value: batch.name + " (expires " + (batch.expiry | govukDate("truncate")) + ")"
         }
       ])
     }) }}

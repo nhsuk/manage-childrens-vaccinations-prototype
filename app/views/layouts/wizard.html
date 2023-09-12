@@ -13,7 +13,7 @@
 
 {% block content %}
   <div class="nhsuk-grid-row">
-    <div class="{{ gridClass or 'nhsuk-grid-column-two-thirds' }} ">
+    <div class="{{ gridClass or "nhsuk-grid-column-two-thirds" }} ">
       {% block beforeForm %}{% endblock %}
 
       <form method="post" novalidate {% if data.features.validation.on %}data-validate{% endif %}>
@@ -22,7 +22,7 @@
         {% if not hideButton %}
         <div class="nhsuk-u-margin-top-6">
           {{ button({
-            html: buttonText if buttonText else 'Continue'
+            html: buttonText if buttonText else "Continue"
           }) }}
         </div>
         {% endif %}

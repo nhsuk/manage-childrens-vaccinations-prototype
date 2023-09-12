@@ -1,17 +1,17 @@
 {% set outcome = child.outcome %}
 {% set consent = child.consent[campaign.type] %}
-{% set isGillickCompetent = consentRecord['gillick-competent'] === 'Yes' %}
+{% set isGillickCompetent = consentRecord["gillick-competent"] === "Yes" %}
 
 {% if child.actionTaken == ACTION_TAKEN.VACCINATED %}
-  {% set color = 'green' %}
+  {% set color = "green" %}
 {% elif child.actionTaken == ACTION_TAKEN.COULD_NOT_GET_CONSENT %}
-  {% set color = 'red' %}
-  {% set outcomeText = 'Not vaccinated' %}
+  {% set color = "red" %}
+  {% set outcomeText = "Not vaccinated" %}
 {% else %}
-  {% set color = 'orange' %}
+  {% set color = "orange" %}
 {% endif %}
 
-{% if consent == 'Given' %}
+{% if consent == "Given" %}
   {% set consentText %}
     {% if isGillickCompetent %}
       The child was assessed as Gillick competent and they gave consent.
@@ -19,11 +19,11 @@
       Their {{ child.consent.parentOrGuardian.relationship | lower }} gave consent
     {% endif %}
   {% endset %}
-{% elif consent == 'Refused' %}
+{% elif consent == "Refused" %}
   {% set consentText %}
     Their {{ child.consent.parentOrGuardian.relationship | lower }} refused to give consent
   {% endset %}
-{% elif consent == 'Unknown' %}
+{% elif consent == "Unknown" %}
   {% set consentText %}
     No-one responded to our requests for consent{% if child.assessedAsNotGillickCompetent %}.
       {% if isGillickCompetent %}
@@ -35,9 +35,9 @@
   {% endset %}
 {% endif %}
 
-{% if vaccinationRecord['why-not-given'] %}
+{% if vaccinationRecord["why-not-given"] %}
   {% set reasonText %}
-    {{ vaccinationRecord['why-not-given'] }}<br>
+    {{ vaccinationRecord["why-not-given"] }}<br>
   {% endset %}
 {% endif %}
 

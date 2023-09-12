@@ -28,9 +28,9 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-          {% include 'campaign/_children-banner.html' %}
+          {% include "campaign/_children-banner.html" %}
 
-          {% if campaign['available-offline'] %}
+          {% if campaign["available-offline"] %}
             <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
           {% endif %}
 
@@ -42,19 +42,19 @@
           {% set actionNeeded %}
             {% set children = filteredChildren.actionNeeded %}
             {% set isActionNeeded = true %}
-            {% include 'campaign/_children-tab.html' %}
+            {% include "campaign/_children-tab.html" %}
           {% endset %}
 
           {% set vaccinated %}
             {% set children = filteredChildren.vaccinated %}
             {% set isActionNeeded = false %}
-            {% include 'campaign/_children-tab.html' %}
+            {% include "campaign/_children-tab.html" %}
           {% endset %}
 
           {% set notVaccinated %}
             {% set children = filteredChildren.notVaccinated %}
             {% set isActionNeeded = false %}
-            {% include 'campaign/_children-tab.html' %}
+            {% include "campaign/_children-tab.html" %}
           {% endset %}
 
           {{ tabs({

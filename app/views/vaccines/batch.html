@@ -23,11 +23,11 @@
           <form method="post">
             {{ input({
               label: {
-                text: 'Batch',
-                classes: 'nhsuk-label--s nhsuk-u-margin-bottom-1'
+                text: "Batch",
+                classes: "nhsuk-label--s nhsuk-u-margin-bottom-1"
               },
-              classes: 'nhsuk-input--width-10',
-              decorate: 'vaccines.batches.' + batch.name + '.name'
+              classes: "nhsuk-input--width-10",
+              decorate: "vaccines.batches." + batch.name + ".name"
             }) }}
 
             {{ dateInput({
@@ -40,12 +40,12 @@
               hint: {
                 text: "For example, 27 10 2023"
               },
-              decorate: 'vaccines.batches.' + batch.name + '.expiry'
+              decorate: "vaccines.batches." + batch.name + ".expiry"
             }) }}
 
             {{ button({
-              text: 'Save changes',
-              classes: 'nhsuk-u-margin-top-3'
+              text: "Save changes",
+              classes: "nhsuk-u-margin-top-3"
             }) }}
           </form>
         </div>

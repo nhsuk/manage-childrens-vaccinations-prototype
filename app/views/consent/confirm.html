@@ -3,7 +3,7 @@
 {% set buttonText = "Confirm" %}
 {% set consented = d(base + "consent") == CONSENT.GIVEN %}
 {% set refused = d(base + "consent") == CONSENT.REFUSED %}
-{% set isGillickCompetent = d(base + "gillick-competent") === 'Yes' %}
+{% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
 
 {% block form %}
   <h1 class="nhsuk-heading-l">{{ title }}</h1>
@@ -16,7 +16,7 @@
   {% endset %}
 
   {% if isGillickCompetent %}
-    {% set consentRecord = d('consent.' + campaign.id + '.' + child.nhsNumber) %}
+    {% set consentRecord = d("consent." + campaign.id + "." + child.nhsNumber) %}
     {% include "campaign/child/_consent-gillick.html" %}
   {% else %}
   <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
@@ -26,32 +26,32 @@
         classes: "app-u-frutiger app-summary-list--no-bottom-border",
         rows: decorateRows([
           {
-            key: 'Consent',
+            key: "Consent",
             value: d(base + "consent"),
-            href: '#'
+            href: "#"
           } if consented or refused,
           {
-            key: 'Consent',
-            value: 'No response',
-            href: '#'
+            key: "Consent",
+            value: "No response",
+            href: "#"
           } if not (consented or refused),
           {
-            key: 'For',
+            key: "For",
             value: child.fullName
           },
           {
-            key: 'By',
+            key: "By",
             value: {
               html: d(base + "parent.relationship") + parentContactDetailsHtml
             },
-            href: '#'
+            href: "#"
           },
           {
-            key: 'Reason',
+            key: "Reason",
             value: {
               html: d(base + "no-consent-reason")
             },
-            href: '#'
+            href: "#"
           } if refused
         ])
       }) }}
@@ -68,25 +68,25 @@
     <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-heading-m">Triage</h2>
-        {% set triageNotes = d("triage." + campaign.id + "." + child.nhsNumber + ".notes") or 'No notes' %}
-        {% set triageStatus = d("triage." + campaign.id + "." + child.nhsNumber + ".status") or 'Vaccinate' %}
+        {% set triageNotes = d("triage." + campaign.id + "." + child.nhsNumber + ".notes") or "No notes" %}
+        {% set triageStatus = d("triage." + campaign.id + "." + child.nhsNumber + ".status") or "Vaccinate" %}
 
         {% if triageStatus === TRIAGE.NEEDS_FOLLOW_UP %}
-          {% set triageStatus = 'Keep in triage' %}
+          {% set triageStatus = "Keep in triage" %}
         {% endif %}
 
         {{ govukSummaryList({
           classes: "app-u-frutiger app-summary-list--no-bottom-border",
           rows: decorateRows([
             {
-              key: 'Triage notes',
+              key: "Triage notes",
               value: triageNotes,
-              href: '#'
+              href: "#"
             },
             {
-              key: 'Status',
+              key: "Status",
               value: triageStatus,
-              href: '#'
+              href: "#"
             }
           ])
         }) }}

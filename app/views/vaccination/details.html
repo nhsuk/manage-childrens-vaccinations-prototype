@@ -7,9 +7,9 @@
 
   {% set detailsHtml %}
     {% if campaign.is3in1MenACWY %}
-      {% include 'vaccination/_multiple-vaccine-details.html' %}
+      {% include "vaccination/_multiple-vaccine-details.html" %}
     {% else %}
-      {% include 'vaccination/_single-vaccine-details.html' %}
+      {% include "vaccination/_single-vaccine-details.html" %}
     {% endif %}
   {% endset %}
 

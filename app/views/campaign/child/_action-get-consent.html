@@ -6,16 +6,16 @@
     }, {
       text: "Yes, I am assessing Gillick competence",
       value: "Gillick"
-    } if not (campaign.type == 'Flu'), {
+    } if not (campaign.type == "Flu"), {
       text: "No",
       value: "No"
     }],
-    decorate: ['vaccination', campaign.id, child.nhsNumber, 'get-consent']
+    decorate: ["vaccination", campaign.id, child.nhsNumber, "get-consent"]
   }) }}
 
   {{ button({
-    text: 'Continue',
-    classes: 'nhsuk-u-margin-bottom-2'
+    text: "Continue",
+    classes: "nhsuk-u-margin-bottom-2"
   }) }}
 {% endset %}
 

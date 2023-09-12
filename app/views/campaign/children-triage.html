@@ -29,9 +29,9 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-          {% include 'campaign/_children-banner.html' %}
+          {% include "campaign/_children-banner.html" %}
 
-          {% if campaign['available-offline'] %}
+          {% if campaign["available-offline"] %}
             <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
           {% endif %}
 
@@ -43,25 +43,25 @@
           {% set needsTriage %}
             {% set children = filteredChildren.triageNeeded %}
             {% set isReasonNeeded = true %}
-            {% include 'campaign/_children-triage-tab.html' %}
+            {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set chaseConsent %}
             {% set children = filteredChildren.chaseConsent %}
             {% set isReasonNeeded = false %}
-            {% include 'campaign/_children-triage-tab.html' %}
+            {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set triageComplete %}
             {% set children = filteredChildren.triageCompleted %}
             {% set isReasonNeeded = true %}
-            {% include 'campaign/_children-triage-tab.html' %}
+            {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set noTriageNeeded %}
             {% set children = filteredChildren.noTriageNeeded %}
             {% set isReasonNeeded = false %}
-            {% include 'campaign/_children-triage-tab.html' %}
+            {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {{ tabs({

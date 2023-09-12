@@ -21,35 +21,35 @@
       classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
       rows: decorateRows([
         {
-          key: 'Name',
+          key: "Name",
           value: child.fullName
         },
         {
-          key: 'Known as',
+          key: "Known as",
           value: child.preferredName
         } if child.preferredName,
         {
-          key: 'Date of birth',
-          value: child.dob | govukDate + ' (aged ' + child.age + ')'
+          key: "Date of birth",
+          value: child.dob | govukDate + " (aged " + child.age + ")"
         },
         {
-          key: 'Address',
+          key: "Address",
           value: {
             html: child.address
           }
         } if responded,
         {
-          key: 'GP',
+          key: "GP",
           value: child.gp
         } if responded,
         {
-          key: 'NHS Number',
+          key: "NHS Number",
           value: child.nhsNumber | formatNHSNumber
         } if responded,
         {
-          key: 'Vaccination history',
+          key: "Vaccination history",
           value: {
-            html: '<a href="#">Record available</a>'
+            html: "<a href=\"#\">Record available</a>"
           }
         } if responded,
         {

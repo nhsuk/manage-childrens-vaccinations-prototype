@@ -1,6 +1,6 @@
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-one-quarter">
-    {% include 'campaign/_filters.html' %}
+    {% include "campaign/_filters.html" %}
   </div>
   <div class="nhsuk-grid-column-three-quarters">
     {% if children | length %}
@@ -28,7 +28,7 @@
                 {% endif %}
               </td>
               <td class="govuk-table__cell" style="width: 150px">
-                {{ child.dob | govukDate('truncate') }}
+                {{ child.dob | govukDate("truncate") }}
               </td>
               <td class="govuk-table__cell">
                 {% if isActionNeeded %}

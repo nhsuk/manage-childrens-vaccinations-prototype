@@ -1,8 +1,8 @@
 {% extends "layouts/default.html" %}
 {% set title = child.fullName %}
-{% set vaccineGiven = vaccinationRecord['given'] !== 'No' %}
-{% set isUnknown = child.consent.unknown or child.consent[campaign.type] == 'Unknown' %}
-{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == 'Refused' %}
+{% set vaccineGiven = vaccinationRecord["given"] !== "No" %}
+{% set isUnknown = child.consent.unknown or child.consent[campaign.type] == "Unknown" %}
+{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == "Refused" %}
 {% set consented = not refused and not isUnknown %}
 {% set responded = consented or refused %}
 {% set triaging = true %}
@@ -26,16 +26,16 @@
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
           {% if child.needsTriage %}
-            {% include 'campaign/child/_triage-banner.html' %}
+            {% include "campaign/child/_triage-banner.html" %}
           {% elseif not child.consent.responded or child.consent.refused %}
-            {% include 'campaign/child/_consent-banner.html' %}
+            {% include "campaign/child/_consent-banner.html" %}
           {% endif %}
 
-          {% include 'campaign/child/_details.html' %}
-          {% include 'campaign/child/_consent-triage.html' %}
+          {% include "campaign/child/_details.html" %}
+          {% include "campaign/child/_consent-triage.html" %}
 
           {% if consented %}
-            {% include 'campaign/child/_health-notes-triage.html' %}
+            {% include "campaign/child/_health-notes-triage.html" %}
           {% endif %}
 
           {% if child.consent.responded %}
@@ -54,7 +54,7 @@
                   {% endif %}
 
                   {% set showKeepInTriage = true %}
-                  {% include 'campaign/child/_triage-fields.html' %}
+                  {% include "campaign/child/_triage-fields.html" %}
 
                   {{ button({
                     text: "Save triage"
@@ -65,7 +65,7 @@
           {% endif %}
         </div>
         <div class="nhsuk-grid-column-one-third">
-          {% if campaign['available-offline'] %}
+          {% if campaign["available-offline"] %}
             <div id="available-offline">
               <h2 class="nhsuk-heading-s nhsuk-u-margin-top-5" style="color: #007f3b">
                 <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
@@ -87,7 +87,7 @@
             {% if child.hadOfflineChanges and not child.seen.isOffline %}
               <hr />
               <h2 class="nhsuk-heading-s">Your changes were synced</h2>
-              <p>They were synced on {{ 'today' | govukDate }} at {{ 'now' | govukTime }}.</p>
+              <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
               <p><a href="#">Hide this message</a></p>
             {% endif %}
           {% endif %}

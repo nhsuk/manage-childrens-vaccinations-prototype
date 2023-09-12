@@ -20,7 +20,7 @@
     }
   } if consentJourney,
   items: [{
-    text: "Yes, they got the " + (campaign.type | lower if campaign.type == 'Flu' else campaign.type) + " vaccine",
+    text: "Yes, they got the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine",
     value: "Yes",
     conditional: {
       html: where
@@ -29,5 +29,5 @@
     text: "No, they did not get it",
     value: "No"
   }],
-  decorate: ['vaccination', campaign.id, child.nhsNumber, "given"]
+  decorate: ["vaccination", campaign.id, child.nhsNumber, "given"]
 }) }}

@@ -16,7 +16,7 @@
           {% if success %}
             {% set html %}
               <p class="govuk-notification-banner__heading">
-                {% if success == 'invited' %}
+                {% if success == "invited" %}
                   <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
                 {% else %}
                   Changes saved
@@ -36,8 +36,8 @@
           </h1>
 
           {{ button({
-            text: 'Add team member',
-            href: '/user/new'
+            text: "Add team member",
+            href: "/user/new"
           }) }}
 
           <table class="nhsuk-table">
