@@ -20,11 +20,6 @@ export default (faker, lastName) => {
   const p = person(faker, false, lastNameToUse)
   const parent = p.sex === 'Female' ? 'Mum' : 'Dad'
 
-  const queryRelationship = ['Step-parent', 'Grandparent', 'Teacher']
-  if (queryRelationship.includes(relationship)) {
-    p.queryRelationship = true
-  }
-
   p.telephone = faker.phone.number('07#########')
   p.relationship = relationship === 'Parent' ? parent : relationship
   p.email = faker.internet.email({

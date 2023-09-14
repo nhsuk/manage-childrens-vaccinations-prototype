@@ -5,12 +5,6 @@ export default (faker, child) => {
   child.needsTriage = false
   if (!child.consent.consented) return
 
-  if (child.consent.parentOrGuardian && child.consent.parentOrGuardian.queryRelationship) {
-    child.needsTriage = true
-    child.actionNeeded = ACTION_NEEDED.TRIAGE
-    reasons.push(TRIAGE_REASON.CHECK_CONSENTER)
-  }
-
   if (child.healthQuestions.hasAnswers) {
     child.needsTriage = true
     child.actionNeeded = ACTION_NEEDED.TRIAGE
