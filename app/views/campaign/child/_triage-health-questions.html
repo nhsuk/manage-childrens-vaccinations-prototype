@@ -2,21 +2,7 @@
   {% if consentJourney %}
     <p><a href="#">Change</a></p>
   {% endif %}
-  {% for question in child.healthQuestions.questions %}
-    <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
-      {{ question.question }}
-    </h3>
-
-    <div class="nhsuk-u-margin-top-2 {% if not loop.last %}nhsuk-u-margin-bottom-4{% endif %}">
-      <p class="nhsuk-u-margin-bottom-0">
-        {% if question.details %}
-          {{ question.answer }} – {{ question.details }}
-        {% else %}
-          {{ question.answer }}
-        {% endif %}
-      </p>
-    </div>
-  {% endfor %}
+  {% include "campaign/child/_health-questions.html" %}
 {% endset %}
 
 {{ card({
