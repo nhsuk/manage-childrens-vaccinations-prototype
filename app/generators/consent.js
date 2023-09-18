@@ -77,6 +77,7 @@ export default (faker, type, childsLastName) => {
     date: DateTime.local().minus({ days }).toISODate(),
     method,
     parentOrGuardian,
-    reason
+    reason,
+    log: []
   }
 }

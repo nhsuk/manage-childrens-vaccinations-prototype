@@ -1,5 +1,15 @@
 {% set getConsent %}
+  {% if child.consent.log.length > 0 %}
+    {% include "campaign/child/_consent-log.html" %}
+  {% endif %}
+
   {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--s",
+        text: "Are you attempting to get consent?"
+      }
+    },
     items: [{
       text: "Yes, I am contacting a parent or guardian",
       value: "Yes"
@@ -21,7 +31,7 @@
 
 <form method="post">
   {{ card({
-    heading: "Are you attempting to get consent?",
+    heading: "Consent",
     headingLevel: "2",
     headingClasses: "nhsuk-heading-m",
     description: getConsent
