@@ -1,0 +1,44 @@
+{% set cardDescription %}
+  {% if child.notes.length > 0 %}
+    {% set rows = [] %}
+    {% for note in child.notes %}
+      {% set _rows = rows.push([
+        {
+          html: "<p class=\"nhsuk-u-margin-0 app-u-nowrap\">" + note.date | govukDate("truncate") + "</p><p class=\"nhsuk-u-secondary-text-color nhsuk-u-margin-0\">" + note.date | govukTime + "</p>"
+        },
+        {
+          text: note.stage | capitalize
+        },
+        {
+          html: "<p class=\"nhsuk-u-margin-0\">" + note.note + "</p><p class=\"nhsuk-u-secondary-text-color nhsuk-u-margin-0\">" + note.user.fullName + "</p>"
+        }
+      ]) %}
+    {% endfor %}
+
+    {{ table({
+      tableClasses: "app-table--no-bottom-border",
+      firstCellIsHeader: false,
+      head: [
+        {
+          text: "Date"
+        },
+        {
+          text: "Action"
+        },
+        {
+          text: "Note"
+        }
+      ],
+      rows: rows
+    }) }}
+  {% else %}
+    <p>No notes added</p>
+  {% endif %}
+{% endset %}
+
+{{ card({
+  heading: "Triage notes",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  descriptionHtml: cardDescription
+}) }}

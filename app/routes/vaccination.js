@@ -122,17 +122,30 @@ export default (router) => {
   router.post([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
-    const vaccineGiven = res.locals.vaccinationRecord.given !== 'No'
+    const { child, vaccinationRecord } = res.locals
+    const vaccineGiven = vaccinationRecord.given !== 'No'
 
     if (vaccineGiven) {
-      res.locals.child.actionTaken = ACTION_TAKEN.VACCINATED
-      res.locals.child.outcome = 'Vaccinated'
-      res.locals.child.batch = res.locals.vaccinationRecord.batch
-      res.locals.child.seen = { text: 'Vaccinated', given: vaccineGiven }
+      child.actionTaken = ACTION_TAKEN.VACCINATED
+      child.outcome = 'Vaccinated'
+      child.batch = vaccinationRecord.batch
+      child.seen = { text: 'Vaccinated', given: vaccineGiven }
     } else {
-      res.locals.child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
-      res.locals.child.outcome = 'Could not vaccinate'
-      res.locals.child.seen = { text: 'Vaccine not given', given: vaccineGiven }
+      child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
+      child.outcome = 'Could not vaccinate'
+      child.seen = { text: 'Vaccine not given', given: vaccineGiven }
+    }
+
+    // Update triage notes
+    if (vaccinationRecord.note) {
+      child.notes.push({
+        date: new Date().toISOString(),
+        note: vaccinationRecord.note,
+        stage: 'vaccinate',
+        user: {
+          fullName: vaccinationRecord.user
+        }
+      })
     }
 
     res.locals.child.seen.isOffline = res.locals.isOffline

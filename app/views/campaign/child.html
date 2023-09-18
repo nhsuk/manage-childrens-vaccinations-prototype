@@ -45,6 +45,7 @@
 
           {% if consented %}
             {% include "campaign/child/_medical-history.html" %}
+            {% include "campaign/child/_triage-notes.html" %}
           {% endif %}
 
           {% if child.outcome == "No outcome yet" %}

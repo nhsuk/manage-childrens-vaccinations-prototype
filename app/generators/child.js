@@ -66,6 +66,8 @@ export default (options) => {
   c.seen = {}
   c.triageStatus = triageStatus(options.triageInProgress, c.consent)
   c.healthQuestions = healthQuestions(faker, options.type, c)
+  c.notes = []
+
   triageNeeded(faker, c)
   if (options.triageInProgress) {
     handleInProgressTriage(c)

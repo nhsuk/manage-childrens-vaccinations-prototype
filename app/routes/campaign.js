@@ -55,9 +55,8 @@ export default (router) => {
   router.post([
     '/campaign/:campaignId/child-triage/:nhsNumber'
   ], (req, res) => {
-    const child = res.locals.child
-    const nhsNumber = req.params.nhsNumber
-    const campaignId = req.params.campaignId
+    const { child } = res.locals
+    const { campaignId, nhsNumber } = req.params
     const triage = _.get(req.body, `triage.${campaignId}.${nhsNumber}`, {})
 
     if (triage) {
@@ -73,6 +72,18 @@ export default (router) => {
         child.actionTaken = ACTION_TAKEN.DO_NOT_VACCINATE
         child.triageCompleted = true
       }
+    }
+
+    // Update triage notes
+    if (triage.note) {
+      child.notes.push({
+        date: new Date().toISOString(),
+        note: triage.note,
+        stage: 'triage',
+        user: {
+          fullName: triage.user
+        }
+      })
     }
 
     res.redirect(`/campaign/${campaignId}/children-triage?success=${nhsNumber}&area=triage`)
