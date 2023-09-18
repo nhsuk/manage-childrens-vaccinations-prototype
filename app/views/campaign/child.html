@@ -58,27 +58,8 @@
           {% elif child.outcome == "Vaccinated" %}
             {% include "campaign/child/_vaccination-recorded.html" %}
           {% endif %}
-
-          <div class="nhsuk-card">
-            <div class="nhsuk-card__content">
-              {{ textarea({
-                label: {
-                  text: "Add notes",
-                  classes: "nhsuk-label--m nhsuk-u-margin-bottom-3"
-                },
-                rows: 5,
-                name: "notes",
-                classes: "nhsuk-u-margin-bottom-0",
-                decorate: ["vaccination", campaign.id, child.nhsNumber, "notes"]
-              }) }}
-
-              {{ button({
-                text: "Add notes",
-                classes: "nhsuk-button--secondary"
-              }) }}
-            </div>
-          </div>
         </div>
+
         <div class="nhsuk-grid-column-one-third">
           {% if campaign["available-offline"] %}
             <div id="available-offline">
