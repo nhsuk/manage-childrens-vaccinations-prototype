@@ -1,0 +1,9 @@
+{% for question in child.healthQuestions.questions %}
+  <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2 {% if not loop.first %}nhsuk-u-margin-top-4{% endif %}">
+    {{ question.question }}
+  </h3>
+
+  <p class="nhsuk-u-margin-bottom-0">
+    {{ question.answer }}{% if question.details %} – {{ question.details }}{% endif %}
+  </p>
+{% endfor %}

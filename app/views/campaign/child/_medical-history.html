@@ -1,13 +1,5 @@
 {% set detailsHtml %}
-  {% for question in child.healthQuestions.questions %}
-    <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-0">
-      {{ question.question }}
-    </h3>
-    <p>{{ question.answer }}</p>
-    {% if question.details %}
-      <p>{{ question.details }}</p>
-    {% endif %}
-  {% endfor %}
+  {% include "campaign/child/_health-questions.html" %}
 {% endset %}
 
 {% set cardDescription %}
