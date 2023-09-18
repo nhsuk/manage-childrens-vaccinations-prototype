@@ -17,8 +17,8 @@
       text: "Yes, I am assessing Gillick competence",
       value: "Gillick"
     } if not (campaign.type == "Flu"), {
-      text: "No",
-      value: "No"
+      text: "No, I am not vaccinating",
+      value: "No, I am not vaccinating"
     }],
     decorate: ["vaccination", campaign.id, child.nhsNumber, "get-consent"]
   }) }}
