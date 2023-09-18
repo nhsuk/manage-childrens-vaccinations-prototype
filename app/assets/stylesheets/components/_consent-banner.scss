@@ -1,5 +1,16 @@
 .app-consent-banner {
-  padding: nhsuk-spacing(3) nhsuk-spacing(5);
+  @include nhsuk-responsive-margin(7, "bottom");
+  @include nhsuk-responsive-padding(5);
+  @include nhsuk-responsive-padding(4, "bottom");
+  @include nhsuk-responsive-padding(4, "top");
+
+  .nhsuk-heading-m {
+    margin-bottom: nhsuk-spacing(2);
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
 
   .nhsuk-link {
     color: inherit;

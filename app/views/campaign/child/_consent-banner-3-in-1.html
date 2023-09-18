@@ -1,35 +1,30 @@
 {% if child.consent[campaign.type].unknown %}
-<div class="app-consent-banner app-consent-banner--orange nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
-    No response to consent request
-  </h2>
-</div>
+  {{ appConsentBanner({
+    color: "orange",
+    heading: "No response to consent request"
+  }) }}
 {% else %}
   {% if child.consent["men-acwy"] == CONSENT.GIVEN %}
-  <div class="app-consent-banner app-consent-banner--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
-    <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
-      MenACWY consent given by {{ child.consent.parentOrGuardian.relationship | lower }}
-    </h2>
-  </div>
+    {{ appConsentBanner({
+      color: "green",
+      heading: "MenACWY consent given by " + child.consent.parentOrGuardian.relationship | lower
+    }) }}
   {% else %}
-  <div class="app-consent-banner app-consent-banner--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-1">
-    <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
-      MenACWY consent refused by {{ child.consent.parentOrGuardian.relationship | lower }}
-    </h2>
-  </div>
+    {{ appConsentBanner({
+      color: "red",
+      heading: "MenACWY consent refused by " + child.consent.parentOrGuardian.relationship | lower
+    }) }}
   {% endif %}
 
   {% if child.consent["3-in-1"] == CONSENT.GIVEN %}
-  <div class="app-consent-banner app-consent-banner--green nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
-    <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
-      3 in 1 consent given by {{ child.consent.parentOrGuardian.relationship | lower }}
-    </h2>
-  </div>
+    {{ appConsentBanner({
+      color: "green",
+      heading: "3 in 1 consent given by " + child.consent.parentOrGuardian.relationship | lower
+    }) }}
   {% else %}
-  <div class="app-consent-banner app-consent-banner--red nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-6">
-    <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-0">
-      3 in 1 consent refused by {{ child.consent.parentOrGuardian.relationship | lower }}
-    </h2>
-  </div>
+    {{ appConsentBanner({
+      color: "red",
+      heading: "3 in 1 consent refused by " + child.consent.parentOrGuardian.relationship | lower
+    }) }}
   {% endif %}
 {% endif %}
