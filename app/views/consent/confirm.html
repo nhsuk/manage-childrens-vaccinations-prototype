@@ -19,10 +19,11 @@
     {% set consentRecord = d("consent." + campaign.id + "." + child.nhsNumber) %}
     {% include "campaign/child/_consent-gillick.html" %}
   {% else %}
-  <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
-    <div class="nhsuk-card__content">
-      <h2 class="nhsuk-heading-m">Consent</h2>
-      {{ govukSummaryList({
+    {{ card({
+      heading: "Consent",
+      headingLevel: "2",
+      headingClasses: "nhsuk-heading-m",
+      descriptionHtml: govukSummaryList({
         classes: "app-summary-list--no-bottom-border",
         rows: decorateRows([
           {
@@ -54,9 +55,8 @@
             href: "#"
           } if refused
         ])
-      }) }}
-    </div>
-  </div>
+      })
+    }) }}
   {% endif %}
 
   {% if consented %}
@@ -89,6 +89,29 @@
               href: "#"
             }
           ])
+        }) }}
+      </div>
+    </div>
+  {% else %}
+    <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-3">
+      <div class="nhsuk-card__content">
+        {{ textarea({
+          label: {
+            text: "Add notes",
+            classes: "nhsuk-label--m nhsuk-u-margin-bottom-3"
+          },
+          hint: {
+            text: "For example, unable to contact parent"
+          },
+          rows: 5,
+          value: "",
+          decorate: base + "note"
+        }) }}
+
+        {{ input({
+          type: "hidden",
+          value: data.user.name,
+          decorate: base + "user"
         }) }}
       </div>
     </div>

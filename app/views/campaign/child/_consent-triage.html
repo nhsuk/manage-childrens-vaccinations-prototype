@@ -38,7 +38,11 @@
 {% endset %}
 
 {% set noResponseHtml %}
-  <p>No response yet</p>
+  {% if child.consent.log.length > 0 %}
+    {% include "campaign/child/_consent-log.html" %}
+  {% else %}
+    <p>No response yet</p>
+  {% endif %}
 
   <p class="nhsuk-u-margin-bottom-0">
     <a href="/triage-consent/{{ campaign.id }}/{{ child.nhsNumber }}" class="nhsuk-button nhsuk-u-margin-bottom-2">Get consent</a>
@@ -51,28 +55,3 @@
   headingClasses: "nhsuk-heading-m",
   description: consentHtml if child.consent.responded else noResponseHtml
 }) }}
-
-{% if not child.consent.responded %}
-  <form method="post">
-    <div class="nhsuk-card">
-      <div class="nhsuk-card__content">
-        <h2 class="nhsuk-heading-m">Triage</h2>
-
-        {{ textarea({
-            label: {
-            text: "Triage notes"
-          },
-          rows: 5,
-          classes: "nhsuk-u-margin-bottom-0",
-          decorate: ["triage", campaign.id, child.nhsNumber, "notes"]
-        }) }}
-
-        {{ button({
-          text: "Add notes",
-          classes: "nhsuk-button--secondary"
-        }) }}
-      </div>
-    </div>
-  </form>
-
-{% endif %}

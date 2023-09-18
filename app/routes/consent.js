@@ -74,8 +74,7 @@ export default (router) => {
     '/triage-consent/:campaignId/:nhsNumber/confirm',
     '/consent/:campaignId/:nhsNumber/confirm'
   ], (req, res, next) => {
-    const child = res.locals.child
-    const campaign = res.locals.campaign
+    const { campaign, child } = res.locals
     const campaignType = campaign.type
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
     const triageData = req.session.data.triage[req.params.campaignId][req.params.nhsNumber]
@@ -121,6 +120,17 @@ export default (router) => {
       child.consent.reasonDetails = consentData['no-consent-reason-details']
       child.actionTaken = 'Do not vaccinate'
       child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+    }
+
+    // Update consent log
+    if (consentData.note) {
+      child.consent.log.push({
+        date: new Date().toISOString(),
+        note: consentData.note,
+        user: {
+          fullName: consentData.user
+        }
+      })
     }
 
     if (gillickCompetent || assessedAsNotGillickCompetent) {
