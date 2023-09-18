@@ -30,9 +30,13 @@
           text: "For example, if the child had a reaction to the vaccine"
         },
         rows: 5,
-        name: "notes",
-        classes: "nhsuk-u-margin-bottom-0",
-        decorate: ["vaccination", campaign.id, child.nhsNumber, "notes"]
+        decorate: [dataLocation, campaign.id, child.nhsNumber, "note"]
+      }) }}
+
+      {{ input({
+        type: "hidden",
+        value: data.user.name,
+        decorate: [dataLocation, campaign.id, child.nhsNumber, "user"]
       }) }}
     </div>
   </div>

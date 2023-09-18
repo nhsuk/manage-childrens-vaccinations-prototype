@@ -37,6 +37,8 @@
           {% endif %}
 
           {% if child.consent.responded %}
+            {% include "campaign/child/_triage-notes.html" %}
+
             <div class="nhsuk-card">
               <div class="nhsuk-card__content">
                 <form method="post">
@@ -55,6 +57,7 @@
                   {% include "campaign/child/_triage-fields.html" %}
 
                   {{ button({
+                    classes: "nhsuk-u-margin-bottom-0",
                     text: "Save triage"
                   }) }}
                 </form>
