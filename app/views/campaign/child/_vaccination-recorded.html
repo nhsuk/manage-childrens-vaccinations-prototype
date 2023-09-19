@@ -44,6 +44,10 @@
       {
         key: "Vaccinator",
         value: "You (" + data.user.name + ")"
+      },
+      {
+        key: "Notes",
+        value: vaccinationRecord.notes | default("None", true)
       }
     ])
   }) }}
