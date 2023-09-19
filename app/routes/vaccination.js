@@ -123,28 +123,18 @@ export default (router) => {
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
     const { child, vaccinationRecord } = res.locals
-    const vaccineGiven = vaccinationRecord.given !== 'No'
+    let { batch, given, notes } = vaccinationRecord
+    given = given !== 'No'
 
-    if (vaccineGiven) {
+    if (given) {
       child.actionTaken = ACTION_TAKEN.VACCINATED
       child.outcome = 'Vaccinated'
-      child.batch = vaccinationRecord.batch
-      child.seen = { text: 'Vaccinated', given: vaccineGiven }
+      child.batch = batch
+      child.seen = { text: 'Vaccinated', given, notes }
     } else {
       child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
       child.outcome = 'Could not vaccinate'
-      child.seen = { text: 'Vaccine not given', given: vaccineGiven }
-    }
-
-    // Update triage notes
-    if (vaccinationRecord.note) {
-      child.triageNotes.push({
-        date: new Date().toISOString(),
-        note: vaccinationRecord.note,
-        user: {
-          fullName: vaccinationRecord.user
-        }
-      })
+      child.seen = { text: 'Vaccine not given', given, notes }
     }
 
     res.locals.child.seen.isOffline = res.locals.isOffline

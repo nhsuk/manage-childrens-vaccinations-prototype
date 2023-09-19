@@ -30,13 +30,7 @@
           text: "For example, if the child had a reaction to the vaccine"
         },
         rows: 5,
-        decorate: [dataLocation, campaign.id, child.nhsNumber, "note"]
-      }) }}
-
-      {{ input({
-        type: "hidden",
-        value: data.user.name,
-        decorate: [dataLocation, campaign.id, child.nhsNumber, "user"]
+        decorate: [dataLocation, campaign.id, child.nhsNumber, "notes"]
       }) }}
     </div>
   </div>
