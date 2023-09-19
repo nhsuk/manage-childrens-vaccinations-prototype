@@ -68,7 +68,6 @@
     <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-heading-m">Triage</h2>
-        {% set triageNotes = d("triage." + campaign.id + "." + child.nhsNumber + ".notes") or "No notes" %}
         {% set triageStatus = d("triage." + campaign.id + "." + child.nhsNumber + ".status") or "Vaccinate" %}
 
         {% if triageStatus === TRIAGE.NEEDS_FOLLOW_UP %}
@@ -79,13 +78,13 @@
           classes: "app-summary-list--no-bottom-border",
           rows: decorateRows([
             {
-              key: "Triage notes",
-              value: triageNotes,
+              key: "Status",
+              value: triageStatus,
               href: "#"
             },
             {
-              key: "Status",
-              value: triageStatus,
+              key: "Triage notes",
+              value: d("triage." + campaign.id + "." + child.nhsNumber + ".note") or "Not provided",
               href: "#"
             }
           ])

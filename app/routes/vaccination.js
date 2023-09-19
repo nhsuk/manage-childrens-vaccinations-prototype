@@ -138,10 +138,9 @@ export default (router) => {
 
     // Update triage notes
     if (vaccinationRecord.note) {
-      child.notes.push({
+      child.triageNotes.push({
         date: new Date().toISOString(),
         note: vaccinationRecord.note,
-        stage: 'vaccinate',
         user: {
           fullName: vaccinationRecord.user
         }

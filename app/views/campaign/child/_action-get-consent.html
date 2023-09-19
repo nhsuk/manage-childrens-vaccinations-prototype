@@ -4,12 +4,6 @@
   {% endif %}
 
   {{ radios({
-    fieldset: {
-      legend: {
-        classes: "nhsuk-fieldset__legend--s",
-        text: "Are you attempting to get consent?"
-      }
-    },
     items: [{
       text: "Yes, I am contacting a parent or guardian",
       value: "Yes"
@@ -31,7 +25,7 @@
 
 <form method="post">
   {{ card({
-    heading: "Consent",
+    heading: "Are you attempting to get consent?",
     headingLevel: "2",
     headingClasses: "nhsuk-heading-m",
     description: getConsent

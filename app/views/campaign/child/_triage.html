@@ -1,0 +1,65 @@
+{% set triageReasons %}
+<ul class="nhsuk-list">
+{% for reason in child.triageReasons %}
+  <li>{{ reason }}</li>
+{% endfor %}
+</ul>
+{% endset %}
+
+{% set triageNotes %}
+<ul class="nhsuk-list">
+{% for note in child.triageNotes | reverse %}
+  <li>
+    <p class="nhsuk-u-margin-bottom-1">{{ note.note }}</p>
+    <p class="nhsuk-u-secondary-text-color nhsuk-u-font-size-16 {% if loop.last %}nhsuk-u-margin-bottom-0{% endif %}">{{ note.user.name }}, {{ note.date | govukDate }} at {{ note.date | govukTime }}</p>
+  </li>
+{% endfor %}
+</ul>
+{% endset %}
+
+{% set cardDescription %}
+  {% if child.needsTriage %}
+    {% if child.triageCompleted %}
+      <p class="nhsuk-body">Triage complete</p>
+    {% endif %}
+
+    {{ govukSummaryList({
+      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+      rows: [
+        {
+          key: {
+            text: "Action needed"
+          },
+          value: {
+            text: child.actionNeeded
+          }
+        },
+        {
+          key: {
+            text: "Triage reasons"
+          },
+          value: {
+            text: triageReasons | safe
+          }
+        } if child.triageReasons.length > 0,
+        {
+          key: {
+            text: "Notes"
+          },
+          value: {
+            text: triageNotes | safe
+          }
+        } if child.triageNotes.length > 0
+      ]
+    }) }}
+  {% else %}
+    <p class="nhsuk-body">No triage needed</p>
+  {% endif %}
+{% endset %}
+
+{{ card({
+  heading: "Triage",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  descriptionHtml: cardDescription
+}) }}

@@ -3,7 +3,7 @@ export const ACTION_NEEDED = {
   GET_CONSENT: 'Get consent',
   CHECK_REFUSAL: 'Check refusal',
   TRIAGE: 'Triage',
-  FOLLOW_UP: 'Triage started',
+  FOLLOW_UP: 'Complete triage',
   NONE: 'No action needed'
 }
 
@@ -22,7 +22,7 @@ export const TRIAGE_REASON = {
 }
 
 export const TRIAGE = {
-  TO_DO: 'To do',
+  TO_DO: 'Needs triage',
   NEEDS_FOLLOW_UP: 'Needs follow up',
   NO_CONSENT_RESPONSE: 'No response',
   READY: 'Ready to vaccinate',
