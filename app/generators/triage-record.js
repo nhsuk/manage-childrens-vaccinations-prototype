@@ -18,7 +18,7 @@ export default (campaigns) => {
 
     children.filter(c => triageStatusToEnrich.includes(c.triageStatus)).forEach(child => {
       tr[campaignId][child.nhsNumber] = {
-        notes: child.healthQuestions.triage,
+        notes: child.triageNotes,
         status: child.triageStatus
       }
     })

@@ -36,7 +36,41 @@
     }) }}
   {% endfor %}
 
-  <h2 class="nhsuk-heading-m nhsuk-u-margin-top-8">Triage</h2>
-  {% set showKeepInTriage = isTriage %}
-  {% include "campaign/child/_triage-fields.html" %}
+  {{ radios({
+    formGroup: {
+      classes: "nhsuk-u-margin-top-6"
+    },
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Triage status"
+      }
+    },
+    items: [
+      {
+        text: TRIAGE.READY
+      },
+      {
+        text: TRIAGE.DO_NOT_VACCINATE
+      },
+      {
+        text: "Keep in triage",
+        value: TRIAGE.NEEDS_FOLLOW_UP
+      } if isTriage
+    ],
+    decorate: ["triage", campaign.id, child.nhsNumber, "status"]
+  }) }}
+
+  {{ textarea({
+    formGroup: {
+      classes: "nhsuk-u-margin-top-6"
+    },
+    label: {
+      classes: "nhsuk-label--m nhsuk-u-margin-bottom-3",
+      text: "Triage notes (optional)"
+    },
+    rows: 5,
+    value: "",
+    decorate: ["triage", campaign.id, child.nhsNumber, "note"]
+  }) }}
 {% endblock %}

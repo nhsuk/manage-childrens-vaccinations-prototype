@@ -61,7 +61,6 @@ export default (router) => {
 
     if (triage) {
       child.triageStatus = triage.status
-      child.healthQuestions.triage = triage.notes
       if (triage.status === TRIAGE.READY) {
         child.actionNeeded = ACTION_NEEDED.VACCINATE
         child.triageCompleted = true
@@ -76,12 +75,12 @@ export default (router) => {
 
     // Update triage notes
     if (triage.note) {
-      child.notes.push({
+      child.triageNotes.push({
         date: new Date().toISOString(),
         note: triage.note,
-        stage: 'triage',
         user: {
-          fullName: triage.user
+          name: 'Jacinta Dodds',
+          email: 'jacinta.dodds@example.com'
         }
       })
     }

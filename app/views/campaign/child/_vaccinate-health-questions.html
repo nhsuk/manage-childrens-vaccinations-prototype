@@ -9,22 +9,6 @@
     HTML: detailsHtml,
     classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
   }) }}
-
-  {% if child.needsTriage %}
-    {% if child.triageCompleted and child.healthQuestions.triage %}
-      <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage notes</h2>
-      <p>{{ child.healthQuestions.triage }}</p>
-    {% else %}
-      <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">Triage needed</h2>
-      <ul class="nhsuk-list nhsuk-u-margin-bottom-0">
-        {% for r in child.triageReasons %}
-          <li>{{ r }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% else %}
-    <p class="nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">No triage needed</p>
-  {% endif %}
 {% endset %}
 
 {{ card({

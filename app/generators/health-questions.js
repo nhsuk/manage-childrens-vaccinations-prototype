@@ -185,6 +185,7 @@ const enrichWithRealisticAnswers = (faker, child, health) => {
   })
 
   // Activate elsewhere in generation process
-  health.inactiveTriage = realisticAnswers[answer].triage
+  health.inactiveTriageNote = realisticAnswers[answer].triage
+
   return health
 }

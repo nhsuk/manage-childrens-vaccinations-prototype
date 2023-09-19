@@ -91,7 +91,6 @@ export default (router) => {
 
     if (child.consent.consented && triageData && triageData.status) {
       child.triageStatus = triageData.status
-      child.healthQuestions.triage = triageData.notes
       if (triageData.status === TRIAGE.READY) {
         child.actionNeeded = ACTION_NEEDED.VACCINATE
         child.triageCompleted = true

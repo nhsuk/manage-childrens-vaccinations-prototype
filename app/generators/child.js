@@ -31,9 +31,17 @@ const handleInProgressTriage = (child) => {
   if (faker.helpers.maybe(() => true, { probability: 0.5 })) return
 
   // Activate triage notes
-  if (child.healthQuestions.inactiveTriage) {
-    child.healthQuestions.triage = child.healthQuestions.inactiveTriage
-    delete child.healthQuestions.inactiveTriage
+  if (child.healthQuestions.inactiveTriageNote) {
+    child.triageNotes.push({
+      date: faker.date.recent({ days: 30 }),
+      note: child.healthQuestions.inactiveTriageNote,
+      user: {
+        name: 'James Davidson',
+        email: 'james.davidson@example.com'
+      }
+    })
+
+    delete child.healthQuestions.inactiveTriageNote
   }
 
   // A small number need follow-ups
@@ -64,9 +72,9 @@ export default (options) => {
   c.actionTaken = null
 
   c.seen = {}
+  c.triageNotes = []
   c.triageStatus = triageStatus(options.triageInProgress, c.consent)
   c.healthQuestions = healthQuestions(faker, options.type, c)
-  c.notes = []
 
   triageNeeded(faker, c)
   if (options.triageInProgress) {

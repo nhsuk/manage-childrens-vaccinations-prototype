@@ -37,32 +37,11 @@
           {% endif %}
 
           {% if child.consent.responded %}
-            {% include "campaign/child/_triage-notes.html" %}
+            {% include "campaign/child/_triage.html" %}
+          {% endif %}
 
-            <div class="nhsuk-card">
-              <div class="nhsuk-card__content">
-                <form method="post">
-                  <h2 class="nhsuk-heading-m">Triage</h2>
-
-                  {% if child.needsTriage %}
-                    <p class="nhsuk-u-margin-bottom-0">Triage is needed because of:</p>
-                    <ul class="nhsuk-list nhsuk-list--bulleted">
-                    {% for r in child.triageReasons %}
-                      <li>{{ r }}</li>
-                    {% endfor %}
-                    </ul>
-                  {% endif %}
-
-                  {% set showKeepInTriage = true %}
-                  {% include "campaign/child/_triage-fields.html" %}
-
-                  {{ button({
-                    classes: "nhsuk-u-margin-bottom-0",
-                    text: "Save triage"
-                  }) }}
-                </form>
-              </div>
-            </div>
+          {% if consented and child.needsTriage and not child.triageCompleted %}
+            {% include "campaign/child/_action-triage.html" %}
           {% endif %}
         </div>
         <div class="nhsuk-grid-column-one-third">
