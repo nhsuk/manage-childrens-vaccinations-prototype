@@ -1,8 +1,4 @@
 {% set getConsent %}
-  {% if child.consent.log.length > 0 %}
-    {% include "campaign/child/_consent-log.html" %}
-  {% endif %}
-
   {{ radios({
     items: [{
       text: "Yes, I am contacting a parent or guardian",

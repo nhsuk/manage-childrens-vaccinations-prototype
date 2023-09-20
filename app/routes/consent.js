@@ -121,17 +121,6 @@ export default (router) => {
       child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
     }
 
-    // Update consent log
-    if (consentData.note) {
-      child.consent.log.push({
-        date: new Date().toISOString(),
-        note: consentData.note,
-        user: {
-          fullName: consentData.user
-        }
-      })
-    }
-
     if (gillickCompetent || assessedAsNotGillickCompetent) {
       next()
     } else {

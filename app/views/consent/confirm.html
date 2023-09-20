@@ -91,28 +91,5 @@
         }) }}
       </div>
     </div>
-  {% else %}
-    <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-3">
-      <div class="nhsuk-card__content">
-        {{ textarea({
-          label: {
-            text: "Add notes",
-            classes: "nhsuk-label--m nhsuk-u-margin-bottom-3"
-          },
-          hint: {
-            text: "For example, unable to contact parent"
-          },
-          rows: 5,
-          value: "",
-          decorate: base + "note"
-        }) }}
-
-        {{ input({
-          type: "hidden",
-          value: data.user.name,
-          decorate: base + "user"
-        }) }}
-      </div>
-    </div>
   {% endif %}
 {% endblock %}

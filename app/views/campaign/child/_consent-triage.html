@@ -38,11 +38,7 @@
 {% endset %}
 
 {% set noResponseHtml %}
-  {% if child.consent.log.length > 0 %}
-    {% include "campaign/child/_consent-log.html" %}
-  {% else %}
-    <p>No response yet</p>
-  {% endif %}
+  <p>No response yet</p>
 
   <p class="nhsuk-u-margin-bottom-0">
     <a href="/triage-consent/{{ campaign.id }}/{{ child.nhsNumber }}" class="nhsuk-button nhsuk-u-margin-bottom-2">Get consent</a>
