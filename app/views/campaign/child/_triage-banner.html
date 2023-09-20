@@ -16,7 +16,7 @@
 
 {% if child.actionTaken == ACTION_TAKEN.DO_NOT_VACCINATE %}
   {% set color = "red" %}
-  {% set heading = "Do not vaccinate" %}
+  {% set heading = ACTION_TAKEN.DO_NOT_VACCINATE %}
   {% set text = "Jane Doe decided that " + child.fullName + " should not be vaccinated." %}
   {% set showTriageReasons = false %}
 {% endif %}

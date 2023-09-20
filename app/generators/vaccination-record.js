@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker'
+import { OUTCOME } from '../enums.js'
 
 export default (campaigns, batches) => {
   const campaign = Object.values(campaigns).find(c => c.inProgress)
@@ -18,7 +19,7 @@ export default (campaigns, batches) => {
     [campaignId]: {}
   }
 
-  children.filter(c => c.outcome === 'Vaccinated').forEach(child => {
+  children.filter(c => c.outcome === OUTCOME.VACCINATED).forEach(child => {
     vr[campaignId][child.nhsNumber] = {
       given: 'Yes',
       where: 'Left arm',
@@ -26,7 +27,7 @@ export default (campaigns, batches) => {
     }
   })
 
-  children.filter(c => c.outcome === 'Could not vaccinate').forEach(child => {
+  children.filter(c => c.outcome === OUTCOME.COULD_NOT_VACCINATE).forEach(child => {
     const reasons = [
       `${child.fullName} was not well enough`,
       `${child.fullName} refused it`,
