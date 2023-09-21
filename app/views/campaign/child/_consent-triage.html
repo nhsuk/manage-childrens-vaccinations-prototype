@@ -1,40 +1,42 @@
-{% set parentContactDetailsHtml %}
-  <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-    Telephone: {{ child.consent.parentOrGuardian.telephone }}<br>
-    Email: {{ child.consent.parentOrGuardian.email }}
-  </div>
-{% endset %}
-
 {% set consentHtml %}
-  {{ summaryList({
+  {% for response in child.consentResponses %}
+    {% set parentContactDetailsHtml %}
+      <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
+        Telephone: {{ response.parentOrGuardian.telephone }}<br>
+        Email: {{ response.parentOrGuardian.email }}
+      </div>
+    {% endset %}
+
+    {{ summaryList({
       classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
       rows: decorateRows([
         {
           key: "Given by" if consented else "Refused by",
-          value: child.consent.parentOrGuardian.relationship
+          value: response.parentOrGuardian.relationship
         },
         {
           key: "Reason for refusal",
           value: {
-            html: child.consent.reason | default("Personal choice") + (" – " + child.consent.reasonDetails if child.consent.reason == "Other")
+            html: response.reason | default("Personal choice") + (" – " + response.reasonDetails if response.reason == "Other")
           }
         } if not consented,
         {
-          key: child.consent.parentOrGuardian.relationship,
+          key: response.parentOrGuardian.relationship,
           value: {
-            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responded )
+            html: response.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responded )
           }
         },
         {
           key: "Date",
-          value: child.consent.date | govukDate
+          value: response.date | govukDate
         },
         {
           key: "Type of consent",
-          value: child.consent.method
+          value: response.method
         }
       ])
     }) }}
+  {% endfor %}
 {% endset %}
 
 {% set noResponseHtml %}
