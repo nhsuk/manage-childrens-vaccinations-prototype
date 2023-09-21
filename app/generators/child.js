@@ -4,6 +4,7 @@ import { getDateOfBirth, getYearGroup, getAge } from './age.js'
 import getPerson from './person.js'
 import getAddress from './address.js'
 import getConsent from './consent.js'
+import getConsentResponses from './consent-responses.js'
 import getTriageStatus from './triage-status.js'
 import getGp from './gp.js'
 import getHealthAnswers from './health-answers.js'
@@ -57,6 +58,7 @@ export default (options) => {
   const { triageInProgress, type } = options
   const isChild = true
   const child = getPerson(faker, isChild)
+  const consentResponses = getConsentResponses(faker, type, child.lastName)
 
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   child.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
@@ -66,7 +68,8 @@ export default (options) => {
   child.dob = getDateOfBirth(faker, options)
   child.age = getAge(child.dob)
   child.yearGroup = getYearGroup(child.dob)
-  child.consent = getConsent(faker, type, child.lastName)
+  child.consentResponses = consentResponses
+  child.consent = getConsent(type, consentResponses)
   child.outcome = OUTCOME.NO_OUTCOME_YET
 
   child.actionNeeded = getActionNeeded(child.consent[type])
