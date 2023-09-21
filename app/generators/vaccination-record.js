@@ -2,44 +2,55 @@ import { faker } from '@faker-js/faker'
 import { OUTCOME } from '../enums.js'
 
 export default (campaigns, batches) => {
-  const campaign = Object.values(campaigns).find(c => c.inProgress)
-  const campaignId = campaign.id
-  const children = campaign.children
+  const campaign = Object
+    .values(campaigns)
+    .find(campaign => campaign.inProgress)
+  const { children, id } = campaign
 
   let batch = null
   if (campaign.isFlu) {
-    batch = Object.values(batches).find(b => b.isFlu)
+    batch = Object
+      .values(batches)
+      .find(batch => batch.isFlu)
   } else if (campaign.isHPV) {
-    batch = Object.values(batches).find(b => b.isHPV)
+    batch = Object
+      .values(batches)
+      .find(batch => batch.isHPV)
   } else if (campaign.is3in1MenACWY) {
-    batch = Object.values(batches).find(b => b.isMenACWY || b.is3in1)
+    batch = Object
+      .values(batches)
+      .find(batch => batch.isMenACWY || batch.is3in1)
   }
 
-  const vr = {
-    [campaignId]: {}
+  const vaccinationRecord = {
+    [id]: {}
   }
 
-  children.filter(c => c.outcome === OUTCOME.VACCINATED).forEach(child => {
-    vr[campaignId][child.nhsNumber] = {
-      given: 'Yes',
-      where: 'Left arm',
-      batch: batch.name
-    }
-  })
+  children
+    .filter(child => child.outcome === OUTCOME.VACCINATED)
+    .forEach(child => {
+      vaccinationRecord[id][child.nhsNumber] = {
+        given: 'Yes',
+        where: 'Left arm',
+        batch: batch.name
+      }
+    })
 
-  children.filter(c => c.outcome === OUTCOME.COULD_NOT_VACCINATE).forEach(child => {
-    const reasons = [
-      `${child.fullName} was not well enough`,
-      `${child.fullName} refused it`,
-      `${child.fullName} has already had the vaccine`,
-      `${child.fullName} had contraindications`
-    ]
+  children
+    .filter(child => child.outcome === OUTCOME.COULD_NOT_VACCINATE)
+    .forEach(child => {
+      const reasons = [
+        `${child.fullName} was not well enough`,
+        `${child.fullName} refused it`,
+        `${child.fullName} has already had the vaccine`,
+        `${child.fullName} had contraindications`
+      ]
 
-    vr[campaignId][child.nhsNumber] = {
-      given: 'No',
-      'why-not-given': faker.helpers.arrayElement(reasons)
-    }
-  })
+      vaccinationRecord[id][child.nhsNumber] = {
+        given: 'No',
+        'why-not-given': faker.helpers.arrayElement(reasons)
+      }
+    })
 
-  return vr
+  return vaccinationRecord
 }

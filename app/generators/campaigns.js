@@ -1,17 +1,17 @@
-import campaign from './campaign.js'
-import campaignInProgress from './campaign-in-progress.js'
 import { DateTime } from 'luxon'
+import getCampaign from './campaign.js'
+import getCampaignInProgress from './campaign-in-progress.js'
 
 export default (options) => {
   const campaigns = []
   options = options || {}
 
   for (let i = 0; i < options.count; i++) {
-    const c = campaign(options.campaign)
-    campaigns.push(c)
+    const campaign = getCampaign(options.campaign)
+    campaigns.push(campaign)
   }
 
-  campaigns.push(campaignInProgress(options.campaign))
+  campaigns.push(getCampaignInProgress(options.campaign))
 
   return campaigns
     .sort((a, b) => DateTime.fromISO(a.date).valueOf() - DateTime.fromISO(b.date).valueOf())

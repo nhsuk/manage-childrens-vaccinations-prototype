@@ -1,4 +1,4 @@
-import person from './person.js'
+import getPerson from './person.js'
 
 export default (faker, lastName) => {
   const relationship = faker.helpers.arrayElement([
@@ -17,16 +17,16 @@ export default (faker, lastName) => {
       ...Array(3).fill(lastName), false
     ])
     : false
-  const p = person(faker, false, lastNameToUse)
-  const parent = p.sex === 'Female' ? 'Mum' : 'Dad'
+  const person = getPerson(faker, false, lastNameToUse)
+  const parent = person.sex === 'Female' ? 'Mum' : 'Dad'
 
-  p.telephone = faker.phone.number('07#########')
-  p.relationship = relationship === 'Parent' ? parent : relationship
-  p.email = faker.internet.email({
-    firstName: p.firstName,
-    lastName: p.lastName
+  person.telephone = faker.phone.number('07#########')
+  person.relationship = relationship === 'Parent' ? parent : relationship
+  person.email = faker.internet.email({
+    firstName: person.firstName,
+    lastName: person.lastName
   })
 
-  delete p.sex
-  return p
+  delete person.sex
+  return person
 }

@@ -1,8 +1,8 @@
-import campaign from './campaign.js'
-import _ from 'lodash'
-import { DateTime } from 'luxon'
 import { faker } from '@faker-js/faker'
+import { DateTime } from 'luxon'
+import _ from 'lodash'
 import { CONSENT, OUTCOME, TRIAGE, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
+import getCampaign from './campaign.js'
 
 const setActions = (child, consent) => {
   if (consent === CONSENT.REFUSED) {
@@ -57,19 +57,19 @@ const setTriageOutcome = (child, consent) => {
 }
 
 export default (options) => {
-  const c = campaign(options)
+  const campaign = getCampaign(options)
 
-  c.inProgress = true
-  c.date = DateTime.now().toISODate() + 'T' + '09:00'
+  campaign.inProgress = true
+  campaign.date = DateTime.now().toISODate() + 'T' + '09:00'
 
   // set triage outcomes for all children
-  c.children.forEach(child => {
-    setTriageOutcome(child, child.consent[c.type])
+  campaign.children.forEach(child => {
+    setTriageOutcome(child, child.consent[campaign.type])
   })
 
-  _.sampleSize(c.children, 50).forEach(child => {
-    setActions(child, child.consent[c.type])
+  _.sampleSize(campaign.children, 50).forEach(child => {
+    setActions(child, child.consent[campaign.type])
   })
 
-  return c
+  return campaign
 }

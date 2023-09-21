@@ -1,10 +1,10 @@
-import child from './child.js'
+import getChild from './child.js'
 
 export default (options) => {
   const children = []
   options = options || {}
   for (let i = 0; i < options.count; i++) {
-    children.push(child(options.child))
+    children.push(getChild(options.child))
   }
 
   return children.sort((a, b) => a.fullName.localeCompare(b.fullName))

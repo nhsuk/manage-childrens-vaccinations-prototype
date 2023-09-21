@@ -1,8 +1,8 @@
-import campaigns from './generators/campaigns.js'
-import vaccinationRecord from './generators/vaccination-record.js'
-import triageRecord from './generators/triage-record.js'
-import users from './generators/users.js'
-import vaccineGenerator from './generators/vaccines.js'
+import getCampaigns from './generators/campaigns.js'
+import getVaccinationRecord from './generators/vaccination-record.js'
+import getTriageRecord from './generators/triage-record.js'
+import getUsers from './generators/users.js'
+import getVaccines from './generators/vaccines.js'
 
 /**
  * Default values for user session data
@@ -13,8 +13,8 @@ import vaccineGenerator from './generators/vaccines.js'
  * existing application.
  */
 
-const c = campaigns({ count: 20 })
-const vaccines = vaccineGenerator()
+const campaigns = getCampaigns({ count: 20 })
+const vaccines = getVaccines()
 
 export default {
   support: 'record-childrens-vaccinations@service.nhs.uk',
@@ -22,11 +22,11 @@ export default {
     name: 'Jane Doe',
     email: 'jane.doe@example.com'
   },
-  campaigns: c,
+  campaigns,
   vaccines,
-  vaccination: vaccinationRecord(c, vaccines.batches),
-  triage: triageRecord(c),
-  users: users({ count: 20 }),
+  vaccination: getVaccinationRecord(campaigns, vaccines.batches),
+  triage: getTriageRecord(campaigns),
+  users: getUsers({ count: 20 }),
   // Set feature flags using the `features` key
   features: {
     pilot: {

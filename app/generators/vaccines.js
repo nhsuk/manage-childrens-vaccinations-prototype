@@ -1,5 +1,5 @@
-import { DateTime } from 'luxon'
 import { fakerEN_GB as faker } from '@faker-js/faker'
+import { DateTime } from 'luxon'
 
 const getBatches = () => {
   const batches = {}
@@ -78,24 +78,24 @@ export default () => {
     }
   ]
 
-  const vacs = fluVaccines.concat(hpvVaccines, dptVaccines, menAcwyVaccines)
-  vacs.forEach(vaccine => summarise(vaccine))
+  const brands = fluVaccines.concat(hpvVaccines, dptVaccines, menAcwyVaccines)
+  brands.forEach(vaccine => summarise(vaccine))
 
-  const allBatches = {}
+  const batches = {}
 
-  vacs.flatMap(v => v.batches).forEach(batches => {
-    Object.keys(batches).forEach(name => {
+  brands.flatMap(brand => brand.batches).forEach(brandBatches => {
+    Object.keys(brandBatches).forEach(name => {
       const batch = {
-        ...batches[name],
-        ...vacs.find(v => v.batches[name])
+        ...brandBatches[name],
+        ...brands.find(brand => brand.batches[name])
       }
 
       batch.summary = batch.summary.replace(')', `, ${name})`)
 
       delete batch.batches
-      allBatches[name] = batch
+      batches[name] = batch
     })
   })
 
-  return { batches: allBatches, brands: vacs }
+  return { batches, brands }
 }

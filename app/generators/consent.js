@@ -1,6 +1,6 @@
-import { CONSENT, REFUSAL_REASON } from '../enums.js'
 import { DateTime } from 'luxon'
-import parent from './parent.js'
+import { CONSENT, REFUSAL_REASON } from '../enums.js'
+import getParent from './parent.js'
 
 export default (faker, type, childsLastName) => {
   if (type === '3-in-1 and MenACWY') {
@@ -39,14 +39,14 @@ export default (faker, type, childsLastName) => {
     )
   }
 
-  const r = faker.helpers.arrayElement([
+  const consent = faker.helpers.arrayElement([
     ...Array(10).fill(CONSENT.GIVEN),
     ...Array(5).fill(CONSENT.UNKNOWN),
     CONSENT.REFUSED
   ])
 
   let reason = null
-  if (r === CONSENT.REFUSED) {
+  if (consent === CONSENT.REFUSED) {
     let availableReasons = Object.values(REFUSAL_REASON)
     if (type !== 'Flu') {
       availableReasons = availableReasons.filter(a => {
@@ -66,14 +66,14 @@ export default (faker, type, childsLastName) => {
     'Paper'
   ])
 
-  const parentOrGuardian = r !== CONSENT.UNKNOWN ? parent(faker, childsLastName) : {}
+  const parentOrGuardian = consent !== CONSENT.UNKNOWN ? getParent(faker, childsLastName) : {}
 
   return {
-    [type]: r,
-    text: r,
-    refused: r === CONSENT.REFUSED,
-    consented: r === CONSENT.GIVEN,
-    responded: r !== CONSENT.UNKNOWN,
+    [type]: consent,
+    text: consent,
+    refused: consent === CONSENT.REFUSED,
+    consented: consent === CONSENT.GIVEN,
+    responded: consent !== CONSENT.UNKNOWN,
     date: DateTime.local().minus({ days }).toISODate(),
     method,
     parentOrGuardian,

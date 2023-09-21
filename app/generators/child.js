@@ -1,13 +1,13 @@
-import person from './person.js'
-import address from './address.js'
-import consent from './consent.js'
-import triageStatus from './triage-status.js'
-import gp from './gp.js'
-import healthQuestions from './health-questions.js'
-import { dateOfBirth, yearGroup, age } from './age.js'
-import triageNeeded from './triage-needed.js'
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
+import { getDateOfBirth, getYearGroup, getAge } from './age.js'
+import getPerson from './person.js'
+import getAddress from './address.js'
+import getConsent from './consent.js'
+import getTriageStatus from './triage-status.js'
+import getGp from './gp.js'
+import getHealthQuestions from './health-questions.js'
+import getTriageNeeded from './triage-needed.js'
 
 const preferredName = (child) => {
   return `${child.firstName} ${faker.person.lastName()}`
@@ -55,31 +55,31 @@ const handleInProgressTriage = (child) => {
 
 export default (options) => {
   const isChild = true
-  const c = person(faker, isChild)
+  const child = getPerson(faker, isChild)
 
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
-  c.nhsNumber = faker.phone.number('999#######')
-  c.preferredName = faker.helpers.maybe(() => preferredName(c), { probability: 0.1 })
-  c.address = address(faker)
-  c.gp = gp(faker)
-  c.dob = dateOfBirth(faker, options)
-  c.age = age(c.dob)
-  c.yearGroup = yearGroup(c.dob)
-  c.consent = consent(faker, options.type, c.lastName)
-  c.outcome = OUTCOME.NO_OUTCOME_YET
+  child.nhsNumber = faker.phone.number('999#######')
+  child.preferredName = faker.helpers.maybe(() => preferredName(child), { probability: 0.1 })
+  child.address = getAddress(faker)
+  child.gp = getGp(faker)
+  child.dob = getDateOfBirth(faker, options)
+  child.age = getAge(child.dob)
+  child.yearGroup = getYearGroup(child.dob)
+  child.consent = getConsent(faker, options.type, child.lastName)
+  child.outcome = OUTCOME.NO_OUTCOME_YET
 
-  setActions(c, c.consent[options.type])
-  c.actionTaken = null
+  setActions(child, child.consent[options.type])
+  child.actionTaken = null
 
-  c.seen = {}
-  c.triageNotes = []
-  c.triageStatus = triageStatus(options.triageInProgress, c.consent)
-  c.healthQuestions = healthQuestions(faker, options.type, c)
+  child.seen = {}
+  child.triageNotes = []
+  child.triageStatus = getTriageStatus(options.triageInProgress, child.consent)
+  child.healthQuestions = getHealthQuestions(faker, options.type, child)
 
-  triageNeeded(faker, c)
+  getTriageNeeded(faker, child)
   if (options.triageInProgress) {
-    handleInProgressTriage(c)
+    handleInProgressTriage(child)
   }
 
-  return c
+  return child
 }

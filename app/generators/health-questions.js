@@ -176,10 +176,10 @@ const enrichWithRealisticAnswers = (faker, child, health) => {
   }
 
   const answer = faker.helpers.objectKey(realisticAnswers)
-  health.questions.forEach((q) => {
-    if (realisticAnswers[answer][q.id]) {
-      q.details = realisticAnswers[answer][q.id]
-      q.answer = 'Yes'
+  health.questions.forEach((question) => {
+    if (realisticAnswers[answer][question.id]) {
+      question.details = realisticAnswers[answer][question.id]
+      question.answer = 'Yes'
       health.hasAnswers = true
     }
   })

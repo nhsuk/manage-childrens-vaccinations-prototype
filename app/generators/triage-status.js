@@ -1,9 +1,9 @@
-import { TRIAGE } from '../enums.js'
 import { faker } from '@faker-js/faker'
+import { TRIAGE } from '../enums.js'
 
-export default (triageInProgess, consent) => {
+export default (triageInProgress, consent) => {
   if (consent.consented) {
-    if (triageInProgess) {
+    if (triageInProgress) {
       return faker.helpers.arrayElement([
         ...Array(10).fill(TRIAGE.TO_DO),
         ...Array(10).fill(TRIAGE.READY),

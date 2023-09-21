@@ -1,9 +1,9 @@
 import { TRIAGE } from '../enums.js'
 
 export default (campaigns) => {
-  const tr = {}
+  const triageRecord = {}
   // get all campaigns in progress or triageInProgress
-  const inProgressCampaigns = Object.values(campaigns).filter(c => c.inProgress || c.triageInProgress)
+  const inProgressCampaigns = Object.values(campaigns).filter(campaign => campaign.inProgress || campaign.triageInProgress)
   const triageStatusToEnrich = [
     TRIAGE.READY,
     TRIAGE.DO_NOT_VACCINATE,
@@ -14,15 +14,15 @@ export default (campaigns) => {
   inProgressCampaigns.forEach(campaign => {
     const campaignId = campaign.id
     const children = campaign.children
-    tr[campaignId] = {}
+    triageRecord[campaignId] = {}
 
     children.filter(c => triageStatusToEnrich.includes(c.triageStatus)).forEach(child => {
-      tr[campaignId][child.nhsNumber] = {
+      triageRecord[campaignId][child.nhsNumber] = {
         notes: child.triageNotes,
         status: child.triageStatus
       }
     })
   })
 
-  return tr
+  return triageRecord
 }

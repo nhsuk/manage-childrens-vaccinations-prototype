@@ -1,8 +1,8 @@
-import school from './school.js'
-import children from './children.js'
-import yearGroups from './year-groups.js'
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
+import getSchool from './school.js'
+import getChildren from './children.js'
+import getYearGroups from './year-groups.js'
 
 const generateRandomString = (length) => {
   length = length || 3
@@ -22,27 +22,27 @@ const ageRange = (type) => {
 
 export default () => {
   const type = faker.helpers.arrayElement(['HPV', 'Flu']) // exclude 3-in-1 and MenACWY for now, as the design is not ready
-  const schoolObject = school(faker, type)
+  const school = getSchool(faker, type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.number.int({ min: 2, max: 100 })
   const triageInProgress = daysUntil < 28
-  const campaignChildren = children({
+  const children = getChildren({
     count: 100,
     child: { ...ageRange(type), triageInProgress }
   })
 
   return {
     id: generateRandomString(3),
-    title: `${type} session at ${schoolObject.name}`,
-    location: schoolObject.name,
+    title: `${type} session at ${school.name}`,
+    location: school.name,
     date: DateTime.now().plus({ days: daysUntil }).toISODate() + 'T' + atTime,
     type,
     triageInProgress,
-    yearGroups: yearGroups(type),
-    school: schoolObject,
+    yearGroups: getYearGroups(type),
+    school,
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',
     is3in1MenACWY: type === '3-in-1 and MenACWY',
-    children: campaignChildren
+    children
   }
 }
