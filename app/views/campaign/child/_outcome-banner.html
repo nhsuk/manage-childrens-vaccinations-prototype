@@ -35,9 +35,9 @@
   {% endset %}
 {% endif %}
 
-{% if vaccinationRecord["why-not-given"] %}
+{% if vaccinationRecord.whyNotGiven %}
   {% set reasonText %}
-    {{ vaccinationRecord["why-not-given"] }}<br>
+    {{ vaccinationRecord.whyNotGiven }}<br>
   {% endset %}
 {% endif %}
 

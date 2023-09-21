@@ -27,7 +27,7 @@
       } if vaccineGiven and batch.method != "Nasal spray",
       {
         key: "Reason",
-        value: vaccinationRecord["why-not-given"]
+        value: vaccinationRecord.whyNotGiven
       } if not vaccineGiven,
       {
         key: "Date",

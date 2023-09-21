@@ -48,7 +48,7 @@ export default (campaigns, batches) => {
 
       vaccinationRecord[id][child.nhsNumber] = {
         given: 'No',
-        'why-not-given': faker.helpers.arrayElement(reasons)
+        whyNotGiven: faker.helpers.arrayElement(reasons)
       }
     })
 

@@ -53,7 +53,7 @@
       } if menACWYVaccineGiven,
       {
         key: "Site",
-        value: vaccinationRecord["where-men-acwy"],
+        value: vaccinationRecord.whereMenACWY,
         href: "#"
       } if menACWYVaccineGiven,
       {
@@ -63,7 +63,7 @@
       } if not menACWYVaccineGiven,
       {
         key: "Reason",
-        value: menACWYVaccinationRecord["why-not-given"],
+        value: menACWYVaccinationRecord.whyNotGiven,
         href: basePath + "/not-given"
       } if not menACWYVaccineGiven
     ])
@@ -94,7 +94,7 @@
       } if 3in1VaccineGiven,
       {
         key: "Site",
-        value: vaccinationRecord["where-3-in-1"],
+        value: vaccinationRecord.where3in1,
         href: "#"
       } if 3in1VaccineGiven,
       {
@@ -104,7 +104,7 @@
       } if not 3in1VaccineGiven,
       {
         key: "Reason",
-        value: 3in1VaccinationRecord["why-not-given"],
+        value: 3in1VaccinationRecord.whyNotGiven,
         href: basePath + "/not-given"
       } if not 3in1VaccineGiven
     ])

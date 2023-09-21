@@ -7,7 +7,7 @@ const filters = {
       return c.yearGroup === yearGroup
     })
   },
-  'triage-status': (children, triageStatus, req, res) => {
+  triageStatus: (children, triageStatus, req, res) => {
     return children.filter((c) => {
       const triage = req.session.data.triage
       const triageRecord = triage && triage[res.locals.campaign.id]
