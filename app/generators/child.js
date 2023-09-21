@@ -6,7 +6,7 @@ import getAddress from './address.js'
 import getConsent from './consent.js'
 import getTriageStatus from './triage-status.js'
 import getGp from './gp.js'
-import getHealthQuestions from './health-questions.js'
+import getHealthAnswers from './health-answers.js'
 import getTriageNeeded from './triage-needed.js'
 
 const preferredName = (child) => {
@@ -74,7 +74,7 @@ export default (options) => {
   child.seen = {}
   child.triageNotes = []
   child.triageStatus = getTriageStatus(options.triageInProgress, child.consent)
-  child.healthQuestions = getHealthQuestions(faker, options.type, child)
+  child.healthAnswers = getHealthAnswers(faker, options.type, child)
 
   getTriageNeeded(faker, child)
   if (options.triageInProgress) {

@@ -52,7 +52,7 @@ export default (router) => {
       }
 
       const details = healthAnswers.details[key] || false
-      const question = child.healthQuestions.questions.find(q => q.id === key)
+      const question = child.healthAnswers.questions.find(q => q.id === key)
       if (question) {
         question.answer = value
 

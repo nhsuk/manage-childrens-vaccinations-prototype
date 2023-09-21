@@ -4,7 +4,7 @@
 {% block form %}
   {{ appHeading({ caption: child.fullName, title: title }) }}
 
-  {% for q in child.healthQuestions.questions %}
+  {% for q in child.healthAnswers.questions %}
     {% set giveDetailsHtml %}
       {{ textarea({
         label: {
