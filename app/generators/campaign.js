@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import getSchool from './school.js'
 import getChildren from './children.js'
 import getYearGroups from './year-groups.js'
+import getHealthQuestions from './health-questions.js'
 
 const generateRandomString = (length) => {
   length = length || 3
@@ -38,6 +39,7 @@ export default () => {
     location: school.name,
     date: DateTime.now().plus({ days: daysUntil }).toISODate() + 'T' + atTime,
     type,
+    healthQuestions: getHealthQuestions(type),
     triageInProgress,
     yearGroups: getYearGroups(type),
     school,

@@ -4,20 +4,20 @@
 {% block form %}
   {{ appHeading({ caption: child.fullName, title: title }) }}
 
-  {% for q in child.healthAnswers.questions %}
+  {% for id, question in campaign.healthQuestions %}
     {% set giveDetailsHtml %}
       {{ textarea({
         label: {
           text: "Give details"
         },
-        decorate: base + "health.details." + q.id
+        decorate: base + "health.details." + id
       }) }}
     {% endset %}
 
     {{ radios({
       fieldset: {
         legend: {
-          text: q.question
+          text: question
         }
       },
       classes: "nhsuk-radios--inline",
@@ -32,7 +32,7 @@
           text: "No"
         }
       ],
-      decorate: base + "health." + q.id
+      decorate: base + "health." + id
     }) }}
   {% endfor %}
 
