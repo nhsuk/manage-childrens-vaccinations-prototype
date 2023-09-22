@@ -24,7 +24,7 @@
         <div class="nhsuk-grid-column-two-thirds">
           {% if child.needsTriage %}
             {% include "campaign/child/_triage-banner.html" %}
-          {% elseif not child.consent.responded or child.consent.refused %}
+          {% elseif not child.consent.responses or child.consent.refused %}
             {% include "campaign/child/_consent-banner.html" %}
           {% endif %}
 
@@ -35,7 +35,7 @@
             {% include "campaign/child/_triage-health-questions.html" %}
           {% endif %}
 
-          {% if child.consent.responded %}
+          {% if child.consent.responses %}
             {% include "campaign/child/_triage.html" %}
           {% endif %}
 
