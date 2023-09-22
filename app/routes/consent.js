@@ -41,28 +41,23 @@ export default (router) => {
     '/consent/:campaignId/:nhsNumber/health-questions'
   ], (req, res, next) => {
     const child = res.locals.child
-    const healthAnswers = _.get(
+    const formAnswers = _.get(
       req.body,
       `consent.${req.params.campaignId}.${req.params.nhsNumber}.health`, {}
     )
 
-    for (const [key, value] of Object.entries(healthAnswers)) {
+    for (const key of Object.keys(formAnswers)) {
       if (key === 'details') {
         continue
       }
 
-      const details = healthAnswers.details[key] || false
-      const question = child.healthAnswers.questions.find(q => q.id === key)
-      if (question) {
-        question.answer = value
+      if (formAnswers[key] === 'Yes') {
+        child.consent.answersNeedTriage = true
 
-        if (value === 'Yes' || details) {
-          child.consent.answersNeedTriage = true
-        }
-
-        if (details) {
-          question.details = details
-        }
+        // Use detail answer if provided, else return `true`
+        child.healthAnswers[key] = formAnswers.details[key] || true
+      } else {
+        child.healthAnswers[key] = false
       }
     }
 
