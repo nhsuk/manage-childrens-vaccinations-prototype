@@ -135,28 +135,6 @@ export default (router) => {
     }
   })
 
-  router.all([
-    '/triage-consent/:campaignId/:nhsNumber/details',
-    '/consent/:campaignId/:nhsNumber/details'
-  ], (req, res, next) => {
-    // set the medical health question options for the summary list
-    const questions = res.locals.child.healthQuestions.questions
-    const options = []
-    const data = req.session.data
-
-    questions.forEach(q => {
-      const option = {
-        key: q.question,
-        value: data.consent[req.params.campaignId][req.params.nhsNumber].health[q.id]
-      }
-
-      options.push(option)
-    })
-
-    res.locals.healthQuestions = options
-    next()
-  })
-
   router.get([
     '/triage-consent/:campaignId/:nhsNumber',
     '/consent/:campaignId/:nhsNumber'
