@@ -7,34 +7,35 @@
       </div>
     {% endset %}
 
-    {{ summaryList({
-      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
-      rows: decorateRows([
-        {
-          key: "Given by" if consented else "Refused by",
-          value: response.parentOrGuardian.relationship
-        },
-        {
-          key: "Reason for refusal",
-          value: {
-            html: response.reason | default("Personal choice") + (" – " + response.reasonDetails if response.reason == "Other")
+    {% set detailText %}
+      {{ response[campaign.type] + " by " + response.parentOrGuardian.relationship }} on {{ response.date | govukDate }}
+    {% endset %}
+
+    {{ details({
+      classes: "nhsuk-u-margin-bottom-0" if loop.last,
+      attributes: { open: true },
+      text: detailText,
+      HTML: summaryList({
+        classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+        rows: decorateRows([
+          {
+            key: "Reason for refusal",
+            value: {
+              html: response.reason | default("Personal choice") + (" – " + response.reasonDetails if response.reason == "Other")
+            }
+          } if response.reason,
+          {
+            key: response.parentOrGuardian.relationship,
+            value: {
+              html: response.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responded )
+            }
+          },
+          {
+            key: "Type of consent",
+            value: response.method
           }
-        } if not consented,
-        {
-          key: response.parentOrGuardian.relationship,
-          value: {
-            html: response.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responded )
-          }
-        },
-        {
-          key: "Date",
-          value: response.date | govukDate
-        },
-        {
-          key: "Type of consent",
-          value: response.method
-        }
-      ])
+        ])
+      })
     }) }}
   {% endfor %}
 {% endset %}
