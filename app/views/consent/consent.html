@@ -1,9 +1,9 @@
 {% extends "layouts/wizard.html" %}
 {% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
 {% if isGillickCompetent %}
-  {% set title = "Do they agree to having both doses of the HPV vaccination?" %}
+  {% set title = "Do they agree to having the HPV vaccination?" %}
 {% else %}
-  {% set title = "Do they agree to them having both doses of the HPV vaccination?" %}
+  {% set title = "Do they agree to them having the HPV vaccination?" %}
 {% endif %}
 
 {% block form %}
