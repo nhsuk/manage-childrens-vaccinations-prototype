@@ -3,17 +3,18 @@
     {{ question }}
   </h3>
 
-  {% for response in child.consentResponses %}
-    <p class="nhsuk-u-margin-bottom-0">
-      {#- Response can be `true` if no detailed answer given -#}
-      {%- if response.healthAnswers[id] -%}
-        Yes
-        {%- if response.healthAnswers[id] != true %}
-          – {{ response.healthAnswers[id] }}
-        {%- endif-%}
-      {%- else -%}
-        No
-      {%- endif -%}
+  {#- Only return responses with health answers that are different -#}
+  {% set uniqueResponses = child.consentResponses | selectattr("healthAnswers") | uniqueFromArrayBy("healthAnswers[" + id + "]") %}
+  {% for response in uniqueResponses %}
+    {%- if uniqueResponses.length > 1 %}
+      {%- set who = (response.parentOrGuardian.relationship if uniqueResponses.length > 1 else "All") + " answered:" -%}
+    {% endif -%}
+    <p class="nhsuk-body">
+      {{- who }} {{ "No" if not response.healthAnswers[id] else "Yes" }}
+    {%- if response.healthAnswers[id] and response.healthAnswers[id] != true %}
+      {{ " – " if response.healthAnswers[id] and response.healthAnswers[id] != true }}
+      {{- response.healthAnswers[id] -}}
     </p>
+    {%- endif -%}
   {% endfor %}
 {% endfor %}

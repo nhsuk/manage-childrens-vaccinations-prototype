@@ -67,7 +67,9 @@ export default (options) => {
   child.age = getAge(child.dob)
   child.yearGroup = getYearGroup(child.dob)
   child.consent = getConsent(type)
-  child.consentResponses = getConsentResponses(faker, type, child)
+  child.consentResponses = getConsentResponses(faker, {
+    type, child, count: faker.number.int({ min: 1, max: 3 })
+  })
   child.outcome = OUTCOME.NO_OUTCOME_YET
 
   child.actionNeeded = getActionNeeded(child.consent[type])
