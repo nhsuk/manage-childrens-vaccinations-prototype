@@ -3,8 +3,8 @@ import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
 import { getDateOfBirth, getYearGroup, getAge } from './age.js'
 import getPerson from './person.js'
 import getAddress from './address.js'
-import getConsent from './consent.js'
 import getConsentResponses from './consent-responses.js'
+import getDerivedConsent from './derived-consent.js'
 import getTriageStatus from './triage-status.js'
 import getGp from './gp.js'
 import getTriageNeeded from './triage-needed.js'
@@ -57,6 +57,9 @@ export default (options) => {
   const { triageInProgress, type } = options
   const isChild = true
   const child = getPerson(faker, isChild)
+  const consentResponses = getConsentResponses(faker, {
+    type, child, count: faker.number.int({ min: 0, max: 4 })
+  })
 
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   child.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
@@ -66,20 +69,18 @@ export default (options) => {
   child.dob = getDateOfBirth(faker, options)
   child.age = getAge(child.dob)
   child.yearGroup = getYearGroup(child.dob)
-  child.consent = getConsent(type)
-  child.consentResponses = getConsentResponses(faker, {
-    type, child, count: faker.number.int({ min: 1, max: 3 })
-  })
+  child.consentResponses = consentResponses
+  child.consent = getDerivedConsent(type, consentResponses)
   child.outcome = OUTCOME.NO_OUTCOME_YET
 
-  child.actionNeeded = getActionNeeded(child.consent[type])
+  child.actionNeeded = getActionNeeded(child.consent)
   child.actionTaken = null
 
   child.seen = {}
   child.triageNotes = []
   child.triageStatus = getTriageStatus(triageInProgress, child.consent)
 
-  getTriageNeeded(faker, child)
+  getTriageNeeded(child)
   if (triageInProgress) {
     handleInProgressTriage(child)
   }

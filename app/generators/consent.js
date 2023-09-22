@@ -2,17 +2,19 @@ import { faker } from '@faker-js/faker'
 import { CONSENT } from '../enums.js'
 
 export default (type) => {
-  const consent = faker.helpers.arrayElement([
+  let consent = faker.helpers.arrayElement([
     ...Array(10).fill(CONSENT.GIVEN),
-    ...Array(5).fill(CONSENT.UNKNOWN),
     CONSENT.REFUSED
   ])
 
-  return {
-    [type]: consent,
-    text: consent,
-    refused: consent === CONSENT.REFUSED,
-    consented: consent === CONSENT.GIVEN,
-    responded: consent !== CONSENT.UNKNOWN
+  if (type === '3-in-1 and MenACWY') {
+    consent = faker.helpers.arrayElement([
+      ...Array(5).fill(CONSENT.GIVEN),
+      ...Array(5).fill(CONSENT.ONLY_MENACWY),
+      ...Array(5).fill(CONSENT.ONLY_3_IN_1),
+      ...Array(2).fill(CONSENT.REFUSED)
+    ])
   }
+
+  return consent
 }

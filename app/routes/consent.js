@@ -81,7 +81,7 @@ export default (router) => {
     child.consent.text = consentData.consent
     child.consent.consented = consentData.consent === CONSENT.GIVEN
     child.consent.refused = consentData.consent === CONSENT.REFUSED
-    child.consent.responded = consentData.consent !== CONSENT.UNKNOWN
+    child.consent.responses = consentData.consent !== CONSENT.UNKNOWN
 
     const consentResponse = child.consentResponses[0]
     consentResponse.date = DateTime.local().toISODate()

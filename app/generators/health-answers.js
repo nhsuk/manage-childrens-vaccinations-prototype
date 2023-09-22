@@ -137,12 +137,6 @@ const realisticAnswers = {
 }
 
 const enrichWithRealisticAnswers = (faker, child, healthAnswers) => {
-  // Did not answer health questions as either
-  // they refused consent or did not respond
-  if (child.consent.refused || !child.consent.responded) {
-    return healthAnswers
-  }
-
   // Do not give health question responses to 80% of children who consent
   if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
     return healthAnswers
@@ -153,7 +147,6 @@ const enrichWithRealisticAnswers = (faker, child, healthAnswers) => {
   for (const key of Object.keys(healthAnswers)) {
     if (realisticAnswers[realisticAnswer][key]) {
       healthAnswers[key] = realisticAnswers[realisticAnswer][key]
-      child.consent.answersNeedTriage = true
 
       // Save realistic triage note for use later in generation process
       child.__triageNote = realisticAnswers[realisticAnswer].triageNote

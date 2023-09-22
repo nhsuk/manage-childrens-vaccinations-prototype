@@ -1,10 +1,11 @@
 import { TRIAGE_REASON, ACTION_NEEDED } from '../enums.js'
 
-export default (faker, child) => {
+export default (child) => {
   const triageReasons = []
   child.needsTriage = false
 
-  if (!child.consent.consented) {
+  // No responses
+  if (!child.consent.responses) {
     return
   }
 
@@ -14,7 +15,7 @@ export default (faker, child) => {
     triageReasons.push(TRIAGE_REASON.HAS_NOTES)
   }
 
-  if (faker.helpers.maybe(() => true, { probability: 0.1 })) {
+  if (child.consent.unknown) {
     child.needsTriage = true
     child.actionNeeded = ACTION_NEEDED.TRIAGE
     triageReasons.push(TRIAGE_REASON.INCONSISTENT_CONSENT)
