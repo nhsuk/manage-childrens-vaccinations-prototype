@@ -1,37 +1,4 @@
-export default (faker, type, child) => {
-  let questions = []
-  const allergy = { title: 'Allergies', id: 'allergy', question: 'Does the child have any severe allergies that have led to an anaphylactic reaction?', answer: 'No' }
-  const medicalConditions = { title: 'Medical conditions', id: 'medicalConditions', question: 'Does the child have any existing medical conditions?', answer: 'No' }
-
-  switch (type) {
-    case 'Flu':
-      questions = [
-        { title: 'Immunity', id: 'their-immune', question: 'Does the child have a disease or treatment that severely affects their immune system?', answer: 'No' },
-        { title: 'Household immunity', id: 'household-immune', question: 'Is anyone in your household having treatment that severely affects their immune system?', answer: 'No' },
-        { title: 'Asthma', id: 'asthma', question: 'Has your child been diagnosed with asthma?', answer: 'No' },
-        { title: 'Egg allergy', id: 'egg-allergy', question: 'Has your child been admitted to intensive care because of a severe egg allergy?', answer: 'No' }
-      ]
-      break
-    case 'HPV':
-      questions = [
-        allergy,
-        medicalConditions,
-        { title: 'Medication', id: 'medication', question: 'Does the child take any regular medication?', answer: 'No' }
-      ]
-      break
-    case '3-in-1 and MenACWY':
-      questions = [
-        allergy,
-        medicalConditions,
-        { title: 'Immunosuppressant', id: 'immunosuppressant', question: 'Does the child take any immunosuppressant medication?', answer: 'No' }
-      ]
-      break
-  }
-
-  questions.push({ title: 'Anything else', id: 'anythingElse', question: 'Is there anything else we should know?', answer: 'No' })
-
-  return enrichWithRealisticAnswers(faker, child, { questions })
-}
+import getHealthQuestions from './health-questions.js'
 
 const realisticAnswers = {
   adhd: {
@@ -51,13 +18,13 @@ const realisticAnswers = {
     triageNote: 'Spoke with parent. Child has an anxiety disorder, takes medication to manage it. No medical issues that would impact vaccine administration. It is safe to vaccinate.'
   },
   asthma: {
-    medicalConditions: 'My child was diagnosed with asthma a few months ago and it has been quite challenging for them. They have struggled with breathing difficulties and have needed to use their inhaler several times a day.',
-    medication: 'My child takes medication every day to manage their asthma',
+    asthma: 'My child was diagnosed with asthma a few months ago and it has been quite challenging for them. They have struggled with breathing difficulties and have needed to use their inhaler several times a day.',
+    asthmaSteroids: 'My child takes medication every day to manage their asthma',
     triageNote: 'Spoke with parent. Child has asthma, takes daily medication. Safe to give vaccine'
   },
   asthmaAndAllergies: {
-    medicalConditions: 'My child has asthma and multiple allergies, including environmental and food allergies.',
-    medication: 'My child takes medication to manage their asthma and prevent breathing difficulties. They also carry an EpiPen in case of anaphylactic reactions.',
+    asthma: 'My child has asthma and multiple allergies, including environmental and food allergies.',
+    asthmaSteroids: 'My child takes medication to manage their asthma and prevent breathing difficulties. They also carry an EpiPen in case of anaphylactic reactions.',
     anythingElse: 'My child has a history of anaphylactic reactions and must avoid certain foods and environments to prevent reactions.',
     triageNote: 'Spoke with parent. Safe to vaccinate, but monitor for adverse reactions'
   },
@@ -69,10 +36,12 @@ const realisticAnswers = {
   },
   badExperience: {
     anythingElse: 'My child had a bad experience with a vaccine before, I just want to make sure they are comfortable and safe',
+    previousReaction: 'My child recently had a bad reaction to a different vaccine.',
     triageNote: 'I have spoken to the parent and they mentioned that the child had a bad experience with a vaccine before. It is important to ensure the child is comfortable and at ease during the vaccine process. I suggest discussing any concerns with the child and addressing them before proceeding with the vaccine. It is safe to give the vaccine with these measures in place.'
   },
   badReaction: {
     anythingElse: 'My child recently had a bad reaction to a different vaccine. I just want to make sure we are extra cautious with this.',
+    previousReaction: 'My child recently had a bad reaction to a different vaccine.',
     triageNote: 'Spoke with parent, confirmed bad reaction from previous vaccine. Vaccine was a COVID-19 vaccination and the reaction was swelling at the site of vaccination. Safe to vaccinate with caution. Monitor for adverse reactions post-vaccination.'
   },
   bleedingDisorder: {
@@ -92,9 +61,14 @@ const realisticAnswers = {
     triageNote: 'Spoke with parent, child has chronic pain due to previous injury and takes medication. Vaccinator should be aware of child’s condition and take extra care during vaccine administration to minimize any discomfort. Monitor for any adverse reactions during and after vaccine administration.'
   },
   coeliacDisease: {
+    eggAllergy: 'My child has coeliac disease and must follow a strict gluten-free diet.',
     medicalConditions: 'My child has coeliac disease and must follow a strict gluten-free diet.',
     medication: 'My child does not take medication, but follows a strict gluten-free diet to manage their coeliac disease.',
     triageNote: 'Spoke with parent. Safe to vaccinate, but monitor for adverse reactions'
+  },
+  covid19: {
+    householdImmuneSystem: 'Their grandmother lives with us, and has recently got covid.',
+    triageNote: 'Spoke with parent. Child has sufficiently recovered. It is safe to vaccinate'
   },
   depression: {
     medicalConditions: 'My child has depression and experiences feelings of sadness and hopelessness on a regular basis.',
@@ -126,10 +100,12 @@ const realisticAnswers = {
   },
   fainting: {
     anythingElse: 'My child has a history of fainting after receiving injections.',
+    previousReaction: 'My child has a history of fainting after receiving injections.',
     triageNote: 'I have spoken to the parent and gathered that the child has a history of fainting after receiving injections. It is recommended to observe the child for 15 minutes after the vaccine is given, to monitor for any adverse reactions. The vaccine can be safely given with this precaution in place.'
   },
   foodAllergy: {
-    allergy: 'Yes, my child has a food allergy to dairy products and has had an anaphylactic reaction in the past.',
+    allergy: 'My child has a food allergy to dairy products and had an anaphylactic reaction in the past.',
+    eggAllergy: 'My child has an allergy to dairy products and had an anaphylactic reaction in the past.',
     medication: 'My child carries an EpiPen with them at all times in case of another reaction.',
     triageNote: 'Spoke with parent. Safe to vaccinate, but monitor for adverse reactions'
   },
@@ -160,29 +136,45 @@ const realisticAnswers = {
   }
 }
 
-const enrichWithRealisticAnswers = (faker, child, health) => {
+const enrichWithRealisticAnswers = (faker, child, healthAnswers) => {
   // Did not answer health questions as either
   // they refused consent or did not respond
   if (child.consent.refused || !child.consent.responded) {
-    return health
+    return healthAnswers
   }
 
   // Do not give health question responses to 80% of children who consent
   if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
-    return health
+    return healthAnswers
   }
 
-  const answer = faker.helpers.objectKey(realisticAnswers)
-  health.questions.forEach((question) => {
-    if (realisticAnswers[answer][question.id]) {
-      question.details = realisticAnswers[answer][question.id]
-      question.answer = 'Yes'
+  const realisticAnswer = faker.helpers.objectKey(realisticAnswers)
+
+  for (const key of Object.keys(healthAnswers)) {
+    if (realisticAnswers[realisticAnswer][key]) {
+      healthAnswers[key] = realisticAnswers[realisticAnswer][key]
       child.consent.answersNeedTriage = true
+
+      // Save realistic triage note for use later in generation process
+      child.__triageNote = realisticAnswers[realisticAnswer].triageNote
     }
-  })
+  }
 
-  // Save realistic triage note for use later in generation process
-  child.__triageNote = realisticAnswers[answer].triageNote
+  return healthAnswers
+}
 
-  return health
+export default (faker, type, child) => {
+  const healthQuestions = getHealthQuestions(type)
+
+  const answers = {}
+
+  // Default answer to `false` for most questions
+  for (const key of Object.keys(healthQuestions)) {
+    answers[key] = false
+  }
+
+  // Enrich answers with realistic responses
+  const healthAnswers = enrichWithRealisticAnswers(faker, child, answers)
+
+  return healthAnswers
 }
