@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
 import { CONSENT, REFUSAL_REASON } from '../enums.js'
+import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
 
-export default (faker, type, childsLastName) => {
+export default (faker, type, child) => {
   if (type === '3-in-1 and MenACWY') {
     const yes = {
       '3-in-1': CONSENT.GIVEN,
@@ -39,15 +40,9 @@ export default (faker, type, childsLastName) => {
     )
   }
 
-  const consent = faker.helpers.arrayElement([
-    ...Array(10).fill(CONSENT.GIVEN),
-    ...Array(5).fill(CONSENT.UNKNOWN),
-    CONSENT.REFUSED
-  ])
-
   let reason = null
   let reasonDetails = null
-  if (consent === CONSENT.REFUSED) {
+  if (child.consent === CONSENT.REFUSED) {
     let availableReasons = Object.values(REFUSAL_REASON)
     if (type !== 'Flu') {
       availableReasons = availableReasons.filter(a => {
@@ -71,13 +66,14 @@ export default (faker, type, childsLastName) => {
     'Paper'
   ])
 
-  const parentOrGuardian = consent !== CONSENT.UNKNOWN ? getParent(faker, childsLastName) : {}
+  const parentOrGuardian = child.consent !== CONSENT.UNKNOWN ? getParent(faker, child.lastName) : {}
 
   return [{
-    [type]: consent,
+    [type]: child.consent,
     date: DateTime.local().minus({ days }).toISODate(),
     method,
     parentOrGuardian,
+    healthAnswers: getHealthAnswers(faker, type, child),
     reason,
     reasonDetails
   }]

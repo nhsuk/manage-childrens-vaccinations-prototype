@@ -3,15 +3,17 @@
     {{ question }}
   </h3>
 
-  <p class="nhsuk-u-margin-bottom-0">
-    {#- Response can be `true` if no detailed answer given -#}
-    {%- if child.healthAnswers[id] -%}
-      Yes
-      {%- if child.healthAnswers[id] != true %}
-        – {{ child.healthAnswers[id] }}
-      {%- endif-%}
-    {%- else -%}
-      No
-    {%- endif -%}
-  </p>
+  {% for response in child.consentResponses %}
+    <p class="nhsuk-u-margin-bottom-0">
+      {#- Response can be `true` if no detailed answer given -#}
+      {%- if response.healthAnswers[id] -%}
+        Yes
+        {%- if response.healthAnswers[id] != true %}
+          – {{ response.healthAnswers[id] }}
+        {%- endif-%}
+      {%- else -%}
+        No
+      {%- endif -%}
+    </p>
+  {% endfor %}
 {% endfor %}

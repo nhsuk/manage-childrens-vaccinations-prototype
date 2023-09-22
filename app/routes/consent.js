@@ -41,6 +41,7 @@ export default (router) => {
     '/consent/:campaignId/:nhsNumber/health-questions'
   ], (req, res, next) => {
     const child = res.locals.child
+    const consentResponse = child.consentResponses[0]
     const formAnswers = _.get(
       req.body,
       `consent.${req.params.campaignId}.${req.params.nhsNumber}.health`, {}
@@ -55,9 +56,9 @@ export default (router) => {
         child.consent.answersNeedTriage = true
 
         // Use detail answer if provided, else return `true`
-        child.healthAnswers[key] = formAnswers.details[key] || true
+        consentResponse.healthAnswers[key] = formAnswers.details[key] || true
       } else {
-        child.healthAnswers[key] = false
+        consentResponse.healthAnswers[key] = false
       }
     }
 
@@ -81,8 +82,10 @@ export default (router) => {
     child.consent.consented = consentData.consent === CONSENT.GIVEN
     child.consent.refused = consentData.consent === CONSENT.REFUSED
     child.consent.responded = consentData.consent !== CONSENT.UNKNOWN
-    child.consent.date = DateTime.local().toISODate()
-    child.consent.method = 'Telephone'
+
+    const consentResponse = child.consentResponses[0]
+    consentResponse.date = DateTime.local().toISODate()
+    consentResponse.method = 'Telephone'
 
     if (child.consent.consented && triageData && triageData.status) {
       child.triageStatus = triageData.status
@@ -110,8 +113,8 @@ export default (router) => {
     }
 
     if (child.consent.refused) {
-      child.consent.reason = consentData['no-consent-reason']
-      child.consent.reasonDetails = consentData['no-consent-reason-details']
+      consentResponse.reason = consentData['no-consent-reason']
+      consentResponse.reasonDetails = consentData['no-consent-reason-details']
       child.actionTaken = 'Do not vaccinate'
       child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
     }
@@ -119,9 +122,9 @@ export default (router) => {
     if (gillickCompetent || assessedAsNotGillickCompetent) {
       next()
     } else {
-      child.consent.parentOrGuardian.fullName = consentData.parent.name
-      child.consent.parentOrGuardian.telephone = consentData.parent.telephone
-      child.consent.parentOrGuardian.relationship =
+      consentResponse.parentOrGuardian.fullName = consentData.parent.name
+      consentResponse.parentOrGuardian.telephone = consentData.parent.telephone
+      consentResponse.parentOrGuardian.relationship =
         (consentData.parent.relationship === 'Other' && consentData.parent['relationship-other'])
           ? consentData.parent['relationship-other']
           : consentData.parent.relationship
