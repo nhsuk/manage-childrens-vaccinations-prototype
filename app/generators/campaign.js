@@ -28,7 +28,8 @@ export default () => {
   const triageInProgress = daysUntil < 28
   const children = getChildren({
     count: 100,
-    child: { ...ageRange(type), triageInProgress }
+    child: { ...ageRange(type), triageInProgress },
+    type
   })
 
   return {
