@@ -8,7 +8,7 @@ export default (faker, child) => {
     return
   }
 
-  if (child.healthQuestions.hasAnswers) {
+  if (child.consent.answersNeedTriage) {
     child.needsTriage = true
     child.actionNeeded = ACTION_NEEDED.TRIAGE
     triageReasons.push(TRIAGE_REASON.HAS_NOTES)

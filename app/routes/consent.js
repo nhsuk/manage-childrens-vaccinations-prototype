@@ -57,7 +57,7 @@ export default (router) => {
         question.answer = value
 
         if (value === 'Yes' || details) {
-          child.healthQuestions.hasAnswers = true
+          child.consent.answersNeedTriage = true
         }
 
         if (details) {

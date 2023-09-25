@@ -50,8 +50,8 @@ const filters = {
   },
   medical: (children, medical) => {
     return children.filter((c) => {
-      const hasAnswers = c.healthQuestions.hasAnswers && c.consent.consented
-      return medical === 'true' ? hasAnswers : !hasAnswers
+      const answersNeedTriage = c.consent.answersNeedTriage && c.consent.consented
+      return medical === 'true' ? answersNeedTriage : !answersNeedTriage
     })
   },
   consent: (children, consent) => {

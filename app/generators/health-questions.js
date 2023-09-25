@@ -30,10 +30,7 @@ export default (faker, type, child) => {
 
   questions.push({ title: 'Anything else', id: 'anything-else', question: 'Is there anything else we should know?', answer: 'No' })
 
-  return enrichWithRealisticAnswers(faker, child, {
-    hasAnswers: false,
-    questions
-  })
+  return enrichWithRealisticAnswers(faker, child, { questions })
 }
 
 const realisticAnswers = {
@@ -180,7 +177,7 @@ const enrichWithRealisticAnswers = (faker, child, health) => {
     if (realisticAnswers[answer][question.id]) {
       question.details = realisticAnswers[answer][question.id]
       question.answer = 'Yes'
-      health.hasAnswers = true
+      child.consent.answersNeedTriage = true
     }
   })
 
