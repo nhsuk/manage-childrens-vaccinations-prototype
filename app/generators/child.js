@@ -54,6 +54,7 @@ const handleInProgressTriage = (child) => {
 }
 
 export default (options) => {
+  const { triageInProgress, type } = options
   const isChild = true
   const child = getPerson(faker, isChild)
 
@@ -65,19 +66,19 @@ export default (options) => {
   child.dob = getDateOfBirth(faker, options)
   child.age = getAge(child.dob)
   child.yearGroup = getYearGroup(child.dob)
-  child.consent = getConsent(faker, options.type, child.lastName)
+  child.consent = getConsent(faker, type, child.lastName)
   child.outcome = OUTCOME.NO_OUTCOME_YET
 
-  child.actionNeeded = getActionNeeded(child.consent[options.type])
+  child.actionNeeded = getActionNeeded(child.consent[type])
   child.actionTaken = null
 
   child.seen = {}
   child.triageNotes = []
-  child.triageStatus = getTriageStatus(options.triageInProgress, child.consent)
-  child.healthAnswers = getHealthAnswers(faker, options.type, child)
+  child.triageStatus = getTriageStatus(triageInProgress, child.consent)
+  child.healthAnswers = getHealthAnswers(faker, type, child)
 
   getTriageNeeded(faker, child)
-  if (options.triageInProgress) {
+  if (triageInProgress) {
     handleInProgressTriage(child)
   }
 
