@@ -7,7 +7,7 @@ const getBatches = () => {
   const prefix = faker.string.alpha({ casing: 'upper', count: 2 })
 
   for (let i = 0; i < count; i++) {
-    const name = `${prefix}${faker.phone.number('####')}`
+    const name = `${prefix}${faker.helpers.replaceSymbolWithNumber('####')}`
     const daysUntilExpiry = faker.number.int({ min: 10, max: 50 })
     const expiryDate = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
     const day = expiryDate.split('-')[2]

@@ -20,7 +20,7 @@ export default (faker, lastName) => {
   const person = getPerson(faker, false, lastNameToUse)
   const parent = person.sex === 'Female' ? 'Mum' : 'Dad'
 
-  person.telephone = faker.phone.number('07#########')
+  person.telephone = faker.helpers.replaceSymbolWithNumber('07### ######')
   person.relationship = relationship === 'Parent' ? parent : relationship
   person.email = faker.internet.email({
     firstName: person.firstName,
