@@ -6,31 +6,45 @@ import getCampaign from './campaign.js'
 
 const setActions = (child, consent) => {
   if (consent === CONSENT.REFUSED) {
-    const checkedRefusal = faker.helpers.maybe(() => true, { probability: 0.2 })
-    child.outcome = checkedRefusal ? OUTCOME.NO_CONSENT : OUTCOME.NO_OUTCOME_YET
+    const checkedRefusal = faker.helpers.maybe(
+      () => true, { probability: 0.2 }
+    )
 
     if (checkedRefusal) {
       child.actionTaken = ACTION_TAKEN.REFUSED_CONSENT
+      child.outcome = OUTCOME.NO_CONSENT
     } else {
       child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+      child.outcome = OUTCOME.NO_OUTCOME_YET
     }
   }
 
   if (consent === CONSENT.UNKNOWN) {
-    const attemptedToGetConsent = faker.helpers.maybe(() => true, { probability: 0.2 })
-    child.outcome = attemptedToGetConsent ? OUTCOME.NO_CONSENT : OUTCOME.NO_OUTCOME_YET
+    const attemptedToGetConsent = faker.helpers.maybe(
+      () => true, { probability: 0.2 }
+    )
 
     if (attemptedToGetConsent) {
       child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
+      child.outcome = OUTCOME.NO_CONSENT
     } else {
       child.actionNeeded = ACTION_NEEDED.GET_CONSENT
+      child.outcome = OUTCOME.NO_OUTCOME_YET
     }
   }
 
   if (consent === CONSENT.GIVEN) {
-    const couldNotVaccinate = faker.helpers.maybe(() => OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 })
-    child.outcome = couldNotVaccinate || OUTCOME.VACCINATED
-    child.actionTaken = couldNotVaccinate ? ACTION_TAKEN.COULD_NOT_VACCINATE : ACTION_TAKEN.VACCINATED
+    const couldNotVaccinate = faker.helpers.maybe(
+      () => OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 }
+    )
+
+    if (couldNotVaccinate) {
+      child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
+      child.outcome = OUTCOME.COULD_NOT_VACCINATE
+    } else {
+      child.actionTaken = ACTION_TAKEN.VACCINATED
+      child.outcome = OUTCOME.VACCINATED
+    }
   }
 }
 
