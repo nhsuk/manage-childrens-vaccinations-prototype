@@ -14,11 +14,11 @@ const preferredName = (child) => {
 }
 
 const getActionNeeded = (consent) => {
-  if (consent === CONSENT.REFUSED) {
+  if (consent.refused) {
     return ACTION_NEEDED.CHECK_REFUSAL
-  } else if (consent === CONSENT.UNKNOWN) {
+  } else if (consent.unknown) {
     return ACTION_NEEDED.GET_CONSENT
-  } else if (consent === CONSENT.GIVEN) {
+  } else if (consent.consented) {
     return ACTION_NEEDED.VACCINATE
   }
 }
