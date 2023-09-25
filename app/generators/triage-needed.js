@@ -9,13 +9,15 @@ export default (child) => {
     return
   }
 
+  // Answered yes to health questions
   if (child.consent.answersNeedTriage) {
     child.needsTriage = true
     child.actionNeeded = ACTION_NEEDED.TRIAGE
     triageReasons.push(TRIAGE_REASON.HAS_NOTES)
   }
 
-  if (child.consent.unknown) {
+  // Inconsistent consent response
+  if (child.consent.inconsistent) {
     child.needsTriage = true
     child.actionNeeded = ACTION_NEEDED.TRIAGE
     triageReasons.push(TRIAGE_REASON.INCONSISTENT_CONSENT)
