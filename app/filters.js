@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { DateTime } from 'luxon'
 
 /**
@@ -47,6 +48,11 @@ export default (env) => {
   // do not error when string is undefined
   filters.capitaliseFirstLetter = string => {
     return string ? string.charAt(0).toUpperCase() + string.slice(1) : string
+  }
+
+  // return unique object values from array
+  filters.uniqueFromArrayBy = (array, value) => {
+    return _.uniqBy(array, value)
   }
 
   // Keep the following line to return your filters to the app
