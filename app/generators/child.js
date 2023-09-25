@@ -13,13 +13,13 @@ const preferredName = (child) => {
   return `${child.firstName} ${faker.person.lastName()}`
 }
 
-const setActions = (child, consent) => {
+const getActionNeeded = (consent) => {
   if (consent === CONSENT.REFUSED) {
-    child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
+    return ACTION_NEEDED.CHECK_REFUSAL
   } else if (consent === CONSENT.UNKNOWN) {
-    child.actionNeeded = ACTION_NEEDED.GET_CONSENT
+    return ACTION_NEEDED.GET_CONSENT
   } else if (consent === CONSENT.GIVEN) {
-    child.actionNeeded = ACTION_NEEDED.VACCINATE
+    return ACTION_NEEDED.VACCINATE
   }
 }
 
@@ -68,7 +68,7 @@ export default (options) => {
   child.consent = getConsent(faker, options.type, child.lastName)
   child.outcome = OUTCOME.NO_OUTCOME_YET
 
-  setActions(child, child.consent[options.type])
+  child.actionNeeded = getActionNeeded(child.consent[options.type])
   child.actionTaken = null
 
   child.seen = {}
