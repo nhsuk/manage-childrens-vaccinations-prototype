@@ -46,6 +46,7 @@ export default (faker, type, childsLastName) => {
   ])
 
   let reason = null
+  let reasonDetails = null
   if (consent === CONSENT.REFUSED) {
     let availableReasons = Object.values(REFUSAL_REASON)
     if (type !== 'Flu') {
@@ -54,6 +55,10 @@ export default (faker, type, childsLastName) => {
       })
     }
     reason = faker.helpers.arrayElement(availableReasons)
+
+    if (reason === REFUSAL_REASON.OTHER) {
+      reasonDetails = 'My family rejects vaccinations on principle.'
+    }
   }
 
   const days = faker.number.int({ min: 10, max: 35 })
@@ -77,6 +82,7 @@ export default (faker, type, childsLastName) => {
     date: DateTime.local().minus({ days }).toISODate(),
     method,
     parentOrGuardian,
-    reason
+    reason,
+    reasonDetails
   }
 }
