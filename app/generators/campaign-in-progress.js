@@ -19,6 +19,11 @@ const setActions = (child, consent) => {
     }
   }
 
+  if (consent === CONSENT.INCONSISTENT) {
+    child.actionNeeded = ACTION_NEEDED.TRIAGE
+    child.outcome = OUTCOME.NO_OUTCOME_YET
+  }
+
   if (consent === CONSENT.UNKNOWN) {
     const attemptedToGetConsent = faker.helpers.maybe(
       () => true, { probability: 0.2 }

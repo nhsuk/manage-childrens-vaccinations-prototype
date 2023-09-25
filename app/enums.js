@@ -33,6 +33,7 @@ export const TRIAGE = {
 export const CONSENT = {
   GIVEN: 'Given',
   REFUSED: 'Refused',
+  INCONSISTENT: 'Conflicting',
   UNKNOWN: 'Unknown',
   ONLY_MENACWY: 'Only MenACWY',
   ONLY_3_IN_1: 'Only 3-in-1'
