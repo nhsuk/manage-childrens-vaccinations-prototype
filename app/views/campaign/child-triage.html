@@ -4,7 +4,6 @@
 {% set isUnknown = child.consent.unknown or child.consent[campaign.type] == "Unknown" %}
 {% set refused = child.consent.refusedBoth or child.consent[campaign.type] == "Refused" %}
 {% set consented = not refused and not isUnknown %}
-{% set responded = consented or refused %}
 {% set triaging = true %}
 
 {% block pageNavigation %}

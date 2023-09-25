@@ -37,25 +37,25 @@
           value: {
             html: child.address
           }
-        } if responded,
+        } if child.consent.responded,
         {
           key: "GP",
           value: child.gp
-        } if responded,
+        } if child.consent.responded,
         {
           key: "NHS Number",
           value: child.nhsNumber | formatNHSNumber
-        } if responded,
+        } if child.consent.responded,
         {
           key: "Vaccination history",
           value: {
             html: "<a href=\"#\">Record available</a>"
           }
-        } if responded,
+        } if child.consent.responded,
         {
           key: child.consent.parentOrGuardian.relationship,
           value: {
-            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if responded )
+            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responded )
           }
         } if child.consent.parentOrGuardian.relationship and not triaging
       ])
