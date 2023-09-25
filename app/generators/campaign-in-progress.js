@@ -54,18 +54,18 @@ const setTriageOutcome = (child, consent) => {
     child.triageCompleted = true
     child.actionNeeded = ACTION_NEEDED.VACCINATE
 
-    // Activate triage notes
-    if (child.healthQuestions.inactiveTriageNote) {
+    // Add realistic triage note
+    if (child.__triageNote) {
       child.triageNotes.push({
         date: faker.date.recent({ days: 30 }),
-        note: child.healthQuestions.inactiveTriageNote,
+        note: child.__triageNote,
         user: {
           name: 'Jane Doe',
           email: 'jane.doe@example.com'
         }
       })
 
-      delete child.healthQuestions.inactiveTriageNote
+      delete child.__triageNote
     }
   }
 }

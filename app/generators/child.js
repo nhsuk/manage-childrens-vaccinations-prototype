@@ -30,18 +30,18 @@ const handleInProgressTriage = (child) => {
   // Only half done
   if (faker.helpers.maybe(() => true, { probability: 0.5 })) return
 
-  // Activate triage notes
-  if (child.healthQuestions.inactiveTriageNote) {
+  // Add realistic triage note
+  if (child.__triageNote) {
     child.triageNotes.push({
       date: faker.date.recent({ days: 30 }),
-      note: child.healthQuestions.inactiveTriageNote,
+      note: child.__triageNote,
       user: {
         name: 'James Davidson',
         email: 'james.davidson@example.com'
       }
     })
 
-    delete child.healthQuestions.inactiveTriageNote
+    delete child.__triageNote
   }
 
   // A small number need follow-ups
