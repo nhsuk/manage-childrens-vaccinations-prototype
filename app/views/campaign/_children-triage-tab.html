@@ -8,8 +8,10 @@
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th class="govuk-table__header">Name</th>
-            {% if isReasonNeeded %}
+            {% if isTriageReasonNeeded %}
               <th class="govuk-table__header">Triage reasons</th>
+            {% elif isRefusalReasonNeeded %}
+              <th class="govuk-table__header">Reason for refusal</th>
             {% else %}
               <th class="govuk-table__header">Date of birth</th>
             {% endif %}
@@ -24,18 +26,25 @@
               <td class="govuk-table__cell">
                 <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
                 {% if child.preferredName %}
-                  <br>Known as: {{ child.preferredName }}
+                  <br><span class="nhsuk-u-font-size-16">Known as: {{ child.preferredName }}</span>
                 {% endif %}
               </td>
-              {% if isReasonNeeded %}
-                <td class="govuk-table__cell">
+              {% if isTriageReasonNeeded %}
+                <td class="govuk-table__cell nhsuk-u-font-size-16">
                   {% for reason in child.triageReasons %}
-                    {{ reason }}
+                    {{ reason | noOrphans | safe }}
+                    {% if not loop.last %}<br>{% endif %}
+                  {% endfor %}
+                </td>
+              {% elif isRefusalReasonNeeded %}
+                <td class="govuk-table__cell nhsuk-u-font-size-16">
+                  {% for reason in child.consent.refusalReasons %}
+                    {{ reason | noOrphans | safe }}
                     {% if not loop.last %}<br>{% endif %}
                   {% endfor %}
                 </td>
               {% else %}
-                <td class="govuk-table__cell" style="width: 150px">
+                <td class="govuk-table__cell nhsuk-u-font-size-16" style="width: 150px">
                   {{ child.dob | govukDate("truncate") }}
                 </td>
               {% endif %}

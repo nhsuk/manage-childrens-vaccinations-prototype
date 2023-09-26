@@ -43,6 +43,14 @@ export default (type, consentResponses) => {
     }
   }
 
+  // Build a list of refusal reasons
+  const refusalReasons = []
+  if (refused) {
+    for (consent of Object.values(consentResponses)) {
+      refusalReasons.push(consent.reason)
+    }
+  }
+
   const derivedConsent = {
     [type]: consent,
     text: consent,
@@ -52,6 +60,7 @@ export default (type, consentResponses) => {
     unknown: consentResponses.length === 0,
     responses: consentResponses.length > 0,
     answersNeedTriage: answersNeedingTriage.length > 0,
+    refusalReasons,
     ...(type === '3-in-1 and MenACWY') && {
       refusedBoth: consent === CONSENT.REFUSED,
       both: consent === CONSENT.GIVEN

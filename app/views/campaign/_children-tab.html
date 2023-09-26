@@ -24,10 +24,10 @@
               <td class="govuk-table__cell">
                 <a href="/campaign/{{ campaign.id }}/child/{{ child.nhsNumber }}">{{ child.fullName }}</a>
                 {% if child.preferredName %}
-                  <br>Known as: {{ child.preferredName }}
+                  <br><span class="nhsuk-u-font-size-16">Known as: {{ child.preferredName }}</span>
                 {% endif %}
               </td>
-              <td class="govuk-table__cell" style="width: 150px">
+              <td class="govuk-table__cell nhsuk-u-font-size-16" style="width: 150px">
                 {{ child.dob | govukDate("truncate") }}
               </td>
               <td class="govuk-table__cell">
