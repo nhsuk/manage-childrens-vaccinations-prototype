@@ -42,25 +42,27 @@
 
           {% set needsTriage %}
             {% set children = filteredChildren.triageNeeded %}
-            {% set isReasonNeeded = true %}
+            {% set isTriageReasonNeeded = true %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set chaseConsent %}
             {% set children = filteredChildren.chaseConsent %}
-            {% set isReasonNeeded = false %}
+            {% set isTriageReasonNeeded = false %}
+            {% set isRefusalReasonNeeded = true %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set triageComplete %}
             {% set children = filteredChildren.triageCompleted %}
-            {% set isReasonNeeded = true %}
+            {% set isTriageReasonNeeded = true %}
+            {% set isRefusalReasonNeeded = false %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set noTriageNeeded %}
             {% set children = filteredChildren.noTriageNeeded %}
-            {% set isReasonNeeded = false %}
+            {% set isTriageReasonNeeded = false %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
