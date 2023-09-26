@@ -6,7 +6,7 @@
   {#- Only return responses with health answers that are different -#}
   {% set uniqueResponses = child.consentResponses | selectattr("healthAnswers") | uniqueFromArrayBy("healthAnswers[" + id + "]") %}
   {% for response in uniqueResponses %}
-    {%- if uniqueResponses.length > 1 %}
+    {%- if child.consentResponses.length > 1 %}
       {%- set who = (response.parentOrGuardian.relationship if uniqueResponses.length > 1 else "All") + " answered:" -%}
     {% endif -%}
     <p class="nhsuk-body">

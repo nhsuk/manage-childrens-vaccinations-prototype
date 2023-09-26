@@ -31,7 +31,7 @@
           {% include "campaign/child/_details.html" %}
           {% include "campaign/child/_consent-triage.html" %}
 
-          {% if consented %}
+          {% if child.consent.consented or child.consent.inconsistent %}
             {% include "campaign/child/_triage-health-questions.html" %}
           {% endif %}
 
