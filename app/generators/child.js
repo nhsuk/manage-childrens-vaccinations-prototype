@@ -1,5 +1,5 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
-import { OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
+import { OUTCOME, ACTION_NEEDED } from '../enums.js'
 import { getDateOfBirth, getYearGroup, getAge } from './age.js'
 import getPerson from './person.js'
 import getAddress from './address.js'
@@ -25,7 +25,9 @@ const getActionNeeded = (consent) => {
 
 const handleInProgressTriage = (child) => {
   // Only relevant to children needing triage
-  if (!child.needsTriage) return
+  if (!child.consent.consented && !child.needsTriage) {
+    return
+  }
 
   // Only half done
   if (faker.helpers.maybe(() => true, { probability: 0.5 })) return

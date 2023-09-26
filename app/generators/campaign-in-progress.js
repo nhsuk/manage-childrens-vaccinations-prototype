@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import _ from 'lodash'
-import { CONSENT, OUTCOME, TRIAGE, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
+import { OUTCOME, TRIAGE, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
 import getCampaign from './campaign.js'
 
-const setActions = (child, consent) => {
-  if (consent === CONSENT.REFUSED) {
+const setActions = (child) => {
+  if (child.consent.refused) {
     const checkedRefusal = faker.helpers.maybe(
       () => true, { probability: 0.2 }
     )
@@ -19,12 +19,12 @@ const setActions = (child, consent) => {
     }
   }
 
-  if (consent === CONSENT.INCONSISTENT) {
+  if (child.consent.inconsistent) {
     child.actionNeeded = ACTION_NEEDED.TRIAGE
     child.outcome = OUTCOME.NO_OUTCOME_YET
   }
 
-  if (consent === CONSENT.UNKNOWN) {
+  if (child.consent.unknown) {
     const attemptedToGetConsent = faker.helpers.maybe(
       () => true, { probability: 0.2 }
     )
@@ -38,7 +38,7 @@ const setActions = (child, consent) => {
     }
   }
 
-  if (consent === CONSENT.GIVEN) {
+  if (child.consent.consented) {
     const couldNotVaccinate = faker.helpers.maybe(
       () => OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 }
     )
@@ -53,25 +53,28 @@ const setActions = (child, consent) => {
   }
 }
 
-const setTriageOutcome = (child, consent) => {
-  if (consent === CONSENT.GIVEN && child.needsTriage) {
-    child.triageStatus = TRIAGE.READY
-    child.triageCompleted = true
-    child.actionNeeded = ACTION_NEEDED.VACCINATE
+const setTriageOutcome = (child) => {
+  // Only relevant to children needing triage
+  if (!child.consent.consented && !child.needsTriage) {
+    return
+  }
 
-    // Add realistic triage note
-    if (child.__triageNote) {
-      child.triageNotes.push({
-        date: faker.date.recent({ days: 30 }),
-        note: child.__triageNote,
-        user: {
-          name: 'Jane Doe',
-          email: 'jane.doe@example.com'
-        }
-      })
+  child.triageStatus = TRIAGE.READY
+  child.triageCompleted = true
+  child.actionNeeded = ACTION_NEEDED.VACCINATE
 
-      delete child.__triageNote
-    }
+  // Add realistic triage note
+  if (child.__triageNote) {
+    child.triageNotes.push({
+      date: faker.date.recent({ days: 30 }),
+      note: child.__triageNote,
+      user: {
+        name: 'Jane Doe',
+        email: 'jane.doe@example.com'
+      }
+    })
+
+    delete child.__triageNote
   }
 }
 
@@ -83,11 +86,11 @@ export default (options) => {
 
   // set triage outcomes for all children
   campaign.children.forEach(child => {
-    setTriageOutcome(child, child.consent[campaign.type])
+    setTriageOutcome(child)
   })
 
   _.sampleSize(campaign.children, 50).forEach(child => {
-    setActions(child, child.consent[campaign.type])
+    setActions(child)
   })
 
   return campaign
