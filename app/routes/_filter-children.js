@@ -30,7 +30,7 @@ const filters = {
   },
   noTriageNeeded: (children) => {
     return children.filter((c) => {
-      return !c.needsTriage && c.consent.consented
+      return !c.needsTriage && !c.consent.unknown
     })
   },
   triageNeeded: (children) => {
