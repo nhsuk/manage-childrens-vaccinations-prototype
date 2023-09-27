@@ -2,7 +2,7 @@
 {% if consent == CONSENT.REFUSED %}
   {% set color = "orange" %}
   {% set heading %}
-    Their {{ child.consent.parentOrGuardian.relationship | lower }} has refused to give consent
+    Parent or guardian refused to give consent
   {% endset %}
   {% set action = ACTION_NEEDED.CHECK_REFUSAL %}
 {% elif consent == CONSENT.UNKNOWN %}
