@@ -1,9 +1,10 @@
 {% extends "layouts/wizard.html" %}
 {% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
+{% set campaignName = campaign.type | lower if campaign.type == "Flu" else campaign.type %}
 {% if isGillickCompetent %}
-  {% set title = "Do they agree to having the HPV vaccination?" %}
+  {% set title = "Do they agree to having the " + campaignName + " vaccination?" %}
 {% else %}
-  {% set title = "Do they agree to them having the HPV vaccination?" %}
+  {% set title = "Do they agree to them having the " + campaignName + " vaccination?" %}
 {% endif %}
 
 {% block form %}

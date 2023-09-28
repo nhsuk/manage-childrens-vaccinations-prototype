@@ -10,7 +10,7 @@
   }) }}
 {% endset %}
 
-{% set title = "Did they get the " + ("flu" if campaign.type == "Flu" else campaign.type) + " vaccine?" %}
+{% set title = "Did they get the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine?" %}
 
 {{ radios({
   fieldset: {
