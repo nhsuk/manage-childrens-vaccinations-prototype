@@ -43,9 +43,11 @@
 {% set noResponseHtml %}
   <p>No response yet</p>
 
-  <p class="nhsuk-u-margin-bottom-0">
-    <a href="/triage-consent/{{ campaign.id }}/{{ child.nhsNumber }}" class="nhsuk-button nhsuk-u-margin-bottom-2">Get consent</a>
-  </p>
+  {{ button({
+    classes: "nhsuk-u-margin-bottom-0",
+    text: "Get consent",
+    href: "/triage-consent/" + campaign.id + "/" + child.nhsNumber
+  }) }}
 {% endset %}
 
 {{ card({
