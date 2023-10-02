@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody class="nhsuk-table__body">
-              {% for id, user in data.users %}
+              {% for user in data.users %}
                 <tr class="nhsuk-table__row">
                   <td class="nhsuk-table__cell">
                     <a href="/user/{{ user.id }}">{{ user.fullName }}</a>
