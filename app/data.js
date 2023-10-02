@@ -1,7 +1,8 @@
+import { faker } from '@faker-js/faker'
 import getCampaigns from './generators/campaigns.js'
 import getVaccinationRecord from './generators/vaccination-record.js'
 import getTriageRecord from './generators/triage-record.js'
-import getUsers from './generators/users.js'
+import getUser from './generators/user.js'
 import getVaccines from './generators/vaccines.js'
 
 /**
@@ -15,18 +16,16 @@ import getVaccines from './generators/vaccines.js'
 
 const campaigns = getCampaigns({ count: 20 })
 const vaccines = getVaccines()
+const users = faker.helpers.multiple(getUser, { count: 20 })
 
 export default {
   support: 'record-childrens-vaccinations@service.nhs.uk',
-  user: {
-    name: 'Jane Doe',
-    email: 'jane.doe@example.com'
-  },
+  user: users[0],
   campaigns,
   vaccines,
   vaccination: getVaccinationRecord(campaigns, vaccines.batches),
   triage: getTriageRecord(campaigns),
-  users: getUsers({ count: 20 }),
+  users,
   // Set feature flags using the `features` key
   features: {
     pilot: {
