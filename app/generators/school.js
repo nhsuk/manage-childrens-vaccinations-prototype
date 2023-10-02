@@ -1,18 +1,24 @@
-import fs from 'fs'
-const schools = JSON.parse(fs.readFileSync('app/generators/data/schools_sample.json'))
+import { faker } from '@faker-js/faker'
+import fs from 'node:fs'
 
-export default (faker, type) => {
-  let s = faker.helpers.arrayElement(schools)
+const schoolData = 'app/generators/data/schools-sample.json'
+const schools = JSON.parse(fs.readFileSync(schoolData))
+
+/**
+ * Generate school
+ * @param {string} type - Vaccine type
+ * @returns {object} School
+ */
+export default (type) => {
+  let school = faker.helpers.arrayElement(schools)
 
   if (type === 'Flu') {
-    while (s.phase !== 'Primary') {
-      s = faker.helpers.arrayElement(schools)
-    }
+    const primarySchools = schools.filter(item => item.phase === 'Primary')
+    school = faker.helpers.arrayElement(primarySchools)
   } else {
-    while (s.phase !== 'Secondary') {
-      s = faker.helpers.arrayElement(schools)
-    }
+    const secondarySchools = schools.filter(item => item.phase === 'Secondary')
+    school = faker.helpers.arrayElement(secondarySchools)
   }
 
-  return s
+  return school
 }
