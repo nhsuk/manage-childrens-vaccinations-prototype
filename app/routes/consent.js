@@ -1,6 +1,6 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
-import { CONSENT, ACTION_NEEDED, ACTION_TAKEN, TRIAGE, TRIAGE_REASON } from '../enums.js'
+import { CONSENT, ACTION_NEEDED, ACTION_TAKEN, TRIAGE } from '../enums.js'
 import { DateTime } from 'luxon'
 
 export default (router) => {
@@ -98,13 +98,11 @@ export default (router) => {
       } else if (triageData.status === TRIAGE.NEEDS_FOLLOW_UP) {
         child.actionNeeded = ACTION_NEEDED.FOLLOW_UP
         child.needsTriage = true
-        child.triageReasons = [TRIAGE_REASON.NURSE_REQUESTED]
         child.triageCompleted = false
       } else if (triageData.status === TRIAGE.DO_NOT_VACCINATE) {
         child.actionNeeded = ACTION_NEEDED.NONE
         child.actionTaken = ACTION_TAKEN.DO_NOT_VACCINATE
         child.needsTriage = true
-        child.triageReasons = [TRIAGE_REASON.NURSE_REQUESTED]
         child.triageCompleted = true
       }
     } else if (child.consent.consented) {

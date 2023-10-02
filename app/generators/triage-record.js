@@ -7,7 +7,6 @@ export default (campaigns) => {
   const triageStatusToEnrich = [
     TRIAGE.READY,
     TRIAGE.DO_NOT_VACCINATE,
-    TRIAGE.REFUSED_CONSENT,
     TRIAGE.NEEDS_FOLLOW_UP
   ]
 
