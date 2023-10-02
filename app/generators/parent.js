@@ -3,10 +3,10 @@ import { CONTACT_PREFERENCE, PARENTAL_RELATIONSHIP } from '../enums.js'
 
 /**
  * Generate parent
- * @param {object} child - Child
+ * @param {object} patient - Patient
  * @returns {object} Parent
  */
-export default (child) => {
+export default (patient) => {
   const { MUM, DAD, GUARDIAN, CARER, STEP_PARENT, GRANDPARENT, OTHER } = PARENTAL_RELATIONSHIP
 
   const relationship = faker.helpers.weightedArrayElement([
@@ -35,11 +35,11 @@ export default (child) => {
       firstName = faker.person.firstName()
   }
 
-  // 3 out of 4 parents have same surname as child
+  // 3 out of 4 parents have same surname as patient
   // Do not match name if guardian or carer
   const lastName = relationship === (MUM || DAD)
     ? faker.helpers.weightedArrayElement([
-      { value: child.lastName, weight: 3 },
+      { value: patient.lastName, weight: 3 },
       { value: faker.person.lastName(), weight: 1 }
     ])
     : faker.person.lastName()

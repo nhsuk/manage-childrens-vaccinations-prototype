@@ -23,8 +23,8 @@
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
                 <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
-                {% if child.preferredName %}
-                  <br><span class="nhsuk-u-font-size-16">Known as: {{ child.preferredName }}</span>
+                {% if child.knownAs %}
+                  <br><span class="nhsuk-u-font-size-16">Known as: {{ child.knownAs }}</span>
                 {% endif %}
               </td>
               {% if isRefusalReasonNeeded %}

@@ -26,8 +26,8 @@
         },
         {
           key: "Known as",
-          value: child.preferredName
-        } if child.preferredName,
+          value: child.knownAs
+        } if child.knownAs,
         {
           key: "Date of birth",
           value: child.dob | govukDate + " (aged " + child.dob | age + ")"
