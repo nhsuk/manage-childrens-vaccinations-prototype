@@ -21,9 +21,9 @@
           {
             key: "Reason for refusal",
             value: {
-              html: response.reason | default("Personal choice") + (" – " + response.reasonDetails if response.reason == "Other")
+              html: response.refusalReason | default("Personal choice") + (" – " + response.refusalReasonOther if response.refusalReason == "Other")
             }
-          } if response.reason,
+          } if response.refusalReason,
           {
             key: response.parentOrGuardian.relationship,
             value: {

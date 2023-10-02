@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { CONSENT } from '../enums.js'
+import { CONSENT, RESPONSE_CONSENT } from '../enums.js'
 
 export default (type, responses) => {
   // Only derive consent from responses for this campaign type
@@ -11,17 +11,17 @@ export default (type, responses) => {
   let inconsistent // All consent responses mixed
 
   if (responses.length === 1) {
-    consent = responses[0][type]
-    consented = responses[0][type] === CONSENT.GIVEN
-    refused = responses[0][type] === CONSENT.REFUSED
+    consent = responses[0].status
+    consented = responses[0].status === RESPONSE_CONSENT.GIVEN
+    refused = responses[0].status === RESPONSE_CONSENT.REFUSED
   } else if (responses.length > 1) {
-    const allConsented = _.uniqBy(responses, type) === CONSENT.GIVEN
+    const allConsented = _.uniqBy(responses, 'status') === RESPONSE_CONSENT.GIVEN
     if (allConsented) {
       consent = CONSENT.GIVEN
       consented = true
     }
 
-    const allRefused = _.uniqBy(responses, type) === CONSENT.REFUSED
+    const allRefused = _.uniqBy(responses, 'status') === RESPONSE_CONSENT.REFUSED
     if (allRefused) {
       consent = CONSENT.REFUSED
       refused = true

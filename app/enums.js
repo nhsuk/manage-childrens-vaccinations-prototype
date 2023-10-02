@@ -39,7 +39,23 @@ export const OUTCOME = {
   COULD_NOT_VACCINATE: 'Could not vaccinate'
 }
 
-export const REFUSAL_REASON = {
+export const RESPONSE_CONSENT = {
+  GIVEN: 'Given',
+  REFUSED: 'Refused',
+  INVALID: 'Invalid',
+  ONLY_MENACWY: 'MenACWY only',
+  ONLY_3_IN_1: '3-in-1 only'
+}
+
+export const RESPONSE_METHOD = {
+  WEBSITE: 'Website',
+  TEXT: 'Text message',
+  CALL: 'Voice call',
+  PERSON: 'In person',
+  PAPER: 'Paper'
+}
+
+export const RESPONSE_REFUSAL = {
   GELATINE: 'Vaccine contains gelatine from pigs',
   ALREADY_GIVEN: 'Vaccine already received',
   GETTING_ELSEWHERE: 'Vaccine will be given elsewhere',
