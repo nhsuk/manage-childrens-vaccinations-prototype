@@ -6,7 +6,7 @@ import getRefusal from './refusal.js'
 import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
 
-export default (faker, { type, child, count }) => {
+export default (faker, { type, patient, count }) => {
   const consentResponses = []
 
   for (let i = 0; i < count; i++) {
@@ -25,9 +25,9 @@ export default (faker, { type, child, count }) => {
       [type]: consent,
       date: DateTime.local().minus({ days }).toISODate(),
       method,
-      parentOrGuardian: getParent(child),
+      parentOrGuardian: getParent(patient),
       healthAnswers: (consent === CONSENT.GIVEN)
-        ? getHealthAnswers(faker, type, child)
+        ? getHealthAnswers(faker, type, patient)
         : false,
       ...(consent === CONSENT.REFUSED) && {
         reason,
