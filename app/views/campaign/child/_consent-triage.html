@@ -2,7 +2,7 @@
   {% for response in child.consentResponses %}
     {% set parentContactDetailsHtml %}
       <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-        Telephone: {{ response.parentOrGuardian.telephone }}<br>
+        Phone: {{ response.parentOrGuardian.telephone }}<br>
         Email: {{ response.parentOrGuardian.email }}
       </div>
     {% endset %}

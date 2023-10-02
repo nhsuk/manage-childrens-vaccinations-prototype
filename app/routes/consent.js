@@ -85,7 +85,7 @@ export default (router) => {
 
     const consentResponse = child.consentResponses[0]
     consentResponse.date = DateTime.local().toISODate()
-    consentResponse.method = 'Telephone'
+    consentResponse.method = 'Phone'
 
     if (child.consent.consented && triageData && triageData.status) {
       child.triageStatus = triageData.status

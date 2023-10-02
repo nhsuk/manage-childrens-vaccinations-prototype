@@ -16,7 +16,7 @@ export default (faker, { type, child, count }) => {
     const method = faker.helpers.arrayElement([
       ...Array(5).fill('Website'),
       'Text message',
-      'Telephone',
+      'Voice call',
       'In person',
       'Paper'
     ])
