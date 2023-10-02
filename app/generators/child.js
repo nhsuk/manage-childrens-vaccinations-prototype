@@ -6,7 +6,7 @@ import getAddress from './address.js'
 import getConsentResponses from './consent-responses.js'
 import getDerivedConsent from './derived-consent.js'
 import getTriageStatus from './triage-status.js'
-import getGp from './gp.js'
+import getGpSurgery from './gp-surgery.js'
 import getTriageNeeded from './triage-needed.js'
 
 const preferredName = (child) => {
@@ -67,7 +67,7 @@ export default (options) => {
   child.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
   child.preferredName = faker.helpers.maybe(() => preferredName(child), { probability: 0.1 })
   child.address = getAddress()
-  child.gp = getGp(faker)
+  child.gpSurgery = getGpSurgery()
   child.dob = getDateOfBirth(faker, options)
   child.age = getAge(child.dob)
   child.yearGroup = getYearGroup(child.dob)
