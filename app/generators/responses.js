@@ -7,7 +7,7 @@ import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
 
 export default (faker, { type, patient, count }) => {
-  const consentResponses = []
+  const responses = []
 
   for (let i = 0; i < count; i++) {
     const consent = getConsent(type)
@@ -21,7 +21,7 @@ export default (faker, { type, patient, count }) => {
       'Paper'
     ])
 
-    consentResponses.push({
+    responses.push({
       [type]: consent,
       date: DateTime.local().minus({ days }).toISODate(),
       method,
@@ -36,5 +36,5 @@ export default (faker, { type, patient, count }) => {
     })
   }
 
-  return _.uniqBy(consentResponses, 'parentOrGuardian.relationship')
+  return _.uniqBy(responses, 'parentOrGuardian.relationship')
 }

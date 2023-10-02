@@ -1,5 +1,5 @@
 {% set consentHtml %}
-  {% for response in child.consentResponses %}
+  {% for response in child.responses %}
     {% set parentContactDetailsHtml %}
       <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
         Phone: {{ response.parentOrGuardian.tel }}<br>

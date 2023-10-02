@@ -2,7 +2,7 @@ import { fakerEN_GB as faker } from '@faker-js/faker'
 import { OUTCOME, ACTION_NEEDED } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
-import getConsentResponses from './consent-responses.js'
+import getResponses from './responses.js'
 import getDerivedConsent from './derived-consent.js'
 import getTriageStatus from './triage-status.js'
 import getTriageNeeded from './triage-needed.js'
@@ -53,7 +53,7 @@ const handleInProgressTriage = (patient) => {
 export default (options) => {
   const { minYearGroup, maxYearGroup, triageInProgress, type } = options
   const patient = getChild(minYearGroup, maxYearGroup)
-  const consentResponses = getConsentResponses(faker, {
+  const responses = getResponses(faker, {
     type, patient, count: faker.number.int({ min: 0, max: 4 })
   })
 
@@ -61,8 +61,8 @@ export default (options) => {
   patient.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
   patient.address = getAddress()
   patient.yearGroup = getYearGroup(patient.dob)
-  patient.consentResponses = consentResponses
-  patient.consent = getDerivedConsent(type, consentResponses)
+  patient.responses = responses
+  patient.consent = getDerivedConsent(type, responses)
   patient.outcome = OUTCOME.NO_OUTCOME_YET
 
   patient.actionNeeded = getActionNeeded(patient.consent)

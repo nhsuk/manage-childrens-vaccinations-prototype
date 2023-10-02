@@ -63,7 +63,7 @@ export default (router) => {
     }
 
     // Add consent response
-    child.consentResponses = [{ healthAnswers }]
+    child.responses = [{ healthAnswers }]
 
     next()
   })
@@ -86,7 +86,7 @@ export default (router) => {
     child.consent.refused = consentData.consent === CONSENT.REFUSED
     child.consent.responses = consentData.consent !== CONSENT.UNKNOWN
 
-    const consentResponse = child.consentResponses[0]
+    const consentResponse = child.responses[0]
     consentResponse.date = DateTime.local().toISODate()
     consentResponse.method = 'Phone'
 
