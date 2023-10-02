@@ -7,7 +7,7 @@
       label: {
         text: "Give details"
       },
-      decorate: base + "no-consent-reason-details"
+      decorate: base + "refusalReasonOther"
     }) }}
   {% endset %}
 
@@ -19,21 +19,21 @@
       }
     },
     items: [
-      { text: REFUSAL_REASON.GELATINE } if campaign.isFlu,
-      { text: REFUSAL_REASON.ALREADY_GIVEN },
-      { text: REFUSAL_REASON.GETTING_ELSEWHERE },
-      { text: REFUSAL_REASON.MEDICAL },
-      { text: REFUSAL_REASON.PERSONAL },
+      { text: RESPONSE_REFUSAL.GELATINE } if campaign.isFlu,
+      { text: RESPONSE_REFUSAL.ALREADY_GIVEN },
+      { text: RESPONSE_REFUSAL.GETTING_ELSEWHERE },
+      { text: RESPONSE_REFUSAL.MEDICAL },
+      { text: RESPONSE_REFUSAL.PERSONAL },
       {
         divider: "or"
       },
       {
-        text: REFUSAL_REASON.OTHER,
+        text: RESPONSE_REFUSAL.OTHER,
         conditional: {
           html: other
         }
       }
     ],
-    decorate: base + "no-consent-reason"
+    decorate: base + "refusalReason"
   }) }}
 {% endblock %}

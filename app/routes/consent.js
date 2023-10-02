@@ -114,8 +114,8 @@ export default (router) => {
     }
 
     if (child.consent.refused) {
-      consentResponse.reason = consentData['no-consent-reason']
-      consentResponse.reasonDetails = consentData['no-consent-reason-details']
+      consentResponse.refusalReason = consentData.refusalReason
+      consentResponse.refusalReasonOther = consentData.refusalReasonOther
       child.actionTaken = 'Do not vaccinate'
       child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
     }

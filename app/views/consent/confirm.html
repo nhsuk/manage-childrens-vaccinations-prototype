@@ -50,7 +50,7 @@
           {
             key: "Reason",
             value: {
-              html: d(base + "no-consent-reason") + (" – " + d(base + "no-consent-reason-details") if d(base + "no-consent-reason") == "Other")
+              html: d(base + "refusalReason") + (" – " + d(base + "refusalReasonOther") if d(base + "refusalReason") == "Other")
             },
             href: "#"
           } if refused
