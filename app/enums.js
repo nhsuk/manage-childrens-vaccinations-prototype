@@ -46,11 +46,6 @@ export const OUTCOME = {
   COULD_NOT_VACCINATE: 'Could not vaccinate'
 }
 
-export const MEDICAL = {
-  YES: 'Yes',
-  NO: 'No medical notes'
-}
-
 export const REFUSAL_REASON = {
   GELATINE: 'Vaccine contains gelatine from pigs',
   ALREADY_GIVEN: 'Vaccine already received',
