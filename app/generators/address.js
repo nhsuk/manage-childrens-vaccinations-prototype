@@ -1,4 +1,18 @@
-export default (faker) => {
-  const postcode = `BS${faker.string.numeric(2)} ${faker.string.numeric(1)}${faker.string.alpha(2)}`.toUpperCase()
-  return `${faker.string.numeric(3)} ${faker.location.street()}<br>Bristol<br>${postcode}`
+import { fakerEN_GB as faker } from '@faker-js/faker'
+
+/**
+ * Generate address
+ * @returns {string} Address
+ */
+export default () => {
+  const postcodeOutward = `BS${faker.number.int({ min: 1, max: 9 })}`
+  const postcodeInward = faker.location.zipCode().split(' ')[1]
+
+  const address = [
+    faker.location.streetAddress(),
+    'Bristol',
+    `${postcodeOutward} ${postcodeInward}`
+  ].join('\n')
+
+  return address
 }

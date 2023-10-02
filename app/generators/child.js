@@ -66,7 +66,7 @@ export default (options) => {
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   child.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
   child.preferredName = faker.helpers.maybe(() => preferredName(child), { probability: 0.1 })
-  child.address = getAddress(faker)
+  child.address = getAddress()
   child.gp = getGp(faker)
   child.dob = getDateOfBirth(faker, options)
   child.age = getAge(child.dob)
