@@ -47,3 +47,20 @@ export const REFUSAL_REASON = {
   PERSONAL: 'Personal choice',
   OTHER: 'Other'
 }
+
+export const PARENTAL_RELATIONSHIP = {
+  MUM: 'Mum',
+  DAD: 'Dad',
+  STEP_PARENT: 'Step-parent',
+  GRANDPARENT: 'Grandparent',
+  GUARDIAN: 'Guardian',
+  CARER: 'Carer',
+  OTHER: 'Other'
+}
+
+export const CONTACT_PREFERENCE = {
+  NONE: 'No preference',
+  TEXT: 'Text message',
+  CALL: 'Voice call',
+  OTHER: 'Other'
+}

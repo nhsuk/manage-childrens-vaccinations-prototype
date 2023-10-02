@@ -124,10 +124,10 @@ export default (router) => {
       next()
     } else {
       consentResponse.parentOrGuardian.fullName = consentData.parent.name
-      consentResponse.parentOrGuardian.telephone = consentData.parent.telephone
+      consentResponse.parentOrGuardian.tel = consentData.parent.tel
       consentResponse.parentOrGuardian.relationship =
-        (consentData.parent.relationship === 'Other' && consentData.parent['relationship-other'])
-          ? consentData.parent['relationship-other']
+        (consentData.parent.relationship === 'Other' && consentData.parent.relationshipOther)
+          ? consentData.parent.relationshipOther
           : consentData.parent.relationship
 
       next()

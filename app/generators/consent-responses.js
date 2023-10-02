@@ -25,7 +25,7 @@ export default (faker, { type, child, count }) => {
       [type]: consent,
       date: DateTime.local().minus({ days }).toISODate(),
       method,
-      parentOrGuardian: getParent(faker, child.lastName),
+      parentOrGuardian: getParent(child),
       healthAnswers: (consent === CONSENT.GIVEN)
         ? getHealthAnswers(faker, type, child)
         : false,

@@ -1,32 +1,69 @@
-import getPerson from './person.js'
+import { fakerEN_GB as faker } from '@faker-js/faker'
+import { CONTACT_PREFERENCE, PARENTAL_RELATIONSHIP } from '../enums.js'
 
-export default (faker, lastName) => {
-  const relationship = faker.helpers.arrayElement([
-    ...Array(15).fill('Parent'),
-    ...Array(3).fill('Guardian'),
-    ...Array(2).fill('Carer'),
-    'Step-parent',
-    'Grandparent',
-    'Teacher'
+/**
+ * Generate parent
+ * @param {object} child - Child
+ * @returns {object} Parent
+ */
+export default (child) => {
+  const { MUM, DAD, GUARDIAN, CARER, STEP_PARENT, GRANDPARENT, OTHER } = PARENTAL_RELATIONSHIP
+
+  const relationship = faker.helpers.weightedArrayElement([
+    { value: MUM, weight: 8 },
+    { value: DAD, weight: 8 },
+    { value: GUARDIAN, weight: 3 },
+    { value: CARER, weight: 2 },
+    { value: STEP_PARENT, weight: 1 },
+    { value: GRANDPARENT, weight: 1 },
+    { value: OTHER, weight: 1 }
   ])
 
+  const contactPreference = faker.helpers.arrayElement(
+    Object.values(CONTACT_PREFERENCE)
+  )
+
+  let firstName
+  switch (relationship) {
+    case MUM:
+      firstName = faker.person.firstName('female')
+      break
+    case DAD:
+      firstName = faker.person.firstName('male')
+      break
+    default:
+      firstName = faker.person.firstName()
+  }
+
+  // 3 out of 4 parents have same surname as child
   // Do not match name if guardian or carer
-  // 3 out of 4 parents with same surname as child
-  const lastNameToUse = relationship === 'Parent'
-    ? faker.helpers.arrayElement([
-      ...Array(3).fill(lastName), false
+  const lastName = relationship === (MUM || DAD)
+    ? faker.helpers.weightedArrayElement([
+      { value: child.lastName, weight: 3 },
+      { value: faker.person.lastName(), weight: 1 }
     ])
-    : false
-  const person = getPerson(faker, false, lastNameToUse)
-  const parent = person.sex === 'Female' ? 'Mum' : 'Dad'
+    : faker.person.lastName()
 
-  person.telephone = faker.helpers.replaceSymbolWithNumber('07### ######')
-  person.relationship = relationship === 'Parent' ? parent : relationship
-  person.email = faker.internet.email({
-    firstName: person.firstName,
-    lastName: person.lastName
-  })
+  const phone = faker.helpers.replaceSymbolWithNumber('07### ######')
+  const tel = faker.helpers.maybe(() => phone, { probability: 0.7 })
 
-  delete person.sex
-  return person
+  const parent = {
+    firstName,
+    lastName,
+    fullName: `${firstName} ${lastName}`,
+    email: faker.internet.email({ firstName, lastName }),
+    ...tel && {
+      tel,
+      contactPreference
+    },
+    ...(tel && contactPreference === OTHER) && {
+      contactPreferenceOther: 'Can only be reached by text from 6am - 3pm'
+    },
+    relationship,
+    ...(relationship === OTHER) && {
+      relationshipOther: 'Foster parent'
+    }
+  }
+
+  return parent
 }
