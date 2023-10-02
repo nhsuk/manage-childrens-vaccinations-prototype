@@ -32,6 +32,24 @@ export default (env) => {
     return DateTime.fromISO(params).toFormat('EEEE d MMMM yyyy')
   }
 
+  /**
+   * Get age from date
+   * @param {object<Date>} date
+   * @returns {number} Age in years
+   */
+  filters.age = date => {
+    const today = new Date()
+    const birth = new Date(date)
+    const month = today.getMonth() - birth.getMonth()
+
+    let age = today.getFullYear() - birth.getFullYear()
+    if (month < 0 || (month === 0 && today.getDate() < birth.getDate())) {
+      age--
+    }
+
+    return age
+  }
+
   filters.formatNHSNumber = nhsNumber => {
     const numberArray = nhsNumber.split('')
     numberArray.splice(3, 0, ' ')

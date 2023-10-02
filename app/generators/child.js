@@ -1,6 +1,6 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { OUTCOME, ACTION_NEEDED } from '../enums.js'
-import { getDateOfBirth, getYearGroup, getAge } from './age.js'
+import { getDateOfBirth, getYearGroup } from './age.js'
 import getPerson from './person.js'
 import getAddress from './address.js'
 import getConsentResponses from './consent-responses.js'
@@ -69,7 +69,6 @@ export default (options) => {
   child.address = getAddress()
   child.gpSurgery = getGpSurgery()
   child.dob = getDateOfBirth(faker, options)
-  child.age = getAge(child.dob)
   child.yearGroup = getYearGroup(child.dob)
   child.consentResponses = consentResponses
   child.consent = getDerivedConsent(type, consentResponses)
