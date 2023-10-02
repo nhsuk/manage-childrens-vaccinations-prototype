@@ -2,6 +2,7 @@ export const ACTION_NEEDED = {
   VACCINATE: 'Vaccinate',
   GET_CONSENT: 'Get consent',
   CHECK_REFUSAL: 'Check refusal',
+  CHECK_CONFLICTING: 'Review conflicting consent',
   TRIAGE: 'Triage',
   FOLLOW_UP: 'Complete triage',
   NONE: 'No action needed'
@@ -15,19 +16,11 @@ export const ACTION_TAKEN = {
   REFUSED_CONSENT: 'Refused consent'
 }
 
-export const TRIAGE_REASON = {
-  HAS_NOTES: 'Health questions need triage',
-  INCONSISTENT_CONSENT: 'Conflicting consent',
-  NURSE_REQUESTED: 'Nurse requested'
-}
-
 export const TRIAGE = {
   TO_DO: 'Needs triage',
   NEEDS_FOLLOW_UP: 'Needs follow up',
-  NO_CONSENT_RESPONSE: 'No response',
   READY: 'Ready to vaccinate',
-  DO_NOT_VACCINATE: 'Do not vaccinate',
-  REFUSED_CONSENT: 'Refused consent'
+  DO_NOT_VACCINATE: 'Do not vaccinate'
 }
 
 export const CONSENT = {

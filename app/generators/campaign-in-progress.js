@@ -20,7 +20,7 @@ const setActions = (child) => {
   }
 
   if (child.consent.inconsistent) {
-    child.actionNeeded = ACTION_NEEDED.TRIAGE
+    child.actionNeeded = ACTION_NEEDED.CHECK_CONFLICTING
     child.outcome = OUTCOME.NO_OUTCOME_YET
   }
 

@@ -1,11 +1,3 @@
-{% set triageReasons %}
-<ul class="nhsuk-list">
-{% for reason in child.triageReasons %}
-  <li>{{ reason }}</li>
-{% endfor %}
-</ul>
-{% endset %}
-
 {% set triageNotes %}
 <ul class="nhsuk-list">
 {% for note in child.triageNotes | reverse %}
@@ -34,14 +26,6 @@
             text: child.actionNeeded
           }
         },
-        {
-          key: {
-            text: "Triage reasons"
-          },
-          value: {
-            text: triageReasons | safe
-          }
-        } if child.triageReasons.length > 0,
         {
           key: {
             text: "Notes"

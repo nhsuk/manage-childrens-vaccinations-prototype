@@ -37,22 +37,20 @@
         ])
       })
     }) }}
+  {% else %}
+    <p>No response yet</p>
+
+    {{ button({
+      classes: "nhsuk-u-margin-bottom-0",
+      text: "Get consent",
+      href: "/triage-consent/" + campaign.id + "/" + child.nhsNumber
+    }) }}
   {% endfor %}
-{% endset %}
-
-{% set noResponseHtml %}
-  <p>No response yet</p>
-
-  {{ button({
-    classes: "nhsuk-u-margin-bottom-0",
-    text: "Get consent",
-    href: "/triage-consent/" + campaign.id + "/" + child.nhsNumber
-  }) }}
 {% endset %}
 
 {{ card({
   heading: "Consent",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: consentHtml if child.consent.responses else noResponseHtml
+  description: consentHtml
 }) }}

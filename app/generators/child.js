@@ -80,7 +80,7 @@ export default (options) => {
 
   child.seen = {}
   child.triageNotes = []
-  child.triageStatus = getTriageStatus(triageInProgress, child.consent)
+  child.triageStatus = getTriageStatus(triageInProgress)
 
   getTriageNeeded(child)
   if (triageInProgress) {

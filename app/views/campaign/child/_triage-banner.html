@@ -1,6 +1,5 @@
 {% set color = "blue" %}
 {% set heading = "Triage needed" %}
-{% set showTriageReasons = true %}
 
 {% if child.actionNeeded == ACTION_NEEDED.FOLLOW_UP %}
   {% set color = "aqua-green" %}
@@ -11,26 +10,16 @@
   {% set color = "purple" %}
   {% set heading = "Ready to vaccinate" %}
   {% set text = "Jane Doe decided that " + child.fullName + " can be vaccinated." %}
-  {% set showTriageReasons = false %}
 {% endif %}
 
 {% if child.actionTaken == ACTION_TAKEN.DO_NOT_VACCINATE %}
   {% set color = "red" %}
   {% set heading = ACTION_TAKEN.DO_NOT_VACCINATE %}
   {% set text = "Jane Doe decided that " + child.fullName + " should not be vaccinated." %}
-  {% set showTriageReasons = false %}
 {% endif %}
 
-{% call appConsentBanner({
+{{ appConsentBanner({
   color: color,
   heading: heading,
   text: text
-}) %}
-{% if child.triageReasons and showTriageReasons %}
-  <ul class="nhsuk-list">
-  {% for reason in child.triageReasons %}
-    <li>{{ reason }}</li>
-  {% endfor %}
-  </ul>
-{% endif %}
-{% endcall %}
+}) }}

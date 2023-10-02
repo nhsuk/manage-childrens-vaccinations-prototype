@@ -42,27 +42,17 @@
 
           {% set needsTriage %}
             {% set children = filteredChildren.triageNeeded %}
-            {% set isTriageReasonNeeded = true %}
-            {% include "campaign/_children-triage-tab.html" %}
-          {% endset %}
-
-          {% set chaseConsent %}
-            {% set children = filteredChildren.chaseConsent %}
-            {% set isTriageReasonNeeded = false %}
-            {% set isRefusalReasonNeeded = true %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set triageComplete %}
             {% set children = filteredChildren.triageCompleted %}
-            {% set isTriageReasonNeeded = true %}
             {% set isRefusalReasonNeeded = false %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
           {% set noTriageNeeded %}
             {% set children = filteredChildren.noTriageNeeded %}
-            {% set isTriageReasonNeeded = false %}
             {% include "campaign/_children-triage-tab.html" %}
           {% endset %}
 
@@ -80,13 +70,6 @@
                 id: "triage-complete",
                 panel: {
                   html: triageComplete
-                }
-              },
-              {
-                label: "Get consent (" + filteredChildren.chaseConsent.length + ")",
-                id: "get-consent",
-                panel: {
-                  html: chaseConsent
                 }
               },
               {
