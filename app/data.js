@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import getCampaigns from './generators/campaigns.js'
-import getVaccinationRecord from './generators/vaccination-record.js'
+import getVaccination from './generators/vaccination.js'
 import getTriageRecord from './generators/triage-record.js'
 import getUser from './generators/user.js'
 import getVaccines from './generators/vaccines.js'
@@ -23,7 +23,7 @@ export default {
   user: users[0],
   campaigns,
   vaccines,
-  vaccination: getVaccinationRecord(campaigns, vaccines.batches),
+  vaccination: getVaccination(campaigns, vaccines.batches),
   triage: getTriageRecord(campaigns),
   users,
   // Set feature flags using the `features` key

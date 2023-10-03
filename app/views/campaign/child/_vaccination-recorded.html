@@ -1,6 +1,6 @@
 {% set vaccineRecorded %}
   <p><a href="#">Change</a></p>
-  {% set batch = data.vaccines.batches[vaccinationRecord.batch] %}
+  {% set batch = data.vaccines.batches[vaccination.batch] %}
 
   {{ govukSummaryList({
     classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
@@ -14,21 +14,13 @@
         value: "1 of 2"
       } if vaccineGiven and campaign.type == "HPV",
       {
-        key: "Vaccine given?",
-        value: vaccinationRecord.given
+        key: "Outcome",
+        value: vaccination.outcome
       },
       {
         key: "Site",
-        value: "Nasal"
-      } if vaccineGiven and batch.method == "Nasal spray",
-      {
-        key: "Site",
-        value: vaccinationRecord.where
-      } if vaccineGiven and batch.method != "Nasal spray",
-      {
-        key: "Reason",
-        value: vaccinationRecord.whyNotGiven
-      } if not vaccineGiven,
+        value: vaccination.site
+      } if vaccineGiven,
       {
         key: "Date",
         value: "Today (" + "today" | govukDate + ")"
@@ -47,7 +39,7 @@
       },
       {
         key: "Notes",
-        value: vaccinationRecord.notes | default("None", true)
+        value: vaccination.notes | default("None", true)
       }
     ])
   }) }}

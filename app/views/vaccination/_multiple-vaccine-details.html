@@ -1,5 +1,5 @@
-{% set menACWYVaccineGiven = "men-acwy" in vaccinationRecord["multi-given"] %}
-{% set 3in1VaccineGiven = "3-in-1" in vaccinationRecord["multi-given"] %}
+{% set menACWYVaccineGiven = "men-acwy" in vaccination["multi-given"] %}
+{% set 3in1VaccineGiven = "3-in-1" in vaccination["multi-given"] %}
 
 {{ govukSummaryList({
   classes: "app-summary-list--no-bottom-border",
@@ -53,19 +53,14 @@
       } if menACWYVaccineGiven,
       {
         key: "Site",
-        value: vaccinationRecord.whereMenACWY,
+        value: vaccination.siteMenACWY,
         href: "#"
       } if menACWYVaccineGiven,
       {
-        key: "Given",
-        value: "No",
-        href: "#"
-      } if not menACWYVaccineGiven,
-      {
-        key: "Reason",
-        value: menACWYVaccinationRecord.whyNotGiven,
-        href: basePath + "/not-given"
-      } if not menACWYVaccineGiven
+        key: "Outcome",
+        value: menACWYVaccination.outcome,
+        href: basePath + "/not-given" if not menACWYVaccineGiven
+      }
     ])
   }) }}
 {% else %}
@@ -94,7 +89,7 @@
       } if 3in1VaccineGiven,
       {
         key: "Site",
-        value: vaccinationRecord.where3in1,
+        value: vaccination.site3in1,
         href: "#"
       } if 3in1VaccineGiven,
       {
@@ -104,7 +99,7 @@
       } if not 3in1VaccineGiven,
       {
         key: "Reason",
-        value: 3in1VaccinationRecord.whyNotGiven,
+        value: 3in1Vaccination.outcome,
         href: basePath + "/not-given"
       } if not 3in1VaccineGiven
     ])

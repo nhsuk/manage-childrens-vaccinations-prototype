@@ -35,12 +35,6 @@
   {% endset %}
 {% endif %}
 
-{% if vaccinationRecord.whyNotGiven %}
-  {% set reasonText %}
-    {{ vaccinationRecord.whyNotGiven }}<br>
-  {% endset %}
-{% endif %}
-
 {% call appConsentBanner({
   color: color,
   heading: outcomeText or outcome,
@@ -50,7 +44,7 @@
   }
 }) %}
   <p class="nhsuk-body">
-    {{ reasonText | safe }}
+    {{ vaccination.outcome | safe }}
     {{ consentText | safe }}
   </p>
 {% endcall %}

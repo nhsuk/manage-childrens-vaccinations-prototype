@@ -1,12 +1,12 @@
-{% set where %}
+{% set siteHtml %}
   {{ radios({
     items: [
-      { text: "Left arm" },
-      { text: "Right arm" },
-      { text: "Other" }
+      { text: VACCINATION_SITE.ARM_LEFT },
+      { text: VACCINATION_SITE.ARM_RIGHT },
+      { text: VACCINATION_SITE.OTHER }
     ],
     classes: "nhsuk-radios--inline",
-    decorate: ["vaccination", campaign.id, child.nhsNumber, "where"]
+    decorate: ["vaccination", campaign.id, child.nhsNumber, "site"]
   }) }}
 {% endset %}
 
@@ -21,13 +21,13 @@
   } if consentJourney,
   items: [{
     text: "Yes, they got the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine",
-    value: "Yes",
+    value: VACCINATION_OUTCOME.VACCINATED,
     conditional: {
-      html: where
+      html: siteHtml
     } if not campaign.isFlu
   }, {
     text: "No, they did not get it",
-    value: "No"
+    value: false
   }],
-  decorate: ["vaccination", campaign.id, child.nhsNumber, "given"]
+  decorate: ["vaccination", campaign.id, child.nhsNumber, "outcome"]
 }) }}

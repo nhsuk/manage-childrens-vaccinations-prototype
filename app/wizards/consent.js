@@ -39,8 +39,8 @@ export default (req, res, isTriage) => {
     },
     [`${basePath}/vaccinate`]: {
       [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {
-        data: `vaccination.${campaignId}.${nhsNumber}.given`,
-        value: 'No'
+        data: `vaccination.${campaignId}.${nhsNumber}.outcome`,
+        value: 'false'
       }
     },
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},

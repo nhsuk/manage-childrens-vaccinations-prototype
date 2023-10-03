@@ -1,14 +1,15 @@
 import _ from 'lodash'
-import { TRIAGE, CONSENT, OUTCOME, ACTION_NEEDED, ACTION_TAKEN, RESPONSE_REFUSAL } from './enums.js'
+import { TRIAGE, CONSENT, ACTION_NEEDED, ACTION_TAKEN, RESPONSE_REFUSAL, VACCINATION_SITE, VACCINATION_OUTCOME } from './enums.js'
 
 export default () => {
   const globals = {
     TRIAGE,
     CONSENT,
-    OUTCOME,
     ACTION_NEEDED,
     ACTION_TAKEN,
-    RESPONSE_REFUSAL
+    RESPONSE_REFUSAL,
+    VACCINATION_SITE,
+    VACCINATION_OUTCOME
   }
 
   /**

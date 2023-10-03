@@ -2,7 +2,7 @@
 {% set title = "Was " + child.fullName + " given the " + type + " vaccine?" %}
 
 {% block form %}
-  {% set where %}
+  {% set siteHtml %}
     {{ radios({
       fieldset: {
         legend: {
@@ -11,14 +11,14 @@
         }
       },
       items: [
-        { text: "Left arm" },
-        { text: "Right arm" },
-        { text: "Left thigh" },
-        { text: "Right thigh" },
-        { text: "Left buttock" },
-        { text: "Right buttock" }
+        { text: VACCINATION_SITE.ARM_LEFT },
+        { text: VACCINATION_SITE.ARM_RIGHT },
+        { text: VACCINATION_SITE.THIGH_LEFT },
+        { text: VACCINATION_SITE.THIGH_RIGHT },
+        { text: VACCINATION_SITE.BUTTOCK_LEFT },
+        { text: VACCINATION_SITE.BUTTOCK_RIGHT }
       ],
-      decorate: [dataLocation, campaign.id, child.nhsNumber, "where"]
+      decorate: [dataLocation, campaign.id, child.nhsNumber, "site"]
     }) }}
   {% endset %}
 
@@ -32,14 +32,14 @@
     },
     items: [{
       text: "Yes, they had the " + type + " vaccine",
-      value: "Yes",
+      value: VACCINATION_OUTCOME.VACCINATED,
       conditional: {
-        html: where
+        html: siteHtml
       } if campaign.vaccines[0].method == "Injection"
     }, {
       text: "No, they did not get the vaccine",
-      value: "No"
+      value: false
     }],
-    decorate: [dataLocation, campaign.id, child.nhsNumber, "given"]
+    decorate: [dataLocation, campaign.id, child.nhsNumber, "outcome"]
   }) }}
 {% endblock %}
