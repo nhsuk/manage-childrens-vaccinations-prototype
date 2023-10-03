@@ -58,7 +58,7 @@ export const CONSENT = {
   ONLY_3_IN_1: 'Only 3-in-1'
 }
 
-export const OUTCOME = {
+export const PATIENT_OUTCOME = {
   NO_OUTCOME_YET: 'No outcome yet',
   VACCINATED: 'Vaccinated',
   NO_CONSENT: 'No consent',

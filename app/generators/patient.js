@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { fakerEN_GB as faker } from '@faker-js/faker'
-import { ACTION_NEEDED, OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
+import { ACTION_NEEDED, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
 import getResponse from './response.js'
@@ -76,7 +76,7 @@ export default (options) => {
   patient.yearGroup = getYearGroup(patient.dob)
   patient.responses = responses
   patient.consent = getDerivedConsent(type, responses)
-  patient.outcome = OUTCOME.NO_OUTCOME_YET
+  patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
 
   patient.actionNeeded = getActionNeeded(patient.consent)
   patient.actionTaken = null

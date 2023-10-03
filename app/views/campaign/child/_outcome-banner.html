@@ -1,4 +1,3 @@
-{% set outcome = child.outcome %}
 {% set consent = child.consent[campaign.type] %}
 {% set isGillickCompetent = consentRecord["gillick-competent"] === "Yes" %}
 
@@ -37,7 +36,7 @@
 
 {% call appConsentBanner({
   color: color,
-  heading: outcomeText or outcome,
+  heading: outcomeText or child.outcome,
   link: {
     href: "#",
     text: "Change outcome"
