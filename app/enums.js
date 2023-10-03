@@ -4,7 +4,6 @@ export const ACTION_NEEDED = {
   CHECK_REFUSAL: 'Check refusal',
   CHECK_CONFLICTING: 'Review conflicting consent',
   TRIAGE: 'Triage',
-  FOLLOW_UP: 'Complete triage',
   NONE: 'No action needed'
 }
 
@@ -16,11 +15,11 @@ export const ACTION_TAKEN = {
   REFUSED_CONSENT: 'Refused consent'
 }
 
-export const TRIAGE = {
-  TO_DO: 'Needs triage',
-  NEEDS_FOLLOW_UP: 'Needs follow up',
-  READY: 'Ready to vaccinate',
-  DO_NOT_VACCINATE: 'Do not vaccinate'
+export const TRIAGE_OUTCOME = {
+  NEEDS_TRIAGE: 'Needs triage',
+  DELAY_VACCINATION: 'Delay vaccination to a later date',
+  DO_NOT_VACCINATE: 'Do not vaccinate in campaign',
+  VACCINATE: 'Safe to vaccinate'
 }
 
 export const VACCINATION_SITE = {

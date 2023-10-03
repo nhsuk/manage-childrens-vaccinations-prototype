@@ -1,4 +1,4 @@
-import { TRIAGE, OUTCOME, CONSENT, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
+import { TRIAGE_OUTCOME, OUTCOME, CONSENT, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
 import _ from 'lodash'
 
 const filters = {
@@ -12,10 +12,10 @@ const filters = {
       const triage = req.session.data.triage
       const triageRecord = triage && triage[res.locals.campaign.id]
       if (triageRecord && triageRecord[c.nhsNumber]) {
-        return triageRecord[c.nhsNumber].status === TRIAGE[triageStatus]
+        return triageRecord[c.nhsNumber].status === TRIAGE_OUTCOME[triageStatus]
       }
 
-      return c.triageStatus === TRIAGE[triageStatus]
+      return c.triageStatus === TRIAGE_OUTCOME[triageStatus]
     })
   },
   actionNeeded: (children, action) => {
@@ -30,17 +30,17 @@ const filters = {
   },
   noTriageNeeded: (children) => {
     return children.filter((c) => {
-      return !c.needsTriage && c.consent.consented
+      return !c.triageStatus && c.consent.consented
     })
   },
   triageNeeded: (children) => {
     return children.filter((c) => {
-      return c.needsTriage && !c.triageCompleted
+      return c.triageStatus && c.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE
     })
   },
   triageCompleted: (children) => {
     return children.filter((c) => {
-      return c.triageCompleted
+      return c.triageStatus && c.triageStatus !== TRIAGE_OUTCOME.NEEDS_TRIAGE
     })
   },
   outcome: (children, outcome) => {

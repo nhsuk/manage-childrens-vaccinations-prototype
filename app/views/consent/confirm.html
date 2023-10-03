@@ -66,18 +66,12 @@
     <div class="nhsuk-card">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-heading-m">Triage</h2>
-        {% set triageStatus = d("triage." + campaign.id + "." + child.nhsNumber + ".status") or "Vaccinate" %}
-
-        {% if triageStatus === TRIAGE.NEEDS_FOLLOW_UP %}
-          {% set triageStatus = "Keep in triage" %}
-        {% endif %}
-
         {{ govukSummaryList({
           classes: "app-summary-list--no-bottom-border",
           rows: decorateRows([
             {
               key: "Status",
-              value: triageStatus,
+              value: d("triage." + campaign.id + "." + child.nhsNumber + ".status") or "Not provided",
               href: "#"
             },
             {

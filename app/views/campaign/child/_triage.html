@@ -10,11 +10,7 @@
 {% endset %}
 
 {% set cardDescription %}
-  {% if child.needsTriage %}
-    {% if child.triageCompleted %}
-      <p class="nhsuk-body">Triage complete</p>
-    {% endif %}
-
+  {% if child.triageStatus == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
     {{ govukSummaryList({
       classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
       rows: [
@@ -36,6 +32,8 @@
         } if child.triageNotes.length > 0
       ]
     }) }}
+  {% elif child.triageStatus != TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+    <p class="nhsuk-body">Triage complete</p>
   {% else %}
     <p class="nhsuk-body">No triage needed</p>
   {% endif %}

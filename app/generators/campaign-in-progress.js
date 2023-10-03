@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import _ from 'lodash'
-import { OUTCOME, TRIAGE, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
+import { OUTCOME, TRIAGE_OUTCOME, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
 import getCampaign from './campaign.js'
 
 const setActions = (child) => {
@@ -55,12 +55,11 @@ const setActions = (child) => {
 
 const setTriageOutcome = (child) => {
   // Only relevant to children needing triage
-  if (!child.consent.consented && !child.needsTriage) {
+  if (!child.consent.consented && !child.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }
 
-  child.triageStatus = TRIAGE.READY
-  child.triageCompleted = true
+  child.triageStatus = TRIAGE_OUTCOME.VACCINATE
   child.actionNeeded = ACTION_NEEDED.VACCINATE
 
   // Add realistic triage note
