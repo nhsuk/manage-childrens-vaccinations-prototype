@@ -48,14 +48,17 @@
     },
     items: [
       {
-        text: TRIAGE.READY
+        text: TRIAGE_OUTCOME.VACCINATE
       },
       {
-        text: TRIAGE.DO_NOT_VACCINATE
+        text: TRIAGE_OUTCOME.DELAY_VACCINATION
+      },
+      {
+        text: TRIAGE_OUTCOME.DO_NOT_VACCINATE
       },
       {
         text: "Keep in triage",
-        value: TRIAGE.NEEDS_FOLLOW_UP
+        value: TRIAGE_OUTCOME.NEEDS_TRIAGE
       } if isTriage
     ],
     decorate: ["triage", campaign.id, child.nhsNumber, "status"]

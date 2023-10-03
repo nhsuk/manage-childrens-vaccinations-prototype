@@ -3,18 +3,22 @@
     items: [
       {
         text: "Yes, it’s safe to vaccinate",
-        value: TRIAGE.READY
+        value: TRIAGE_OUTCOME.VACCINATE
       },
       {
         text: "No, do not vaccinate",
-        value: TRIAGE.DO_NOT_VACCINATE
+        value: TRIAGE_OUTCOME.DO_NOT_VACCINATE
       },
       {
         divider: "or"
       },
       {
+        text: "Delay vaccination to a later date",
+        value: TRIAGE_OUTCOME.DELAY_VACCINATION
+      },
+      {
         text: "Keep in triage",
-        value: TRIAGE.NEEDS_FOLLOW_UP
+        value: TRIAGE_OUTCOME.NEEDS_TRIAGE
       }
     ],
     decorate: ["triage", campaign.id, child.nhsNumber, "status"]

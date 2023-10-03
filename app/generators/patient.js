@@ -1,12 +1,10 @@
 import _ from 'lodash'
 import { fakerEN_GB as faker } from '@faker-js/faker'
-import { OUTCOME, ACTION_NEEDED } from '../enums.js'
+import { ACTION_NEEDED, OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
 import getResponse from './response.js'
 import getDerivedConsent from './derived-consent.js'
-import getTriageStatus from './triage-status.js'
-import getTriageNeeded from './triage-needed.js'
 import { getYearGroup } from './year-group.js'
 
 const getActionNeeded = (consent) => {
@@ -15,18 +13,31 @@ const getActionNeeded = (consent) => {
   } else if (consent.unknown) {
     return ACTION_NEEDED.GET_CONSENT
   } else if (consent.consented) {
-    return ACTION_NEEDED.VACCINATE
+    // Answered yes to health questions
+    if (consent.answersNeedTriage) {
+      return ACTION_NEEDED.TRIAGE
+    } else {
+      return ACTION_NEEDED.VACCINATE
+    }
   }
 }
 
 const handleInProgressTriage = (patient) => {
   // Only relevant to children needing triage
-  if (!patient.consent.consented && !patient.needsTriage) {
+  if (!patient.consent.consented && !patient.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }
 
   // Only half done
-  if (faker.helpers.maybe(() => true, { probability: 0.5 })) return
+  if (faker.helpers.maybe(() => true, { probability: 0.5 })) {
+    return
+  }
+
+  // Set triage outcome to vaccinate
+  patient.triageStatus = faker.helpers.weightedArrayElement([
+    { value: TRIAGE_OUTCOME.NEEDS_TRIAGE, weight: 1 },
+    { value: TRIAGE_OUTCOME.VACCINATE, weight: 1 }
+  ])
 
   // Add realistic triage note
   if (patient.__triageNote) {
@@ -44,9 +55,8 @@ const handleInProgressTriage = (patient) => {
 
   // A small number need follow-ups
   if (faker.helpers.maybe(() => true, { probability: 0.2 })) {
-    patient.actionNeeded = ACTION_NEEDED.FOLLOW_UP
+    patient.actionNeeded = ACTION_NEEDED.TRIAGE
   } else {
-    patient.triageCompleted = true
     patient.actionNeeded = ACTION_NEEDED.VACCINATE
   }
 }
@@ -72,10 +82,12 @@ export default (options) => {
   patient.actionTaken = null
 
   patient.seen = {}
-  patient.triageNotes = []
-  patient.triageStatus = getTriageStatus(triageInProgress)
 
-  getTriageNeeded(patient)
+  patient.triageNotes = []
+  patient.triageStatus = patient.consent.answersNeedTriage
+    ? TRIAGE_OUTCOME.NEEDS_TRIAGE
+    : false
+
   if (triageInProgress) {
     handleInProgressTriage(patient)
   }

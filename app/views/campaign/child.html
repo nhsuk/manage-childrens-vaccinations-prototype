@@ -52,7 +52,7 @@
               {% include "campaign/child/_action-get-consent.html" %}
             {% elseif campaign.is3in1MenACWY %}
               {% include "campaign/child/_action-vaccinate-3-in-1.html" %}
-            {% elseif child.triageStatus != TRIAGE.DO_NOT_VACCINATE %}
+            {% elseif child.triageStatus == TRIAGE_OUTCOME.VACCINATE %}
               {% include "campaign/child/_action-vaccinate.html" %}
             {% endif %}
           {% elif child.outcome == OUTCOME.VACCINATED %}

@@ -1,6 +1,6 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
-import { CONSENT, ACTION_NEEDED, ACTION_TAKEN, TRIAGE } from '../enums.js'
+import { CONSENT, ACTION_NEEDED, ACTION_TAKEN, TRIAGE_OUTCOME } from '../enums.js'
 import { DateTime } from 'luxon'
 
 export default (router) => {
@@ -92,25 +92,17 @@ export default (router) => {
 
     if (child.consent.consented && triageData && triageData.status) {
       child.triageStatus = triageData.status
-      if (triageData.status === TRIAGE.READY) {
+      if (triageData.status === TRIAGE_OUTCOME.VACCINATE) {
         child.actionNeeded = ACTION_NEEDED.VACCINATE
-        child.triageCompleted = true
-      } else if (triageData.status === TRIAGE.NEEDS_FOLLOW_UP) {
-        child.actionNeeded = ACTION_NEEDED.FOLLOW_UP
-        child.needsTriage = true
-        child.triageCompleted = false
-      } else if (triageData.status === TRIAGE.DO_NOT_VACCINATE) {
+      } else if (triageData.status === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
+        child.actionNeeded = ACTION_NEEDED.TRIAGE
+      } else if (triageData.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.actionNeeded = ACTION_NEEDED.NONE
         child.actionTaken = ACTION_TAKEN.DO_NOT_VACCINATE
-        child.needsTriage = true
-        child.triageCompleted = true
       }
     } else if (child.consent.consented) {
       child.actionNeeded = ACTION_NEEDED.VACCINATE
       child.actionTaken = null
-      if (res.locals.isTriage) {
-        child.triageCompleted = true
-      }
     }
 
     if (child.consent.refused) {
