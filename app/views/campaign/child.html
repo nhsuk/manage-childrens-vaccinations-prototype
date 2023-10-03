@@ -21,7 +21,7 @@
 
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          {% if child.outcome == OUTCOME.NO_OUTCOME_YET %}
+          {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
             {% if campaign.is3in1MenACWY %}
               {% include "campaign/child/_consent-banner-3-in-1.html" %}
             {% else %}
@@ -47,7 +47,7 @@
             {% include "campaign/child/_triage.html" %}
           {% endif %}
 
-          {% if child.outcome == OUTCOME.NO_OUTCOME_YET %}
+          {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
             {% if isUnknown or refused %}
               {% include "campaign/child/_action-get-consent.html" %}
             {% elseif campaign.is3in1MenACWY %}
@@ -55,7 +55,7 @@
             {% elseif child.triageStatus == TRIAGE_OUTCOME.VACCINATE %}
               {% include "campaign/child/_action-vaccinate.html" %}
             {% endif %}
-          {% elif child.outcome == OUTCOME.VACCINATED %}
+          {% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
             {% include "campaign/child/_vaccination-recorded.html" %}
           {% endif %}
         </div>

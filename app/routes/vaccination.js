@@ -1,5 +1,5 @@
 import { vaccination } from '../wizards/vaccination.js'
-import { ACTION_TAKEN, OUTCOME, VACCINATION_OUTCOME } from '../enums.js'
+import { ACTION_TAKEN, PATIENT_OUTCOME, VACCINATION_OUTCOME } from '../enums.js'
 import _ from 'lodash'
 
 export default (router) => {
@@ -128,18 +128,18 @@ export default (router) => {
 
     if (vaccineGiven) {
       child.actionTaken = ACTION_TAKEN.VACCINATED
-      child.outcome = OUTCOME.VACCINATED
+      child.outcome = PATIENT_OUTCOME.VACCINATED
       child.batch = batch
       child.seen = {
-        text: OUTCOME.VACCINATED,
+        text: PATIENT_OUTCOME.VACCINATED,
         outcome: VACCINATION_OUTCOME.VACCINATED,
         notes
       }
     } else {
       child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
-      child.outcome = OUTCOME.COULD_NOT_VACCINATE
+      child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       child.seen = {
-        text: OUTCOME.COULD_NOT_VACCINATE,
+        text: PATIENT_OUTCOME.COULD_NOT_VACCINATE,
         outcome: VACCINATION_OUTCOME.REFUSED,
         notes
       }

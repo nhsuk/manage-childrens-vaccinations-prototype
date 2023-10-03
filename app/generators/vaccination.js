@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums.js'
+import { PATIENT_OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums.js'
 
 /**
  * Get vaccination
@@ -33,7 +33,7 @@ export default (campaigns, batches) => {
   }
 
   children
-    .filter(child => child.outcome === OUTCOME.VACCINATED)
+    .filter(child => child.outcome === PATIENT_OUTCOME.VACCINATED)
     .forEach(child => {
       vaccination[id][child.nhsNumber] = {
         outcome: VACCINATION_OUTCOME.VACCINATED,
@@ -43,7 +43,7 @@ export default (campaigns, batches) => {
     })
 
   children
-    .filter(child => child.outcome === OUTCOME.COULD_NOT_VACCINATE)
+    .filter(child => child.outcome === PATIENT_OUTCOME.COULD_NOT_VACCINATE)
     .forEach(child => {
       vaccination[id][child.nhsNumber] = {
         outcome: faker.helpers.arrayElement([

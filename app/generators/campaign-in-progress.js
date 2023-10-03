@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import _ from 'lodash'
-import { OUTCOME, TRIAGE_OUTCOME, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
+import { PATIENT_OUTCOME, TRIAGE_OUTCOME, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
 import getCampaign from './campaign.js'
 
 const setActions = (child) => {
@@ -12,16 +12,16 @@ const setActions = (child) => {
 
     if (checkedRefusal) {
       child.actionTaken = ACTION_TAKEN.REFUSED_CONSENT
-      child.outcome = OUTCOME.NO_CONSENT
+      child.outcome = PATIENT_OUTCOME.NO_CONSENT
     } else {
       child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
-      child.outcome = OUTCOME.NO_OUTCOME_YET
+      child.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
     }
   }
 
   if (child.consent.inconsistent) {
     child.actionNeeded = ACTION_NEEDED.CHECK_CONFLICTING
-    child.outcome = OUTCOME.NO_OUTCOME_YET
+    child.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
   }
 
   if (child.consent.unknown) {
@@ -31,24 +31,24 @@ const setActions = (child) => {
 
     if (attemptedToGetConsent) {
       child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
-      child.outcome = OUTCOME.NO_CONSENT
+      child.outcome = PATIENT_OUTCOME.NO_CONSENT
     } else {
       child.actionNeeded = ACTION_NEEDED.GET_CONSENT
-      child.outcome = OUTCOME.NO_OUTCOME_YET
+      child.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
     }
   }
 
   if (child.consent.consented) {
     const couldNotVaccinate = faker.helpers.maybe(
-      () => OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 }
+      () => PATIENT_OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 }
     )
 
     if (couldNotVaccinate) {
       child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
-      child.outcome = OUTCOME.COULD_NOT_VACCINATE
+      child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
     } else {
       child.actionTaken = ACTION_TAKEN.VACCINATED
-      child.outcome = OUTCOME.VACCINATED
+      child.outcome = PATIENT_OUTCOME.VACCINATED
     }
   }
 }

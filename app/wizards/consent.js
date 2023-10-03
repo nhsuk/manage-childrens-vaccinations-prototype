@@ -1,5 +1,5 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import { CONSENT, ACTION_TAKEN } from '../enums.js'
+import { CONSENT, ACTION_TAKEN, PATIENT_OUTCOME } from '../enums.js'
 
 export default (req, res, isTriage) => {
   const nhsNumber = req.params.nhsNumber
@@ -53,7 +53,7 @@ export default (req, res, isTriage) => {
         value: 'Yes'
       },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
-        res.locals.child.outcome = 'No consent'
+        res.locals.child.outcome = PATIENT_OUTCOME.NO_CONSENT
         res.locals.child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
         res.locals.child.assessedAsNotGillickCompetent = true
         res.locals.child.seen.isOffline = res.locals.isOffline
@@ -66,7 +66,7 @@ export default (req, res, isTriage) => {
         value: CONSENT.GIVEN
       },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
-        res.locals.child.outcome = 'No consent'
+        res.locals.child.outcome = PATIENT_OUTCOME.NO_CONSENT
         res.locals.child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
         res.locals.child.seen.isOffline = res.locals.isOffline
         return true

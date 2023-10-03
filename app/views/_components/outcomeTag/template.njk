@@ -1,11 +1,11 @@
 {%- from "tag/macro.njk" import tag %}
-{% if outcome == OUTCOME.VACCINATED %}
+{% if outcome == PATIENT_OUTCOME.VACCINATED %}
   {% set color = "green" %}
-{% elif outcome == OUTCOME.NO_CONSENT %}
+{% elif outcome == PATIENT_OUTCOME.NO_CONSENT %}
   {% set color = "red" %}
-{% elif outcome == OUTCOME.COULD_NOT_VACCINATE %}
+{% elif outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set color = "orange" %}
-{% elif outcome == OUTCOME.NO_OUTCOME_YET %}
+{% elif outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
   {% set color = "white" %}
 {% endif %}
 
