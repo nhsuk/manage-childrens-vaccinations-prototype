@@ -23,6 +23,33 @@ export const TRIAGE = {
   DO_NOT_VACCINATE: 'Do not vaccinate'
 }
 
+export const VACCINATION_SITE = {
+  NOSE: 'Nasal',
+  ARM_LEFT: 'Left arm',
+  ARM_LEFT_UPPER: 'Left arm (upper position)',
+  ARM_LEFT_LOWER: 'Left arm (lower position)',
+  ARM_RIGHT: 'Right arm',
+  ARM_RIGHT_UPPER: 'Right arm (upper position)',
+  ARM_RIGHT_LOWER: 'Right arm (lower position)',
+  BUTTOCK_LEFT: 'Left buttock',
+  BUTTOCK_RIGHT: 'Right buttock',
+  THIGH_LEFT: 'Left thigh',
+  THIGH_RIGHT: 'Right thigh',
+  OTHER: 'Other'
+}
+
+export const VACCINATION_OUTCOME = {
+  VACCINATED: 'Vaccinated',
+  PART_VACCINATED: 'Partially vaccinated',
+  ALREADY_VACCINATED: 'Already had the vaccine',
+  CONTRAINDICATIONS: 'Had contraindications',
+  REFUSED: 'Refused vaccine',
+  ABSENT: 'Absent',
+  UNWELL: 'Unwell',
+  NO_CONSENT: 'Unable to contact parent',
+  LATE_CONSENT: 'Consent received too late'
+}
+
 export const CONSENT = {
   GIVEN: 'Given',
   REFUSED: 'Refused',

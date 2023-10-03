@@ -1,5 +1,5 @@
 import { vaccination } from '../wizards/vaccination.js'
-import { ACTION_TAKEN, OUTCOME } from '../enums.js'
+import { ACTION_TAKEN, OUTCOME, VACCINATION_OUTCOME } from '../enums.js'
 import _ from 'lodash'
 
 export default (router) => {
@@ -52,7 +52,7 @@ export default (router) => {
   ], (req, res, next) => {
     res.locals.type = res.locals.campaign.type
     res.locals.dataLocation = 'vaccination'
-    res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    res.locals.vaccination = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     next()
   })
 
@@ -92,12 +92,12 @@ export default (router) => {
   router.all([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
-    res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
-    res.locals.menACWYVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
-    res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    res.locals['3in1Vaccination'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    res.locals.menACWYVaccination = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+    res.locals.vaccination = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
 
-    if (!res.locals.vaccinationRecord.batch) {
-      res.locals.vaccinationRecord.batch = req.session.data['todays-batch']
+    if (!res.locals.vaccination.batch) {
+      res.locals.vaccination.batch = req.session.data['todays-batch']
     }
 
     next()
@@ -122,19 +122,27 @@ export default (router) => {
   router.post([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
-    const { child, vaccinationRecord } = res.locals
-    let { batch, given, notes } = vaccinationRecord
-    given = given !== 'No'
+    const { child, vaccination } = res.locals
+    const { batch, outcome, notes } = vaccination
+    const vaccineGiven = outcome === VACCINATION_OUTCOME.VACCINATED
 
-    if (given) {
+    if (vaccineGiven) {
       child.actionTaken = ACTION_TAKEN.VACCINATED
       child.outcome = OUTCOME.VACCINATED
       child.batch = batch
-      child.seen = { text: OUTCOME.VACCINATED, given, notes }
+      child.seen = {
+        text: OUTCOME.VACCINATED,
+        outcome: VACCINATION_OUTCOME.VACCINATED,
+        notes
+      }
     } else {
       child.actionTaken = ACTION_TAKEN.COULD_NOT_VACCINATE
       child.outcome = OUTCOME.COULD_NOT_VACCINATE
-      child.seen = { text: 'Vaccine not given', given, notes }
+      child.seen = {
+        text: OUTCOME.COULD_NOT_VACCINATE,
+        outcome: VACCINATION_OUTCOME.REFUSED,
+        notes
+      }
     }
 
     res.locals.child.seen.isOffline = res.locals.isOffline

@@ -35,10 +35,10 @@ export default (router) => {
   ], (req, res, next) => {
     res.locals.child = res.locals.campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
     if (res.locals.campaign.is3in1MenACWY) {
-      res.locals['3in1VaccinationRecord'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
-      res.locals.menAcwyVaccinationRecord = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+      res.locals['3in1Vaccination'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+      res.locals.menAcwyVaccination = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     } else {
-      res.locals.vaccinationRecord = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
+      res.locals.vaccination = _.get(req.session.data, `vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
     }
 
     res.locals.consentRecord = _.get(req.session.data, `consent.${req.params.campaignId}.${req.params.nhsNumber}`)

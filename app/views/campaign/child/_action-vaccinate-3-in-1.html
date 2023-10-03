@@ -10,27 +10,27 @@
 {% endif %}
 
 {% set wasGiven %}
-  {% set whereMenACWY %}
+  {% set siteMenACWY %}
     {{ radios({
       items: [
-        { text: "Left arm" },
-        { text: "Right arm" },
-        { text: "Other" }
+        { text: VACCINATION_SITE.ARM_LEFT },
+        { text: VACCINATION_SITE.ARM_RIGHT },
+        { text: VACCINATION_SITE.OTHER }
       ],
       classes: "nhsuk-radios--inline",
-      decorate: ["vaccination", campaign.id, child.nhsNumber, "whereMenACWY"]
+      decorate: ["vaccination", campaign.id, child.nhsNumber, "siteMenACWY"]
     }) }}
   {% endset %}
 
-  {% set where3in1 %}
+  {% set site3in1 %}
     {{ radios({
       items: [
-        { text: "Left arm" },
-        { text: "Right arm" },
-        { text: "Other" }
+        { text: VACCINATION_SITE.ARM_LEFT },
+        { text: VACCINATION_SITE.ARM_RIGHT },
+        { text: VACCINATION_SITE.OTHER }
       ],
       classes: "nhsuk-radios--inline",
-      decorate: ["vaccination", campaign.id, child.nhsNumber, "where3in1"]
+      decorate: ["vaccination", campaign.id, child.nhsNumber, "site3in1"]
     }) }}
   {% endset %}
 
@@ -39,13 +39,13 @@
       text: "MenACWY",
       value: "men-acwy",
       conditional: {
-        html: whereMenACWY
+        html: siteMenACWY
       }
     }, {
       text: "3-in-1 booster",
       value: "3-in-1",
       conditional: {
-        html: where3in1
+        html: site3in1
       }
     }, {
       divider: "or"

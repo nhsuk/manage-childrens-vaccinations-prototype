@@ -1,14 +1,14 @@
 {% set rootPath = "/vaccination/" %}
 {% set index = 0 %}
-{% if 3in1VaccinationRecord %}
+{% if 3in1Vaccination %}
   {% set rootPath = "/3-in-1-vaccination/" %}
-{% elseif menACWYVaccinationRecord %}
+{% elseif menACWYVaccination %}
   {% set rootPath = "/men-acwy-vaccination/" %}
   {% set index = 1 %}
 {% endif %}
-{% set batchKey = vaccinationRecord.batch %}
+{% set batchKey = vaccination.batch %}
 {% set batch = data.vaccines.batches[batchKey] %}
-{% set vaccineGiven = vaccinationRecord["given"] !== "No" %}
+{% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set basePath = rootPath + campaign.id + "/" + child.nhsNumber %}
 
 {{ vaccine.summary }}
@@ -41,18 +41,14 @@
     },
     {
       key: "Site",
-      value: "Nasal"
-    } if vaccineGiven and batch.method == "Nasal spray",
+      value: vaccination.site,
+      href: basePath + "/has-it-been-given" if batch.method != "Nasal spray"
+    } if vaccineGiven,
     {
-      key: "Site",
-      value: vaccinationRecord.where,
-      href: basePath + "/has-it-been-given"
-    } if vaccineGiven and batch.method != "Nasal spray",
-    {
-      key: "Reason",
-      value: vaccinationRecord.whyNotGiven,
-      href: basePath + "/not-given"
-    } if not vaccineGiven,
+      key: "Outcome",
+      value: vaccination.outcome,
+      href: basePath + "/not-given" if not vaccineGiven
+    },
     {
       key: "Date",
       value: "Today (" + "today" | govukDate + ")",
