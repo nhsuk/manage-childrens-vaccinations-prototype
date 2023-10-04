@@ -50,7 +50,7 @@ export default (type, patient) => {
     method,
     parentOrGuardian: getParent(patient),
     ...(status === RESPONSE_CONSENT.GIVEN) && {
-      healthAnswers: getHealthAnswers(faker, type, patient)
+      healthAnswers: getHealthAnswers(type, patient)
     },
     ...(status === RESPONSE_CONSENT.REFUSED) && {
       refusalReason,
