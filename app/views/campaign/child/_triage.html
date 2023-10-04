@@ -1,41 +1,20 @@
-{% set triageNotes %}
-<ul class="nhsuk-list">
-{% for note in child.triageNotes | reverse %}
-  <li>
-    <p class="nhsuk-u-margin-bottom-1">{{ note.note }}</p>
-    <p class="nhsuk-u-secondary-text-color nhsuk-u-font-size-16 {% if loop.last %}nhsuk-u-margin-bottom-0{% endif %}">{{ note.user.name }}, {{ note.date | govukDate }} at {{ note.date | govukTime }}</p>
-  </li>
-{% endfor %}
-</ul>
-{% endset %}
-
 {% set cardDescription %}
   {% if child.triageStatus == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-    {{ govukSummaryList({
-      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
-      rows: [
-        {
-          key: {
-            text: "Action needed"
-          },
-          value: {
-            text: child.actionNeeded
-          }
-        },
-        {
-          key: {
-            text: "Notes"
-          },
-          value: {
-            text: triageNotes | safe
-          }
-        } if child.triageNotes.length > 0
-      ]
-    }) }}
+    <p class="nhsuk-body">Needs triage</p>
   {% elif child.triageStatus != TRIAGE_OUTCOME.NEEDS_TRIAGE %}
     <p class="nhsuk-body">Triage complete</p>
   {% else %}
     <p class="nhsuk-body">No triage needed</p>
+  {% endif %}
+  {% if child.triageNotes.length %}
+    <ul class="nhsuk-list">
+    {% for note in child.triageNotes | reverse %}
+      <li>
+        <p class="nhsuk-u-margin-bottom-1">{{ note.note }}</p>
+        <p class="nhsuk-u-secondary-text-color nhsuk-u-font-size-16 {% if loop.last %}nhsuk-u-margin-bottom-0{% endif %}">{{ note.user.name }}, {{ note.date | govukDate }} at {{ note.date | govukTime }}</p>
+      </li>
+    {% endfor %}
+    </ul>
   {% endif %}
 {% endset %}
 

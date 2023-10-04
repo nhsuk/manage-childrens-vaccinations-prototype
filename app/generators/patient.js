@@ -12,13 +12,8 @@ const getActionNeeded = (consent) => {
     return ACTION_NEEDED.CHECK_REFUSAL
   } else if (consent.unknown) {
     return ACTION_NEEDED.GET_CONSENT
-  } else if (consent.consented) {
-    // Answered yes to health questions
-    if (consent.answersNeedTriage) {
-      return ACTION_NEEDED.TRIAGE
-    } else {
-      return ACTION_NEEDED.VACCINATE
-    }
+  } else if (consent.inconsistent) {
+    return ACTION_NEEDED.CHECK_CONFLICTING
   }
 }
 
@@ -53,11 +48,9 @@ const handleInProgressTriage = (patient) => {
     delete patient.__triageNote
   }
 
-  // A small number need follow-ups
-  if (faker.helpers.maybe(() => true, { probability: 0.2 })) {
-    patient.actionNeeded = ACTION_NEEDED.TRIAGE
-  } else {
-    patient.actionNeeded = ACTION_NEEDED.VACCINATE
+  // A small number still need follow-up triage, the rest can vaccinate
+  if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
+    patient.triageStatus = TRIAGE_OUTCOME.VACCINATE
   }
 }
 

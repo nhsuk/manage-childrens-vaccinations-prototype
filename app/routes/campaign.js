@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import filterChildren from './_filter-children.js'
 import { vaccination } from '../wizards/vaccination.js'
-import { ACTION_NEEDED, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
+import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
 const offlineChangesCount = (campaign) => {
   const offlineCount = campaign.children.reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
@@ -61,12 +61,9 @@ export default (router) => {
 
     if (triage) {
       child.triageStatus = triage.status
-      if (triage.status === TRIAGE_OUTCOME.VACCINATE) {
-        child.actionNeeded = ACTION_NEEDED.VACCINATE
-      } else if (triage.status === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
-        child.actionNeeded = ACTION_NEEDED.TRIAGE
-      } else if (triage.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
-        child.actionNeeded = ACTION_NEEDED.NONE
+
+      // If triage outcome is not to vaccinate, set patient outcome
+      if (triage.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
     }

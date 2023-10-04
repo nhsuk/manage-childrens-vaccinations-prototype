@@ -1,12 +1,10 @@
 {%- from "tag/macro.njk" import tag %}
-{% if action == ACTION_NEEDED.VACCINATE %}
+{% if action == ACTION_NEEDED.CHECK_CONFLICTING %}
   {% set color = "purple" %}
 {% elif action == ACTION_NEEDED.GET_CONSENT %}
   {% set color = "yellow" %}
 {% elif action == ACTION_NEEDED.CHECK_REFUSAL %}
   {% set color = "orange" %}
-{% elif action == ACTION_NEEDED.TRIAGE %}
-  {% set color = "blue" %}
 {% else %}
   {% set color = "white" %}
 {% endif %}
