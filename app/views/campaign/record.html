@@ -28,7 +28,7 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-          {% include "campaign/_children-banner.html" %}
+          {% include "campaign/_notification-banner.html" %}
 
           {% if campaign["available-offline"] %}
             <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
@@ -40,45 +40,36 @@
           </h1>
 
           {% set actionNeeded %}
-            {% set children = filteredChildren.actionNeeded %}
-            {% set isActionNeeded = true %}
-            {% include "campaign/_children-tab.html" %}
+            {% set tab = filters.actionNeeded %}
+            {% include "campaign/_tab.html" %}
           {% endset %}
 
           {% set vaccinated %}
-            {% set children = filteredChildren.vaccinated %}
-            {% set isActionNeeded = false %}
-            {% include "campaign/_children-tab.html" %}
+            {% set tab = filters.vaccinated %}
+            {% include "campaign/_tab.html" %}
           {% endset %}
 
-          {% set notVaccinated %}
-            {% set children = filteredChildren.notVaccinated %}
-            {% set isActionNeeded = false %}
-            {% include "campaign/_children-tab.html" %}
+          {% set couldNotVaccinate %}
+            {% set tab = filters.couldNotVaccinate %}
+            {% include "campaign/_tab.html" %}
           {% endset %}
 
           {{ tabs({
             items: [
               {
-                label: "Action needed (" + filteredChildren.actionNeeded.length + ")",
                 id: "action-needed",
-                panel: {
-                  html: actionNeeded
-                }
+                label: filters.actionNeeded.label,
+                panel: { html: actionNeeded }
               },
               {
-                label: "Vaccinated (" + filteredChildren.vaccinated.length + ")",
                 id: "vaccinated",
-                panel: {
-                  html: vaccinated
-                }
+                label: filters.vaccinated.label,
+                panel: { html: vaccinated }
               },
               {
-                label: "Not vaccinated (" + filteredChildren.notVaccinated.length + ")",
                 id: "not-vaccinated",
-                panel: {
-                  html: notVaccinated
-                }
+                label: filters.couldNotVaccinate.label,
+                panel: { html: couldNotVaccinate }
               }
             ]
           }) }}

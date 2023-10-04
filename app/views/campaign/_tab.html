@@ -3,48 +3,46 @@
     {% include "campaign/_filters.html" %}
   </div>
   <div class="nhsuk-grid-column-three-quarters">
-    {% if children | length %}
+    {% if tab.results.length %}
       <table class="nhsuk-table app-children-table" id="children">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th class="govuk-table__header">Name</th>
-            {% if isRefusalReasonNeeded %}
-              <th class="govuk-table__header">Reason for refusal</th>
-            {% else %}
-              <th class="govuk-table__header">Date of birth</th>
-            {% endif %}
             <th class="govuk-table__header">
-              Action
+              {{- "Reason for refusal" if isRefusalReasonNeeded else "Date of birth" -}}
+            </th>
+            <th class="govuk-table__header">
+              {{- "Action needed" if tab.actionNeeded else "Outcome" -}}
             </th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          {% for child in children %}
+          {% for patient in tab.results %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <a href="/campaign/{{ campaign.id }}/child-triage/{{ child.nhsNumber }}">{{ child.fullName }}</a>
-                {% if child.knownAs %}
-                  <br><span class="nhsuk-u-font-size-16">Known as: {{ child.knownAs }}</span>
+                <a href="/campaign/{{ campaign.id }}/child-triage/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
+                {% if patient.knownAs %}
+                  <br><span class="nhsuk-u-font-size-16">Known as: {{ patient.knownAs }}</span>
                 {% endif %}
               </td>
-              {% if isRefusalReasonNeeded %}
-                <td class="govuk-table__cell nhsuk-u-font-size-16">
-                  {% for reason in child.consent.refusalReasons %}
+              <td class="govuk-table__cell nhsuk-u-font-size-16">
+                {% if isRefusalReasonNeeded %}
+                  {% for reason in patient.consent.refusalReasons %}
                     {{ reason | noOrphans | safe }}
                     {% if not loop.last %}<br>{% endif %}
                   {% endfor %}
-                </td>
-              {% else %}
-                <td class="govuk-table__cell nhsuk-u-font-size-16" style="width: 150px">
-                  {{ child.dob | govukDate("truncate") }}
-                </td>
-              {% endif %}
-              <td class="govuk-table__cell">
-                {% if child.outcome == PATIENT_OUTCOME.DO_NOT_VACCINATE %}
-                  {{ appOutcomeTag(child.outcome) }}
                 {% else %}
-                  {{ appActionNeededTag(child.actionNeeded) }}
+                  {{ patient.dob | govukDate("truncate") }}
                 {% endif %}
+              </td>
+              <td class="govuk-table__cell">
+                {{ tag({
+                  text: action(patient).text,
+                  classes: "nhsuk-tag--" + action(patient).colour + " nhsuk-u-font-size-16 nhsuk-u-width-full"
+                }) if tab.actionNeeded else tag({
+                  text: outcome(patient).text,
+                  classes: "nhsuk-tag--" + outcome(patient).colour + " nhsuk-u-font-size-16 nhsuk-u-width-full"
+                }) }}
               </td>
             </tr>
           {% endfor %}

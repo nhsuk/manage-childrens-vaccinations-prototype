@@ -29,7 +29,7 @@
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-          {% include "campaign/_children-banner.html" %}
+          {% include "campaign/_notification-banner.html" %}
 
           {% if campaign["available-offline"] %}
             <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
@@ -40,44 +40,37 @@
             {{ title | noOrphans | safe }}
           </h1>
 
-          {% set needsTriage %}
-            {% set children = filteredChildren.triageNeeded %}
-            {% include "campaign/_children-triage-tab.html" %}
+          {% set triageNeeded %}
+            {% set tab = filters.triageNeeded %}
+            {% include "campaign/_tab.html" %}
           {% endset %}
 
-          {% set triageComplete %}
-            {% set children = filteredChildren.triageCompleted %}
-            {% set isRefusalReasonNeeded = false %}
-            {% include "campaign/_children-triage-tab.html" %}
+          {% set triageCompleted %}
+            {% set tab = filters.triageCompleted %}
+            {% include "campaign/_tab.html" %}
           {% endset %}
 
           {% set noTriageNeeded %}
-            {% set children = filteredChildren.noTriageNeeded %}
-            {% include "campaign/_children-triage-tab.html" %}
+            {% set tab = filters.noTriageNeeded %}
+            {% include "campaign/_tab.html" %}
           {% endset %}
 
           {{ tabs({
             items: [
               {
-                label: "Needs triage (" + filteredChildren.triageNeeded.length + ")",
                 id: "needs-triage",
-                panel: {
-                  html: needsTriage
-                }
+                label: filters.triageNeeded.label,
+                panel: { html: triageNeeded }
               },
               {
-                label: "Triage complete (" + filteredChildren.triageCompleted.length + ")",
-                id: "triage-complete",
-                panel: {
-                  html: triageComplete
-                }
+                id: "triage-completed",
+                label: filters.triageCompleted.label,
+                panel: { html: triageCompleted }
               },
               {
-                label: "No triage needed (" + filteredChildren.noTriageNeeded.length + ")",
                 id: "no-triage-needed",
-                panel: {
-                  html: noTriageNeeded
-                }
+                label: filters.noTriageNeeded.label,
+                panel: { html: noTriageNeeded }
               }
             ]
           }) }}

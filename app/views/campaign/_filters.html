@@ -43,10 +43,10 @@
   {% endfor %}
 </ul>
 
-{% if isActionNeeded %}
+{% if tab.actionNeededFilter %}
 <p class="nhsuk-u-margin-bottom-1">By action needed</p>
 <ul class="nhsuk-list">
-  {% for key, item in ACTION_NEEDED %}
+  {% for key, item in actionsFilter %}
     {% set active = activeFilters.actionNeeded == key %}
     <li {% if active %}class="app-active-filter"{% endif %}>
       <a href="{{ filterPath(activeFilters, "actionNeeded", key) }}">{{ item }}</a>
