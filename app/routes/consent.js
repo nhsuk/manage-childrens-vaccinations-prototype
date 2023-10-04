@@ -1,6 +1,6 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
-import { CONSENT, ACTION_NEEDED, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
+import { CONSENT, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 import { DateTime } from 'luxon'
 
 export default (router) => {
@@ -92,22 +92,16 @@ export default (router) => {
 
     if (child.consent.consented && triageData && triageData.status) {
       child.triageStatus = triageData.status
-      if (triageData.status === TRIAGE_OUTCOME.VACCINATE) {
-        child.actionNeeded = ACTION_NEEDED.VACCINATE
-      } else if (triageData.status === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
-        child.actionNeeded = ACTION_NEEDED.TRIAGE
-      } else if (triageData.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
-        child.actionNeeded = ACTION_NEEDED.NONE
+
+      // If triage outcome is not to vaccinate, set patient outcome
+      if (triageData.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
-    } else if (child.consent.consented) {
-      child.actionNeeded = ACTION_NEEDED.VACCINATE
     }
 
     if (child.consent.refused) {
       consentResponse.refusalReason = consentData.refusalReason
       consentResponse.refusalReasonOther = consentData.refusalReasonOther
-      child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
     }
 
     if (gillickCompetent || assessedAsNotGillickCompetent) {

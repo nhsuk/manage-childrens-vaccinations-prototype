@@ -1,10 +1,7 @@
 export const ACTION_NEEDED = {
-  VACCINATE: 'Vaccinate',
   GET_CONSENT: 'Get consent',
   CHECK_REFUSAL: 'Check refusal',
-  CHECK_CONFLICTING: 'Review conflicting consent',
-  TRIAGE: 'Triage',
-  NONE: 'No action needed'
+  CHECK_CONFLICTING: 'Review conflicting consent'
 }
 
 export const TRIAGE_OUTCOME = {

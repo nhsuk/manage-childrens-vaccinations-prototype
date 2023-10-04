@@ -1,16 +1,10 @@
 {% set consent = child.consent[campaign.type] %}
 {% if consent == CONSENT.REFUSED %}
   {% set color = "orange" %}
-  {% set heading %}
-    Parent or guardian refused to give consent
-  {% endset %}
-  {% set action = ACTION_NEEDED.CHECK_REFUSAL %}
+  {% set heading = "Parent or guardian refused to give consent" %}
 {% elif consent == CONSENT.UNKNOWN %}
   {% set color = "yellow" %}
-  {% set heading %}
-    No-one responded to our requests for consent
-  {% endset %}
-  {% set action = ACTION_NEEDED.GET_CONSENT %}
+  {% set heading = "No-one responded to our requests for consent" %}
 {% endif %}
 
 {{ appConsentBanner({

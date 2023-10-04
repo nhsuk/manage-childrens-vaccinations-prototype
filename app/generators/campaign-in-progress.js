@@ -53,7 +53,6 @@ const setTriageOutcome = (child) => {
   }
 
   child.triageStatus = TRIAGE_OUTCOME.VACCINATE
-  child.actionNeeded = ACTION_NEEDED.VACCINATE
 
   // Add realistic triage note
   if (child.__triageNote) {
