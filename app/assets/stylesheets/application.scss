@@ -18,17 +18,24 @@ $color_app-pale-blue: #ccdff1;
 
 // Import app components
 @import "components/consent-banner";
-@import "components/outcome-tag";
 
 // Import app layouts
 @import "unbranded";
 @import "email";
 @import "offline";
 
+// Overrides
+.nhsuk-tag--white {
+  font-weight: normal;
+  border-style: dashed;
+}
+
+// App utilities
 .app-u-nowrap {
   white-space: nowrap;
 }
 
+// App components
 .app-scenario {
   background: $color_nhsuk-grey-5;
 }

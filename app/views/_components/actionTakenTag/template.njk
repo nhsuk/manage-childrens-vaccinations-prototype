@@ -1,26 +1,19 @@
-{%- from "_components/icon/macro.njk" import appIcon -%}
+{%- from "tag/macro.njk" import tag %}
 {% if action == ACTION_TAKEN.VACCINATED %}
-  {% set color = 'green' %}
+  {% set color = "green" %}
 {% elif action == ACTION_TAKEN.COULD_NOT_GET_CONSENT %}
-  {% set color = 'red' %}
+  {% set color = "red" %}
 {% elif action == ACTION_TAKEN.COULD_NOT_VACCINATE %}
-  {% set color = 'orange' %}
+  {% set color = "orange" %}
 {% elif action == ACTION_TAKEN.REFUSED_CONSENT %}
-  {% set color = 'red' %}
+  {% set color = "red" %}
 {% elif action == ACTION_TAKEN.DO_NOT_VACCINATE %}
-  {% set color = 'red' %}
+  {% set color = "red" %}
 {% else %}
-  {% set color = 'white' %}
+  {% set color = "white" %}
 {% endif %}
 
-<div
-  class="app-action-tag nhsuk-tag nhsuk-tag--{{ color }}"
-  style="width: 100%"
->
-  {% if icon %}
-    {{ appIcon({ type: icon }) }}
-  {% endif %}
-  <span class="nhsuk-u-font-size-16">
-    {{ action }}
-  </span>
-</div>
+{{ tag({
+  text: action,
+  classes: "nhsuk-tag--" + color + " nhsuk-u-font-size-16 nhsuk-u-width-full"
+}) }}
