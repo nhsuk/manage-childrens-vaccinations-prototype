@@ -1,4 +1,4 @@
-import { TRIAGE_OUTCOME, PATIENT_OUTCOME, CONSENT, ACTION_NEEDED, ACTION_TAKEN } from '../enums.js'
+import { TRIAGE_OUTCOME, PATIENT_OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
 import _ from 'lodash'
 
 const filters = {
@@ -21,11 +21,6 @@ const filters = {
   actionNeeded: (children, action) => {
     return children.filter((c) => {
       return c.actionNeeded === ACTION_NEEDED[action]
-    })
-  },
-  actionTaken: (children, action) => {
-    return children.filter((c) => {
-      return c.actionTaken === ACTION_TAKEN[action]
     })
   },
   noTriageNeeded: (children) => {
@@ -72,12 +67,10 @@ const sort = (children) => {
 export default (req, res) => {
   const query = req.query
   const children = res.locals.campaign.children
-  let vaccinatedChildren = filter(children, 'actionTaken', 'VACCINATED')
+  let vaccinatedChildren = filter(children, 'outcome', 'VACCINATED')
   let couldNotVaccinateChildren = [
-    ...filter(children, 'actionTaken', 'COULD_NOT_VACCINATE'),
-    ...filter(children, 'actionTaken', 'COULD_NOT_GET_CONSENT'),
-    ...filter(children, 'actionTaken', 'REFUSED_CONSENT'),
-    ...filter(children, 'actionTaken', 'DO_NOT_VACCINATE')
+    ...filter(children, 'outcome', 'COULD_NOT_VACCINATE'),
+    ...filter(children, 'outcome', 'NO_CONSENT')
   ]
 
   couldNotVaccinateChildren = sort(couldNotVaccinateChildren)

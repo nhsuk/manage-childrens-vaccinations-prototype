@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import filterChildren from './_filter-children.js'
 import { vaccination } from '../wizards/vaccination.js'
-import { ACTION_NEEDED, ACTION_TAKEN, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
+import { ACTION_NEEDED, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
 const offlineChangesCount = (campaign) => {
   const offlineCount = campaign.children.reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
@@ -67,7 +67,7 @@ export default (router) => {
         child.actionNeeded = ACTION_NEEDED.TRIAGE
       } else if (triage.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.actionNeeded = ACTION_NEEDED.NONE
-        child.actionTaken = ACTION_TAKEN.DO_NOT_VACCINATE
+        child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
     }
 
@@ -122,7 +122,6 @@ export default (router) => {
       res.locals.noConsent = req.query.noConsent
       const nhsNumber = req.query.noConsent
       const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
-      child.actionTaken = ACTION_TAKEN.COULD_NOT_GET_CONSENT
       child.outcome = PATIENT_OUTCOME.NO_CONSENT
       child.seen.isOffline = res.locals.isOffline
       res.locals.successChild = child
