@@ -50,16 +50,16 @@ const setTriageOutcome = (child) => {
   // Only relevant to children needing triage
   if (
     !child.consent.outcome === CONSENT_OUTCOME.VALID &&
-    !child.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE
+    !child.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
   ) {
     return
   }
 
-  child.triageStatus = TRIAGE_OUTCOME.VACCINATE
+  child.triage.outcome = TRIAGE_OUTCOME.VACCINATE
 
   // Add realistic triage note
   if (child.__triageNote) {
-    child.triageNotes.push({
+    child.triage.notes.push({
       date: faker.date.recent({ days: 30 }),
       note: child.__triageNote,
       user: {

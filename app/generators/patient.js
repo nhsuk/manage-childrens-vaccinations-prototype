@@ -21,7 +21,7 @@ const handleInProgressTriage = (patient) => {
   // Only relevant to children needing triage
   if (
     !patient.consent.outcome === CONSENT_OUTCOME.VALID &&
-    !patient.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
+    !patient.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }
 
@@ -31,14 +31,14 @@ const handleInProgressTriage = (patient) => {
   }
 
   // Set triage outcome to vaccinate
-  patient.triageStatus = faker.helpers.weightedArrayElement([
+  patient.triage.outcome = faker.helpers.weightedArrayElement([
     { value: TRIAGE_OUTCOME.NEEDS_TRIAGE, weight: 1 },
     { value: TRIAGE_OUTCOME.VACCINATE, weight: 1 }
   ])
 
   // Add realistic triage note
   if (patient.__triageNote) {
-    patient.triageNotes.push({
+    patient.triage.notes.push({
       date: faker.date.recent({ days: 30 }),
       note: patient.__triageNote,
       user: {
@@ -52,7 +52,7 @@ const handleInProgressTriage = (patient) => {
 
   // A small number still need follow-up triage, the rest can vaccinate
   if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
-    patient.triageStatus = TRIAGE_OUTCOME.VACCINATE
+    patient.triage.outcome = TRIAGE_OUTCOME.VACCINATE
   }
 }
 
@@ -77,10 +77,12 @@ export default (options) => {
 
   patient.seen = {}
 
-  patient.triageNotes = []
-  patient.triageStatus = patient.consent.answersNeedTriage
-    ? TRIAGE_OUTCOME.NEEDS_TRIAGE
-    : false
+  patient.triage = {
+    notes: [],
+    outcome: patient.consent.answersNeedTriage
+      ? TRIAGE_OUTCOME.NEEDS_TRIAGE
+      : false
+  }
 
   if (triageInProgress) {
     handleInProgressTriage(patient)

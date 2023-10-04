@@ -23,9 +23,9 @@
   <p class="nhsuk-u-margin-bottom-1">By triage status</p>
   <ul class="nhsuk-list">
     {% for key, item in TRIAGE_OUTCOME %}
-      {% set active = activeFilters.triageStatus == key %}
+      {% set active = activeFilters.triageOutcome == key %}
       <li {% if active %}class="app-active-filter"{% endif %}>
-        <a href="{{ filterPath(activeFilters, "triageStatus", key) }}">{{ item }}</a>
+        <a href="{{ filterPath(activeFilters, "triage.outcome", key) }}">{{ item }}</a>
       </li>
     {% endfor %}
   </ul>

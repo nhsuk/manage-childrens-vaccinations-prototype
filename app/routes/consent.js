@@ -89,11 +89,11 @@ export default (router) => {
     consentResponse.method = 'Phone'
 
     const hasConsented = consentData.consent.outcome === CONSENT_OUTCOME.VALID
-    if (hasConsented && triageData && triageData.status) {
-      child.triageStatus = triageData.status
+    if (hasConsented && triageData && triageData.outcome) {
+      child.triage.outcome = triageData.outcome
 
       // If triage outcome is not to vaccinate, set patient outcome
-      if (triageData.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
+      if (triageData.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
     }

@@ -4,7 +4,7 @@ export default (campaigns) => {
   const triageRecord = {}
   // get all campaigns in progress or triageInProgress
   const inProgressCampaigns = Object.values(campaigns).filter(campaign => campaign.inProgress || campaign.triageInProgress)
-  const triageStatusToEnrich = [
+  const triageOutcomeToEnrich = [
     TRIAGE_OUTCOME.VACCINATE,
     TRIAGE_OUTCOME.DELAY_VACCINATION,
     TRIAGE_OUTCOME.DO_NOT_VACCINATE
@@ -15,11 +15,8 @@ export default (campaigns) => {
     const children = campaign.children
     triageRecord[campaignId] = {}
 
-    children.filter(c => triageStatusToEnrich.includes(c.triageStatus)).forEach(child => {
-      triageRecord[campaignId][child.nhsNumber] = {
-        notes: child.triageNotes,
-        status: child.triageStatus
-      }
+    children.filter(c => triageOutcomeToEnrich.includes(c.triage.outcome)).forEach(child => {
+      triageRecord[campaignId][child.nhsNumber] = child.triage
     })
   })
 

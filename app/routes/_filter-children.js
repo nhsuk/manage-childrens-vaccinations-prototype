@@ -7,15 +7,15 @@ const filters = {
       return c.yearGroup === yearGroup
     })
   },
-  triageStatus: (children, triageStatus, req, res) => {
+  triageOutcome: (children, triageOutcome, req, res) => {
     return children.filter((c) => {
       const triage = req.session.data.triage
       const triageRecord = triage && triage[res.locals.campaign.id]
       if (triageRecord && triageRecord[c.nhsNumber]) {
-        return triageRecord[c.nhsNumber].status === TRIAGE_OUTCOME[triageStatus]
+        return triageRecord[c.nhsNumber].outcome === TRIAGE_OUTCOME[triageOutcome]
       }
 
-      return c.triageStatus === TRIAGE_OUTCOME[triageStatus]
+      return c.triage.outcome === TRIAGE_OUTCOME[triageOutcome]
     })
   },
   actionNeeded: (children, action) => {
@@ -25,17 +25,17 @@ const filters = {
   },
   noTriageNeeded: (children) => {
     return children.filter((c) => {
-      return !c.triageStatus && c.consent.outcome === CONSENT_OUTCOME.VALID
+      return !c.triage.outcome && c.consent.outcome === CONSENT_OUTCOME.VALID
     })
   },
   triageNeeded: (children) => {
     return children.filter((c) => {
-      return c.triageStatus && c.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE
+      return c.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
     })
   },
   triageCompleted: (children) => {
     return children.filter((c) => {
-      return c.triageStatus && c.triageStatus !== TRIAGE_OUTCOME.NEEDS_TRIAGE
+      return c.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE
     })
   },
   outcome: (children, outcome) => {

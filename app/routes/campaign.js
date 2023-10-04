@@ -60,17 +60,17 @@ export default (router) => {
     const triage = _.get(req.body, `triage.${campaignId}.${nhsNumber}`, {})
 
     if (triage) {
-      child.triageStatus = triage.status
+      child.triage.outcome = triage.outcome
 
       // If triage outcome is not to vaccinate, set patient outcome
-      if (triage.status === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
+      if (triage.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
     }
 
     // Update triage notes
     if (triage.note) {
-      child.triageNotes.push({
+      child.triage.notes.push({
         date: new Date().toISOString(),
         note: triage.note,
         user: {
