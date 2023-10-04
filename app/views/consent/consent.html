@@ -18,15 +18,15 @@
     items: [
       {
         text: "Yes, they agree",
-        value: CONSENT.GIVEN
+        value: CONSENT_OUTCOME.VALID
       },
       {
         text: "No, they do not agree",
-        value: CONSENT.REFUSED
+        value: CONSENT_OUTCOME.REFUSED
       },
       {
         text: "No response",
-        value: CONSENT.UNKNOWN
+        value: CONSENT_OUTCOME.NO_RESPONSE
       } if not isGillickCompetent
     ],
     decorate: base + "consent"

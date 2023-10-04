@@ -1,8 +1,8 @@
 {% extends "layouts/wizard.html" %}
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
-{% set consented = d(base + "consent") == CONSENT.GIVEN %}
-{% set refused = d(base + "consent") == CONSENT.REFUSED %}
+{% set hasConsented = d(base + "consent") == CONSENT_OUTCOME.VALID %}
+{% set hasRefused = d(base + "consent") == CONSENT_OUTCOME.REFUSED %}
 {% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
 
 {% block form %}
@@ -30,12 +30,12 @@
             key: "Consent",
             value: d(base + "consent"),
             href: "#"
-          } if consented or refused,
+          } if hasConsented or hasRefused,
           {
             key: "Consent",
             value: "No response",
             href: "#"
-          } if not (consented or refused),
+          } if not (hasConsented or hasRefused),
           {
             key: "For",
             value: child.fullName
@@ -53,7 +53,7 @@
               html: d(base + "refusalReason") + (" – " + d(base + "refusalReasonOther") if d(base + "refusalReason") == "Other")
             },
             href: "#"
-          } if refused
+          } if hasRefused
         ])
       })
     }) }}

@@ -27,7 +27,7 @@
       } if consentRecord and consentRecord["gillick-assessment"],
       {
         key: "Consent",
-        value: "Given by child" if consentRecord.consent === CONSENT.GIVEN else "Refused by child"
+        value: "Given by child" if consentRecord.consent === CONSENT_OUTCOME.VALID else "Refused by child"
       } if consentRecord and isGillickCompetent,
       {
         key: "Consent",

@@ -1,6 +1,6 @@
 import wizard from '../wizards/consent.js'
 import _ from 'lodash'
-import { CONSENT, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
+import { CONSENT_OUTCOME, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 import { DateTime } from 'luxon'
 
 export default (router) => {
@@ -81,16 +81,15 @@ export default (router) => {
     const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
 
     child.consent[campaignType] = consentData.consent
-    child.consent.text = consentData.consent
-    child.consent.consented = consentData.consent === CONSENT.GIVEN
-    child.consent.refused = consentData.consent === CONSENT.REFUSED
-    child.consent.responses = consentData.consent !== CONSENT.UNKNOWN
+    child.consent.outcome = consentData.consent
+    child.consent.responses = consentData.consent !== CONSENT_OUTCOME.NO_RESPONSE
 
     const consentResponse = child.responses[0]
     consentResponse.date = DateTime.local().toISODate()
     consentResponse.method = 'Phone'
 
-    if (child.consent.consented && triageData && triageData.status) {
+    const hasConsented = consentData.consent.outcome === CONSENT_OUTCOME.VALID
+    if (hasConsented && triageData && triageData.status) {
       child.triageStatus = triageData.status
 
       // If triage outcome is not to vaccinate, set patient outcome
@@ -99,7 +98,7 @@ export default (router) => {
       }
     }
 
-    if (child.consent.refused) {
+    if (child.consent.outcome === CONSENT_OUTCOME.REFUSED) {
       consentResponse.refusalReason = consentData.refusalReason
       consentResponse.refusalReasonOther = consentData.refusalReasonOther
     }

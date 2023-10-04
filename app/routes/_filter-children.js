@@ -1,4 +1,4 @@
-import { TRIAGE_OUTCOME, PATIENT_OUTCOME, CONSENT, ACTION_NEEDED } from '../enums.js'
+import { CONSENT_OUTCOME, TRIAGE_OUTCOME, PATIENT_OUTCOME, ACTION_NEEDED } from '../enums.js'
 import _ from 'lodash'
 
 const filters = {
@@ -25,7 +25,7 @@ const filters = {
   },
   noTriageNeeded: (children) => {
     return children.filter((c) => {
-      return !c.triageStatus && c.consent.consented
+      return !c.triageStatus && c.consent.outcome === CONSENT_OUTCOME.VALID
     })
   },
   triageNeeded: (children) => {
@@ -45,13 +45,13 @@ const filters = {
   },
   medical: (children, medical) => {
     return children.filter((c) => {
-      const answersNeedTriage = c.consent.answersNeedTriage && c.consent.consented
+      const answersNeedTriage = c.consent.answersNeedTriage && c.consent.outcome === CONSENT_OUTCOME.VALID
       return medical === 'true' ? answersNeedTriage : !answersNeedTriage
     })
   },
   consent: (children, consent) => {
     return children.filter((c) => {
-      return c.consent.text === CONSENT[consent]
+      return c.consent.text === CONSENT_OUTCOME[consent]
     })
   }
 }

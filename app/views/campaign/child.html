@@ -1,9 +1,9 @@
 {% extends "layouts/default.html" %}
 {% set title = child.fullName %}
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
-{% set isUnknown = child.consent.unknown or child.consent[campaign.type] == CONSENT.UNKNOWN %}
-{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == CONSENT.REFUSED %}
-{% set consented = not refused and not isUnknown %}
+{% set isUnknown = child.consent.outcome or child.consent[campaign.type] == CONSENT_OUTCOME.NO_RESPONSE %}
+{% set hasRefused = child.consent.outcome or child.consent[campaign.type] == CONSENT_OUTCOME.REFUSED %}
+{% set hasConsented = not hasRefused and not isUnknown %}
 
 {% block pageNavigation %}
   <div class="nhsuk-width-container">
@@ -31,9 +31,7 @@
             {% include "campaign/child/_outcome-banner.html" %}
           {% endif %}
 
-          {% if child.consent.responses %}
-            {% include "campaign/child/_consent-responses.html" %}
-          {% endif %}
+          {% include "campaign/child/_consent-responses.html" %}
         </div>
       </div>
 
@@ -42,13 +40,13 @@
           {% include "campaign/child/_details.html" %}
           {% include "campaign/child/_consent-gillick.html" %}
 
-          {% if consented %}
+          {% if hasConsented %}
             {% include "campaign/child/_vaccinate-health-questions.html" %}
             {% include "campaign/child/_triage.html" %}
           {% endif %}
 
           {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
-            {% if isUnknown or refused %}
+            {% if isUnknown or hasRefused %}
               {% include "campaign/child/_action-get-consent.html" %}
             {% elseif campaign.is3in1MenACWY %}
               {% include "campaign/child/_action-vaccinate-3-in-1.html" %}

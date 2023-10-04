@@ -54,16 +54,6 @@
   {% endfor %}
 </ul>
 {% endif %}
-{#
-<p class="nhsuk-u-margin-bottom-1">By consent</p>
-<ul class="nhsuk-list">
-  {% for key, item in CONSENT %}
-    {% set active = activeFilters.consent == key %}
-    <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, "consent", key) }}">{{ item }}</a>
-    </li>
-  {% endfor %}
-</ul> #}
 
 <script>
     function filterTable() {

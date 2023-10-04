@@ -27,7 +27,7 @@
           {
             key: response.parentOrGuardian.relationship,
             value: {
-              html: response.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responded )
+              html: response.parentOrGuardian.fullName + ( parentContactDetailsHtml if not isUnknown )
             }
           },
           {

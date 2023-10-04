@@ -38,11 +38,12 @@ export const VACCINATION_OUTCOME = {
   LATE_CONSENT: 'Consent received too late'
 }
 
-export const CONSENT = {
-  GIVEN: 'Given',
+export const CONSENT_OUTCOME = {
+  NO_RESPONSE: 'No response',
+  VALID: 'Given',
   REFUSED: 'Refused',
+  FINAL_REFUSAL: 'Final refusal, do not contact',
   INCONSISTENT: 'Conflicting',
-  UNKNOWN: 'Unknown',
   ONLY_MENACWY: 'Only MenACWY',
   ONLY_3_IN_1: 'Only 3-in-1'
 }

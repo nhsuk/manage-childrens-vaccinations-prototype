@@ -17,6 +17,7 @@
       BN1 1AA
     {% endset %}
 
+    {% set haveConsentResponse = child.consent.outcome != CONSENT_OUTCOME.NO_RESPONSE %}
     {{ summaryList({
       classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
       rows: decorateRows([
@@ -37,25 +38,25 @@
           value: {
             html: child.address | nl2br
           }
-        } if child.consent.responses,
+        } if haveConsentResponse,
         {
           key: "GP",
           value: child.gpSurgery
-        } if child.consent.responses,
+        } if haveConsentResponse,
         {
           key: "NHS Number",
           value: child.nhsNumber | formatNHSNumber
-        } if child.consent.responses,
+        } if haveConsentResponse,
         {
           key: "Vaccination history",
           value: {
             html: "<a href=\"#\">Record available</a>"
           }
-        } if child.consent.responses,
+        } if haveConsentResponse,
         {
           key: child.consent.parentOrGuardian.relationship,
           value: {
-            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if child.consent.responses )
+            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if haveConsentResponse )
           }
         } if child.consent.parentOrGuardian.relationship and not triaging
       ])
