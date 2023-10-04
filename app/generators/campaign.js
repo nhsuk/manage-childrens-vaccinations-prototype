@@ -1,7 +1,7 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import getSchool from './school.js'
-import getChildren from './children.js'
+import getPatient from './patient.js'
 import getYearGroups from './year-groups.js'
 import getHealthQuestions from './health-questions.js'
 
@@ -27,11 +27,10 @@ export default () => {
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.number.int({ min: 2, max: 100 })
   const triageInProgress = daysUntil < 28
-  const children = getChildren({
-    count: 100,
-    child: { ...ageRange(type), triageInProgress },
-    type
-  })
+  const options = { ...ageRange(type), triageInProgress }
+  // const children = getChildren(100, patientOptions)
+  const children = faker.helpers.multiple(getPatient(options), { count: 100 })
+    .sort((a, b) => a.fullName.localeCompare(b.fullName))
 
   return {
     id: generateRandomString(3),

@@ -56,7 +56,7 @@ const handleInProgressTriage = (patient) => {
   }
 }
 
-export default (options) => {
+const getPatient = (options) => {
   const { minYearGroup, maxYearGroup, triageInProgress, type } = options
   const patient = getChild(minYearGroup, maxYearGroup)
 
@@ -87,6 +87,14 @@ export default (options) => {
   if (triageInProgress) {
     handleInProgressTriage(patient)
   }
+
+  return patient
+}
+
+export default (options) => {
+  const patient = () => ({
+    ...getPatient(options)
+  })
 
   return patient
 }
