@@ -1,20 +1,18 @@
 {% set color = "blue" %}
-{% set heading = "Triage needed" %}
 
-{% if child.actionNeeded == ACTION_NEEDED.VACCINATE %}
+{% if child.triage == TRIAGE_OUTCOME.VACCINATE %}
   {% set color = "purple" %}
-  {% set heading = "Ready to vaccinate" %}
   {% set text = "Jane Doe decided that " + child.fullName + " can be vaccinated." %}
 {% endif %}
 
-{% if child.actionTaken == ACTION_TAKEN.DO_NOT_VACCINATE %}
+{% if (child.triage == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
+      (child.triage == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
   {% set color = "red" %}
-  {% set heading = ACTION_TAKEN.DO_NOT_VACCINATE %}
   {% set text = "Jane Doe decided that " + child.fullName + " should not be vaccinated." %}
 {% endif %}
 
 {{ appConsentBanner({
   color: color,
-  heading: heading,
+  heading: child.triage,
   text: text
 }) }}

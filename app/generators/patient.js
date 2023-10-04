@@ -79,7 +79,6 @@ export default (options) => {
   patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
 
   patient.actionNeeded = getActionNeeded(patient.consent)
-  patient.actionTaken = null
 
   patient.seen = {}
 

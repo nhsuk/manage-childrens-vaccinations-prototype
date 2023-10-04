@@ -5,7 +5,7 @@
   {% set color = "red" %}
 {% elif outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set color = "orange" %}
-{% elif outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
+{% else %}
   {% set color = "white" %}
 {% endif %}
 

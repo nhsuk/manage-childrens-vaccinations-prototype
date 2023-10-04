@@ -1,11 +1,10 @@
 {% set consent = child.consent[campaign.type] %}
 {% set isGillickCompetent = consentRecord["gillick-competent"] === "Yes" %}
 
-{% if child.actionTaken == ACTION_TAKEN.VACCINATED %}
+{% if child.outcome == PATIENT_OUTCOME.VACCINATED %}
   {% set color = "green" %}
-{% elif child.actionTaken == ACTION_TAKEN.COULD_NOT_GET_CONSENT %}
+{% elif child.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set color = "red" %}
-  {% set outcomeText = "Not vaccinated" %}
 {% else %}
   {% set color = "orange" %}
 {% endif %}
@@ -36,7 +35,7 @@
 
 {% call appConsentBanner({
   color: color,
-  heading: outcomeText or child.outcome,
+  heading: child.outcome,
   link: {
     href: "#",
     text: "Change outcome"
