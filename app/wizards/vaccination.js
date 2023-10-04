@@ -40,7 +40,7 @@ const journeyForEverythingElse = (data, campaign, child) => {
 
   if (!hasConsent && !askingForConsent) {
     return {
-      [`/campaign/${campaignId}/children?noConsent=${nhsNumber}`]: {}
+      [`/campaign/${campaignId}/record?noConsent=${nhsNumber}`]: {}
     }
   }
 
@@ -88,7 +88,7 @@ export function vaccination (req) {
       ? journeyFor3in1MenAcwy(req.session.data, campaignId, child)
       : journeyForEverythingElse(req.session.data, campaign, child),
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
-    [`/campaign/${campaignId}/children?success=${nhsNumber}`]: {}
+    [`/campaign/${campaignId}/record?success=${nhsNumber}`]: {}
   }
 
   return wizard(journey, req)

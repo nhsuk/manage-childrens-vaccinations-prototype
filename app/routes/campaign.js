@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import filterChildren from './_filter-children.js'
+import filters from './_filters.js'
 import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
@@ -80,7 +80,7 @@ export default (router) => {
       })
     }
 
-    res.redirect(`/campaign/${campaignId}/children-triage?success=${nhsNumber}&area=triage`)
+    res.redirect(`/campaign/${campaignId}/triage?success=${nhsNumber}&area=triage`)
   })
 
   router.post('/campaign/:campaignId', (req, res, next) => {
@@ -111,7 +111,7 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId/children'
+    '/campaign/:campaignId/record'
   ], (req, res, next) => {
     const campaign = req.session.data.campaigns[req.params.campaignId]
 
@@ -132,10 +132,11 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId/children',
-    '/campaign/:campaignId/children-triage'
+    '/campaign/:campaignId/responses',
+    '/campaign/:campaignId/triage',
+    '/campaign/:campaignId/record'
   ], (req, res, next) => {
-    res.locals.filteredChildren = filterChildren(req, res)
+    res.locals.filters = filters(req, res)
 
     if (res.locals.success) {
       const campaign = req.session.data.campaigns[req.params.campaignId]

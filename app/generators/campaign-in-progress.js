@@ -21,10 +21,7 @@ const setConsentOutcome = (patient) => {
 
 const setTriageOutcome = (patient) => {
   // Only relevant to children needing triage
-  if (
-    !patient.consent.outcome === CONSENT_OUTCOME.VALID &&
-    !patient.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
-  ) {
+  if (patient.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }
 

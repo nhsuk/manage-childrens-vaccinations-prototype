@@ -9,7 +9,7 @@
 {% block pageNavigation %}
   <div class="nhsuk-width-container">
     {{ backLink({
-      href: "/campaign/" + campaign.id + "/children-triage",
+      href: "/campaign/" + campaign.id + "/triage",
       classes: "nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-0"
     }) }}
   </div>
@@ -31,11 +31,10 @@
           {% include "campaign/child/_details.html" %}
           {% include "campaign/child/_consent-responses.html" %}
 
-          {% if child.consent.answersNeedTriage %}
+          {% if child.triage.outcome != TRIAGE_OUTCOME.NONE %}
             {% include "campaign/child/_triage-health-questions.html" %}
+            {% include "campaign/child/_triage.html" %}
           {% endif %}
-
-          {% include "campaign/child/_triage.html" %}
 
           {% if child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
             {% include "campaign/child/_action-triage.html" %}

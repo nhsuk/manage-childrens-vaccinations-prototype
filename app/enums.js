@@ -1,10 +1,5 @@
-export const ACTION_NEEDED = {
-  GET_CONSENT: 'Get consent',
-  CHECK_REFUSAL: 'Check refusal',
-  CHECK_CONFLICTING: 'Review conflicting consent'
-}
-
 export const TRIAGE_OUTCOME = {
+  NONE: 'No screening information',
   NEEDS_TRIAGE: 'Needs triage',
   DELAY_VACCINATION: 'Delay vaccination to a later date',
   DO_NOT_VACCINATE: 'Do not vaccinate in campaign',
@@ -50,7 +45,7 @@ export const CONSENT_OUTCOME = {
 
 export const PATIENT_OUTCOME = {
   NO_OUTCOME_YET: 'No outcome yet',
-  NO_CONSENT: 'No consent',
+  NO_CONSENT: 'No consent given',
   VACCINATED: 'Vaccinated',
   COULD_NOT_VACCINATE: 'Could not vaccinate'
 }

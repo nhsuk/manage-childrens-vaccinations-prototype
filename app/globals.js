@@ -1,10 +1,9 @@
 import _ from 'lodash'
-import { CONSENT_OUTCOME, ACTION_NEEDED, PATIENT_OUTCOME, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
+import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
 
 export default () => {
   const globals = {
     CONSENT_OUTCOME,
-    ACTION_NEEDED,
     PATIENT_OUTCOME,
     RESPONSE_REFUSAL,
     TRIAGE_OUTCOME,
@@ -131,6 +130,73 @@ export default () => {
       })
 
     return rows
+  }
+
+  /**
+   * Action needed filters
+   * @returns {object} Actions needed
+   */
+  globals.actionsFilter = {
+    'get-consent': 'Get consent',
+    'check-refusal': 'Check refusal',
+    triage: 'Triage',
+    vaccinate: 'Vaccinate'
+  }
+
+  /**
+   * Action properties
+   * @param {object} patient - Patient
+   * @returns {object} Action properties
+   */
+  globals.action = (patient) => {
+    const { consent, triage } = patient
+
+    switch (true) {
+      // Consent actions
+      case consent.outcome === CONSENT_OUTCOME.NO_RESPONSE:
+        return { text: 'Get consent', colour: 'yellow' }
+      case consent.outcome === CONSENT_OUTCOME.INCONSISTENT:
+        return { text: 'Review conflicting consent', colour: 'orange' }
+      case consent.outcome === CONSENT_OUTCOME.REFUSED:
+        return { text: 'Check refusal', colour: 'orange' }
+      case consent.outcome === CONSENT_OUTCOME.FINAL_REFUSAL:
+        return { text: 'Refused, do not contact', colour: 'red' }
+
+      // Triage actions
+      case consent.outcome === CONSENT_OUTCOME.VALID &&
+        triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE:
+        return { text: 'Triage', colour: 'blue' }
+      case consent.outcome === CONSENT_OUTCOME.VALID &&
+        triage.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE:
+        return { text: 'Do not vaccinate', colour: 'red' }
+
+      // Record actions
+      case consent.outcome === CONSENT_OUTCOME.VALID:
+      case consent.outcome === CONSENT_OUTCOME.VALID &&
+        triage.outcome === TRIAGE_OUTCOME.VACCINATE:
+        return { text: 'Vaccinate', colour: 'purple' }
+
+      // Default to no action
+      default:
+        return { text: 'No action needed', colour: 'white' }
+    }
+  }
+
+  /**
+   * Outcome properties
+   * @param {object} patient - Patient
+   * @returns {object} Outcome properties
+   */
+  globals.outcome = (patient) => {
+    switch (patient.outcome) {
+      case PATIENT_OUTCOME.VACCINATED:
+        return { text: patient.outcome, colour: 'green' }
+      case PATIENT_OUTCOME.COULD_NOT_VACCINATE:
+      case PATIENT_OUTCOME.NO_CONSENT:
+        return { text: patient.outcome, colour: 'red' }
+      default:
+        return { text: patient.outcome, colour: 'white' }
+    }
   }
 
   // Keep the following line to return your globals to the app

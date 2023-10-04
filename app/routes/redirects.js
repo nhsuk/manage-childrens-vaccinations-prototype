@@ -3,21 +3,21 @@ const getCampaignId = (req) => {
 }
 
 export default (router) => {
-  router.get('/go/record-vaccinations', (req, res) => {
-    res.redirect(`/campaign/${getCampaignId(req)}/children`)
+  router.get('/go/record', (req, res) => {
+    res.redirect(`/campaign/${getCampaignId(req)}/record`)
   })
 
   router.get('/go/triage', (req, res) => {
-    res.redirect(`/campaign/${getCampaignId(req)}/children-triage`)
+    res.redirect(`/campaign/${getCampaignId(req)}/triage`)
   })
 
   router.get('/go/in-progress', (req, res) => {
     const campaignId = Object.values(req.session.data.campaigns).find(c => c.inProgress).id
-    res.redirect(`/campaign/${campaignId}/children`)
+    res.redirect(`/campaign/${campaignId}/record`)
   })
 
   router.get('/go/in-progress-triage', (req, res) => {
     const campaignId = Object.values(req.session.data.campaigns).filter(c => c.triageInProgress)[0].id
-    res.redirect(`/campaign/${campaignId}/children-triage`)
+    res.redirect(`/campaign/${campaignId}/triage`)
   })
 }
