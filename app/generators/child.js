@@ -6,7 +6,7 @@ import { yearGroups } from './year-group.js'
 /**
  * Generate child
  * @param {number} minYearGroup - Minimum year group
- * @param {number} maxYearGroup - Minimum year group
+ * @param {number} maxYearGroup - Maximum year group
  * @returns {object} Child
  */
 export default (minYearGroup, maxYearGroup) => {
