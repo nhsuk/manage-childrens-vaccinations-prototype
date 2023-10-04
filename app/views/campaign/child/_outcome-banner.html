@@ -9,7 +9,7 @@
   {% set color = "orange" %}
 {% endif %}
 
-{% if consent == CONSENT.GIVEN %}
+{% if consent == CONSENT_OUTCOME.VALID %}
   {% set consentText %}
     {% if isGillickCompetent %}
       The child was assessed as Gillick competent and they gave consent.
@@ -17,11 +17,11 @@
       Their {{ child.consent.parentOrGuardian.relationship | lower }} gave consent
     {% endif %}
   {% endset %}
-{% elif consent == CONSENT.REFUSED %}
+{% elif consent == CONSENT_OUTCOME.REFUSED %}
   {% set consentText %}
     Their {{ child.consent.parentOrGuardian.relationship | lower }} refused to give consent
   {% endset %}
-{% elif consent == CONSENT.UNKNOWN %}
+{% elif consent == CONSENT_OUTCOME.NO_RESPONSE %}
   {% set consentText %}
     No-one responded to our requests for consent{% if child.assessedAsNotGillickCompetent %}.
       {% if isGillickCompetent %}

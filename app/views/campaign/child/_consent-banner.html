@@ -1,8 +1,8 @@
 {% set consent = child.consent[campaign.type] %}
-{% if consent == CONSENT.REFUSED %}
+{% if consent == CONSENT_OUTCOME.REFUSED %}
   {% set color = "orange" %}
   {% set heading = "Parent or guardian refused to give consent" %}
-{% elif consent == CONSENT.UNKNOWN %}
+{% elif consent == CONSENT_OUTCOME.NO_RESPONSE %}
   {% set color = "yellow" %}
   {% set heading = "No-one responded to our requests for consent" %}
 {% endif %}

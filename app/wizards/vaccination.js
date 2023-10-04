@@ -1,4 +1,4 @@
-import { VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums.js'
+import { CONSENT_OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums.js'
 import { wizard } from 'nhsuk-prototype-rig'
 import _ from 'lodash'
 
@@ -10,9 +10,9 @@ const journeyForEverythingElse = (data, campaign, child) => {
   const nhsNumber = child.nhsNumber
   const campaignId = campaign.id
   const hasDefaultBatch = !!data['todays-batch']
-  const isUnknown = child.consent.unknown || child.consent[campaign.type] === 'Unknown'
-  const refused = child.consent.refusedBoth || child.consent[campaign.type] === 'Refused'
-  const hasConsent = !(isUnknown || refused)
+  const isUnknown = child.consent.outcome || child.consent[campaign.type] === CONSENT_OUTCOME.NO_RESPONSE
+  const hasRefused = child.consent.outcome || child.consent[campaign.type] === CONSENT_OUTCOME.REFUSED
+  const hasConsent = !(isUnknown || hasRefused)
   const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
   const askForNoReason = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`) !== VACCINATION_OUTCOME.VACCINATED
   const isOtherSite = getData(data, `vaccination.${campaignId}.${nhsNumber}.site`) === VACCINATION_SITE.OTHER

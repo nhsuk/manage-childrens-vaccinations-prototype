@@ -1,25 +1,27 @@
 import _ from 'lodash'
 import { fakerEN_GB as faker } from '@faker-js/faker'
-import { ACTION_NEEDED, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
+import { ACTION_NEEDED, CONSENT_OUTCOME, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
 import getResponse from './response.js'
-import getDerivedConsent from './derived-consent.js'
+import getConsent from './consent.js'
 import { getYearGroup } from './year-group.js'
 
 const getActionNeeded = (consent) => {
-  if (consent.refused) {
+  if (consent.outcome === CONSENT_OUTCOME.REFUSED) {
     return ACTION_NEEDED.CHECK_REFUSAL
-  } else if (consent.unknown) {
+  } else if (consent.outcome === CONSENT_OUTCOME.NO_RESPONSE) {
     return ACTION_NEEDED.GET_CONSENT
-  } else if (consent.inconsistent) {
+  } else if (consent.outcome === CONSENT_OUTCOME.INCONSISTENT) {
     return ACTION_NEEDED.CHECK_CONFLICTING
   }
 }
 
 const handleInProgressTriage = (patient) => {
   // Only relevant to children needing triage
-  if (!patient.consent.consented && !patient.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
+  if (
+    !patient.consent.outcome === CONSENT_OUTCOME.VALID &&
+    !patient.triageStatus === TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }
 
@@ -68,7 +70,7 @@ export default (options) => {
   patient.address = getAddress()
   patient.yearGroup = getYearGroup(patient.dob)
   patient.responses = responses
-  patient.consent = getDerivedConsent(type, responses)
+  patient.consent = getConsent(type, responses)
   patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
 
   patient.actionNeeded = getActionNeeded(patient.consent)

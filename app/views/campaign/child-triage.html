@@ -1,9 +1,9 @@
 {% extends "layouts/default.html" %}
 {% set title = child.fullName %}
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
-{% set isUnknown = child.consent.unknown or child.consent[campaign.type] == "Unknown" %}
-{% set refused = child.consent.refusedBoth or child.consent[campaign.type] == "Refused" %}
-{% set consented = not refused and not isUnknown %}
+{% set isUnknown = child.consent.outcome or child.consent[campaign.type] == CONSENT_OUTCOME.NO_RESPONSE %}
+{% set hasRefused = child.consent.outcome or child.consent[campaign.type] == CONSENT_OUTCOME.REFUSED %}
+{% set hasConsented = not hasRefused and not isUnknown %}
 {% set triaging = true %}
 
 {% block pageNavigation %}
@@ -24,22 +24,20 @@
         <div class="nhsuk-grid-column-two-thirds">
           {% if child.triageStatus == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
             {% include "campaign/child/_triage-banner.html" %}
-          {% elseif not child.consent.responses or child.consent.refused %}
+          {% else %}
             {% include "campaign/child/_consent-banner.html" %}
           {% endif %}
 
           {% include "campaign/child/_details.html" %}
           {% include "campaign/child/_consent-responses.html" %}
 
-          {% if child.consent.consented or child.consent.inconsistent %}
+          {% if child.consent.answersNeedTriage %}
             {% include "campaign/child/_triage-health-questions.html" %}
           {% endif %}
 
-          {% if child.consent.responses %}
-            {% include "campaign/child/_triage.html" %}
-          {% endif %}
+          {% include "campaign/child/_triage.html" %}
 
-          {% if consented and child.triageStatus == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+          {% if child.triageStatus == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
             {% include "campaign/child/_action-triage.html" %}
           {% endif %}
         </div>

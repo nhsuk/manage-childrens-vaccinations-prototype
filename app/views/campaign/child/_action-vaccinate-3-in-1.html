@@ -1,4 +1,4 @@
-{% if not child.consent.both %}
+{% if not child.consent.outcome === CONSENT_OUTCOME.VALID %}
   {% set warningConsentFor %}
     {{ "the 3-in-1 booster" if child.consent["3-in-1"] == "Yes" else "MenACWY" }}
   {% endset %}

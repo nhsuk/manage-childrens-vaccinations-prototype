@@ -1,5 +1,5 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import { CONSENT, PATIENT_OUTCOME } from '../enums.js'
+import { CONSENT_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 
 export default (req, res, isTriage) => {
   const nhsNumber = req.params.nhsNumber
@@ -15,11 +15,11 @@ export default (req, res, isTriage) => {
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
         data: `${baseData}.consent`,
-        value: CONSENT.GIVEN
+        value: CONSENT_OUTCOME.VALID
       },
       [`${basePath}/confirm`]: {
         data: `${baseData}.consent`,
-        value: CONSENT.UNKNOWN
+        value: CONSENT_OUTCOME.NO_RESPONSE
       }
     },
     [`${basePath}/why-not-consenting`]: {
@@ -34,7 +34,7 @@ export default (req, res, isTriage) => {
       },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: {
         data: `${baseData}.consent`,
-        excludedValue: CONSENT.GIVEN
+        excludedValue: CONSENT_OUTCOME.VALID
       }
     },
     [`${basePath}/vaccinate`]: {
@@ -62,7 +62,7 @@ export default (req, res, isTriage) => {
     [`${basePath}/consent?gillick`]: {
       [`${basePath}/health-questions`]: {
         data: `${baseData}.consent`,
-        value: CONSENT.GIVEN
+        value: CONSENT_OUTCOME.VALID
       },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
         res.locals.child.outcome = PATIENT_OUTCOME.NO_CONSENT
