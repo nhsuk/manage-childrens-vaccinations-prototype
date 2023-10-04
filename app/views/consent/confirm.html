@@ -71,7 +71,7 @@
           rows: decorateRows([
             {
               key: "Status",
-              value: d("triage." + campaign.id + "." + child.nhsNumber + ".status") or "Not provided",
+              value: d("triage." + campaign.id + "." + child.nhsNumber + ".outcome") or "Not provided",
               href: "#"
             },
             {

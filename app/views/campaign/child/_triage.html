@@ -1,14 +1,14 @@
 {% set cardDescription %}
-  {% if child.triageStatus == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+  {% if child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
     <p class="nhsuk-body">Needs triage</p>
-  {% elif child.triageStatus != TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+  {% elif child.triage.outcome != TRIAGE_OUTCOME.NEEDS_TRIAGE %}
     <p class="nhsuk-body">Triage complete</p>
   {% else %}
     <p class="nhsuk-body">No triage needed</p>
   {% endif %}
-  {% if child.triageNotes.length %}
+  {% if child.triage.notes.length %}
     <ul class="nhsuk-list">
-    {% for note in child.triageNotes | reverse %}
+    {% for note in child.triage.notes | reverse %}
       <li>
         <p class="nhsuk-u-margin-bottom-1">{{ note.note }}</p>
         <p class="nhsuk-u-secondary-text-color nhsuk-u-font-size-16 {% if loop.last %}nhsuk-u-margin-bottom-0{% endif %}">{{ note.user.name }}, {{ note.date | govukDate }} at {{ note.date | govukTime }}</p>
