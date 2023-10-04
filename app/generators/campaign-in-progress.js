@@ -1,74 +1,62 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import _ from 'lodash'
-import { PATIENT_OUTCOME, TRIAGE_OUTCOME, ACTION_NEEDED, CONSENT_OUTCOME } from '../enums.js'
+import { CONSENT_OUTCOME, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 import getCampaign from './campaign.js'
+import getUser from './user.js'
 
-const setActions = (child) => {
-  if (child.consent.outcome === CONSENT_OUTCOME.REFUSED) {
+const setConsentOutcome = (patient) => {
+  // 20% of refusals chased, and all confirmed their refusal
+  if (patient.consent.outcome === CONSENT_OUTCOME.REFUSED) {
     const checkedRefusal = faker.helpers.maybe(
       () => true, { probability: 0.2 }
     )
 
     if (checkedRefusal) {
-      child.outcome = PATIENT_OUTCOME.NO_CONSENT
-    } else {
-      child.actionNeeded = ACTION_NEEDED.CHECK_REFUSAL
-    }
-  }
-
-  if (child.consent.outcome === CONSENT_OUTCOME.INCONSISTENT) {
-    child.actionNeeded = ACTION_NEEDED.CHECK_CONFLICTING
-  }
-
-  if (child.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE) {
-    const attemptedToGetConsent = faker.helpers.maybe(
-      () => true, { probability: 0.2 }
-    )
-
-    if (attemptedToGetConsent) {
-      child.outcome = PATIENT_OUTCOME.NO_CONSENT
-    } else {
-      child.actionNeeded = ACTION_NEEDED.GET_CONSENT
-    }
-  }
-
-  if (child.consent.outcome === CONSENT_OUTCOME.VALID) {
-    const couldNotVaccinate = faker.helpers.maybe(
-      () => PATIENT_OUTCOME.COULD_NOT_VACCINATE, { probability: 0.2 }
-    )
-
-    if (couldNotVaccinate) {
-      child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
-    } else {
-      child.outcome = PATIENT_OUTCOME.VACCINATED
+      patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
+      patient.outcome = PATIENT_OUTCOME.NO_CONSENT
     }
   }
 }
 
-const setTriageOutcome = (child) => {
+const setTriageOutcome = (patient) => {
   // Only relevant to children needing triage
   if (
-    !child.consent.outcome === CONSENT_OUTCOME.VALID &&
-    !child.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
+    !patient.consent.outcome === CONSENT_OUTCOME.VALID &&
+    !patient.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
   ) {
     return
   }
 
-  child.triage.outcome = TRIAGE_OUTCOME.VACCINATE
+  patient.triage.outcome = TRIAGE_OUTCOME.VACCINATE
 
   // Add realistic triage note
-  if (child.__triageNote) {
-    child.triage.notes.push({
+  if (patient.__triageNote) {
+    patient.triage.notes.push({
       date: faker.date.recent({ days: 30 }),
-      note: child.__triageNote,
-      user: {
-        name: 'Jane Doe',
-        email: 'jane.doe@example.com'
-      }
+      note: patient.__triageNote,
+      user: getUser()
     })
 
-    delete child.__triageNote
+    delete patient.__triageNote
+  }
+}
+
+const setOutcome = (patient) => {
+  // 20% of patients could not be vaccinated
+  if (
+    patient.consent.outcome === CONSENT_OUTCOME.VALID &&
+    patient.triage.outcome === TRIAGE_OUTCOME.VACCINATE
+  ) {
+    const couldNotVaccinate = faker.helpers.maybe(
+      () => true, { probability: 0.2 }
+    )
+
+    if (couldNotVaccinate) {
+      patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
+    } else {
+      patient.outcome = PATIENT_OUTCOME.VACCINATED
+    }
   }
 }
 
@@ -78,14 +66,14 @@ export default (options) => {
   campaign.inProgress = true
   campaign.date = DateTime.now().toISODate() + 'T' + '09:00'
 
-  // set triage outcomes for all children
-  campaign.children.forEach(child => {
-    setTriageOutcome(child)
-  })
+  // Set consent outcome for all patients
+  campaign.children.forEach(patient => setConsentOutcome(patient))
 
-  _.sampleSize(campaign.children, 50).forEach(child => {
-    setActions(child)
-  })
+  // Set triage outcome for all patients
+  campaign.children.forEach(patient => setTriageOutcome(patient))
+
+  // Set patient outcome for 50% of patients
+  _.sampleSize(campaign.children, 50).forEach(patient => setOutcome(patient))
 
   return campaign
 }
