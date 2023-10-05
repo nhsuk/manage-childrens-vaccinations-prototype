@@ -29,9 +29,7 @@ export default (router) => {
 
   router.all([
     '/campaign/:campaignId/child/:nhsNumber',
-    '/campaign/:campaignId/child/:nhsNumber/*',
-    '/campaign/:campaignId/child-triage/:nhsNumber/',
-    '/campaign/:campaignId/child-triage/:nhsNumber/*'
+    '/campaign/:campaignId/child/:nhsNumber/*'
   ], (req, res, next) => {
     res.locals.child = res.locals.campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
     if (res.locals.campaign.is3in1MenACWY) {
@@ -46,41 +44,36 @@ export default (router) => {
     next()
   })
 
-  router.post([
-    '/campaign/:campaignId/child/:nhsNumber'
-  ], (req, res) => {
-    res.redirect(res.locals.paths.next)
-  })
-
-  router.post([
-    '/campaign/:campaignId/child-triage/:nhsNumber'
-  ], (req, res) => {
+  router.post('/campaign/:campaignId/child/:nhsNumber', (req, res, next) => {
     const { child } = res.locals
     const { campaignId, nhsNumber } = req.params
+    const { isTriage } = req.session.data
     const triage = _.get(req.body, `triage.${campaignId}.${nhsNumber}`, {})
 
-    if (triage) {
+    if (isTriage && triage) {
       child.triage.outcome = triage.outcome
 
       // If triage outcome is not to vaccinate, set patient outcome
       if (triage.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
         child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
-    }
 
-    // Update triage notes
-    if (triage.note) {
-      child.triage.notes.push({
-        date: new Date().toISOString(),
-        note: triage.note,
-        user: {
-          name: 'Jacinta Dodds',
-          email: 'jacinta.dodds@example.com'
-        }
-      })
-    }
+      // Update triage notes
+      if (triage.note) {
+        child.triage.notes.push({
+          date: new Date().toISOString(),
+          note: triage.note,
+          user: {
+            name: 'Jacinta Dodds',
+            email: 'jacinta.dodds@example.com'
+          }
+        })
+      }
 
-    res.redirect(`/campaign/${campaignId}/triage?success=${nhsNumber}&area=triage`)
+      res.redirect(`/campaign/${campaignId}/triage?success=${nhsNumber}`)
+    } else {
+      res.redirect(res.locals.paths.next)
+    }
   })
 
   router.post('/campaign/:campaignId', (req, res, next) => {
@@ -102,12 +95,6 @@ export default (router) => {
     '/campaign/:campaignId/child/:nhsNumber'
   ], (req, res) => {
     res.render('campaign/child')
-  })
-
-  router.all([
-    '/campaign/:campaignId/child-triage/:nhsNumber'
-  ], (req, res) => {
-    res.render('campaign/child-triage')
   })
 
   router.all([
@@ -143,7 +130,6 @@ export default (router) => {
       res.locals.successChild = campaign.children.find(c => {
         return c.nhsNumber === req.query.success
       })
-      res.locals.area = req.query.area
     }
     next()
   })

@@ -12,11 +12,10 @@
     {% endset %}
 
     {{ details({
-      classes: "nhsuk-u-margin-bottom-0" if loop.last,
       attributes: { open: true },
       text: detailText,
       HTML: summaryList({
-        classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+        classes: "app-summary-list--no-bottom-border",
         rows: decorateRows([
           {
             key: "Reason for refusal",
@@ -38,14 +37,19 @@
       })
     }) }}
   {% else %}
-    <p>No response yet</p>
-
-    {{ button({
-      classes: "nhsuk-u-margin-bottom-0",
-      text: "Get consent",
-      href: "/triage-consent/" + campaign.id + "/" + child.nhsNumber
-    }) }}
+    <p class="nhsuk-body nhsuk-u-margin-bottom-0">No responses yet</p>
   {% endfor %}
+
+  {% set detailsHtml %}
+    {% include "campaign/child/_health-answers.html" %}
+  {% endset %}
+
+  {{ details({
+    text: "Responses to health questions",
+    attributes: { open: true } if child.consent.answersNeedTriage,
+    HTML: detailsHtml,
+    classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
+  }) if child.responses.length }}
 {% endset %}
 
 {{ card({
