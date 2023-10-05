@@ -1,15 +1,3 @@
-{% set siteHtml %}
-  {{ radios({
-    items: [
-      { text: VACCINATION_SITE.ARM_LEFT },
-      { text: VACCINATION_SITE.ARM_RIGHT },
-      { text: VACCINATION_SITE.OTHER }
-    ],
-    classes: "nhsuk-radios--inline",
-    decorate: ["vaccination", campaign.id, child.nhsNumber, "site"]
-  }) }}
-{% endset %}
-
 {% set title = "Did they get the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine?" %}
 
 {{ radios({
@@ -23,7 +11,15 @@
     text: "Yes, they got the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine",
     value: VACCINATION_OUTCOME.VACCINATED,
     conditional: {
-      html: siteHtml
+      html: radios({
+        items: [
+          { text: VACCINATION_SITE.ARM_LEFT },
+          { text: VACCINATION_SITE.ARM_RIGHT },
+          { text: VACCINATION_SITE.OTHER }
+        ],
+        classes: "nhsuk-radios--inline",
+        decorate: ["vaccination", campaign.id, child.nhsNumber, "site"]
+      })
     } if not campaign.isFlu
   }, {
     text: "No, they did not get it",
