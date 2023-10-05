@@ -59,9 +59,9 @@
     }) }}
   {% endif %}
 
-  {% if consented %}
+  {% if hasConsented %}
     {% set consentJourney = true %}
-    {% include "campaign/child/_triage-health-questions.html" %}
+    {% include "campaign/child/_health-questions.html" %}
 
     <div class="nhsuk-card">
       <div class="nhsuk-card__content">
