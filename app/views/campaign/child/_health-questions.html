@@ -1,0 +1,15 @@
+{% set detailsHtml %}
+  {% include "campaign/child/_health-answers.html" %}
+{% endset %}
+
+{{ card({
+  heading: "Health questions",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: details({
+    text: "Show answers",
+    attributes: { open: true } if child.consent.answersNeedTriage,
+    HTML: detailsHtml,
+    classes: "nhsuk-expander nhsuk-u-margin-bottom-0"
+  })
+}) }}

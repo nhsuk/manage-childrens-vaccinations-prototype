@@ -32,7 +32,7 @@
           {% include "campaign/child/_consent-responses.html" %}
 
           {% if child.triage.outcome != TRIAGE_OUTCOME.NONE %}
-            {% include "campaign/child/_triage-health-questions.html" %}
+            {% include "campaign/child/_health-questions.html" %}
             {% include "campaign/child/_triage.html" %}
           {% endif %}
 
