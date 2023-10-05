@@ -1,4 +1,4 @@
-{% set consentHtml %}
+{% set description %}
   {% for response in child.responses %}
     {% set parentContactDetailsHtml %}
       <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
@@ -49,8 +49,8 @@
 {% endset %}
 
 {{ card({
-  heading: "Consent",
+  heading: "Consent responses",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: consentHtml
+  description: description
 }) }}
