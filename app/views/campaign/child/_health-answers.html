@@ -10,7 +10,7 @@
   {% set uniqueResponses = child.responses | selectattr("healthAnswers") | uniqueFromArrayBy("healthAnswers[" + id + "]") %}
   {% for response in uniqueResponses %}
     {%- if child.responses.length > 1 %}
-      {%- set who = (response.parentOrGuardian.relationship if uniqueResponses.length > 1 else "All") + " answered:" -%}
+      {%- set who = (response.parentOrGuardian.relationship if uniqueResponses.length > 1 else "All") + " responded:" -%}
     {% endif -%}
     <p class="nhsuk-body">
       {{- who }} {{ "No" if not response.healthAnswers[id] else "Yes" }}

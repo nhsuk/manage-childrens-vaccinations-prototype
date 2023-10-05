@@ -1,16 +1,14 @@
 import { wizard } from 'nhsuk-prototype-rig'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 
-export default (req, res, isTriage) => {
+export default (req, res) => {
   const nhsNumber = req.params.nhsNumber
   const campaignId = req.params.campaignId
-  const triagePath = isTriage ? 'triage-consent' : 'consent'
-  const childPath = isTriage ? 'child-triage' : 'child'
-  const basePath = `/${triagePath}/${campaignId}/${nhsNumber}`
+  const basePath = `/consent/${campaignId}/${nhsNumber}`
   const baseData = `consent.${campaignId}.${nhsNumber}`
 
   const journey = {
-    [`/campaign/${campaignId}/${childPath}/${nhsNumber}`]: {},
+    [`/campaign/${campaignId}/child/${nhsNumber}`]: {},
     [basePath]: {},
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
@@ -29,9 +27,6 @@ export default (req, res, isTriage) => {
       [`${basePath}/confirm`]: true
     },
     [`${basePath}/confirm`]: {
-      [`/campaign/${campaignId}/child-triage/${nhsNumber}`]: () => {
-        return isTriage
-      },
       [`/campaign/${campaignId}/child/${nhsNumber}`]: {
         data: `${baseData}.consent`,
         excludedValue: CONSENT_OUTCOME.VALID

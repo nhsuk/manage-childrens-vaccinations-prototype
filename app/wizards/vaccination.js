@@ -10,9 +10,9 @@ const journeyForEverythingElse = (data, campaign, child) => {
   const nhsNumber = child.nhsNumber
   const campaignId = campaign.id
   const hasDefaultBatch = !!data['todays-batch']
-  const isUnknown = child.consent.outcome || child.consent[campaign.type] === CONSENT_OUTCOME.NO_RESPONSE
-  const hasRefused = child.consent.outcome || child.consent[campaign.type] === CONSENT_OUTCOME.REFUSED
-  const hasConsent = !(isUnknown || hasRefused)
+  const hasNoResponse = child.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
+  const hasRefused = child.consent.outcome === CONSENT_OUTCOME.REFUSED
+  const hasConsent = !(hasNoResponse || hasRefused)
   const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
   const askForNoReason = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`) !== VACCINATION_OUTCOME.VACCINATED
   const isOtherSite = getData(data, `vaccination.${campaignId}.${nhsNumber}.site`) === VACCINATION_SITE.OTHER

@@ -1,9 +1,9 @@
 {% extends "layouts/default.html" %}
 {% set title = child.fullName %}
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
-{% set isUnknown = child.consent.outcome or child.consent[campaign.type] == CONSENT_OUTCOME.NO_RESPONSE %}
-{% set hasRefused = child.consent.outcome or child.consent[campaign.type] == CONSENT_OUTCOME.REFUSED %}
-{% set hasConsented = not hasRefused and not isUnknown %}
+{% set hasNoResponse = child.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
+{% set hasRefused = child.consent.outcome == CONSENT_OUTCOME.REFUSED %}
+{% set hasConsented = not hasRefused and not hasNoResponse %}
 
 {% block pageNavigation %}
   <div class="nhsuk-width-container">
@@ -21,30 +21,30 @@
 
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
-          {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
+          {% if child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+            {% include "campaign/child/_triage-banner.html" %}
+          {% elif child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
             {% include "campaign/child/_consent-banner.html" %}
           {% else %}
             {% include "campaign/child/_outcome-banner.html" %}
           {% endif %}
 
-          {% include "campaign/child/_responses.html" %}
-        </div>
-      </div>
-
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
           {% include "campaign/child/_details.html" %}
+
+          {% include "campaign/child/_responses.html" %}
           {% include "campaign/child/_consent-gillick.html" %}
 
           {% if hasConsented %}
-            {% include "campaign/child/_health-questions.html" %}
             {% include "campaign/child/_triage.html" %}
           {% endif %}
 
           {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
-            {% if isUnknown or hasRefused %}
+            {% if hasNoResponse or hasRefused %}
               {% include "campaign/child/_action-get-consent.html" %}
-            {% elseif child.triage.outcome == TRIAGE_OUTCOME.VACCINATE %}
+            {% elif child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+              {% include "campaign/child/_action-triage.html" %}
+            {% elif child.triage.outcome == TRIAGE_OUTCOME.VACCINATE or
+              child.triage.outcome == TRIAGE_OUTCOME.NONE %}
               {% include "campaign/child/_action-vaccinate.html" %}
             {% endif %}
           {% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
