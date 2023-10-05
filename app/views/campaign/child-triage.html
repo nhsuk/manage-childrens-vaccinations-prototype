@@ -29,7 +29,7 @@
           {% endif %}
 
           {% include "campaign/child/_details.html" %}
-          {% include "campaign/child/_consent-responses.html" %}
+          {% include "campaign/child/_responses.html" %}
 
           {% if child.triage.outcome != TRIAGE_OUTCOME.NONE %}
             {% include "campaign/child/_health-questions.html" %}
