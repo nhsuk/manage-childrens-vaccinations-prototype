@@ -1,10 +1,32 @@
-{% set consent = child.consent[campaign.type] %}
-{% if consent == CONSENT_OUTCOME.REFUSED %}
-  {% set color = "orange" %}
-  {% set heading = "Parent or guardian refused to give consent" %}
-{% elif consent == CONSENT_OUTCOME.NO_RESPONSE %}
+{% if child.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
   {% set color = "yellow" %}
   {% set heading = "No-one responded to our requests for consent" %}
+{% else %}
+  {# MenACWY only #}
+  {% if child.consent.outcome == CONSENT_OUTCOME.ONLY_MENACWY %}
+    {% set color = "purple" %}
+    {% set heading = "Parent or guardian gave consent for MenACWY" %}
+  {% else %}
+    {% set color = "orange" %}
+    {% set heading = "Parent or guardian refused to give consent for MenACWY"%}
+  {% endif %}
+
+  {# 3-in-1 only #}
+  {% if child.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 %}
+    {% set color = "purple" %}
+    {% set heading = "Parent or guardian gave consent for the 3-in-1 booster" %}
+  {% else %}
+    {% set color = "orange" %}
+    {% set heading = "Parent or guardian refused to give consent for the 3-in-1 booster" %}
+  {% endif %}
+
+  {# Flu or HPV #}
+  {% if child.consent.outcome == CONSENT_OUTCOME.VALID %}
+    {% set heading = false %}
+  {% else %}
+    {% set color = "orange" %}
+    {% set heading = "Parent or guardian refused to give consent" %}
+  {% endif %}
 {% endif %}
 
 {{ appConsentBanner({
