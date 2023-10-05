@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block main %}
-  <div class="nhsuk-width-container">
+  <form class="nhsuk-width-container" method="post">
     <main class="nhsuk-main-wrapper" id="main-content" role="main">
       <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
@@ -82,5 +82,5 @@
         </div>
       </div>
     </main>
-  </div>
+  </form>
 {% endblock %}

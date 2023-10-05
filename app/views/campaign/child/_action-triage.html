@@ -42,11 +42,9 @@
   }) }}
 {% endset %}
 
-<form method="post">
-  {{ card({
-    heading: "Is it safe to vaccinate " + child.fullName + "?",
-    headingLevel: "2",
-    headingClasses: "nhsuk-heading-m",
-    description: cardDescription
-  }) }}
-</form>
+{{ card({
+  heading: "Is it safe to vaccinate " + child.fullName + "?",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: cardDescription
+}) }}

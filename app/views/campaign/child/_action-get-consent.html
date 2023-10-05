@@ -19,11 +19,9 @@
   }) }}
 {% endset %}
 
-<form method="post">
-  {{ card({
-    heading: "Are you attempting to get consent?",
-    headingLevel: "2",
-    headingClasses: "nhsuk-heading-m",
-    description: getConsent
-  }) }}
-</form>
+{{ card({
+  heading: "Are you attempting to get consent?",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: getConsent
+}) }}
