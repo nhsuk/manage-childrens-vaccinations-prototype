@@ -63,11 +63,9 @@
   }) }}
 {% endset %}
 
-<form method="post">
-  {{ card({
-    heading: "Which vaccines did they get?" if campaign.is3in1MenACWY else "Did they get the vaccine?",
-    headingLevel: "2",
-    headingClasses: "nhsuk-heading-m",
-    description: description
-  }) }}
-</form>
+{{ card({
+  heading: "Which vaccines did they get?" if campaign.is3in1MenACWY else "Did they get the vaccine?",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: description
+}) }}
