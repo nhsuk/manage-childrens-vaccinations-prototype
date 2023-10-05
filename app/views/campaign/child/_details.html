@@ -1,65 +1,42 @@
-<div class="nhsuk-card">
-  <div class="nhsuk-card__content">
-    <h2 class="nhsuk-card__heading nhsuk-heading-m">
-      Child details
-    </h2>
-    {% set parentContactDetailsHtml %}
-      <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-        Phone: {{ child.consent.parentOrGuardian.tel }}<br>
-        Email: {{ child.consent.parentOrGuardian.email }}
-      </div>
-    {% endset %}
-
-    {% set addressHtml %}
-      1 Street Name<br>
-      Town<br>
-      City<br>
-      BN1 1AA
-    {% endset %}
-
-    {% set haveConsentResponse = child.consent.outcome != CONSENT_OUTCOME.NO_RESPONSE %}
-    {{ summaryList({
-      classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
-      rows: decorateRows([
-        {
-          key: "Name",
-          value: child.fullName
-        },
-        {
-          key: "Known as",
-          value: child.knownAs
-        } if child.knownAs,
-        {
-          key: "Date of birth",
-          value: child.dob | govukDate + " (aged " + child.dob | age + ")"
-        },
-        {
-          key: "Address",
-          value: {
-            html: child.address | nl2br
-          }
-        } if haveConsentResponse,
-        {
-          key: "GP",
-          value: child.gpSurgery
-        } if haveConsentResponse,
-        {
-          key: "NHS Number",
-          value: child.nhsNumber | formatNHSNumber
-        } if haveConsentResponse,
-        {
-          key: "Vaccination history",
-          value: {
-            html: "<a href=\"#\">Record available</a>"
-          }
-        } if haveConsentResponse,
-        {
-          key: child.consent.parentOrGuardian.relationship,
-          value: {
-            html: child.consent.parentOrGuardian.fullName + ( parentContactDetailsHtml if haveConsentResponse )
-          }
-        } if child.consent.parentOrGuardian.relationship
-      ])
-    }) }}
-  </div>
-</div>
+{{ card({
+  heading: "Child details",
+  headingLevel: "2",
+  headingClasses: "nhsuk-heading-m",
+  description: summaryList({
+    classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+    rows: decorateRows([
+      {
+        key: "Name",
+        value: child.fullName
+      },
+      {
+        key: "Known as",
+        value: child.knownAs
+      } if child.knownAs,
+      {
+        key: "Date of birth",
+        value: child.dob | govukDate + " (aged " + child.dob | age + ")"
+      },
+      {
+        key: "Address",
+        value: {
+          html: child.address | nl2br
+        }
+      } if not hasNoResponse,
+      {
+        key: "GP",
+        value: child.gpSurgery
+      } if not hasNoResponse,
+      {
+        key: "NHS Number",
+        value: child.nhsNumber | formatNHSNumber
+      } if not hasNoResponse,
+      {
+        key: "Vaccination history",
+        value: {
+          html: "<a href=\"#\">Record available</a>"
+        }
+      } if not hasNoResponse
+    ])
+  })
+}) }}
