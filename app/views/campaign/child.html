@@ -48,8 +48,6 @@
           {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
             {% if isUnknown or hasRefused %}
               {% include "campaign/child/_action-get-consent.html" %}
-            {% elseif campaign.is3in1MenACWY %}
-              {% include "campaign/child/_action-vaccinate-3-in-1.html" %}
             {% elseif child.triage.outcome == TRIAGE_OUTCOME.VACCINATE %}
               {% include "campaign/child/_action-vaccinate.html" %}
             {% endif %}

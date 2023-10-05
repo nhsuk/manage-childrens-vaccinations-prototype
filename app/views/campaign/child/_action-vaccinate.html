@@ -1,9 +1,61 @@
-{% set wasGiven %}
+{% if not child.consent.outcome === CONSENT_OUTCOME.VALID %}
+  {% set warningConsentFor = "the 3-in-1 booster" if child.consent["3-in-1"] == "Yes" else "MenACWY" %}
+  {{ warningCallout({
+    heading: "Do not give both vaccines",
+    classes: "nhsuk-u-margin-bottom-6",
+    HTML: "<p>Consent has only been given for " + warningConsentFor + ".</p>"
+  }) }}
+{% endif %}
+
+{% set description %}
   {% if campaign.type == "HPV" %}
     <p>They need their 1st dose.</p>
   {% endif %}
 
-  {% include "campaign/child/_action-vaccinate-options.html" %}
+  {% if campaign.is3in1MenACWY %}
+    {{ checkboxes({
+      items: [{
+        text: "MenACWY",
+        value: "men-acwy",
+        conditional: {
+          html: radios({
+            items: [
+              { text: VACCINATION_SITE.ARM_LEFT },
+              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.OTHER }
+            ],
+            classes: "nhsuk-radios--inline",
+            decorate: ["vaccination", campaign.id, child.nhsNumber, "siteMenACWY"]
+          })
+        }
+      }, {
+        text: "3-in-1 booster",
+        value: "3-in-1",
+        conditional: {
+          html: radios({
+            items: [
+              { text: VACCINATION_SITE.ARM_LEFT },
+              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.OTHER }
+            ],
+            classes: "nhsuk-radios--inline",
+            decorate: ["vaccination", campaign.id, child.nhsNumber, "site3in1"]
+          })
+        }
+      }, {
+        divider: "or"
+      }, {
+        text: "None",
+        value: "none"
+      }],
+      formGroup: {
+        classes: "nhsuk-u-margin-bottom-7"
+      },
+      decorate: ["vaccination", campaign.id, child.nhsNumber, "multi-given"]
+    }) }}
+  {% else %}
+    {% include "_radios-vaccination-outcome.html" %}
+  {% endif %}
 
   {{ button({
     text: "Continue",
@@ -13,9 +65,9 @@
 
 <form method="post">
   {{ card({
-    heading: "Did they get the vaccine?",
+    heading: "Which vaccines did they get?" if campaign.is3in1MenACWY else "Did they get the vaccine?",
     headingLevel: "2",
     headingClasses: "nhsuk-heading-m",
-    description: wasGiven
+    description: description
   }) }}
 </form>
