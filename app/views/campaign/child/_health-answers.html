@@ -1,3 +1,6 @@
+{% if consentJourney %}
+  <p><a href="#">Change</a></p>
+{% endif %}
 {% for id, question in campaign.healthQuestions %}
   <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2 {% if not loop.first %}nhsuk-u-margin-top-4{% endif %}">
     {{ question }}

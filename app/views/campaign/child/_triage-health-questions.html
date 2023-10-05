@@ -1,8 +1,5 @@
 {% set cardDescription %}
-  {% if consentJourney %}
-    <p><a href="#">Change</a></p>
-  {% endif %}
-  {% include "campaign/child/_health-questions.html" %}
+  {% include "campaign/child/_health-answers.html" %}
 {% endset %}
 
 {{ card({
