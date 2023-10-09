@@ -73,6 +73,11 @@ export default (env) => {
     return _.uniqBy(array, value)
   }
 
+  // return array without empty values
+  filters.removeEmptyFromArray = (array) => {
+    return array.filter(item => item)
+  }
+
   // Keep the following line to return your filters to the app
   return filters
 }

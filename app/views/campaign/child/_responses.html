@@ -1,12 +1,5 @@
 {% set description %}
   {% for response in child.responses %}
-    {% set parentContactDetailsHtml %}
-      <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-        Phone: {{ response.parentOrGuardian.tel }}<br>
-        Email: {{ response.parentOrGuardian.email }}
-      </div>
-    {% endset %}
-
     {% set detailText %}
       {{ response[campaign.type] + " by " + response.parentOrGuardian.relationship }} on {{ response.date | govukDate }}
     {% endset %}
@@ -18,21 +11,27 @@
         classes: "app-summary-list--no-bottom-border",
         rows: decorateRows([
           {
-            key: "Reason for refusal",
-            value: {
-              html: response.refusalReason | default("Personal choice") + (" – " + response.refusalReasonOther if response.refusalReason == "Other")
-            }
-          } if response.refusalReason,
-          {
             key: response.parentOrGuardian.relationship,
             value: {
-              html: response.parentOrGuardian.fullName + ( parentContactDetailsHtml if not isUnknown )
+              html: response.parentOrGuardian.fullName
+            }
+          },
+          {
+            key: "Contact details",
+            value: {
+              html: [response.parentOrGuardian.tel, response.parentOrGuardian.email] | removeEmptyFromArray | join("<br>")
             }
           },
           {
             key: "Type of consent",
             value: response.method
-          }
+          },
+          {
+            key: "Reason for refusal",
+            value: {
+              html: response.refusalReason | default("Personal choice") + (" – " + response.refusalReasonOther if response.refusalReason == "Other")
+            }
+          } if response.refusalReason
         ])
       })
     }) }}
