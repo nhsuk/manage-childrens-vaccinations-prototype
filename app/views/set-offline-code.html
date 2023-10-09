@@ -15,17 +15,20 @@
 
       <p>Make a copy of this code and keep it safe, we will ask you for it when you are working offline.</p>
 
-      <div class="nhsuk-card">
-        <div class="nhsuk-card__content">
-          <p class="nhsuk-u-margin-bottom-0">Your code:</p>
-          <h3 class="nhsuk-card__heading nhsuk-u-padding-top-0 nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
-            tomato-lettuce-pear
-          </h3>
-          <p class="nhsuk-u-margin-top-0">
-            <a href="#">Get a different code</a>
-          </p>
-        </div>
-      </div>
+      {% set descriptionHtml %}
+        <p class="nhsuk-body">
+          <code class="nhsuk-u-font-size-24 nhsuk-u-font-weight-bold">tomato-lettuce-pear</code>
+        </p>
+        <p class="nhsuk-body nhsuk-u-margin-bottom-0">
+          <a href="#">Get a different code</a>
+        </p>
+      {% endset %}
+
+      {{ card({
+        heading: "Your code:",
+        headingClasses: "nhsuk-heading-xs nhsuk-u-font-weight-normal nhsuk-u-margin-bottom-0s",
+        descriptionHtml: descriptionHtml
+      }) }}
 
       <form method="post">
         {{ input({

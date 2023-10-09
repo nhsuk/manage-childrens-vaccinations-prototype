@@ -49,13 +49,14 @@
         </tbody>
       </table>
     {% else %}
-      <div style="margin-top: 32px; border: 2px solid #b1b4b6; min-height: 300px">
-        <div class="nhsuk-card__content">
-          <h2 class="nhsuk-heading-l">No results</h2>
-          <p>We couldn’t find any children that matched your filters.</p>
-          <p><a href="?">Remove filter</a></p>
-        </div>
-      </div>
+      {% set descriptionHtml %}
+        <p class="nhsuk-body">We couldn’t find any children that matched your filters.</p>
+        <p class="nhsuk-body"><a href="?">Remove filter</a></p>
+      {% endset %}
+      {{ card({
+        heading: "No results",
+        descriptionHtml: descriptionHtml
+      }) }}
     {% endif %}
   </div>
 </div>

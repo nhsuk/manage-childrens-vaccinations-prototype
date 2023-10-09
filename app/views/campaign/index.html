@@ -117,16 +117,18 @@
   {% else %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="nhsuk-card">
-        <div class="nhsuk-card__content">
-          <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-2">
-            <span class="app-online-status app-online-status--offline">
-              {{ appIcon({ type: "cross" }) }} Not available offline
-            </span>
-          </h2>
-          <p>Go online to access this session</p>
-        </div>
-      </div>
+      {% set headingHtml %}
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <span class="app-online-status app-online-status--offline">
+            {{ appIcon({ type: "cross" }) }} Not available offline
+          </span>
+        </h2>
+      {% endset %}
+
+      {{ card({
+        headingHtml: headingHtml,
+        description: "Go online to access this session"
+      }) }}
     </div>
   </div>
   {% endif %}
