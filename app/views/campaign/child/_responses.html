@@ -1,7 +1,7 @@
 {% set description %}
   {% for response in child.responses %}
     {% set detailText %}
-      {{ response[campaign.type] + " by " + response.parentOrGuardian.relationship }} on {{ response.date | govukDate }}
+      {{ response.status + " by " + response.parentOrGuardian.relationship }} on {{ response.date | govukDate }}
     {% endset %}
 
     {{ details({

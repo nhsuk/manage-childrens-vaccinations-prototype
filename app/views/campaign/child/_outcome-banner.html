@@ -1,4 +1,4 @@
-{% set consent = child.consent[campaign.type] %}
+{% set consent = child.consent.outcome %}
 {% set isGillickCompetent = consentRecord["gillick-competent"] === "Yes" %}
 
 {% if child.outcome == PATIENT_OUTCOME.VACCINATED %}

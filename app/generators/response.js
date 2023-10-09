@@ -44,7 +44,6 @@ export default (type, patient) => {
   const days = faker.number.int({ min: 10, max: 35 })
 
   const response = () => ({
-    [type]: status, // TODO: Remove type specific consent
     date: DateTime.local().minus({ days }).toISODate(),
     status,
     method,

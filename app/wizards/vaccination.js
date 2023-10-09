@@ -58,8 +58,8 @@ const journeyForEverythingElse = (data, campaign, child) => {
 const journeyFor3in1MenAcwy = (data, campaignId, child) => {
   const nhsNumber = child.nhsNumber
   const givenVaccines = getData(data, `vaccination.${campaignId}.${nhsNumber}.multi-given`) || []
-  const askForNoMenAcwyReason = child.consent['men-acwy'] === 'Yes' && !givenVaccines.includes('men-acwy')
-  const askForNo3in1Reason = child.consent['3-in-1'] === 'Yes' && !givenVaccines.includes('3-in-1')
+  const askForNoMenAcwyReason = child.consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY && !givenVaccines.includes('men-acwy')
+  const askForNo3in1Reason = child.consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1 && !givenVaccines.includes('3-in-1')
 
   if (askForNoMenAcwyReason) {
     return {

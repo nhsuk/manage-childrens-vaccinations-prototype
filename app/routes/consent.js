@@ -56,14 +56,12 @@ export default (router) => {
 
   // Copy consent values to the child object
   router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
-    const { campaign, child } = res.locals
-    const campaignType = campaign.type
+    const { child } = res.locals
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
     const triageData = req.session.data.triage[req.params.campaignId][req.params.nhsNumber]
     const gillickCompetent = consentData['gillick-competent'] === 'Yes'
     const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
 
-    child.consent[campaignType] = consentData.consent
     child.consent.outcome = consentData.consent
     child.consent.responses = consentData.consent !== CONSENT_OUTCOME.NO_RESPONSE
 
