@@ -1,18 +1,18 @@
 {% extends "layouts/default.html" %}
-{% set htmlClasses = "app-email" %}
-{% set bodyClasses = "app-email__body" %}
-{% set containerClasses = "app-email__header-and-message-container" %}
+
+{% set bodyClasses = "app-email" %}
 {% set mainClasses = "app-email__message" %}
+{% set containerClasses = "nhsuk-width-container--email" %}
 {% set title = subject %}
 {% block skipLink %}{% endblock %}
 {% block header %}{% endblock %}
 {% block footer %}{% endblock %}
 
 {% block bodyStart %}
-  <div class="govuk-width-container app-email__metadata-container">
+  <div class="nhsuk-width-container nhsuk-width-container--email">
     <dl class="app-email__metadata">
       <div>
-        <dt class="govuk-visually-hidden">Subject:</dt>
+        <dt class="nhsuk-u-visually-hidden">Subject:</dt>
         <dd><b class="govuk-heading-m govuk-!-margin-bottom-2">{{ subject }}</b></dd>
       </div>
       <div>
@@ -29,7 +29,7 @@
 
 {% block content %}
   {{ header({
-    service: {
+    transactionalService: {
       name: serviceName,
       href: "/"
     },
