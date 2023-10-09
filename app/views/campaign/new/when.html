@@ -2,7 +2,7 @@
 {% set title = "When is the session?" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {{ dateInput({
     fieldset: {

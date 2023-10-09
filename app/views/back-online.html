@@ -2,7 +2,7 @@
 {% set title = "You’re back online" %}
 
 {% block content %}
-  <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {% if totalOfflineChangesCount == 1 %}
     <p>1 offline change needs syncing.</p>

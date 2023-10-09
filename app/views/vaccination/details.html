@@ -3,7 +3,7 @@
 {% set buttonText = "Confirm" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {% set detailsHtml %}
     {% if campaign.is3in1MenACWY %}

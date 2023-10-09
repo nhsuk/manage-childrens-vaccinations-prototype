@@ -11,7 +11,7 @@
 {% block content %}
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+      {{ appHeading({ title: title }) }}
 
       <form method="post" action="/manage-users?success={{ user.id }}">
         {{ input({

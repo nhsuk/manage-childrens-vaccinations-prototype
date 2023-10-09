@@ -28,9 +28,7 @@
         }) }}
       {% endif %}
 
-      <h1 class="nhsuk-heading-xl">
-        {{ title | noOrphans | safe }}
-      </h1>
+      {{ appHeading({ title: title, size: "xl" }) }}
 
       {{ button({
         text: "Add team member",

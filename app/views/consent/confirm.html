@@ -6,7 +6,7 @@
 {% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {% set parentContactDetailsHtml %}
     <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">

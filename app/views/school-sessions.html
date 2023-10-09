@@ -17,7 +17,7 @@
     }) }}
   {% endif %}
 
-  <h1 class="nhsuk-heading-xl{% if not isOffline %} nhsuk-u-margin-bottom-2{% endif %}">{{ title | noOrphans | safe }}</h1>
+  {{ appHeading({ title: title, size: "xl" }) }}
 
   {% if not isOffline %}
     <p>

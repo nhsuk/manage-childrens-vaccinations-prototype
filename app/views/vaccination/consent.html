@@ -4,13 +4,16 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="nhsuk-heading-l">{{ title }}</h1>
+      {{ appHeading({ title: title }) }}
+
       <p>We would ask you to record:</p>
+
       <ul class="nhsuk-list nhsuk-list--bullet">
         <li>a parent’s contact details</li>
         <li>consent</li>
         <li>answers to medical questions</li>
       </ul>
+
       <p>
         <a href="/campaign/{{ campaign.id }}/record">Return to list of children</a>
       </p>

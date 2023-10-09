@@ -4,7 +4,7 @@
 {% set base = "/campaign/new/" + campaignId %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {{ govukSummaryList({
     classes: "app-summary-list--no-bottom-border",

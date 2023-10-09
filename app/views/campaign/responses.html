@@ -1,10 +1,6 @@
 {% extends "layouts/default.html" %}
-{% if filteredYearGroup %}
-  {% set caption = "Consent responses" %}
-  {% set title = filteredYearGroup.name %}
-{% else %}
-  {% set title = "Consent responses" %}
-{% endif %}
+
+{% set title = "Consent responses" %}
 
 {% block outerContent %}
   {{ breadcrumb({
@@ -30,10 +26,11 @@
     <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
   {% endif %}
 
-  <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
-    {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
-    {{ title | noOrphans | safe }}
-  </h1>
+  {{ appHeading({
+    title: filteredYearGroup.name if filteredYearGroup else title,
+    caption: title if filteredYearGroup,
+    size: "xl"
+  }) }}
 
   {% set consentValid %}
     {% set tab = filters.consentValid %}

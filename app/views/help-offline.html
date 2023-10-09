@@ -11,7 +11,7 @@
 {% block content %}
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+      {{ appHeading({ title: title, size: "xl" }) }}
 
       <p>You can use this service if you are not connected to the internet.</p>
 

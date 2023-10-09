@@ -5,7 +5,7 @@
 {% set title = "Record " + type + " vaccination" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {% set html %}
     {{ summaryList({

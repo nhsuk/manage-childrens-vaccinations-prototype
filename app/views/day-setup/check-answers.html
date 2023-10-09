@@ -3,7 +3,7 @@
 {% set buttonText = "Confirm and continue" %}
 
 {% block form %}
-  <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+  {{ appHeading({ title: title }) }}
 
   {{ summaryList({
     rows: decorateRows([
