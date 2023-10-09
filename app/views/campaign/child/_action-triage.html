@@ -1,50 +1,52 @@
-{% set cardDescription %}
-  {{ radios({
-    items: [
-      {
-        text: "Yes, it’s safe to vaccinate",
-        value: TRIAGE_OUTCOME.VACCINATE
-      },
-      {
-        text: "No, do not vaccinate",
-        value: TRIAGE_OUTCOME.DO_NOT_VACCINATE
-      },
-      {
-        divider: "or"
-      },
-      {
-        text: "Delay vaccination to a later date",
-        value: TRIAGE_OUTCOME.DELAY_VACCINATION
-      },
-      {
-        text: "Keep in triage",
-        value: TRIAGE_OUTCOME.NEEDS_TRIAGE
-      }
-    ],
-    decorate: ["triage", campaign.id, child.nhsNumber, "outcome"]
-  }) }}
+{% set descriptionHtml %}
+  <form method="post">
+    {{ radios({
+      items: [
+        {
+          text: "Yes, it’s safe to vaccinate",
+          value: TRIAGE_OUTCOME.VACCINATE
+        },
+        {
+          text: "No, do not vaccinate",
+          value: TRIAGE_OUTCOME.DO_NOT_VACCINATE
+        },
+        {
+          divider: "or"
+        },
+        {
+          text: "Delay vaccination to a later date",
+          value: TRIAGE_OUTCOME.DELAY_VACCINATION
+        },
+        {
+          text: "Keep in triage",
+          value: TRIAGE_OUTCOME.NEEDS_TRIAGE
+        }
+      ],
+      decorate: ["triage", campaign.id, child.nhsNumber, "outcome"]
+    }) }}
 
-  {{ textarea({
-    label: {
-      classes: "nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-6",
-      text: "Triage notes (optional)"
-    },
-    rows: 5,
-    value: "",
-    decorate: ["triage", campaign.id, child.nhsNumber, "note"]
-  }) }}
+    {{ textarea({
+      label: {
+        classes: "nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-6",
+        text: "Triage notes (optional)"
+      },
+      rows: 5,
+      value: "",
+      decorate: ["triage", campaign.id, child.nhsNumber, "note"]
+    }) }}
 
-  {{ button({
-    classes: "nhsuk-u-margin-bottom-0",
-    text: "Save triage",
-    name: "isTriage",
-    value: true
-  }) }}
+    {{ button({
+      classes: "nhsuk-u-margin-bottom-0",
+      text: "Save triage",
+      name: "isTriage",
+      value: true
+    }) }}
+  </form>
 {% endset %}
 
 {{ card({
   heading: "Is it safe to vaccinate " + child.fullName + "?",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: cardDescription
+  descriptionHtml: descriptionHtml
 }) }}

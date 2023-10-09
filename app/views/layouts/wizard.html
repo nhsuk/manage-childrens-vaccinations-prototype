@@ -1,14 +1,12 @@
 {% extends "layouts/default.html" %}
+
 {% set mainClasses = "nhsuk-main-wrapper--s" %}
-{% block pageNavigation %}
-  {% if paths.back %}
-    <div class="nhsuk-width-container">
-      {{ backLink({
-        href: paths.back,
-        classes: "nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-0"
-      }) }}
-    </div>
-  {% endif %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: paths.back,
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) if paths.back }}
 {% endblock %}
 
 {% block content %}

@@ -1,4 +1,4 @@
-{% set vaccineRecorded %}
+{% set descriptionHtml %}
   <p><a href="#">Change</a></p>
   {% set batch = data.vaccines.batches[vaccination.batch] %}
 
@@ -49,5 +49,5 @@
   heading: "Vaccination details",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: vaccineRecorded
+  descriptionHtml: descriptionHtml
 }) }}

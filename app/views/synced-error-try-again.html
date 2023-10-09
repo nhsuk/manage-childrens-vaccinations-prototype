@@ -1,28 +1,24 @@
 {% extends "layouts/default.html" %}
 {% set title = "We cannot sync your changes at the moment" %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-          <p>The website is currently unavailable. A team is working to fix this.</p>
+      <p>The website is currently unavailable. A team is working to fix this.</p>
 
-          <p class="nhsuk-u-margin-bottom-6">Please try to sync your changes again later.</p>
+      <p class="nhsuk-u-margin-bottom-6">Please try to sync your changes again later.</p>
 
-          {{ button({
-            text: "Continue working offline",
-            href: "/dashboard"
-          }) }}
+      {{ button({
+        text: "Continue working offline",
+        href: "/dashboard"
+      }) }}
 
-          <p class="nhsuk-u-margin-top-6">
-            If you keep seeing this message, contact support on:<br>
-            <a href="#">support@service.nhs.uk</a>
-          </p>
-        </div>
-      </div>
-    </main>
+      <p class="nhsuk-u-margin-top-6">
+        If you keep seeing this message, contact support on:<br>
+        <a href="#">support@service.nhs.uk</a>
+      </p>
+    </div>
   </div>
 {% endblock %}

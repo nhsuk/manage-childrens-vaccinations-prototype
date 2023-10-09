@@ -1,27 +1,29 @@
-{% set getConsent %}
-  {{ radios({
-    items: [{
-      text: "Yes, I am contacting a parent or guardian",
-      value: "Yes"
-    }, {
-      text: "Yes, I am assessing Gillick competence",
-      value: "Gillick"
-    } if not (campaign.type == "Flu"), {
-      text: "No, I am not vaccinating",
-      value: "No, I am not vaccinating"
-    }],
-    decorate: ["vaccination", campaign.id, child.nhsNumber, "get-consent"]
-  }) }}
+{% set descriptionHtml %}
+  <form method="post">
+    {{ radios({
+      items: [{
+        text: "Yes, I am contacting a parent or guardian",
+        value: "Yes"
+      }, {
+        text: "Yes, I am assessing Gillick competence",
+        value: "Gillick"
+      } if not (campaign.type == "Flu"), {
+        text: "No, I am not vaccinating",
+        value: "No, I am not vaccinating"
+      }],
+      decorate: ["vaccination", campaign.id, child.nhsNumber, "get-consent"]
+    }) }}
 
-  {{ button({
-    text: "Continue",
-    classes: "nhsuk-u-margin-bottom-2"
-  }) }}
+    {{ button({
+      text: "Continue",
+      classes: "nhsuk-u-margin-bottom-2"
+    }) }}
+  </form>
 {% endset %}
 
 {{ card({
   heading: "Are you attempting to get consent?",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: getConsent
+  descriptionHtml: descriptionHtml
 }) }}

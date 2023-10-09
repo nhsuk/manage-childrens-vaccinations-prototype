@@ -1,58 +1,54 @@
 {% extends "layouts/default.html" %}
 {% set title = "Help working offline" %}
 
-{% block pageNavigation %}
+{% block outerContent %}
   {{ breadcrumb({
     text: "Home",
     href: "/dashboard"
   }) }}
 {% endblock %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <h1 class="nhsuk-heading-xl">{{ title }}</h1>
 
-          <p>You can use this service if you are not connected to the internet.</p>
+      <p>You can use this service if you are not connected to the internet.</p>
 
-          <h2 class="nhsuk-heading-m">While working offline</h2>
+      <h2 class="nhsuk-heading-m">While working offline</h2>
 
-          <p>Changes you make will be stored on your device. They are not saved until you reconnect to the internet.</p>
+      <p>Changes you make will be stored on your device. They are not saved until you reconnect to the internet.</p>
 
-          <p>While offline you cannot sign in or sign out.</p>
+      <p>While offline you cannot sign in or sign out.</p>
 
-          {{ list({
-            "title": "Do",
-            "type": "tick",
-            "items": [
-              {
-                "item": "record vaccinations"
-              },
-              {
-                "item": "add vaccines that are missing"
-              }
-            ]
-          }) }}
+      {{ list({
+        "title": "Do",
+        "type": "tick",
+        "items": [
+          {
+            "item": "record vaccinations"
+          },
+          {
+            "item": "add vaccines that are missing"
+          }
+        ]
+      }) }}
 
-          {{ list({
-            "title": "Don’t",
-            "type": "cross",
-            "items": [
-              {
-                "item": "sign in or out"
-              },
-              {
-                "item": "edit a session’s details"
-              },
-              {
-                "item": "edit existing vaccines"
-              }
-            ]
-          }) }}
-        </div>
-      </div>
-    </main>
+      {{ list({
+        "title": "Don’t",
+        "type": "cross",
+        "items": [
+          {
+            "item": "sign in or out"
+          },
+          {
+            "item": "edit a session’s details"
+          },
+          {
+            "item": "edit existing vaccines"
+          }
+        ]
+      }) }}
+    </div>
   </div>
 {% endblock %}

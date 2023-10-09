@@ -1,4 +1,4 @@
-{% set cardDescription %}
+{% set descriptionHtml %}
   <p class="nhsuk-body">{{ child.triage.outcome }}</p>
   {% if child.triage.notes.length %}
     <ul class="nhsuk-list">
@@ -16,5 +16,5 @@
   heading: "Triage",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  descriptionHtml: cardDescription
+  descriptionHtml: descriptionHtml
 }) }}

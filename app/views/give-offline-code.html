@@ -1,41 +1,37 @@
 {% extends "layouts/default.html" %}
 {% set title = "Enter your code to begin working offline" %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <form method="post">
-                {{ input({
-                  label: {
-                    text: title,
-                    isPageHeading: true,
-                    classes: "nhsuk-label--l nhsuk-u-margin-bottom-2"
-                  },
-                  hint: {
-                    text: "Your code is 3 words, it is not case sensitive.",
-                    classes: "nhsuk-u-margin-bottom-2"
-                  },
-                  type: "text",
-                  classes: "nhsuk-input--width-20",
-                  decorate: "confirm-offline-password"
-                }) }}
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <form method="post">
+            {{ input({
+              label: {
+                text: title,
+                isPageHeading: true,
+                classes: "nhsuk-label--l nhsuk-u-margin-bottom-2"
+              },
+              hint: {
+                text: "Your code is 3 words, it is not case sensitive.",
+                classes: "nhsuk-u-margin-bottom-2"
+              },
+              type: "text",
+              classes: "nhsuk-input--width-20",
+              decorate: "confirm-offline-password"
+            }) }}
 
-                <p>
-                  <a href="#">I’ve forgotten my code</a>
-                </p>
+            <p>
+              <a href="#">I’ve forgotten my code</a>
+            </p>
 
-                {{ button({
-                  text: "Continue"
-                }) }}
-              </form>
-            </div>
-          </div>
+            {{ button({
+              text: "Continue"
+            }) }}
+          </form>
         </div>
       </div>
-    </main>
+    </div>
   </div>
 {% endblock %}

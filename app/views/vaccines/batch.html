@@ -1,55 +1,49 @@
 {% extends "layouts/default.html" %}
 {% set title = "Edit batch" %}
 
-{% block pageNavigation %}
-<div class="nhsuk-width-container">
+{% block outerContent %}
   {{ backLink({
     href: "/vaccines",
-    classes: "nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-0"
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
   }) }}
-</div>
 {% endblock %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <h1 class="nhsuk-heading-l">
-        <span class="nhsuk-caption-l">{{ batch.brand }}</span>
-        {{ title | noOrphans | safe }}
-      </h1>
+{% block content %}
+  <h1 class="nhsuk-heading-l">
+    <span class="nhsuk-caption-l">{{ batch.brand }}</span>
+    {{ title | noOrphans | safe }}
+  </h1>
 
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          <form method="post">
-            {{ input({
-              label: {
-                text: "Batch",
-                classes: "nhsuk-label--s nhsuk-u-margin-bottom-1"
-              },
-              classes: "nhsuk-input--width-10",
-              decorate: "vaccines.batches." + batch.name + ".name"
-            }) }}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <form method="post">
+        {{ input({
+          label: {
+            text: "Batch",
+            classes: "nhsuk-label--s nhsuk-u-margin-bottom-1"
+          },
+          classes: "nhsuk-input--width-10",
+          decorate: "vaccines.batches." + batch.name + ".name"
+        }) }}
 
-            {{ dateInput({
-              fieldset: {
-                legend: {
-                  text: "Expiry date",
-                  classes: "nhsuk-fieldset__legend--s nhsuk-u-margin-bottom-1"
-                }
-              },
-              hint: {
-                text: "For example, 27 10 2023"
-              },
-              decorate: "vaccines.batches." + batch.name + ".expiry"
-            }) }}
+        {{ dateInput({
+          fieldset: {
+            legend: {
+              text: "Expiry date",
+              classes: "nhsuk-fieldset__legend--s nhsuk-u-margin-bottom-1"
+            }
+          },
+          hint: {
+            text: "For example, 27 10 2023"
+          },
+          decorate: "vaccines.batches." + batch.name + ".expiry"
+        }) }}
 
-            {{ button({
-              text: "Save changes",
-              classes: "nhsuk-u-margin-top-3"
-            }) }}
-          </form>
-        </div>
-      </div>
-    </main>
+        {{ button({
+          text: "Save changes",
+          classes: "nhsuk-u-margin-top-3"
+        }) }}
+      </form>
+    </div>
   </div>
 {% endblock %}

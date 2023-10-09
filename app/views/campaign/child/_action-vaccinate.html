@@ -7,65 +7,67 @@
   }) }}
 {% endif %}
 
-{% set description %}
-  {% if campaign.type == "HPV" %}
-    <p>They need their 1st dose.</p>
-  {% endif %}
+{% set descriptionHtml %}
+  <form method="post">
+    {% if campaign.type == "HPV" %}
+      <p>They need their 1st dose.</p>
+    {% endif %}
 
-  {% if campaign.is3in1MenACWY %}
-    {{ checkboxes({
-      items: [{
-        text: "MenACWY",
-        value: "men-acwy",
-        conditional: {
-          html: radios({
-            items: [
-              { text: VACCINATION_SITE.ARM_LEFT },
-              { text: VACCINATION_SITE.ARM_RIGHT },
-              { text: VACCINATION_SITE.OTHER }
-            ],
-            classes: "nhsuk-radios--inline",
-            decorate: ["vaccination", campaign.id, child.nhsNumber, "siteMenACWY"]
-          })
-        }
-      }, {
-        text: "3-in-1 booster",
-        value: "3-in-1",
-        conditional: {
-          html: radios({
-            items: [
-              { text: VACCINATION_SITE.ARM_LEFT },
-              { text: VACCINATION_SITE.ARM_RIGHT },
-              { text: VACCINATION_SITE.OTHER }
-            ],
-            classes: "nhsuk-radios--inline",
-            decorate: ["vaccination", campaign.id, child.nhsNumber, "site3in1"]
-          })
-        }
-      }, {
-        divider: "or"
-      }, {
-        text: "None",
-        value: "none"
-      }],
-      formGroup: {
-        classes: "nhsuk-u-margin-bottom-7"
-      },
-      decorate: ["vaccination", campaign.id, child.nhsNumber, "multi-given"]
+    {% if campaign.is3in1MenACWY %}
+      {{ checkboxes({
+        items: [{
+          text: "MenACWY",
+          value: "men-acwy",
+          conditional: {
+            html: radios({
+              items: [
+                { text: VACCINATION_SITE.ARM_LEFT },
+                { text: VACCINATION_SITE.ARM_RIGHT },
+                { text: VACCINATION_SITE.OTHER }
+              ],
+              classes: "nhsuk-radios--inline",
+              decorate: ["vaccination", campaign.id, child.nhsNumber, "siteMenACWY"]
+            })
+          }
+        }, {
+          text: "3-in-1 booster",
+          value: "3-in-1",
+          conditional: {
+            html: radios({
+              items: [
+                { text: VACCINATION_SITE.ARM_LEFT },
+                { text: VACCINATION_SITE.ARM_RIGHT },
+                { text: VACCINATION_SITE.OTHER }
+              ],
+              classes: "nhsuk-radios--inline",
+              decorate: ["vaccination", campaign.id, child.nhsNumber, "site3in1"]
+            })
+          }
+        }, {
+          divider: "or"
+        }, {
+          text: "None",
+          value: "none"
+        }],
+        formGroup: {
+          classes: "nhsuk-u-margin-bottom-7"
+        },
+        decorate: ["vaccination", campaign.id, child.nhsNumber, "multi-given"]
+      }) }}
+    {% else %}
+      {% include "_radios-vaccination-outcome.html" %}
+    {% endif %}
+
+    {{ button({
+      text: "Continue",
+      classes: "nhsuk-u-margin-bottom-2"
     }) }}
-  {% else %}
-    {% include "_radios-vaccination-outcome.html" %}
-  {% endif %}
-
-  {{ button({
-    text: "Continue",
-    classes: "nhsuk-u-margin-bottom-2"
-  }) }}
+  </form>
 {% endset %}
 
 {{ card({
   heading: "Which vaccines did they get?" if campaign.is3in1MenACWY else "Did they get the vaccine?",
   headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: description
+  descriptionHtml: descriptionHtml
 }) }}

@@ -1,64 +1,60 @@
 {% extends "layouts/default.html" %}
 {% set title = "Manage team" %}
 
-{% block pageNavigation %}
+{% block outerContent %}
   {{ breadcrumb({
     text: "Home",
     href: "/dashboard"
   }) }}
 {% endblock %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          {% if success %}
-            {% set html %}
-              <p class="govuk-notification-banner__heading">
-                {% if success == "invited" %}
-                  <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
-                {% else %}
-                  Changes saved
-                {% endif %}
-              </p>
-            {% endset %}
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% if success %}
+        {% set html %}
+          <p class="govuk-notification-banner__heading">
+            {% if success == "invited" %}
+              <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
+            {% else %}
+              Changes saved
+            {% endif %}
+          </p>
+        {% endset %}
 
-            {{ govukNotificationBanner({
-              html: html,
-              type: "success"
-            }) }}
-          {% endif %}
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      {% endif %}
 
-          <h1 class="nhsuk-heading-xl">
-            {{ title | noOrphans | safe }}
-          </h1>
+      <h1 class="nhsuk-heading-xl">
+        {{ title | noOrphans | safe }}
+      </h1>
 
-          {{ button({
-            text: "Add team member",
-            href: "/user/new"
-          }) }}
+      {{ button({
+        text: "Add team member",
+        href: "/user/new"
+      }) }}
 
-          <table class="nhsuk-table">
-            <thead class="nhsuk-table__head">
-              <tr class="nhsuk-table__row">
-                <th class="nhsuk-table__header">Name</th>
-                <th class="nhsuk-table__header">Email address</th>
-              </tr>
-            </thead>
-            <tbody class="nhsuk-table__body">
-              {% for user in data.users %}
-                <tr class="nhsuk-table__row">
-                  <td class="nhsuk-table__cell">
-                    <a href="/user/{{ user.id }}">{{ user.fullName }}</a>
-                  </td>
-                  <td class="nhsuk-table__cell">{{ user.email }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
+      <table class="nhsuk-table">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th class="nhsuk-table__header">Name</th>
+            <th class="nhsuk-table__header">Email address</th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          {% for user in data.users %}
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <a href="/user/{{ user.id }}">{{ user.fullName }}</a>
+              </td>
+              <td class="nhsuk-table__cell">{{ user.email }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 {% endblock %}

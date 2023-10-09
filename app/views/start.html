@@ -1,27 +1,23 @@
 {% extends "layouts/default.html" %}
 {% set title = "Manage vaccinations for school-aged children" %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <h1 class="nhsuk-heading-xl">{{ title }}</h1>
 
-          <p>Use this service to:</p>
+      <p>Use this service to:</p>
 
-          <ul class="nhsuk-list nhsuk-list--bullet nhsuk-u-margin-bottom-6">
-            <li>triage consent requests</li>
-            <li>approve children for vaccination</li>
-            <li>keep a record of vaccinations given to children</li>
-          </ul>
+      <ul class="nhsuk-list nhsuk-list--bullet nhsuk-u-margin-bottom-6">
+        <li>triage consent requests</li>
+        <li>approve children for vaccination</li>
+        <li>keep a record of vaccinations given to children</li>
+      </ul>
 
-          {{ button({
-            text: "Start now",
-            href: "/sign-in"
-          }) }}
-        </div>
-      </div>
-    </main>
+      {{ button({
+        text: "Start now",
+        href: "/sign-in"
+      }) }}
+    </div>
   </div>
 {% endblock %}

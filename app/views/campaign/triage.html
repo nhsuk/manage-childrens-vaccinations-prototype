@@ -7,7 +7,7 @@
   {% set title = "Triage" %}
 {% endif %}
 
-{% block pageNavigation %}
+{% block outerContent %}
   {{ breadcrumb({
     items: [
       {
@@ -24,59 +24,55 @@
   }) }}
 {% endblock %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-          {% include "campaign/_notification-banner.html" %}
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% include "campaign/_notification-banner.html" %}
 
-          {% if campaign["available-offline"] %}
-            <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
-          {% endif %}
+      {% if campaign["available-offline"] %}
+        <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
+      {% endif %}
 
-          <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
-            {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
-            {{ title | noOrphans | safe }}
-          </h1>
+      <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
+        {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
+        {{ title | noOrphans | safe }}
+      </h1>
 
-          {% set triageNeeded %}
-            {% set tab = filters.triageNeeded %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set triageNeeded %}
+        {% set tab = filters.triageNeeded %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {% set triageCompleted %}
-            {% set tab = filters.triageCompleted %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set triageCompleted %}
+        {% set tab = filters.triageCompleted %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {% set noTriageNeeded %}
-            {% set tab = filters.noTriageNeeded %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set noTriageNeeded %}
+        {% set tab = filters.noTriageNeeded %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {{ tabs({
-            items: [
-              {
-                id: "needs-triage",
-                label: filters.triageNeeded.label,
-                panel: { html: triageNeeded }
-              },
-              {
-                id: "triage-completed",
-                label: filters.triageCompleted.label,
-                panel: { html: triageCompleted }
-              },
-              {
-                id: "no-triage-needed",
-                label: filters.noTriageNeeded.label,
-                panel: { html: noTriageNeeded }
-              }
-            ]
-          }) }}
-        </div>
-      </div>
-    </main>
+      {{ tabs({
+        items: [
+          {
+            id: "needs-triage",
+            label: filters.triageNeeded.label,
+            panel: { html: triageNeeded }
+          },
+          {
+            id: "triage-completed",
+            label: filters.triageCompleted.label,
+            panel: { html: triageCompleted }
+          },
+          {
+            id: "no-triage-needed",
+            label: filters.noTriageNeeded.label,
+            panel: { html: noTriageNeeded }
+          }
+        ]
+      }) }}
+    </div>
   </div>
 
   <script>

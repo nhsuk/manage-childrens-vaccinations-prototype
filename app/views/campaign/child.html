@@ -5,82 +5,76 @@
 {% set hasRefused = child.consent.outcome == CONSENT_OUTCOME.REFUSED %}
 {% set hasConsented = not hasRefused and not hasNoResponse %}
 
-{% block pageNavigation %}
-  <div class="nhsuk-width-container">
-    {{ backLink({
-      href: "/campaign/" + campaign.id + "/record",
-      classes: "nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-0"
-    }) }}
-  </div>
+{% block outerContent %}
+  {{ backLink({
+    href: "/campaign/" + campaign.id + "/record",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
 {% endblock %}
 
-{% block main %}
-  <form class="nhsuk-width-container" method="post">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+{% block content %}
+  <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          {% if child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-            {% include "campaign/child/_triage-banner.html" %}
-          {% elif child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
-            {% include "campaign/child/_consent-banner.html" %}
-          {% else %}
-            {% include "campaign/child/_outcome-banner.html" %}
-          {% endif %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% if child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+        {% include "campaign/child/_triage-banner.html" %}
+      {% elif child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
+        {% include "campaign/child/_consent-banner.html" %}
+      {% else %}
+        {% include "campaign/child/_outcome-banner.html" %}
+      {% endif %}
 
-          {% include "campaign/child/_details.html" %}
+      {% include "campaign/child/_details.html" %}
 
-          {% include "campaign/child/_responses.html" %}
-          {% include "campaign/child/_consent-gillick.html" %}
+      {% include "campaign/child/_responses.html" %}
+      {% include "campaign/child/_consent-gillick.html" %}
 
-          {% if hasConsented %}
-            {% include "campaign/child/_triage.html" %}
-          {% endif %}
+      {% if hasConsented %}
+        {% include "campaign/child/_triage.html" %}
+      {% endif %}
 
-          {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
-            {% if hasNoResponse or hasRefused %}
-              {% include "campaign/child/_action-get-consent.html" %}
-            {% elif child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-              {% include "campaign/child/_action-triage.html" %}
-            {% elif child.triage.outcome == TRIAGE_OUTCOME.VACCINATE or
-              child.triage.outcome == TRIAGE_OUTCOME.NONE %}
-              {% include "campaign/child/_action-vaccinate.html" %}
-            {% endif %}
-          {% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
-            {% include "campaign/child/_vaccination-recorded.html" %}
-          {% endif %}
-        </div>
+      {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
+        {% if hasNoResponse or hasRefused %}
+          {% include "campaign/child/_action-get-consent.html" %}
+        {% elif child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+          {% include "campaign/child/_action-triage.html" %}
+        {% elif child.triage.outcome == TRIAGE_OUTCOME.VACCINATE or
+          child.triage.outcome == TRIAGE_OUTCOME.NONE %}
+          {% include "campaign/child/_action-vaccinate.html" %}
+        {% endif %}
+      {% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
+        {% include "campaign/child/_vaccination-recorded.html" %}
+      {% endif %}
+    </div>
 
-        <div class="nhsuk-grid-column-one-third">
-          {% if campaign["available-offline"] %}
-            <div id="available-offline">
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-top-5" style="color: #007f3b">
-                <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-                  <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-                </svg>
-                Available offline
-              </h2>
-              {% if not child.seen.isOffline and not child.hadOfflineChanges %}
-                <p>You can make changes to this child’s record while not connected to the internet.</p>
-              {% endif %}
-            </div>
-
-            {% if child.seen.isOffline %}
-              <hr>
-              <h2 class="nhsuk-heading-s">You made changes offline</h2>
-              <p>Your changes will automatically sync when you’re back online.</p>
-            {% endif %}
-
-            {% if child.hadOfflineChanges and not child.seen.isOffline %}
-              <hr>
-              <h2 class="nhsuk-heading-s">Your changes were synced</h2>
-              <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
-              <p><a href="#">Hide this message</a></p>
-            {% endif %}
+    <div class="nhsuk-grid-column-one-third">
+      {% if campaign["available-offline"] %}
+        <div id="available-offline">
+          <h2 class="nhsuk-heading-s nhsuk-u-margin-top-5" style="color: #007f3b">
+            <svg class="nhsuk-icon nhsuk-icon__tick" style="vertical-align: bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+              <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+            </svg>
+            Available offline
+          </h2>
+          {% if not child.seen.isOffline and not child.hadOfflineChanges %}
+            <p>You can make changes to this child’s record while not connected to the internet.</p>
           {% endif %}
         </div>
-      </div>
-    </main>
-  </form>
+
+        {% if child.seen.isOffline %}
+          <hr>
+          <h2 class="nhsuk-heading-s">You made changes offline</h2>
+          <p>Your changes will automatically sync when you’re back online.</p>
+        {% endif %}
+
+        {% if child.hadOfflineChanges and not child.seen.isOffline %}
+          <hr>
+          <h2 class="nhsuk-heading-s">Your changes were synced</h2>
+          <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
+          <p><a href="#">Hide this message</a></p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

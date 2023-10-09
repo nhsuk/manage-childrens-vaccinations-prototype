@@ -6,7 +6,7 @@
   {% set title = "Consent responses" %}
 {% endif %}
 
-{% block pageNavigation %}
+{% block outerContent %}
   {{ breadcrumb({
     items: [
       {
@@ -23,68 +23,64 @@
   }) }}
 {% endblock %}
 
-{% block main %}
-  <div class="nhsuk-width-container">
-    <main class="nhsuk-main-wrapper" id="main-content" role="main">
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-          {% include "campaign/_notification-banner.html" %}
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% include "campaign/_notification-banner.html" %}
 
-          {% if campaign["available-offline"] %}
-            <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
-          {% endif %}
+      {% if campaign["available-offline"] %}
+        <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
+      {% endif %}
 
-          <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
-            {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
-            {{ title | noOrphans | safe }}
-          </h1>
+      <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
+        {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
+        {{ title | noOrphans | safe }}
+      </h1>
 
-          {% set consentValid %}
-            {% set tab = filters.consentValid %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set consentValid %}
+        {% set tab = filters.consentValid %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {% set consentRefused %}
-            {% set tab = filters.consentRefused %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set consentRefused %}
+        {% set tab = filters.consentRefused %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {% set consentConflicts %}
-            {% set tab = filters.consentConflicts %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set consentConflicts %}
+        {% set tab = filters.consentConflicts %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {% set noResponse %}
-            {% set tab = filters.noResponse %}
-            {% include "campaign/_tab.html" %}
-          {% endset %}
+      {% set noResponse %}
+        {% set tab = filters.noResponse %}
+        {% include "campaign/_tab.html" %}
+      {% endset %}
 
-          {{ tabs({
-            items: [
-              {
-                id: "consent-valid",
-                label: filters.consentValid.label,
-                panel: { html: consentValid }
-              },
-              {
-                id: "consent-refused",
-                label: filters.consentRefused.label,
-                panel: { html: consentRefused }
-              },
-              {
-                id: "consent-conflicts",
-                label: filters.consentConflicts.label,
-                panel: { html: consentConflicts }
-              },
-              {
-                id: "no-response",
-                label: filters.noResponse.label,
-                panel: { html: noResponse }
-              }
-            ]
-          }) }}
-        </div>
-      </div>
-    </main>
+      {{ tabs({
+        items: [
+          {
+            id: "consent-valid",
+            label: filters.consentValid.label,
+            panel: { html: consentValid }
+          },
+          {
+            id: "consent-refused",
+            label: filters.consentRefused.label,
+            panel: { html: consentRefused }
+          },
+          {
+            id: "consent-conflicts",
+            label: filters.consentConflicts.label,
+            panel: { html: consentConflicts }
+          },
+          {
+            id: "no-response",
+            label: filters.noResponse.label,
+            panel: { html: noResponse }
+          }
+        ]
+      }) }}
+    </div>
   </div>
 {% endblock %}
