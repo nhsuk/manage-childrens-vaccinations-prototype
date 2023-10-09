@@ -19,13 +19,9 @@
       <form method="post" novalidate {% if data.features.validation.on %}data-validate{% endif %}>
         {% block form %}{% endblock %}
 
-        {% if not hideButton %}
-        <div class="nhsuk-u-margin-top-6">
-          {{ button({
-            html: buttonText if buttonText else "Continue"
-          }) }}
-        </div>
-        {% endif %}
+        {{ button({
+          html: buttonText if buttonText else "Continue"
+        }) if not hideButton }}
       </form>
 
       {% block afterForm %}{% endblock %}
