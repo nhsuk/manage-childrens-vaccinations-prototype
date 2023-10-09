@@ -41,7 +41,7 @@ export default (router) => {
     '/consent/:campaignId/:nhsNumber/health-questions'
   ], (req, res, next) => {
     const child = res.locals.child
-    const consentResponse = child.consentResponses[0]
+    const healthAnswers = {}
     const formAnswers = _.get(
       req.body,
       `consent.${req.params.campaignId}.${req.params.nhsNumber}.health`, {}
@@ -56,11 +56,14 @@ export default (router) => {
         child.consent.answersNeedTriage = true
 
         // Use detail answer if provided, else return `true`
-        consentResponse.healthAnswers[key] = formAnswers.details[key] || true
+        healthAnswers[key] = formAnswers.details[key] || true
       } else {
-        consentResponse.healthAnswers[key] = false
+        healthAnswers[key] = false
       }
     }
+
+    // Add consent response
+    child.consentResponses = [{ healthAnswers }]
 
     next()
   })
