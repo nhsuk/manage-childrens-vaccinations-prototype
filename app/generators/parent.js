@@ -51,7 +51,7 @@ export default (patient) => {
     firstName,
     lastName,
     fullName: `${firstName} ${lastName}`,
-    email: faker.internet.email({ firstName, lastName }),
+    email: faker.internet.email({ firstName, lastName }).toLowerCase(),
     ...tel && {
       tel,
       contactPreference
