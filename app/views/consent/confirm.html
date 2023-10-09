@@ -60,28 +60,35 @@
   {% endif %}
 
   {% if hasConsented %}
-    {% set consentJourney = true %}
-    {% include "campaign/child/_health-answers.html" %}
+    {% set description %}
+      {% set consentJourney = true %}
+      {% include "campaign/child/_health-answers.html" %}
+    {% endset %}
 
-    <div class="nhsuk-card">
-      <div class="nhsuk-card__content">
-        <h2 class="nhsuk-heading-m">Triage</h2>
-        {{ govukSummaryList({
-          classes: "app-summary-list--no-bottom-border",
-          rows: decorateRows([
-            {
-              key: "Status",
-              value: d("triage." + campaign.id + "." + child.nhsNumber + ".outcome") or "Not provided",
-              href: "#"
-            },
-            {
-              key: "Triage notes",
-              value: d("triage." + campaign.id + "." + child.nhsNumber + ".note") or "Not provided",
-              href: "#"
-            }
-          ])
-        }) }}
-      </div>
-    </div>
+    {{ card({
+      heading: "Health questions",
+      headingClasses: "nhsuk-heading-m",
+      description: description
+    }) }}
+
+    {{ card({
+      heading: "Triage",
+      headingClasses: "nhsuk-heading-m",
+      description: govukSummaryList({
+        classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+        rows: decorateRows([
+          {
+            key: "Status",
+            value: d("triage." + campaign.id + "." + child.nhsNumber + ".outcome") or "Not provided",
+            href: "#"
+          },
+          {
+            key: "Triage notes",
+            value: d("triage." + campaign.id + "." + child.nhsNumber + ".note") or "Not provided",
+            href: "#"
+          }
+        ])
+      })
+    }) }}
   {% endif %}
 {% endblock %}
