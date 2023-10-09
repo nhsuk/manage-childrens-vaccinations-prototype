@@ -64,7 +64,7 @@ export default (router) => {
           date: new Date().toISOString(),
           note: triage.note,
           user: {
-            name: 'Jacinta Dodds',
+            fullName: 'Jacinta Dodds',
             email: 'jacinta.dodds@example.com'
           }
         })

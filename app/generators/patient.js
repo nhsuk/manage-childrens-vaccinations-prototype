@@ -30,7 +30,7 @@ const handleInProgressTriage = (patient) => {
       date: faker.date.recent({ days: 30 }),
       note: patient.__triageNote,
       user: {
-        name: 'James Davidson',
+        fullName: 'James Davidson',
         email: 'james.davidson@example.com'
       }
     })
