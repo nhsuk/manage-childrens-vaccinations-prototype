@@ -1,15 +1,7 @@
 import _ from 'lodash'
 import { DateTime } from 'luxon'
 
-/**
- * Prototype specific filters for use in Nunjucks templates.
- *
- * You can override Prototype Rig filters by creating filter methods
- * with the same name.
- *
- * You can delete this file if you don’t need your own filters.
- */
-export default (env) => {
+export default (_env) => {
   const filters = {}
 
   /**
@@ -26,11 +18,6 @@ export default (env) => {
    *
    * @see {@link https://mozilla.github.io/nunjucks/api#custom-filters}
    */
-
-  // example: 7 December 2021
-  filters.dateWithDayOfWeek = params => {
-    return DateTime.fromISO(params).toFormat('EEEE d MMMM yyyy')
-  }
 
   /**
    * Get age from date
@@ -50,34 +37,46 @@ export default (env) => {
     return age
   }
 
-  filters.formatNHSNumber = nhsNumber => {
-    const numberArray = nhsNumber.split('')
+  /**
+   * Formatted date with day of the week
+   * @param {string} string - ISO date, for example 07-12-2021
+   * @returns {string} Formatted date, for example Sunday 7 December 2021
+   */
+  filters.dateWithDayOfWeek = string => {
+    console.log('string', string)
+    return DateTime.fromISO(string).toFormat('EEEE d MMMM yyyy')
+  }
+
+  /**
+   * Formatted NHS number
+   * @param {string} nhsNumber - NHS Number
+   * @returns {string} Formatted NHS number
+   */
+  filters.formatNHSNumber = string => {
+    const numberArray = string.split('')
     numberArray.splice(3, 0, ' ')
     numberArray.splice(8, 0, ' ')
     return numberArray.join('')
   }
 
-  // stringify an object
-  filters.stringify = obj => {
-    return JSON.stringify(obj)
-  }
-
-  // example: "not like this" becomes "Not like this"
-  // do not error when string is undefined
-  filters.capitaliseFirstLetter = string => {
-    return string ? string.charAt(0).toUpperCase() + string.slice(1) : string
-  }
-
-  // return unique object values from array
+  /**
+   * Return unique object values from array
+   * @param {Array} array - Array to interrogate
+   * @param {string} value - Value
+   * @returns {Array} Array with unique object values
+   */
   filters.uniqueFromArrayBy = (array, value) => {
     return _.uniqBy(array, value)
   }
 
-  // return array without empty values
+  /**
+   * Return array without empty values
+   * @param {Array} array - Array to filter
+   * @returns {Array} Filtered array
+   */
   filters.removeEmptyFromArray = (array) => {
     return array.filter(item => item)
   }
 
-  // Keep the following line to return your filters to the app
   return filters
 }
