@@ -22,11 +22,8 @@
         </td>
         <td class="nhsuk-table__cell nhsuk-u-text-align-right">
           {% if c["available-offline"] %}
-            <span class="nhsuk-u-font-weight-bold" style="color: #007f3b">
-              <svg class="nhsuk-icon nhsuk-icon__tick app-icon-small" style="vertical-align: top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
-                <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-              </svg>
-              Available offline
+            <span class="app-online-status app-online-status--online">
+              {{ appIcon({ type: "tick" }) }} Available offline
             </span>
           {% elseif isOffline %}
             <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>
