@@ -60,12 +60,10 @@
   {% endif %}
 
   {% if consented %}
-    <div class="nhsuk-u-margin-top-4">
-      {% set consentJourney = true %}
-      {% include "campaign/child/_triage-health-questions.html" %}
-    </div>
+    {% set consentJourney = true %}
+    {% include "campaign/child/_triage-health-questions.html" %}
 
-    <div class="nhsuk-card nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4">
+    <div class="nhsuk-card">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-heading-m">Triage</h2>
         {% set triageStatus = d("triage." + campaign.id + "." + child.nhsNumber + ".status") or "Vaccinate" %}
