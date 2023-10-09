@@ -56,19 +56,19 @@
 {% endif %}
 
 <script>
-    function filterTable() {
-      var inputValue = document.getElementById('search').value.toLowerCase();
-      var rows = document.getElementById('children').querySelectorAll('tbody tr');
+  function filterTable() {
+    var inputValue = document.getElementById('search').value.toLowerCase();
+    var rows = document.getElementById('children').querySelectorAll('tbody tr');
 
-      for (var i = 0; i < rows.length; i++) {
-        var nameCell = rows[i].getElementsByTagName('td')[0];
-        var name = nameCell.textContent || nameCell.innerText;
-        if (name.toLowerCase().indexOf(inputValue) > -1) {
-          rows[i].style.display = '';
-        } else {
-          rows[i].style.display = 'none';
-        }
+    for (var i = 0; i < rows.length; i++) {
+      var nameCell = rows[i].getElementsByTagName('td')[0];
+      var name = nameCell.textContent || nameCell.innerText;
+      if (name.toLowerCase().indexOf(inputValue) > -1) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
       }
     }
-    document.getElementById('search').addEventListener('input', filterTable);
-  </script>
+  }
+  document.getElementById('search').addEventListener('input', filterTable);
+</script>
