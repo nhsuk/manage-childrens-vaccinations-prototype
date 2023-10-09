@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
 
-export default () => {
+export default (env) => {
   const globals = {
     CONSENT_OUTCOME,
     PATIENT_OUTCOME,
@@ -199,6 +199,14 @@ export default () => {
     }
   }
 
-  // Keep the following line to return your globals to the app
+  /**
+   * Output local data within a view
+   */
+  globals.inspect = function (data) {
+    const { filters } = this.ctx.settings.nunjucksEnv
+    const json = JSON.stringify(data, null, 2)
+    return filters.safe(`<pre>${json}</pre>`)
+  }
+
   return globals
 }
