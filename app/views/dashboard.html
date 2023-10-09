@@ -2,44 +2,39 @@
 {% set title = "Manage vaccinations for school-aged children" %}
 
 {% block content %}
+  {% if hasAnyOfflineChanges %}
+    {{ warningCallout({
+      heading: "You have offline changes",
+      HTML: "<p>Your offline changes will automatically sync when you’re back&nbsp;online.</p>",
+      classes: "nhsuk-u-margin-top-0"
+    }) }}
+  {% endif %}
+
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      {% if hasAnyOfflineChanges %}
-        {{ warningCallout({
-          heading: "You have offline changes",
-          HTML: "<p>Your offline changes will automatically sync when you’re back&nbsp;online.</p>",
-          classes: "nhsuk-u-margin-top-0"
-        }) }}
-      {% endif %}
-
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
-        </div>
-      </div>
-
-
-      <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
-        <a href="/school-sessions">School sessions</a>
-      </h2>
-      <p>Manage sessions and record vaccinations</p>
-
-      <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
-        <a href="/vaccines">Manage vaccine batches</a>
-      </h2>
-      <p>Add or remove batches</p>
-
-      <hr>
-
-      <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
-        <a href="/manage-users">Manage team</a>
-      </h2>
-      <p>Add or remove team members and set permissions</p>
-
-      <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
-        <a href="#">Your account</a>
-      </h2>
-      <p>Change your email address or password</p>
+    <div class="nhsuk-grid-column-two-thirds">
+      <h1 class="nhsuk-heading-xl">{{ title | noOrphans | safe }}</h1>
     </div>
   </div>
+
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+    <a href="/school-sessions">School sessions</a>
+  </h2>
+  <p>Manage sessions and record vaccinations</p>
+
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+    <a href="/vaccines">Manage vaccine batches</a>
+  </h2>
+  <p>Add or remove batches</p>
+
+  <hr>
+
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+    <a href="/manage-users">Manage team</a>
+  </h2>
+  <p>Add or remove team members and set permissions</p>
+
+  <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+    <a href="#">Your account</a>
+  </h2>
+  <p>Change your email address or password</p>
 {% endblock %}

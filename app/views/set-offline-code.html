@@ -9,43 +9,39 @@
 {% endblock %}
 
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="nhsuk-heading-l">{{ title | noOrphans | safe }}</h1>
 
-          <p>Make a copy of this code and keep it safe, we will ask you for it when you are working offline.</p>
+      <p>Make a copy of this code and keep it safe, we will ask you for it when you are working offline.</p>
 
-          <div class="nhsuk-card">
-            <div class="nhsuk-card__content">
-              <p class="nhsuk-u-margin-bottom-0">Your code:</p>
-              <h3 class="nhsuk-card__heading nhsuk-u-padding-top-0 nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
-                tomato-lettuce-pear
-              </h3>
-              <p class="nhsuk-u-margin-top-0">
-                <a href="#">Get a different code</a>
-              </p>
-            </div>
-          </div>
-
-          <form method="post">
-            {{ input({
-              label: {
-                text: "Confirm your code",
-                classes: "nhsuk-label--s nhsuk-u-margin-bottom-2"
-              },
-              type: "text",
-              classes: "nhsuk-input--width-20",
-              decorate: "offline-code"
-            }) }}
-
-            {{ button({
-              text: "Confirm and continue"
-            }) }}
-          </form>
+      <div class="nhsuk-card">
+        <div class="nhsuk-card__content">
+          <p class="nhsuk-u-margin-bottom-0">Your code:</p>
+          <h3 class="nhsuk-card__heading nhsuk-u-padding-top-0 nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+            tomato-lettuce-pear
+          </h3>
+          <p class="nhsuk-u-margin-top-0">
+            <a href="#">Get a different code</a>
+          </p>
         </div>
       </div>
+
+      <form method="post">
+        {{ input({
+          label: {
+            text: "Confirm your code",
+            classes: "nhsuk-label--s nhsuk-u-margin-bottom-2"
+          },
+          type: "text",
+          classes: "nhsuk-input--width-20",
+          decorate: "offline-code"
+        }) }}
+
+        {{ button({
+          text: "Confirm and continue"
+        }) }}
+      </form>
     </div>
   </div>
 {% endblock %}

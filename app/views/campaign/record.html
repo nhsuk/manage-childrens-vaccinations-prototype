@@ -24,53 +24,49 @@
 {% endblock %}
 
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      {% include "campaign/_notification-banner.html" %}
+  {% include "campaign/_notification-banner.html" %}
 
-      {% if campaign["available-offline"] %}
-        <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
-      {% endif %}
+  {% if campaign["available-offline"] %}
+    <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
+  {% endif %}
 
-      <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
-        {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
-        {{ title | noOrphans | safe }}
-      </h1>
+  <h1 class="nhsuk-heading-xl nhsuk-u-margin-bottom-6">
+    {% if caption %}<span class="nhsuk-caption-l">{{ caption }}</span>{% endif %}
+    {{ title | noOrphans | safe }}
+  </h1>
 
-      {% set actionNeeded %}
-        {% set tab = filters.actionNeeded %}
-        {% include "campaign/_tab.html" %}
-      {% endset %}
+  {% set actionNeeded %}
+    {% set tab = filters.actionNeeded %}
+    {% include "campaign/_tab.html" %}
+  {% endset %}
 
-      {% set vaccinated %}
-        {% set tab = filters.vaccinated %}
-        {% include "campaign/_tab.html" %}
-      {% endset %}
+  {% set vaccinated %}
+    {% set tab = filters.vaccinated %}
+    {% include "campaign/_tab.html" %}
+  {% endset %}
 
-      {% set couldNotVaccinate %}
-        {% set tab = filters.couldNotVaccinate %}
-        {% include "campaign/_tab.html" %}
-      {% endset %}
+  {% set couldNotVaccinate %}
+    {% set tab = filters.couldNotVaccinate %}
+    {% include "campaign/_tab.html" %}
+  {% endset %}
 
-      {{ tabs({
-        items: [
-          {
-            id: "action-needed",
-            label: filters.actionNeeded.label,
-            panel: { html: actionNeeded }
-          },
-          {
-            id: "vaccinated",
-            label: filters.vaccinated.label,
-            panel: { html: vaccinated }
-          },
-          {
-            id: "not-vaccinated",
-            label: filters.couldNotVaccinate.label,
-            panel: { html: couldNotVaccinate }
-          }
-        ]
-      }) }}
-    </div>
-  </div>
+  {{ tabs({
+    items: [
+      {
+        id: "action-needed",
+        label: filters.actionNeeded.label,
+        panel: { html: actionNeeded }
+      },
+      {
+        id: "vaccinated",
+        label: filters.vaccinated.label,
+        panel: { html: vaccinated }
+      },
+      {
+        id: "not-vaccinated",
+        label: filters.couldNotVaccinate.label,
+        panel: { html: couldNotVaccinate }
+      }
+    ]
+  }) }}
 {% endblock %}

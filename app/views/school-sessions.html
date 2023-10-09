@@ -9,44 +9,40 @@
 {% endblock %}
 
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      {% if hasAnyOfflineChanges %}
-        {{ warningCallout({
-          heading: "You have offline changes",
-          HTML: "<p>Your offline changes will upload when you’re back&nbsp;online.</p>",
-          classes: "nhsuk-u-margin-top-0"
-        }) }}
-      {% endif %}
+  {% if hasAnyOfflineChanges %}
+    {{ warningCallout({
+      heading: "You have offline changes",
+      HTML: "<p>Your offline changes will upload when you’re back&nbsp;online.</p>",
+      classes: "nhsuk-u-margin-top-0"
+    }) }}
+  {% endif %}
 
-      <h1 class="nhsuk-heading-xl{% if not isOffline %} nhsuk-u-margin-bottom-2{% endif %}">{{ title | noOrphans | safe }}</h1>
+  <h1 class="nhsuk-heading-xl{% if not isOffline %} nhsuk-u-margin-bottom-2{% endif %}">{{ title | noOrphans | safe }}</h1>
 
-      {% if not isOffline %}
-        <p>
-          <a href="/campaign/new/start">Add a session</a>
-        </p>
-      {% endif %}
+  {% if not isOffline %}
+    <p>
+      <a href="/campaign/new/start">Add a session</a>
+    </p>
+  {% endif %}
 
-      {% if hasFluCampaigns %}
-        <h2 class="nhsuk-heading-l">Flu</h2>
+  {% if hasFluCampaigns %}
+    <h2 class="nhsuk-heading-l">Flu</h2>
 
-        {% set type = "Flu" %}
-        {% include "_sessions-table.html" %}
-      {% endif %}
+    {% set type = "Flu" %}
+    {% include "_sessions-table.html" %}
+  {% endif %}
 
-      {% if hasHPVCampaigns %}
-        <h2 class="nhsuk-heading-l">HPV</h2>
+  {% if hasHPVCampaigns %}
+    <h2 class="nhsuk-heading-l">HPV</h2>
 
-        {% set type = "HPV" %}
-        {% include "_sessions-table.html" %}
-      {% endif %}
+    {% set type = "HPV" %}
+    {% include "_sessions-table.html" %}
+  {% endif %}
 
-      {% if has3in1Campaigns %}
-        <h2 class="nhsuk-heading-l">3-in-1 and MenACWY</h2>
+  {% if has3in1Campaigns %}
+    <h2 class="nhsuk-heading-l">3-in-1 and MenACWY</h2>
 
-        {% set type = "3-in-1 and MenACWY" %}
-        {% include "_sessions-table.html" %}
-      {% endif %}
-    </div>
-  </div>
+    {% set type = "3-in-1 and MenACWY" %}
+    {% include "_sessions-table.html" %}
+  {% endif %}
 {% endblock %}
