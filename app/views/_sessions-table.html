@@ -8,20 +8,20 @@
     </tr>
   </thead>
   <tbody class="nhsuk-table__body">
-    {% for id, c in data.campaigns %}
-      {% if c.type === type %}
+    {% for id, campaign in data.campaigns %}
+      {% if campaign.type === type %}
       <tr class="nhsuk-table__row">
         <td class="nhsuk-table__cell">
-          {{ c.date | govukDate("truncate") }}
+          {{ campaign.date | govukDate("truncate") }}
         </td>
         <td class="nhsuk-table__cell">
-          {{ c.date | govukTime }}
+          {{ campaign.date | govukTime }}
         </td>
         <td class="nhsuk-table__cell">
-            <a href="/campaign/{{ c.id }}">{{ c.school.name }}</a>
+            <a href="/campaign/{{ id }}">{{ campaign.school.name }}</a>
         </td>
         <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-          {% if c["available-offline"] %}
+          {% if campaign["available-offline"] %}
             <span class="app-online-status app-online-status--online">
               {{ appIcon({ type: "tick" }) }} Available offline
             </span>

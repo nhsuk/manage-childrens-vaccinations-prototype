@@ -57,8 +57,8 @@ const setOutcome = (patient) => {
   }
 }
 
-export default (options) => {
-  const campaign = getCampaign(options)
+export default () => {
+  const campaign = getCampaign()
 
   campaign.inProgress = true
   campaign.date = DateTime.now().toISODate() + 'T' + '09:00'

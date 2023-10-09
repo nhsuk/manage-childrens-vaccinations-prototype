@@ -22,17 +22,16 @@ const ageRange = (type) => {
 }
 
 export default () => {
-  const type = faker.helpers.arrayElement(['HPV', 'Flu']) // exclude 3-in-1 and MenACWY for now, as the design is not ready
+  const type = faker.helpers.arrayElement(['HPV', 'Flu']) // Exclude 3-in-1 and MenACWY for now, as the design is not ready
   const school = getSchool(type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.number.int({ min: 2, max: 100 })
   const triageInProgress = daysUntil < 28
   const options = { ...ageRange(type), triageInProgress }
-  // const children = getChildren(100, patientOptions)
   const children = faker.helpers.multiple(getPatient(options), { count: 100 })
     .sort((a, b) => a.fullName.localeCompare(b.fullName))
 
-  return {
+  const campaign = {
     id: generateRandomString(3),
     title: `${type} session at ${school.name}`,
     location: school.name,
@@ -47,4 +46,6 @@ export default () => {
     is3in1MenACWY: type === '3-in-1 and MenACWY',
     children
   }
+
+  return campaign
 }
