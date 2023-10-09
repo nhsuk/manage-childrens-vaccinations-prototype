@@ -43,7 +43,6 @@ export default (_env) => {
    * @returns {string} Formatted date, for example Sunday 7 December 2021
    */
   filters.dateWithDayOfWeek = string => {
-    console.log('string', string)
     return DateTime.fromISO(string).toFormat('EEEE d MMMM yyyy')
   }
 
