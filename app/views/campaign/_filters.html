@@ -14,32 +14,32 @@
 
 {% if triaging %}
   <p class="nhsuk-u-margin-bottom-1">By notes</p>
-  <ul class="nhsuk-list">
-    <li {% if activeFilters.medical == "true" %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, "medical", "true") }}">Has notes</a>
+  <ul class="nhsuk-list app-list--filters">
+    <li>
+      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "medical", "true") }}">Has notes</a>
     </li>
-    <li {% if activeFilters.medical == "false" %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, "medical", "false") }}">No notes</a>
+    <li>
+      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "medical", "false") }}">No notes</a>
     </li>
   </ul>
 
   <p class="nhsuk-u-margin-bottom-1">By triage status</p>
-  <ul class="nhsuk-list">
+  <ul class="nhsuk-list app-list--filters">
     {% for key, item in TRIAGE_OUTCOME %}
       {% set active = activeFilters.triageOutcome == key %}
-      <li {% if active %}class="app-active-filter"{% endif %}>
-        <a href="{{ filterPath(activeFilters, "triage.outcome", key) }}">{{ item }}</a>
+      <li>
+        <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "triage.outcome", key) }}">{{ item }}</a>
       </li>
     {% endfor %}
   </ul>
 {% endif %}
 
 <p class="nhsuk-u-margin-bottom-1">By year group</p>
-<ul class="nhsuk-list">
+<ul class="nhsuk-list app-list--filters">
   {% for group in campaign.yearGroups %}
     {% set active = activeFilters.year == group.number %}
-    <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, "year", group.number) }}">
+    <li>
+      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "year", group.number) }}">
         {{ group.name }}
       </a>
     </li>
@@ -48,11 +48,11 @@
 
 {% if tab.actionNeededFilter %}
 <p class="nhsuk-u-margin-bottom-1">By action needed</p>
-<ul class="nhsuk-list">
+<ul class="nhsuk-list app-list--filters">
   {% for key, item in actionsFilter %}
     {% set active = activeFilters.actionNeeded == key %}
-    <li {% if active %}class="app-active-filter"{% endif %}>
-      <a href="{{ filterPath(activeFilters, "actionNeeded", key) }}">{{ item }}</a>
+    <li>
+      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "actionNeeded", key) }}">{{ item }}</a>
     </li>
   {% endfor %}
 </ul>

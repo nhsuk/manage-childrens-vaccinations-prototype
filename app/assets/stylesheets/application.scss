@@ -105,11 +105,11 @@ $color_app-pale-blue: #ccdff1;
   }
 }
 
-.app-active-filter {
-  font-weight: bold;
-
-  a {
-    color: inherit;
+.app-list--filters {
+  [aria-current] {
+    @include nhsuk-link-style-default;
+    @include nhsuk-link-style-text;
+    @include nhsuk-typography-weight-bold;
     text-decoration: none;
 
     &:hover {
