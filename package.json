@@ -9,8 +9,7 @@
   },
   "prototype": {
     "serviceName": "Manage vaccinations for school-aged children",
-    "defaultRigLayout": "layouts/default.html",
-    "defaultUnbrandedLayout": "layouts/unbranded.html"
+    "defaultRigLayout": "layouts/default.html"
   },
   "stylelint": {
     "extends": "stylelint-config-gds/scss"
