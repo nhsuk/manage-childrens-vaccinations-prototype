@@ -4,28 +4,28 @@
   </div>
   <div class="nhsuk-grid-column-three-quarters">
     {% if tab.results.length %}
-      <table class="nhsuk-table app-children-table" id="children">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header">Name</th>
-            <th class="govuk-table__header">
+      <table class="nhsuk-table app-table--patients" id="patients">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th class="nhsuk-table__header">Name</th>
+            <th class="nhsuk-table__header">
               {{- "Reason for refusal" if isRefusalReasonNeeded else "Date of birth" -}}
             </th>
-            <th class="govuk-table__header">
+            <th class="nhsuk-table__header">
               {{- "Action needed" if tab.actionNeeded else "Outcome" -}}
             </th>
           </tr>
         </thead>
-        <tbody class="govuk-table__body">
+        <tbody class="nhsuk-table__body">
           {% for patient in tab.results %}
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
                 <a href="/campaign/{{ campaign.id }}/child/{{ patient.nhsNumber }}">{{ patient.fullName }}</a>
                 {% if patient.knownAs %}
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ patient.knownAs }}</span>
                 {% endif %}
               </td>
-              <td class="govuk-table__cell nhsuk-u-font-size-16">
+              <td class="nhsuk-table__cell nhsuk-u-font-size-16">
                 {% if isRefusalReasonNeeded %}
                   {% for reason in patient.consent.refusalReasons %}
                     {{ reason | noOrphans | safe }}
@@ -35,7 +35,7 @@
                   {{ patient.dob | govukDate("truncate") }}
                 {% endif %}
               </td>
-              <td class="govuk-table__cell">
+              <td class="nhsuk-table__cell">
                 {{ tag({
                   text: action(patient).text,
                   classes: "nhsuk-tag--" + action(patient).colour + " nhsuk-u-font-size-16 nhsuk-u-width-full"
