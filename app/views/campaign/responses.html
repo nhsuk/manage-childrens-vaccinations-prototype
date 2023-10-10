@@ -23,7 +23,9 @@
   {% include "campaign/_notification-banner.html" %}
 
   {% if campaign["available-offline"] %}
-    <span class="nhsuk-heading-s nhsuk-u-margin-bottom-1" style="color: #007f3b">Available offline</span>
+    <span class="app-online-status app-online-status--online">
+      {{ appIcon({ type: "tick" }) }} Available offline
+    </span>
   {% endif %}
 
   {{ appHeading({
