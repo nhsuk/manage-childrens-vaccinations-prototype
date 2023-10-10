@@ -1,4 +1,4 @@
-{% set consentHtml %}
+{% set descriptionHtml %}
   <p>
     <a href="#">Change</a>
   </p>
@@ -10,7 +10,7 @@
       {
         key: "Assessment",
         value: {
-          html: "Assessed by " + data.user.name + "<br>" + ("today" | govukDate)
+          html: "Assessed by " + data.user.fullName + "<br>" + ("today" | govukDate)
         }
       },
       {
@@ -37,11 +37,8 @@
   }) }}
 {% endset %}
 
-{% if consentRecord and consentRecord["gillick-competent"] %}
-  {{ card({
-    heading: "Gillick competence",
-    headingLevel: "2",
-    headingClasses: "nhsuk-heading-m",
-    description: consentHtml
-  }) }}
-{% endif %}
+{{ card({
+  heading: "Gillick competence",
+  headingClasses: "nhsuk-heading-m",
+  descriptionHtml: descriptionHtml
+}) if consentRecord and consentRecord["gillick-competent"] }}

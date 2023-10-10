@@ -1,4 +1,5 @@
 {% extends "layouts/default.html" %}
+
 {% set title = campaign.title %}
 {% set hasChildren = campaign.children.length > 0 %}
 
@@ -16,17 +17,10 @@
 {% endblock %}
 
 {% block content %}
-  {% if success %}
-    {% set html %}
-      <p class="govuk-notification-banner__heading">
-        New session created
-      </p>
-    {% endset %}
-    {{ govukNotificationBanner({
-      html: html,
-      type: "success"
-    }) }}
-  {% endif %}
+  {{ govukNotificationBanner({
+    type: "success",
+    text: "New session created"
+  }) if success }}
 
   <h1 class="nhsuk-heading-l">
     {{ title | noOrphans | safe }}
@@ -71,6 +65,7 @@
           </div>
         </div>
       </div>
+
       <div class="nhsuk-grid-column-one-third">
         {% if hasChildren and not campaign["available-offline"] %}
         <div id="save-offline">
@@ -99,15 +94,15 @@
           </div>
 
           {% if campaignOfflineChangesCount == 1 %}
-            <hr class="nhsuk-section-break nhsuk-section-break--visible nhsuk-section-break--m">
+            <hr>
             <h2 class="nhsuk-heading-s">You changed 1 record offline</h2>
             <p>Your change will automatically sync when you’re back online.</p>
           {% elif campaignOfflineChangesCount > 1 %}
-            <hr class="nhsuk-section-break nhsuk-section-break--visible nhsuk-section-break--m">
+            <hr>
             <h2 class="nhsuk-heading-s">You changed {{ campaignOfflineChangesCount }} records offline</h2>
             <p>Your changes will automatically sync when you’re back online.</p>
           {% elif campaign.hadOfflineChanges and campaignOfflineChangesCount == 0 %}
-            <hr class="nhsuk-section-break nhsuk-section-break--visible nhsuk-section-break--m">
+            <hr>
             <h2 class="nhsuk-heading-s">Your changes were synced</h2>
             <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
           {% endif %}

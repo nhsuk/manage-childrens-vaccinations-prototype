@@ -1,4 +1,4 @@
-{% set description %}
+{% set descriptionHtml %}
   {% for response in child.responses %}
     {% set detailText %}
       {{ response.status + " by " + response.parentOrGuardian.relationship }} on {{ response.date | govukDate }}
@@ -53,7 +53,6 @@
 
 {{ card({
   heading: "Consent responses",
-  headingLevel: "2",
   headingClasses: "nhsuk-heading-m",
-  description: description
+  descriptionHtml: descriptionHtml
 }) }}
