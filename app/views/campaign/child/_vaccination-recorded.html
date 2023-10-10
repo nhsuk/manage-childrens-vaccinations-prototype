@@ -20,7 +20,7 @@
       {
         key: "Site",
         value: vaccination.site
-      } if vaccineGiven,
+      } if vaccineGiven and vaccination.site,
       {
         key: "Date",
         value: "Today (" + "today" | govukDate + ")"
