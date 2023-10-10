@@ -19,6 +19,12 @@ $govuk-assets-path: "/govuk/assets/";
 @import "email";
 
 // NHS.UK frontend overrides
+.nhsuk-summary-list__row:not(:has(.nhsuk-summary-list__actions))::after {
+  border-bottom: 1px solid $nhsuk-border-color;
+  content: "";
+  display: table-cell;
+}
+
 .nhsuk-tag--white {
   font-weight: normal;
   border-style: dashed;
@@ -77,23 +83,6 @@ $govuk-assets-path: "/govuk/assets/";
 
   .nhsuk-link {
     @include nhsuk-link-style-text;
-  }
-}
-
-.app-summary-list--no-bottom-border {
-  .govuk-summary-list__row:last-child,
-  .nhsuk-summary-list__row:last-child {
-    border: none;
-
-    .govuk-summary-list__key,
-    .nhsuk-summary-list__key {
-      border-bottom: none;
-    }
-
-    .govuk-summary-list__value,
-    .nhsuk-summary-list__value {
-      border-bottom: none;
-    }
   }
 }
 

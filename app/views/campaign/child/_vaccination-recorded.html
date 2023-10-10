@@ -2,8 +2,8 @@
   <p><a href="#">Change</a></p>
   {% set batch = data.vaccines.batches[vaccination.batch] %}
 
-  {{ govukSummaryList({
-    classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+  {{ summaryList({
+    classes: "nhsuk-u-margin-bottom-0",
     rows: decorateRows([
       {
         key: "Vaccine",

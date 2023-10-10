@@ -10,8 +10,7 @@
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set basePath = rootPath + campaign.id + "/" + child.nhsNumber %}
 
-{{ govukSummaryList({
-  classes: "app-summary-list--no-bottom-border",
+{{ summaryList({
   rows: decorateRows([
     {
       key: "Child",

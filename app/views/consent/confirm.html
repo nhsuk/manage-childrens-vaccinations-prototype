@@ -23,8 +23,7 @@
     {{ card({
       heading: "Consent",
       headingClasses: "nhsuk-heading-m",
-      descriptionHtml: govukSummaryList({
-        classes: "app-summary-list--no-bottom-border",
+      descriptionHtml: summaryList({
         rows: decorateRows([
           {
             key: "Consent",
@@ -74,8 +73,8 @@
     {{ card({
       heading: "Triage",
       headingClasses: "nhsuk-heading-m",
-      description: govukSummaryList({
-        classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
+      description: summaryList({
+        classes: "nhsuk-u-margin-bottom-0",
         rows: decorateRows([
           {
             key: "Status",
