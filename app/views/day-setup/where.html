@@ -1,4 +1,5 @@
 {% extends "layouts/wizard.html" %}
+
 {% set title = "What are you doing today?" %}
 
 {% block form %}
@@ -23,7 +24,9 @@
         text: "A catch-up clinic",
         value: "clinic"
       },
-      { divider: "or " },
+      {
+        divider: "or"
+      },
       {
         text: "Something else"
       }
