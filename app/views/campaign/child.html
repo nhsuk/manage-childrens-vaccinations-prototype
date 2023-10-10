@@ -4,7 +4,7 @@
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set hasNoResponse = child.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
 {% set hasRefused = child.consent.outcome == CONSENT_OUTCOME.REFUSED %}
-{% set hasConsented = not hasRefused and not hasNoResponse %}
+{% set hasHealthAnswers = child.consent.answersNeedTriage %}
 
 {% block outerContent %}
   {{ backLink({
@@ -31,7 +31,7 @@
       {% include "campaign/child/_responses.html" %}
       {% include "campaign/child/_consent-gillick.html" %}
 
-      {% if hasConsented %}
+      {% if hasHealthAnswers %}
         {% include "campaign/child/_triage.html" %}
       {% endif %}
 
