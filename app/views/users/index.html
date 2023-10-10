@@ -15,7 +15,7 @@
       {% set html %}
         <p class="govuk-notification-banner__heading">
           {% if success == "invited" %}
-            <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
+            <a href="/emails/invite-new-user" class="app-u-hidden-link">Invite sent</a>
           {% else %}
             Changes saved
           {% endif %}
@@ -31,7 +31,7 @@
 
       {{ button({
         text: "Add team member",
-        href: "/user/new"
+        href: "/users/new"
       }) }}
 
       <table class="nhsuk-table">
@@ -42,10 +42,10 @@
           </tr>
         </thead>
         <tbody class="nhsuk-table__body">
-          {% for user in data.users %}
+          {% for id, user in data.users %}
             <tr class="nhsuk-table__row">
               <td class="nhsuk-table__cell">
-                <a href="/user/{{ user.id }}">{{ user.fullName }}</a>
+                <a href="/users/{{ id }}">{{ user.fullName }}</a>
               </td>
               <td class="nhsuk-table__cell">{{ user.email }}</td>
             </tr>

@@ -51,9 +51,9 @@ $color_app-pale-blue: #ccdff1;
   }
 }
 
-.app-hidden-link {
+.app-u-hidden-link {
   text-decoration: none;
-  color: inherit;
+  color: inherit !important;
 
   &:hover {
     text-decoration: underline;

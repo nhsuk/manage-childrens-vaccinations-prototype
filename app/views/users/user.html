@@ -4,7 +4,7 @@
 
 {% block outerContent %}
   {{ backLink({
-    href: "/manage-users",
+    href: "/users",
     classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
   }) }}
 {% endblock %}
@@ -14,7 +14,7 @@
     <div class="nhsuk-grid-column-two-thirds">
       {{ appHeading({ title: title }) }}
 
-      <form method="post" action="/manage-users?success={{ user.id }}">
+      <form method="post" action="/users?success={{ user.id }}">
         {{ input({
           label: {
             text: "Name"

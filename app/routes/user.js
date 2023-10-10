@@ -1,7 +1,9 @@
+import { faker } from '@faker-js/faker'
+
 export default (router) => {
   router.all([
-    '/user/:userId',
-    '/user/:userId/*'
+    '/users/:userId',
+    '/users/:userId/*'
   ], (req, res, next) => {
     const data = req.session.data
     const user = data.users[req.params.userId]
@@ -9,29 +11,28 @@ export default (router) => {
     next()
   })
 
-  router.get([
-    '/user/new/'
-  ], (req, res) => {
-    res.render('user/new')
+  router.get('/users/new/', (req, res) => {
+    res.render('users/new')
   })
 
-  router.post([
-    '/user/new/'
-  ], (req, res) => {
-    req.session.data.users['123'] = req.session.data.users.new
+  router.post('/users/new/', (req, res) => {
+    const userId = faker.string.uuid()
+
+    req.session.data.users[userId] = {
+      id: userId,
+      ...req.session.data.users.new
+    }
+
     delete req.session.data.users.new
-    res.redirect('/manage-users?success=invited')
+
+    res.redirect('/users?success=invited')
   })
 
-  router.all([
-    '/user/:userId/'
-  ], (req, res) => {
-    res.render('user/index')
+  router.all('/users/:userId/', (req, res) => {
+    res.render('users/user')
   })
 
-  router.all([
-    '/user/:userId/:view'
-  ], (req, res) => {
-    res.render(`user/${req.params.view}`)
+  router.all('/users/:userId/:view', (req, res) => {
+    res.render(`users/${req.params.view}`)
   })
 }

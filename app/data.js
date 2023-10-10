@@ -31,12 +31,17 @@ const campaigns = campaignsArray.reduce((object, campaign) => {
   return object
 }, {})
 
+const usersArray = faker.helpers.multiple(getUser, { count: 20 })
+const users = usersArray.reduce((object, user) => {
+  object[user.id] = user
+  return object
+}, {})
+
 const vaccines = getVaccines()
-const users = faker.helpers.multiple(getUser, { count: 20 })
 
 export default {
   support: 'record-childrens-vaccinations@service.nhs.uk',
-  user: users[0],
+  user: usersArray[0],
   campaigns,
   vaccines,
   vaccination: getVaccination(campaigns, vaccines.batches),
