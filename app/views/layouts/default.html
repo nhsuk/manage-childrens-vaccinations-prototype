@@ -18,15 +18,10 @@
 
 {% block header %}
   {% if isOffline %}
-    <div class="app-offline-indicator">
+    <div class="app-offline-banner">
       <div class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-          <div class="nhsuk-grid-column-two-thirds">
-            <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-19">You are working offline</span>
-            <span class="nhsuk-u-padding-left-2 nhsuk-u-padding-right-2"></span>
-            <a href="/help-offline" class="nhsuk-link">Help working offline</a>
-          </div>
-        </div>
+        <span class="nhsuk-u-font-weight-bold nhsuk-u-font-size-19 nhsuk-u-margin-right-3">You are working offline</span>
+        <a href="/help-offline" class="nhsuk-link nhsuk-text-colour">Help working offline</a>
       </div>
     </div>
   {% endif %}

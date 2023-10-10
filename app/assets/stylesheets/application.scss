@@ -4,10 +4,6 @@ $govuk-global-styles: false;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/govuk/assets/";
 
-// App variables
-// stylelint-disable scss/dollar-variable-pattern
-$color_app-pale-blue: #ccdff1;
-
 @import "node_modules/nhsuk-frontend/packages/nhsuk";
 
 // Import GOV.UK Frontend
@@ -19,9 +15,8 @@ $color_app-pale-blue: #ccdff1;
 // Import app components
 @import "components/consent-banner";
 
-// Import app layouts
+// Import email layout
 @import "email";
-@import "offline";
 
 // NHS.UK frontend overrides
 .nhsuk-tag--white {
@@ -73,6 +68,15 @@ $color_app-pale-blue: #ccdff1;
 
   &--offline {
     color: $color_nhsuk-red
+  }
+}
+
+.app-offline-banner {
+  background: #ccdff1;
+  padding: nhsuk-spacing(3) 0 nhsuk-spacing(3);
+
+  .nhsuk-link {
+    @include nhsuk-link-style-text;
   }
 }
 
