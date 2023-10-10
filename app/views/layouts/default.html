@@ -42,45 +42,36 @@
 {% endblock %}
 
 {% block footer %}
-  <footer role="contentinfo">
-    <div class="nhsuk-footer" id="nhsuk-footer">
-      <div class="nhsuk-width-container">
-        <h2 class="nhsuk-u-visually-hidden">Scenario links</h2>
-        <ul class="nhsuk-footer__list nhsuk-u-margin-bottom-6">
-          <li class="nhsuk-footer__list-item">
-            <a class="nhsuk-footer__list-item-link" href="/scenario-office">Scenario 1</a>
-          </li>
-          <li class="nhsuk-footer__list-item">
-            <a class="nhsuk-footer__list-item-link" href="/scenario-offline">Scenario 2</a>
-          </li>
-          <li class="nhsuk-footer__list-item">
-            <a class="nhsuk-footer__list-item-link" href="/scenario-back-online">Scenario 3</a>
-          </li>
-        </ul>
-
-        <h2 class="nhsuk-u-visually-hidden">Support links</h2>
-        <ul class="nhsuk-footer__list">
-          <li class="nhsuk-footer__list-item">
-            <a class="nhsuk-footer__list-item-link" href="/clear-session-data">Clear session data</a>
-          </li>
-          <li class="nhsuk-footer__list-item">
-            <a class="nhsuk-footer__list-item-link" href="/feature-flags">Feature flags</a>
-          </li>
-          {% if data.features.offline.on === false %}
-            <li class="nhsuk-footer__list-item">
-              <a class="nhsuk-footer__list-item-link" href="/go-offline">Go offline</a>
-            </li>
-          {% else %}
-            <li class="nhsuk-footer__list-item">
-              <a class="nhsuk-footer__list-item-link" href="/go-online">Go online</a>
-            </li>
-          {% endif %}
-        </ul>
-
-        <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
-      </div>
-    </div>
-  </footer>
+  {{ footer({
+    links: [
+      {
+        URL: "/clear-session-data",
+        label: "Clear session data"
+      },
+      {
+        URL: "/feature-flags",
+        label: "Feature flags"
+      },
+      {
+        URL: "/go-offline" if data.features.offline.on === false else "/go-online",
+        label: "Go offline" if data.features.offline.on === false else "Go online"
+      }
+    ],
+    linksColumn2: [
+      {
+        URL: "/scenario-office",
+        label: "Scenario 1"
+      },
+      {
+        URL: "/scenario-offline",
+        label: "Scenario 2"
+      },
+      {
+        URL: "/scenario-back-online",
+        label: "Scenario 3"
+      }
+    ]
+  }) }}
 {% endblock %}
 
 {% block bodyEnd %}
