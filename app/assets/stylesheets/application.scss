@@ -23,33 +23,30 @@ $color_app-pale-blue: #ccdff1;
 @import "email";
 @import "offline";
 
-// Overrides
+// NHS.UK frontend overrides
 .nhsuk-tag--white {
   font-weight: normal;
   border-style: dashed;
 }
 
-// App utilities
-.app-u-nowrap {
-  white-space: nowrap;
-}
+// GOV.UK Frontend overrides
+.govuk-notification-banner {
+  border-color: $color_nhsuk-blue;
 
-// App components
-.app-scenario {
-  background: $color_nhsuk-grey-5;
-}
+  .govuk-notification-banner__header {
+    background-color: $color_nhsuk-blue;
+  }
 
-.app-search {
-  background: $color_nhsuk-grey-5;
-  border: 1px solid $nhsuk-border-color;
-  padding: nhsuk-spacing(3);
-  margin-bottom: nhsuk-spacing(4);
+  &--success {
+    border-color: $color_nhsuk-green;
 
-  .nhsuk-form-group {
-    margin-bottom: 0;
+    .govuk-notification-banner__header {
+      background-color: $color_nhsuk-green;
+    }
   }
 }
 
+// App utilities
 .app-u-hidden-link {
   text-decoration: none;
   color: inherit !important;
@@ -57,6 +54,15 @@ $color_app-pale-blue: #ccdff1;
   &:hover {
     text-decoration: underline;
   }
+}
+
+.app-u-nowrap {
+  white-space: nowrap;
+}
+
+// App components
+.app-scenario {
+  background: $color_nhsuk-grey-5;
 }
 
 .app-online-status {
@@ -94,14 +100,6 @@ $color_app-pale-blue: #ccdff1;
 .app-table--no-bottom-border {
   tr:last-child td {
     border-bottom: none;
-  }
-}
-
-.app-notification-banner {
-  border-color: $color_nhsuk-blue;
-
-  .govuk-notification-banner__header {
-    background-color: $color_nhsuk-blue;
   }
 }
 
