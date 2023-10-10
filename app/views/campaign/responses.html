@@ -41,11 +41,13 @@
 
   {% set consentRefused %}
     {% set tab = filters.consentRefused %}
+    {% set isRefusalReasonNeeded = true %}
     {% include "campaign/_tab.html" %}
   {% endset %}
 
   {% set consentConflicts %}
     {% set tab = filters.consentConflicts %}
+    {% set isRefusalReasonNeeded = false %}
     {% include "campaign/_tab.html" %}
   {% endset %}
 

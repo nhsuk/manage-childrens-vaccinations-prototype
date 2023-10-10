@@ -39,7 +39,7 @@ export default (type, responses) => {
   const refusalReasons = []
   if (outcome === CONSENT_OUTCOME.REFUSED) {
     for (const response of Object.values(responses)) {
-      refusalReasons.push(response.reason)
+      refusalReasons.push(response.refusalReason)
     }
   }
 
