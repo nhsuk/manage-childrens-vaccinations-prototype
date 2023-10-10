@@ -1,4 +1,5 @@
 {% extends "layouts/default.html" %}
+
 {% set title = "Manage team" %}
 
 {% block outerContent %}
@@ -11,22 +12,20 @@
 {% block content %}
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% if success %}
-        {% set html %}
-          <p class="govuk-notification-banner__heading">
-            {% if success == "invited" %}
-              <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
-            {% else %}
-              Changes saved
-            {% endif %}
-          </p>
-        {% endset %}
+      {% set html %}
+        <p class="govuk-notification-banner__heading">
+          {% if success == "invited" %}
+            <a href="/emails/invite-new-user" class="app-hidden-link">Invite sent</a>
+          {% else %}
+            Changes saved
+          {% endif %}
+        </p>
+      {% endset %}
 
-        {{ govukNotificationBanner({
-          html: html,
-          type: "success"
-        }) }}
-      {% endif %}
+      {{ govukNotificationBanner({
+        html: html,
+        type: "success"
+      }) if success }}
 
       {{ appHeading({ title: title, size: "xl" }) }}
 

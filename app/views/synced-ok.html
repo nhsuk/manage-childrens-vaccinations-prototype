@@ -1,4 +1,5 @@
 {% extends "layouts/default.html" %}
+
 {% set title = "Your offline changes have synced successfully" %}
 
 {% block content %}
@@ -16,19 +17,19 @@
         {{ appHeading({ title: title }) }}
 
         {% set everythingHtml %}
-        <ul class="govuk-list">
-          <li>
-            <a href="#">29 March – Hele’s Secondary School</a><br>
-            120 changes
-          </li>
-        </ul>
-      {% endset %}
+          <ul class="govuk-list">
+            <li>
+              <a href="#">29 March – Hele’s Secondary School</a><br>
+              120 changes
+            </li>
+          </ul>
+        {% endset %}
 
-      {{ details({
-        text: "See your synced changes",
-        HTML: everythingHtml,
-        classes: "nhsuk-u-margin-bottom-6"
-      }) }}
+        {{ details({
+          text: "See your synced changes",
+          HTML: everythingHtml,
+          classes: "nhsuk-u-margin-bottom-6"
+        }) }}
 
         {{ button({
           text: "Continue",

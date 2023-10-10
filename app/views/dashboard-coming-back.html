@@ -1,5 +1,6 @@
 {% extends "layouts/default.html" %}
-{% set title = "You’re signed in as " + data.user.name %}
+
+{% set title = "You’re signed in as " + data.user.fullName %}
 
 {% block content %}
   <form action="/dashboard" method="post">
