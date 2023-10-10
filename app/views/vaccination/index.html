@@ -1,4 +1,5 @@
 {% extends "layouts/wizard.html" %}
+
 {% set index = 1 if isMenACWY else 0 %}
 {% set vaccine = campaign.vaccines[index] %}
 {% set batch = vaccine.batches[0] %}
@@ -7,14 +8,12 @@
 {% block form %}
   {{ appHeading({ title: title }) }}
 
-  {% set html %}
-    {{ summaryList({
+  {{ card({
+    heading: type + " vaccine",
+    headingClasses: "nhsuk-heading-m",
+    HTML: summaryList({
       classes: "app-summary-list--no-bottom-border nhsuk-u-margin-bottom-0",
       rows: decorateRows([
-        {
-          key: "Vaccine",
-          value: type
-        },
         {
           key: "Dose",
           value: "1 of 2"
@@ -28,15 +27,7 @@
           value: batch.name + " (expires " + (batch.expiry | govukDate("truncate")) + ")"
         }
       ])
-    }) }}
-  {% endset %}
-
-  {{ card({
-    heading: "",
-    headingLevel: "2",
-    headingClasses: "nhsuk-heading-m nhsuk-u-margin-bottom-1",
-    HTML: html,
-    classes: "nhsuk-u-margin-bottom-4"
+    })
   }) }}
 
   {{ radios({
@@ -55,5 +46,4 @@
     }],
     decorate: [dataLocation, campaignId, child.nhsNumber, "vaccine-correct"]
   }) }}
-
 {% endblock %}

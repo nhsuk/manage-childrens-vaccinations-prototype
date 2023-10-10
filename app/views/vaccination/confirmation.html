@@ -1,18 +1,18 @@
 {% extends "layouts/wizard.html" %}
-{% set title = "Record stored" if isOffline else "Record saved"  %}
+
+{% set title = "Record stored" if isOffline else "Record saved" %}
 {% set hideButton = true %}
+
 {% block outerContent %}{% endblock %}
 
 {% block form %}
   {% set html %}
-    {% if isOffline %}
-      <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">You still need to connect to the internet to save this&nbsp;record.</p>
-    {% endif %}
+    <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">You still need to connect to the internet to save this&nbsp;record.</p>
   {% endset %}
 
   {{ govukPanel({
     titleText: title,
-    html: html,
+    html: html if isOffline,
     classes: "nhsuk-u-margin-bottom-6"
   }) }}
 

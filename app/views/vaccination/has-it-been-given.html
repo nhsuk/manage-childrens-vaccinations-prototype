@@ -2,39 +2,34 @@
 {% set title = "Was " + child.fullName + " given the " + type + " vaccine?" %}
 
 {% block form %}
-  {% set siteHtml %}
-    {{ radios({
-      fieldset: {
-        legend: {
-          classes: "nhsuk-fieldset__legend--s",
-          text: "Where did they get the vaccine?"
-        }
-      },
-      items: [
-        { text: VACCINATION_SITE.ARM_LEFT },
-        { text: VACCINATION_SITE.ARM_RIGHT },
-        { text: VACCINATION_SITE.THIGH_LEFT },
-        { text: VACCINATION_SITE.THIGH_RIGHT },
-        { text: VACCINATION_SITE.BUTTOCK_LEFT },
-        { text: VACCINATION_SITE.BUTTOCK_RIGHT }
-      ],
-      decorate: [dataLocation, campaign.id, child.nhsNumber, "site"]
-    }) }}
-  {% endset %}
-
   {{ radios({
     fieldset: {
       legend: {
         classes: "nhsuk-fieldset__legend--l",
-        isPageHeading: true,
-        text: title | noOrphans | safe
+        text: appHeading({ title: title })
       }
     },
     items: [{
       text: "Yes, they had the " + type + " vaccine",
       value: VACCINATION_OUTCOME.VACCINATED,
       conditional: {
-        html: siteHtml
+        html: radios({
+          fieldset: {
+            legend: {
+              classes: "nhsuk-fieldset__legend--s",
+              text: "Where did they get the vaccine?"
+            }
+          },
+          items: [
+            { text: VACCINATION_SITE.ARM_LEFT },
+            { text: VACCINATION_SITE.ARM_RIGHT },
+            { text: VACCINATION_SITE.THIGH_LEFT },
+            { text: VACCINATION_SITE.THIGH_RIGHT },
+            { text: VACCINATION_SITE.BUTTOCK_LEFT },
+            { text: VACCINATION_SITE.BUTTOCK_RIGHT }
+          ],
+          decorate: [dataLocation, campaign.id, child.nhsNumber, "site"]
+        })
       } if campaign.vaccines[0].method == "Injection"
     }, {
       text: "No, they did not get the vaccine",

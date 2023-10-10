@@ -13,25 +13,23 @@
     {% endif %}
   {% endset %}
 
-  <div class="nhsuk-card">
-    <div class="nhsuk-card__content">
-      {{ detailsHtml | safe }}
-    </div>
-  </div>
+  {{ card({
+    headingHtml: " ",
+    descriptionHtml: detailsHtml
+  }) }}
 
-  <div class="nhsuk-card">
-    <div class="nhsuk-card__content">
-      {{ textarea({
-        label: {
-          text: "Add notes",
-          classes: "nhsuk-label--m nhsuk-u-margin-bottom-3"
-        },
-        hint: {
-          text: "For example, if the child had a reaction to the vaccine"
-        },
-        rows: 5,
-        decorate: [dataLocation, campaign.id, child.nhsNumber, "notes"]
-      }) }}
-    </div>
-  </div>
+  {{ card({
+    headingHtml: " ",
+    descriptionHtml: textarea({
+      label: {
+        text: "Add notes",
+        classes: "nhsuk-label--m nhsuk-u-margin-bottom-2"
+      },
+      hint: {
+        text: "For example, if the child had a reaction to the vaccine"
+      },
+      rows: 5,
+      decorate: [dataLocation, campaign.id, child.nhsNumber, "notes"]
+    })
+  }) }}
 {% endblock %}

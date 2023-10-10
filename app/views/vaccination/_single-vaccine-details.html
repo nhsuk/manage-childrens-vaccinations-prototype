@@ -6,12 +6,9 @@
   {% set rootPath = "/men-acwy-vaccination/" %}
   {% set index = 1 %}
 {% endif %}
-{% set batchKey = vaccination.batch %}
-{% set batch = data.vaccines.batches[batchKey] %}
+{% set batch = data.vaccines.batches[vaccination.batch] %}
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set basePath = rootPath + campaign.id + "/" + child.nhsNumber %}
-
-{{ vaccine.summary }}
 
 {{ govukSummaryList({
   classes: "app-summary-list--no-bottom-border",
@@ -23,27 +20,27 @@
     {
       key: "Vaccine",
       value: batch.vaccine
-    },
+    } if vaccineGiven,
     {
       key: "Dose",
       value: "1 of 2",
       href: "#"
-    } if type == "HPV",
+    } if vaccineGiven and type == "HPV",
     {
       key: "Brand",
       value: batch.brand + " (" + batch.method + ")",
       href: "#"
-    },
+    } if vaccineGiven,
     {
       key: "Batch",
       value: batch.name + " (expires " + (batch.expiryDate | govukDate("truncate")) + ")",
       href: "#"
-    },
+    } if vaccineGiven,
     {
       key: "Site",
       value: vaccination.site,
-      href: basePath + "/has-it-been-given" if batch.method != "Nasal spray"
-    } if vaccineGiven,
+      href: basePath + "/has-it-been-given"
+    }  if vaccineGiven and vaccination.site,
     {
       key: "Outcome",
       value: vaccination.outcome,
@@ -66,7 +63,7 @@
     },
     {
       key: "Vaccinator",
-      value: "You (" + data.user.name + ")",
+      value: "You (" + data.user.fullName + ")",
       href: "#"
     }
   ])

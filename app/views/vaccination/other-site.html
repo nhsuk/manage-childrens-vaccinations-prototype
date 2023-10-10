@@ -1,8 +1,12 @@
 {% extends "layouts/wizard.html" %}
+
 {% set title = "Tell us how the vaccination was given" %}
 
 {% block form %}
-  {{ appHeading({ caption: child.fullName, title: title }) }}
+  {{ appHeading({
+    caption: child.fullName,
+    title: title
+  }) }}
 
   {{ radios({
     fieldset: {

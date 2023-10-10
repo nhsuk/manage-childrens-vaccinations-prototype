@@ -1,14 +1,14 @@
 {% extends "layouts/wizard.html" %}
+
 {% set title = "Which batch did you use?" %}
 
 {% block form %}
-  {% set defaulText = "Default to this batch for today" %}
+  {% set defaultText = "Default to this batch for today" %}
 
   {% set otherBatch %}
     {{ input({
       label: {
-        text: "Batch",
-        classes: "nhsuk-label--s nhsuk-u-margin-bottom-1"
+        text: "Batch"
       },
       classes: "nhsuk-input--width-10",
       decorate: "other-batch-name"
@@ -17,8 +17,7 @@
     {{ dateInput({
       fieldset: {
         legend: {
-          text: "Expiry date",
-          classes: "nhsuk-fieldset__legend--s nhsuk-u-margin-bottom-1"
+          text: "Expiry date"
         }
       },
       hint: {
@@ -29,7 +28,10 @@
 
     {{ checkboxes({
       items: [
-        { text: defaulText, value: "other-batch" }
+        {
+          text: defaultText,
+          value: "other-batch"
+        }
       ],
       decorate: "todays-batch-other"
     }) }}
@@ -43,11 +45,14 @@
       value: batchKey,
       conditional: {
         html: checkboxes({
-                items: [
-                  { text: defaulText, value: batchKey }
-                ],
-                decorate: "todays-batch-" + batchKey
-              })
+          items: [
+            {
+              text: defaultText,
+              value: batchKey
+            }
+          ],
+          decorate: "todays-batch-" + batchKey
+        })
       }
     }), items) %}
   {% endfor %}
@@ -69,5 +74,4 @@
     items: items,
     decorate: [dataLocation, campaign.id, child.nhsNumber, "batch"]
   }) }}
-
 {% endblock %}
