@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
+import _ from 'lodash'
 import getCampaign from './generators/campaign.js'
 import getCampaignInProgress from './generators/campaign-in-progress.js'
 import getVaccination from './generators/vaccination.js'
@@ -24,18 +25,10 @@ campaignsArray.push(getCampaignInProgress())
 campaignsArray.sort((a, b) =>
   DateTime.fromISO(a.date).valueOf() - DateTime.fromISO(b.date).valueOf()
 )
-
-// Use object to hold campaigns, with `campaign.id` as key
-const campaigns = campaignsArray.reduce((object, campaign) => {
-  object[campaign.id] = campaign
-  return object
-}, {})
+const campaigns = _.keyBy(campaignsArray, 'id')
 
 const usersArray = faker.helpers.multiple(getUser, { count: 20 })
-const users = usersArray.reduce((object, user) => {
-  object[user.id] = user
-  return object
-}, {})
+const users = _.keyBy(usersArray, 'id')
 
 const vaccines = getVaccines()
 
