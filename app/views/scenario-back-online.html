@@ -1,9 +1,18 @@
-{% extends "layouts/scenario.html" %}
+{% extends "layouts/default.html" %}
 
 {% set title = "You are back at the office after the school session" %}
 
-{% block scenario %}
-  {{ appHeading({ title: title, caption: "Scenario", size: "xl" }) }}
+{% block skipLink %}{% endblock %}
+{% block header %}{% endblock %}
 
-  <p class="nhsuk-body-l">You need to sync the changes you made while offline.</p>
+{% block content %}
+  <form class="nhsuk-u-reading-width" method="post">
+    {{ appHeading({ title: title, caption: "Scenario", size: "xl" }) }}
+
+    <p>You need to sync the changes you made while offline.</p>
+
+    {{ button({
+      text: "Continue"
+    }) }}
+  </form>
 {% endblock %}

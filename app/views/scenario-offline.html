@@ -1,9 +1,18 @@
-{% extends "layouts/scenario.html" %}
+{% extends "layouts/default.html" %}
 
 {% set title = "You are vaccinating in a school session where there is no internet access" %}
 
-{% block scenario %}
-  {{ appHeading({ title: title, caption: "Scenario", size: "xl" }) }}
+{% block skipLink %}{% endblock %}
+{% block header %}{% endblock %}
 
-  <p class="nhsuk-body-l">You need to use the information you’ve saved while in the office.</p>
+{% block content %}
+  <form class="nhsuk-u-reading-width" method="post">
+    {{ appHeading({ title: title, caption: "Scenario", size: "xl" }) }}
+
+    <p>You need to use the information you’ve saved while in the office.</p>
+
+    {{ button({
+      text: "Continue"
+    }) }}
+  </form>
 {% endblock %}
