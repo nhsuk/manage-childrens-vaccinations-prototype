@@ -1,4 +1,5 @@
 {% extends "layouts/wizard.html" %}
+
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
 {% set hasConsented = d(base + "consent") == CONSENT_OUTCOME.VALID %}
@@ -21,7 +22,6 @@
   {% else %}
     {{ card({
       heading: "Consent",
-      headingLevel: "2",
       headingClasses: "nhsuk-heading-m",
       descriptionHtml: govukSummaryList({
         classes: "app-summary-list--no-bottom-border",

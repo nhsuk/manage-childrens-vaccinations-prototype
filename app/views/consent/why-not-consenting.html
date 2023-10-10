@@ -2,15 +2,6 @@
 {% set title = "Why do they not agree?" %}
 
 {% block form %}
-  {% set other %}
-    {{ input({
-      label: {
-        text: "Give details"
-      },
-      decorate: base + "refusalReasonOther"
-    }) }}
-  {% endset %}
-
   {{ radios({
     fieldset: {
       legend: {
@@ -30,7 +21,12 @@
       {
         text: RESPONSE_REFUSAL.OTHER,
         conditional: {
-          html: other
+          html: input({
+            label: {
+              text: "Give details"
+            },
+            decorate: base + "refusalReasonOther"
+          })
         }
       }
     ],

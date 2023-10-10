@@ -1,4 +1,5 @@
 {% extends "layouts/wizard.html" %}
+
 {% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
 {% set campaignName = campaign.type | lower if campaign.type == "Flu" else campaign.type %}
 {% if isGillickCompetent %}
@@ -31,5 +32,4 @@
     ],
     decorate: base + "consent"
   }) }}
-
 {% endblock %}
