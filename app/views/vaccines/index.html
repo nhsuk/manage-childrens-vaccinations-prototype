@@ -29,16 +29,16 @@
             <tbody class="govuk-table__body">
               {% for batch in batches %}
                 {% if batch.brand == vaccine.brand %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">{{ batch.name }}</td>
-                  <td class="govuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
-                  <td class="govuk-table__cell nhsuk-u-text-align-right">
-                    <a href="/vaccines/{{ batch.name }}">Change</a>
-                  </td>
-                  <td class="govuk-table__cell nhsuk-u-text-align-right">
-                    <a href="#">Move&nbsp;to&nbsp;archive</a>
-                  </td>
-                </tr>
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ batch.name }}</td>
+                    <td class="govuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
+                    <td class="govuk-table__cell nhsuk-u-text-align-right">
+                      <a href="/vaccines/{{ batch.name }}">Change</a>
+                    </td>
+                    <td class="govuk-table__cell nhsuk-u-text-align-right">
+                      <a href="#">Move&nbsp;to&nbsp;archive</a>
+                    </td>
+                  </tr>
                 {% endif %}
               {% endfor %}
             </tbody>
@@ -52,9 +52,10 @@
         }) }}
       {% endfor %}
 
-      <p class="nhsuk-body">
-        <a href="#" class="nhsuk-button">Add a new vaccine</a>
-      </p>
+      {{ button({
+        href: "#",
+        text: "Add a new vaccine"
+      }) }}
     </div>
   </div>
 {% endblock %}
