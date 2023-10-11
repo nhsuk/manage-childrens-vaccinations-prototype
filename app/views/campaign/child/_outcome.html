@@ -1,24 +1,86 @@
-{% set consent = child.consent.outcome %}
-
-{% if child.outcome == PATIENT_OUTCOME.VACCINATED %}
-  {% set colour = "green" %}
-{% elif child.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
+{% if child.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set colour = "red" %}
-{% else %}
-  {% set colour = "orange" %}
-{% endif %}
-
-{% if (child.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
-      (child.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
-  {% set description = child.triage.notes[0].user.fullName + " decided that " + child.fullName + " should not be vaccinated." %}
-{% else %}
-  {% set description = vaccination.outcome %}
+  {% if (child.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
+        (child.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
+    {% set description = child.triage.notes[0].user.fullName + " decided that " + child.fullName + " should not be vaccinated." %}
+  {% else %}
+    {% set description = vaccination.outcome %}
+    {% set descriptionHtml %}
+      {% set batch = data.vaccines.batches[vaccination.batch] %}
+      {{ summaryList({
+        rows: decorateRows([
+          {
+            key: "Reason",
+            value: vaccination.outcome
+          },
+          {
+            key: "Date",
+            value: "Today (" + "today" | govukDate + ")"
+          },
+          {
+            key: "Location",
+            value: campaign.location
+          },
+          {
+            key: "Vaccinator",
+            value: "You (" + data.user.fullName + ")"
+          },
+          {
+            key: "Notes",
+            value: vaccination.notes | default("None", true)
+          }
+        ])
+      }) }}
+    {% endset %}
+  {% endif %}
+{% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
+  {% set colour = "green" %}
+  {% set descriptionHtml %}
+    {% set batch = data.vaccines.batches[vaccination.batch] %}
+    {{ summaryList({
+      rows: decorateRows([
+        {
+          key: "Vaccine",
+          value: batch.summary
+        },
+        {
+          key: "Dose",
+          value: "1 of 2"
+        } if vaccineGiven and campaign.type == "HPV",
+        {
+          key: "Site",
+          value: vaccination.site
+        } if vaccineGiven and vaccination.site,
+        {
+          key: "Date",
+          value: "Today (" + "today" | govukDate + ")"
+        },
+        {
+          key: "Time",
+          value: "now" | govukTime
+        } if vaccineGiven,
+        {
+          key: "Location",
+          value: campaign.location
+        },
+        {
+          key: "Vaccinator",
+          value: "You (" + data.user.fullName + ")"
+        },
+        {
+          key: "Notes",
+          value: vaccination.notes | default("None", true)
+        }
+      ])
+    }) }}
+  {% endset %}
 {% endif %}
 
 {{ card({
   classes: "nhsuk-card--" + colour,
   heading: child.outcome,
   headingClasses: "nhsuk-heading-m",
-  description: description,
+  description: description if description,
+  descriptionHtml: descriptionHtml if descriptionHtml,
   feature: true
 }) }}

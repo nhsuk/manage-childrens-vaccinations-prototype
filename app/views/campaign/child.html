@@ -43,8 +43,6 @@
           child.triage.outcome == TRIAGE_OUTCOME.NONE %}
           {% include "campaign/child/_action-vaccinate.html" %}
         {% endif %}
-      {% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
-        {% include "campaign/child/_vaccination-recorded.html" %}
       {% endif %}
     </div>
 
