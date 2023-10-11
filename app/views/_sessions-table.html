@@ -3,15 +3,17 @@
     <tr class="nhsuk-table__row">
       <th class="nhsuk-table__header">Date</th>
       <th class="nhsuk-table__header">Time</th>
-      <th class="nhsuk-table__header" style="width: 50%">School</th>
-      <th class="nhsuk-table__header nhsuk-u-text-align-right" style="width: 25%"></th>
+      <th class="nhsuk-table__header">School</th>
+      {% if not campaign["available-offline"] or not isOffline %}
+        <th class="nhsuk-table__header nhsuk-u-text-align-right"></th>
+      {% endif %}
     </tr>
   </thead>
   <tbody class="nhsuk-table__body">
     {% for id, campaign in data.campaigns %}
       {% if campaign.type === type %}
       <tr class="nhsuk-table__row">
-        <td class="nhsuk-table__cell">
+        <td class="nhsuk-table__cell app-u-nowrap">
           {{ campaign.date | govukDate("truncate") }}
         </td>
         <td class="nhsuk-table__cell">
@@ -20,15 +22,18 @@
         <td class="nhsuk-table__cell">
             <a href="/campaign/{{ id }}">{{ campaign.school.name }}</a>
         </td>
-        <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-          {% if campaign["available-offline"] %}
+        {% if campaign["available-offline"] %}
+          <td class="nhsuk-table__cell nhsuk-u-text-align-right">
             <span class="app-online-status app-online-status--online">
               {{ icon("tick") }} Available offline
             </span>
-          {% elseif isOffline %}
+          </td>
+        {% elseif isOffline %}
+          <td class="nhsuk-table__cell nhsuk-u-text-align-right">
             <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>
-          {% endif %}
+          </td>
         </td>
+        {% endif %}
       </tr>
       {% endif %}
     {% endfor %}
