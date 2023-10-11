@@ -44,7 +44,6 @@ export default (type, responses) => {
   }
 
   const consent = {
-    [type]: outcome,
     outcome,
     answersNeedTriage: answersNeedingTriage.length > 0,
     refusalReasons
