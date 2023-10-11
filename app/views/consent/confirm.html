@@ -60,8 +60,12 @@
 
   {% if hasConsented %}
     {% set description %}
-      {% set consentJourney = true %}
-      {% include "campaign/child/_health-answers.html" %}
+      <p><a href="#">Change</a></p>
+
+      {{ summaryList({
+        classes: "app-summary-list--full-width",
+        rows: healthAnswerRows(campaign, child)
+      }) }}
     {% endset %}
 
     {{ card({

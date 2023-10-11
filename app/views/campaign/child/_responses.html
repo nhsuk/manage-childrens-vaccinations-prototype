@@ -38,14 +38,13 @@
     <p class="nhsuk-body nhsuk-u-margin-bottom-0">No responses yet</p>
   {% endfor %}
 
-  {% set detailsHtml %}
-    {% include "campaign/child/_health-answers.html" %}
-  {% endset %}
-
   {{ details({
     text: "Responses to health questions",
     attributes: { open: true } if child.consent.answersNeedTriage,
-    HTML: detailsHtml,
+    HTML: summaryList({
+      classes: "app-summary-list--full-width",
+      rows: healthAnswerRows(campaign, child)
+    }),
     classes: "nhsuk-expander"
   }) if child.responses.length }}
 {% endset %}

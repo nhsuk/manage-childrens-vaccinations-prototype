@@ -133,6 +133,55 @@ export default (env) => {
   }
 
   /**
+   * Get health answer
+   * @param {object} response - Consent response
+   * @param {string} id - Question ID
+   * @returns {string} Answer to health question
+   */
+  const getHealthAnswer = (response, id) => {
+    const healthAnswer = response.healthAnswers[id]
+    return !healthAnswer
+      ? 'No'
+      : `Yes – ${healthAnswer}`
+  }
+
+  /**
+   * Health answer summary list rows
+   * @param {object} campaign - Campaign
+   * @param {object} patient - Patient
+   * @returns {object} Parameters for summary list component
+   */
+  globals.healthAnswerRows = function (campaign, patient) {
+    const rows = []
+
+    for (const [id, question] of Object.entries(campaign.healthQuestions)) {
+      const responsesWithAnswers = patient.responses.filter(response => response.healthAnswers)
+      const uniqueResponses = _.uniqBy(responsesWithAnswers, `healthAnswers[${id}]`)
+
+      let answer
+      const answers = []
+      for (const response of uniqueResponses) {
+        if (patient.responses.length > 1) {
+          const who = uniqueResponses.length > 1
+            ? `${response.parentOrGuardian.relationship} responded: `
+            : 'All responded: '
+
+          answers.push(`<p>${who} ${getHealthAnswer(response, id)}</p>`)
+        } else {
+          answer = getHealthAnswer(response, id)
+        }
+      }
+
+      rows.push({
+        key: { text: question },
+        value: { html: answers.join('\n') || answer }
+      })
+    }
+
+    return rows
+  }
+
+  /**
    * Action needed filters
    * @returns {object} Actions needed
    */

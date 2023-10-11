@@ -59,16 +59,6 @@ export default (_env) => {
   }
 
   /**
-   * Return unique object values from array
-   * @param {Array} array - Array to interrogate
-   * @param {string} value - Value
-   * @returns {Array} Array with unique object values
-   */
-  filters.uniqueFromArrayBy = (array, value) => {
-    return _.uniqBy(array, value)
-  }
-
-  /**
    * Return array without empty values
    * @param {Array} array - Array to filter
    * @returns {Array} Filtered array
