@@ -11,7 +11,7 @@ export default (campaigns, batches) => {
   const campaign = Object
     .values(campaigns)
     .find(campaign => campaign.inProgress)
-  const { children, id } = campaign
+  const { cohort, id } = campaign
 
   let batch = null
   if (campaign.isFlu) {
@@ -32,7 +32,7 @@ export default (campaigns, batches) => {
     [id]: {}
   }
 
-  children
+  cohort
     .filter(patient => patient.outcome === PATIENT_OUTCOME.VACCINATED)
     .forEach(patient => {
       vaccination[id][patient.nhsNumber] = {
@@ -42,7 +42,7 @@ export default (campaigns, batches) => {
       }
     })
 
-  children
+  cohort
     .filter(patient => patient.outcome === PATIENT_OUTCOME.COULD_NOT_VACCINATE)
     .forEach(patient => {
       vaccination[id][patient.nhsNumber] = {

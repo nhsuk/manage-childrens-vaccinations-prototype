@@ -8,7 +8,7 @@ import getConsent from './consent.js'
 import { getYearGroup } from './year-group.js'
 
 const handleInProgressTriage = (patient) => {
-  // Only relevant to children needing triage
+  // Only relevant to patients needing triage
   if (patient.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }

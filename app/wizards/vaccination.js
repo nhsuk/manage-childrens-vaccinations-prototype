@@ -80,7 +80,7 @@ export function vaccination (req) {
   const nhsNumber = req.params.nhsNumber
   const campaignId = req.params.campaignId
   const campaign = req.session.data.campaigns[campaignId]
-  const patient = campaign.children
+  const patient = campaign.cohort
     .find(patient => patient.nhsNumber === req.params.nhsNumber)
 
   const journey = {

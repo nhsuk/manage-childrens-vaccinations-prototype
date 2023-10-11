@@ -12,22 +12,22 @@ import vaccineBatchRoutes from './routes/vaccine-batches.js'
 const router = express.Router()
 
 const hasAnyOfflineChanges = (campaigns) => {
-  const children = Object.values(campaigns)
-    .map(campaign => campaign.children)
+  const cohort = Object.values(campaigns)
+    .map(campaign => campaign.cohort)
     .flat()
 
-  children.forEach(patient => {
+  cohort.forEach(patient => {
     if (patient.seen.isOffline) {
       patient.hadOfflineChanges = true
     }
   })
 
-  return children.some(patient => patient.seen.isOffline)
+  return cohort.some(patient => patient.seen.isOffline)
 }
 
 const offlineChangesCount = (campaigns) => {
   const offlineCount = Object.values(campaigns)
-    .map(campaign => campaign.children)
+    .map(campaign => campaign.cohort)
     .flat()
     .reduce((count, patient) => count + (patient.seen.isOffline ? 1 : 0), 0)
 

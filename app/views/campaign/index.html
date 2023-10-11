@@ -1,7 +1,7 @@
 {% extends "_layouts/default.html" %}
 
 {% set title = campaign.title %}
-{% set hasChildren = campaign.children.length > 0 %}
+{% set hasPatients = campaign.cohort.length > 0 %}
 
 {% block outerContent %}
   {{ breadcrumb({
@@ -38,14 +38,14 @@
               </h2>
             {% endif %}
 
-            {% if not hasChildren %}
+            {% if not hasPatients %}
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
                 <a href="#">Add children</a>
               </h2>
               <p>Upload a list of children in this school</p>
             {% endif %}
 
-            {% if hasChildren %}
+            {% if hasPatients %}
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
                 <a href="/campaign/{{ campaign.id }}/responses">Check consent responses</a>
               </h2>
@@ -67,7 +67,7 @@
       </div>
 
       <div class="nhsuk-grid-column-one-third">
-        {% if hasChildren and not campaign["available-offline"] %}
+        {% if hasPatients and not campaign["available-offline"] %}
         <div id="save-offline">
           <h2 class="nhsuk-heading-s">Save offline</h2>
           <p>Record vaccinations while not connected to the internet.</p>

@@ -13,7 +13,7 @@ export default (campaigns) => {
   inProgressCampaigns.forEach(campaign => {
     triageRecord[campaign.id] = {}
 
-    campaign.children
+    campaign.cohort
       .filter(patient => triageOutcomeToEnrich.includes(patient.triage.outcome))
       .forEach(patient => {
         triageRecord[campaign.id][patient.nhsNumber] = patient.triage

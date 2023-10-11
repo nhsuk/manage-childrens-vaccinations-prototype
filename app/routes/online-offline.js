@@ -10,7 +10,7 @@ const syncOfflineChanges = (req) => {
   const { campaigns } = req.session.data
 
   Object.values(campaigns)
-    .map(campaign => campaign.children)
+    .map(campaign => campaign.cohort)
     .flat()
     .filter(patient => patient.seen.isOffline)
     .forEach(patient => { patient.seen.isOffline = false })

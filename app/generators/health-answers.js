@@ -6,7 +6,7 @@ const healthConditionsData = 'app/generators/data/health-conditions.json'
 const healthConditions = JSON.parse(fs.readFileSync(healthConditionsData))
 
 const enrichWithRealisticAnswers = (patient, answers) => {
-  // Do not give health question responses to 80% of children who consent
+  // Do not give health question responses to 80% of patients who consent
   if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
     return answers
   }

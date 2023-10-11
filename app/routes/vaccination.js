@@ -40,7 +40,7 @@ export default (router) => {
     const campaign = data.campaigns[req.params.campaignId]
 
     res.locals.campaign = campaign
-    res.locals.patient = campaign.children
+    res.locals.patient = campaign.cohort
       .find(patient => patient.nhsNumber === req.params.nhsNumber)
     res.locals.paths = vaccination(req)
     next()

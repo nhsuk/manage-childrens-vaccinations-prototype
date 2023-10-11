@@ -2,13 +2,13 @@ import { CONSENT_OUTCOME, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 import _ from 'lodash'
 
 const filters = {
-  year: (children, yearGroup) => {
-    return children.filter((patient) => {
+  year: (cohort, yearGroup) => {
+    return cohort.filter((patient) => {
       return patient.yearGroup === yearGroup
     })
   },
-  actionNeeded: (children, action) => {
-    return children.filter((patient) => {
+  actionNeeded: (cohort, action) => {
+    return cohort.filter((patient) => {
       switch (action) {
         case 'get-consent':
           return patient.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
@@ -25,13 +25,13 @@ const filters = {
       }
     })
   },
-  consentOutcome: (children, outcome) => {
-    return children.filter((patient) => {
+  consentOutcome: (cohort, outcome) => {
+    return cohort.filter((patient) => {
       return patient.consent.outcome === CONSENT_OUTCOME[outcome]
     })
   },
-  triageOutcome: (children, outcome, req, res) => {
-    return children.filter((patient) => {
+  triageOutcome: (cohort, outcome, req, res) => {
+    return cohort.filter((patient) => {
       const triage = req.session.data.triage
       const triageRecord = triage && triage[res.locals.campaign.id]
       if (triageRecord && triageRecord[patient.nhsNumber]) {
@@ -41,34 +41,34 @@ const filters = {
       return patient.triage.outcome === TRIAGE_OUTCOME[outcome]
     })
   },
-  triageNeeded: (children) => {
-    return children.filter((patient) =>
+  triageNeeded: (cohort) => {
+    return cohort.filter((patient) =>
       patient.consent.outcome === CONSENT_OUTCOME.VALID &&
       patient.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
     )
   },
-  triageCompleted: (children) => {
-    return children.filter((patient) =>
+  triageCompleted: (cohort) => {
+    return cohort.filter((patient) =>
       patient.consent.outcome === CONSENT_OUTCOME.VALID &&
       patient.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
       patient.triage.outcome !== TRIAGE_OUTCOME.NONE
     )
   },
-  noTriageNeeded: (children) => {
-    return children.filter((patient) =>
+  noTriageNeeded: (cohort) => {
+    return cohort.filter((patient) =>
       patient.consent.outcome === CONSENT_OUTCOME.VALID &&
       patient.triage.outcome === TRIAGE_OUTCOME.NONE
     )
   },
-  hasOutcome: (children, outcome) => {
-    return children.filter((patient) => {
+  hasOutcome: (cohort, outcome) => {
+    return cohort.filter((patient) => {
       return patient.outcome === PATIENT_OUTCOME[outcome]
     })
   }
 }
 
-const filter = (children, filterName, value, req, res) => {
-  return filters[filterName](children, value, req, res)
+const filter = (cohort, filterName, value, req, res) => {
+  return filters[filterName](cohort, value, req, res)
 }
 
 const sort = (patients) => {
@@ -77,28 +77,28 @@ const sort = (patients) => {
 
 export default (req, res) => {
   const query = req.query
-  const children = res.locals.campaign.children
+  const { cohort } = res.locals.campaign
 
   // Consent filters
-  let noResponseResults = filter(children, 'consentOutcome', 'NO_RESPONSE')
-  let consentValidResults = filter(children, 'consentOutcome', 'VALID')
-  let consentRefusedResults = filter(children, 'consentOutcome', 'REFUSED')
-  let consentConflictsResults = filter(children, 'consentOutcome', 'INCONSISTENT')
+  let noResponseResults = filter(cohort, 'consentOutcome', 'NO_RESPONSE')
+  let consentValidResults = filter(cohort, 'consentOutcome', 'VALID')
+  let consentRefusedResults = filter(cohort, 'consentOutcome', 'REFUSED')
+  let consentConflictsResults = filter(cohort, 'consentOutcome', 'INCONSISTENT')
 
   // Triage filters
-  let triageNeededResults = filter(children, 'triageNeeded')
-  let triageCompletedResults = filter(children, 'triageCompleted')
-  let noTriageNeededResults = filter(children, 'noTriageNeeded')
+  let triageNeededResults = filter(cohort, 'triageNeeded')
+  let triageCompletedResults = filter(cohort, 'triageCompleted')
+  let noTriageNeededResults = filter(cohort, 'noTriageNeeded')
 
   // Record filters
-  let vaccinatedResults = filter(children, 'hasOutcome', 'VACCINATED')
+  let vaccinatedResults = filter(cohort, 'hasOutcome', 'VACCINATED')
   let couldNotVaccinateResults = [
-    ...filter(children, 'hasOutcome', 'COULD_NOT_VACCINATE'),
-    ...filter(children, 'hasOutcome', 'NO_CONSENT')
+    ...filter(cohort, 'hasOutcome', 'COULD_NOT_VACCINATE'),
+    ...filter(cohort, 'hasOutcome', 'NO_CONSENT')
   ]
 
   // Action needed filter
-  let actionNeededResults = children.filter((c) => {
+  let actionNeededResults = cohort.filter((c) => {
     return !vaccinatedResults.includes(c) &&
       !couldNotVaccinateResults.includes(c)
   })

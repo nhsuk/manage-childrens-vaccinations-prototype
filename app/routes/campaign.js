@@ -4,7 +4,7 @@ import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
 const offlineChangesCount = (campaign) => {
-  const offlineCount = campaign.children
+  const offlineCount = campaign.cohort
     .reduce((count, patient) => count + (patient.seen.isOffline ? 1 : 0), 0)
 
   return offlineCount
@@ -33,7 +33,7 @@ export default (router) => {
     '/campaign/:campaignId/patient/:nhsNumber',
     '/campaign/:campaignId/patient/:nhsNumber/*'
   ], (req, res, next) => {
-    res.locals.patient = res.locals.campaign.children
+    res.locals.patient = res.locals.campaign.cohort
       .find(patient => patient.nhsNumber === req.params.nhsNumber)
     if (res.locals.campaign.is3in1MenACWY) {
       res.locals['3in1Vaccination'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
@@ -108,13 +108,13 @@ export default (router) => {
     if (req.query.noConsent) {
       res.locals.noConsent = req.query.noConsent
       const nhsNumber = req.query.noConsent
-      const patient = campaign.children
+      const patient = campaign.cohort
         .find(patient => patient.nhsNumber === nhsNumber)
       patient.outcome = PATIENT_OUTCOME.NO_CONSENT
       patient.seen.isOffline = res.locals.isOffline
       res.locals.successChild = patient
     } else if (res.locals.success) {
-      res.locals.successChild = campaign.children
+      res.locals.successChild = campaign.cohort
         .find(patient => patient.nhsNumber === req.query.success)
     }
 
@@ -130,8 +130,8 @@ export default (router) => {
 
     if (res.locals.success) {
       const campaign = req.session.data.campaigns[req.params.campaignId]
-      res.locals.successChild = campaign.children.find(c => {
-        return c.nhsNumber === req.query.success
+      res.locals.successChild = campaign.cohort.find(patient => {
+        return patient.nhsNumber === req.query.success
       })
     }
     next()

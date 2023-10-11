@@ -28,7 +28,7 @@ export default () => {
   const daysUntil = faker.number.int({ min: 2, max: 100 })
   const triageInProgress = daysUntil < 28
   const options = { ...ageRange(type), triageInProgress }
-  const children = faker.helpers.multiple(getPatient(options), { count: 100 })
+  const cohort = faker.helpers.multiple(getPatient(options), { count: 100 })
     .sort((a, b) => a.fullName.localeCompare(b.fullName))
 
   const campaign = {
@@ -44,7 +44,7 @@ export default () => {
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',
     is3in1MenACWY: type === '3-in-1 and MenACWY',
-    children
+    cohort
   }
 
   return campaign

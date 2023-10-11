@@ -20,7 +20,7 @@ const setConsentOutcome = (patient) => {
 }
 
 const setTriageOutcome = (patient) => {
-  // Only relevant to children needing triage
+  // Only relevant to patients needing triage
   if (patient.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
     return
   }
@@ -64,13 +64,13 @@ export default () => {
   campaign.date = DateTime.now().toISODate() + 'T' + '09:00'
 
   // Set consent outcome for all patients
-  campaign.children.forEach(patient => setConsentOutcome(patient))
+  campaign.cohort.forEach(patient => setConsentOutcome(patient))
 
   // Set triage outcome for all patients
-  campaign.children.forEach(patient => setTriageOutcome(patient))
+  campaign.cohort.forEach(patient => setTriageOutcome(patient))
 
   // Set patient outcome for 50% of patients
-  _.sampleSize(campaign.children, 50).forEach(patient => setOutcome(patient))
+  _.sampleSize(campaign.cohort, 50).forEach(patient => setOutcome(patient))
 
   return campaign
 }
