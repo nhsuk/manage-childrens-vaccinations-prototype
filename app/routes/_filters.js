@@ -27,7 +27,8 @@ const filters = {
   },
   consentOutcome: (cohort, outcome) => {
     return cohort.filter((patient) => {
-      return patient.consent.outcome === CONSENT_OUTCOME[outcome]
+      return patient.outcome === PATIENT_OUTCOME.NO_OUTCOME_YET &&
+      patient.consent.outcome === CONSENT_OUTCOME[outcome]
     })
   },
   triageOutcome: (cohort, outcome, req, res) => {
