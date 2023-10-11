@@ -1,38 +1,32 @@
 {% if patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set colour = "red" %}
-  {% if (patient.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
-        (patient.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
-    {% set description = patient.triage.notes[0].user.fullName + " decided that " + patient.fullName + " should not be vaccinated." %}
-  {% else %}
-    {% set description = vaccination.outcome %}
-    {% set descriptionHtml %}
-      {% set batch = data.vaccines.batches[vaccination.batch] %}
-      {{ summaryList({
-        rows: decorateRows([
-          {
-            key: "Reason",
-            value: vaccination.outcome
-          },
-          {
-            key: "Date",
-            value: "Today (" + "today" | govukDate + ")"
-          },
-          {
-            key: "Location",
-            value: campaign.location
-          },
-          {
-            key: "Vaccinator",
-            value: "You (" + data.user.fullName + ")"
-          },
-          {
-            key: "Notes",
-            value: vaccination.notes | default("None", true)
-          }
-        ])
-      }) }}
-    {% endset %}
-  {% endif %}
+  {% set descriptionHtml %}
+    {% set batch = data.vaccines.batches[vaccination.batch] %}
+    {{ summaryList({
+      rows: decorateRows([
+        {
+          key: "Reason",
+          value: patient.consent.outcome or patient.triage.outcome or vaccination.outcome
+        },
+        {
+          key: "Date",
+          value: "Today (" + "today" | govukDate + ")"
+        },
+        {
+          key: "Location",
+          value: campaign.location
+        },
+        {
+          key: "Vaccinator",
+          value: "You (" + data.user.fullName + ")"
+        },
+        {
+          key: "Notes",
+          value: vaccination.notes | default("None", true)
+        }
+      ])
+    }) }}
+  {% endset %}
 {% elif patient.outcome == PATIENT_OUTCOME.VACCINATED %}
   {% set colour = "green" %}
   {% set descriptionHtml %}
@@ -80,7 +74,6 @@
   classes: "nhsuk-card--" + colour,
   heading: patient.outcome,
   headingClasses: "nhsuk-heading-m",
-  description: description if description,
   descriptionHtml: descriptionHtml if descriptionHtml,
   feature: true
 }) }}

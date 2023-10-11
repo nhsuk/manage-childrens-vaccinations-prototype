@@ -37,7 +37,7 @@ export const CONSENT_OUTCOME = {
   NO_RESPONSE: 'No response',
   VALID: 'Consent given',
   REFUSED: 'Consent refused',
-  FINAL_REFUSAL: 'Final refusal, do not contact',
+  FINAL_REFUSAL: 'Confirmed refusal, do not contact',
   INCONSISTENT: 'Conflicting',
   ONLY_MENACWY: 'Only MenACWY',
   ONLY_3_IN_1: 'Only 3-in-1'

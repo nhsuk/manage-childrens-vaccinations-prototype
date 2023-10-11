@@ -59,7 +59,6 @@ export default (router) => {
   router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
     const { patient } = res.locals
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
-    const triageData = req.session.data.triage[req.params.campaignId][req.params.nhsNumber]
     const gillickCompetent = consentData['gillick-competent'] === 'Yes'
     const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
 
@@ -70,19 +69,13 @@ export default (router) => {
     consentResponse.date = DateTime.local().toISODate()
     consentResponse.method = 'Phone'
 
-    const hasConsented = consentData.consent.outcome === CONSENT_OUTCOME.VALID
-    if (hasConsented && triageData && triageData.outcome) {
-      patient.triage.outcome = triageData.outcome
-
-      // If triage outcome is not to vaccinate, set patient outcome
-      if (triageData.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
-        patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
-      }
-    }
-
     if (patient.consent.outcome === CONSENT_OUTCOME.REFUSED) {
       consentResponse.refusalReason = consentData.refusalReason
       consentResponse.refusalReasonOther = consentData.refusalReasonOther
+
+      // Set consent and patient outcome
+      patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
+      patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
     }
 
     if (gillickCompetent || assessedAsNotGillickCompetent) {
