@@ -17,17 +17,17 @@
       <p>Make a copy of this code and keep it safe, we will ask you for it when you are working offline.</p>
 
       {% set descriptionHtml %}
-        <p class="nhsuk-body">
+        <p>
           <code class="nhsuk-u-font-size-24 nhsuk-u-font-weight-bold">tomato-lettuce-pear</code>
         </p>
-        <p class="nhsuk-body nhsuk-u-margin-bottom-0">
+        <p>
           <a href="#">Get a different code</a>
         </p>
       {% endset %}
 
       {{ card({
         heading: "Your code:",
-        headingClasses: "nhsuk-heading-xs nhsuk-u-font-weight-normal nhsuk-u-margin-bottom-0s",
+        headingClasses: "nhsuk-heading-xs nhsuk-u-font-weight-normal",
         descriptionHtml: descriptionHtml
       }) }}
 
