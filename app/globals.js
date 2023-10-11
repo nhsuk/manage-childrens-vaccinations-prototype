@@ -203,7 +203,7 @@ export default (env) => {
     switch (true) {
       // Consent actions
       case consent.outcome === CONSENT_OUTCOME.NO_RESPONSE:
-        return { text: 'Get consent', colour: 'yellow' }
+        return { text: 'Get consent', colour: 'blue' }
       case consent.outcome === CONSENT_OUTCOME.INCONSISTENT:
         return { text: 'Review conflicting consent', colour: 'orange' }
       case consent.outcome === CONSENT_OUTCOME.REFUSED:
@@ -246,6 +246,61 @@ export default (env) => {
       default:
         return { text: patient.outcome, colour: 'white' }
     }
+  }
+
+  /**
+   * Get consent outcome
+   * @param {object} patient - Patient
+   * @param {object} [consentRecord] - Consent record
+   * @returns {object} Consent outcome properties
+   */
+  globals.consentOutcome = (patient, consentRecord) => {
+    const { assessedAsNotGillickCompetent, consent } = patient
+    const isGillickCompetent = consentRecord?.['gillick-competent'] === 'Yes'
+    let colour
+    let description
+
+    if (consent.outcome === CONSENT_OUTCOME.NO_RESPONSE) {
+      description = 'No-one responded to our requests for consent.'
+
+      if (assessedAsNotGillickCompetent) {
+        description += 'When assessed, the child was not Gillick competent.'
+      } else if (isGillickCompetent) {
+        description += 'The child was assessed as Gillick competent, but they refused consent.'
+      }
+    } else {
+      // MenACWY only
+      if (consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY) {
+        colour = 'purple'
+        description = 'Parent or guardian gave consent for MenACWY.'
+      } else {
+        colour = 'orange'
+        description = 'Parent or guardian refused to give consent for MenACWY.'
+      }
+
+      // 3-in-1 only
+      if (consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1) {
+        colour = 'purple'
+        description = 'Parent or guardian gave consent for the 3-in-1 booster.'
+      } else {
+        colour = 'orange'
+        description = 'Parent or guardian refused to give consent for the 3-in-1 booster.'
+      }
+
+      // Flu or HPV
+      if (consent.outcome === CONSENT_OUTCOME.VALID) {
+        if (isGillickCompetent) {
+          description = 'The child was assessed as Gillick competent and they gave consent.'
+        } else {
+          description = false
+        }
+      } else {
+        colour = 'orange'
+        description = 'Parent or guardian refused to give consent'
+      }
+    }
+
+    return { colour, description }
   }
 
   /**

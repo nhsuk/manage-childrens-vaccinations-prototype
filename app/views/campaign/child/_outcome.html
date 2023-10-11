@@ -1,0 +1,24 @@
+{% set consent = child.consent.outcome %}
+
+{% if child.outcome == PATIENT_OUTCOME.VACCINATED %}
+  {% set colour = "green" %}
+{% elif child.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
+  {% set colour = "red" %}
+{% else %}
+  {% set colour = "orange" %}
+{% endif %}
+
+{% if (child.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
+      (child.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
+  {% set description = child.triage.notes[0].user.fullName + " decided that " + child.fullName + " should not be vaccinated." %}
+{% else %}
+  {% set description = vaccination.outcome %}
+{% endif %}
+
+{{ card({
+  classes: "nhsuk-card--" + colour,
+  heading: child.outcome,
+  headingClasses: "nhsuk-heading-m",
+  description: description,
+  feature: true
+}) }}

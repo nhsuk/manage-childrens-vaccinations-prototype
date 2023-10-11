@@ -1,0 +1,10 @@
+{% set colour = consentOutcome(child).colour %}
+{% set description = consentOutcome(child).description %}
+
+{{ card({
+  classes: ("nhsuk-card--" + colour) if colour,
+  heading: child.consent.outcome,
+  headingClasses: "nhsuk-heading-m",
+  description: description,
+  feature: true
+}) if description }}

@@ -12,9 +12,6 @@ $govuk-assets-path: "/govuk/assets/";
 // Import GOV.UK Prototype Components
 @import "@x-govuk/govuk-prototype-components/x-govuk/all";
 
-// Import app components
-@import "components/consent-banner";
-
 // Import email layout
 @import "email";
 
@@ -33,9 +30,38 @@ $govuk-assets-path: "/govuk/assets/";
   display: table-cell;
 }
 
-.nhsuk-tag--white {
-  font-weight: normal;
-  border-style: dashed;
+.nhsuk-tag {
+  &--white {
+    font-weight: normal;
+    border-style: dashed;
+  }
+}
+
+.nhsuk-card {
+  &--green {
+    .nhsuk-card__heading--feature {
+      background-color: $color_nhsuk-green;
+    }
+  }
+
+  &--orange {
+    .nhsuk-card__heading--feature {
+      background-color: $color_nhsuk-warm-yellow;
+      color: $nhsuk-focus-text-color;
+    }
+  }
+
+  &--purple {
+    .nhsuk-card__heading--feature {
+      background-color: $color_nhsuk-purple;
+    }
+  }
+
+  &--red {
+    .nhsuk-card__heading--feature {
+      background-color: $color_nhsuk-red;
+    }
+  }
 }
 
 // GOV.UK Frontend overrides
