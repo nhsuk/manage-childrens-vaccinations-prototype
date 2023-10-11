@@ -84,7 +84,7 @@ $govuk-assets-path: "/govuk/assets/";
 // App utilities
 .app-u-hidden-link {
   text-decoration: none;
-  color: inherit !important;
+  color: inherit !important; // stylelint-disable-line declaration-no-important
 
   &:hover {
     text-decoration: underline;
