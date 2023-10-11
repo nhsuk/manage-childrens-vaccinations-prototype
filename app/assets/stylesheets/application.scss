@@ -19,6 +19,14 @@ $govuk-assets-path: "/govuk/assets/";
 @import "email";
 
 // NHS.UK frontend overrides
+.nhsuk-summary-list:not(:has(.nhsuk-summary-list__actions)) {
+  .nhsuk-summary-list__value {
+    @include mq($from: tablet) {
+      width: 70%;
+    }
+  }
+}
+
 .nhsuk-summary-list__row:not(:has(.nhsuk-summary-list__actions))::after {
   border-bottom: 1px solid $nhsuk-border-color;
   content: "";
