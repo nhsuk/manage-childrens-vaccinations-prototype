@@ -5,7 +5,7 @@
     {% endset %}
 
     {{ details({
-      attributes: { open: true },
+      attributes: { open: true } if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET,
       text: detailText,
       HTML: summaryList({
         rows: decorateRows([

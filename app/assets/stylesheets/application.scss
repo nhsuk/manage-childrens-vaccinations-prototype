@@ -120,6 +120,17 @@ $govuk-assets-path: "/govuk/assets/";
   }
 }
 
+.nhsuk-details__text {
+  &:has(.nhsuk-summary-list) {
+    padding-bottom: nhsuk-spacing(1);
+    padding-top: nhsuk-spacing(1);
+  }
+
+  .nhsuk-summary-list__row:last-of-type > * {
+    border-bottom: none;
+  }
+}
+
 .app-summary-list--full-width {
   .nhsuk-summary-list__row {
     border-bottom: 1px solid $nhsuk-border-color;
