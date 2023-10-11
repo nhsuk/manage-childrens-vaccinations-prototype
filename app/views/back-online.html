@@ -3,7 +3,7 @@
 {% set title = "You’re back online" %}
 
 {% block content %}
-  {{ appHeading({ title: title }) }}
+  {{ heading({ title: title }) }}
 
   {% if totalOfflineChangesCount == 1 %}
     <p>1 offline change needs syncing.</p>

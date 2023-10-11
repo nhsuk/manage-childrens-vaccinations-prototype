@@ -23,7 +23,7 @@
         <td class="nhsuk-table__cell nhsuk-u-text-align-right">
           {% if campaign["available-offline"] %}
             <span class="app-online-status app-online-status--online">
-              {{ appIcon({ type: "tick" }) }} Available offline
+              {{ icon("tick") }} Available offline
             </span>
           {% elseif isOffline %}
             <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>

@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-  {{ appHeading({ title: title }) }}
+  {{ heading({ title: title }) }}
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
@@ -51,7 +51,7 @@
         <div id="available-offline">
           <h2 class="nhsuk-heading-s nhsuk-u-margin-top-5">
             <span class="app-online-status app-online-status--online">
-              {{ appIcon({ type: "tick" }) }} Available offline
+              {{ icon("tick") }} Available offline
             </span>
           </h2>
           {% if not child.seen.isOffline and not child.hadOfflineChanges %}

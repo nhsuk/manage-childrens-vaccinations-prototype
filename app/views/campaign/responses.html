@@ -24,11 +24,11 @@
 
   {% if campaign["available-offline"] %}
     <span class="app-online-status app-online-status--online">
-      {{ appIcon({ type: "tick" }) }} Available offline
+      {{ icon("tick") }} Available offline
     </span>
   {% endif %}
 
-  {{ appHeading({
+  {{ heading({
     title: filteredYearGroup.name if filteredYearGroup else title,
     caption: title if filteredYearGroup,
     size: "xl"

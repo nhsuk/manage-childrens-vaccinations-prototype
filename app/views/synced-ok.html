@@ -6,7 +6,7 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
       <div id="syncing-changes">
-        {{ appHeading({ title: "Syncing your changes" }) }}
+        {{ heading({ title: "Syncing your changes" }) }}
 
         <svg class="app-loader" viewBox="0 0 10 10" width="100" height="100">
           <circle cx="5" cy="5" r="4"></circle>
@@ -14,7 +14,7 @@
       </div>
 
       <div id="changes-synced" style="display: none">
-        {{ appHeading({ title: title }) }}
+        {{ heading({ title: title }) }}
 
         {% set everythingHtml %}
           <ul class="govuk-list">

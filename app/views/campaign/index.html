@@ -85,7 +85,7 @@
           <div id="available-offline">
             <h2 class="nhsuk-heading-s" style="color: #007f3b">
               <span class="app-online-status app-online-status--online">
-                {{ appIcon({ type: "tick" }) }} Available offline
+                {{ icon("tick") }} Available offline
               </span>
             </h2>
             {% if campaignOfflineChangesCount == 0 and not campaign.hadOfflineChanges %}
@@ -115,7 +115,7 @@
       {% set headingHtml %}
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
           <span class="app-online-status app-online-status--offline">
-            {{ appIcon({ type: "cross" }) }} Not available offline
+            {{ icon("cross") }} Not available offline
           </span>
         </h2>
       {% endset %}

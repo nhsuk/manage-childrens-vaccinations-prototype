@@ -3,7 +3,7 @@
 {% set title = "Health questions" %}
 
 {% block form %}
-  {{ appHeading({ caption: child.fullName, title: title }) }}
+  {{ heading({ caption: child.fullName, title: title }) }}
 
   {% for id, question in campaign.healthQuestions %}
     {% set giveDetailsHtml %}
