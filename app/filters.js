@@ -59,6 +59,20 @@ export default (_env) => {
   }
 
   /**
+   * Convert div.nhsuk-card to form.nhsuk-card
+   * @param {string} string - HTML
+   * @returns {string} Formatted HTML
+   */
+  filters.formCard = function (string) {
+    const { filters } = this.ctx.settings.nunjucksEnv
+    const html = string
+      .replace(/^\n\n<div class="nhsuk-card/, '<form method="post" class="nhsuk-card')
+      .replace(/<\/div>\n$/, '</form>')
+
+    return filters.safe(html)
+  }
+
+  /**
    * Return array without empty values
    * @param {Array} array - Array to filter
    * @returns {Array} Filtered array
