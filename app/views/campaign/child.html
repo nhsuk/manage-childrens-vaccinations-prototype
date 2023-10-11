@@ -18,21 +18,20 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% if child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-        {% include "campaign/child/_triage-banner.html" %}
-      {% elif child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
-        {% include "campaign/child/_consent-banner.html" %}
+      {% if child.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET %}
+        {% include "campaign/child/_outcome.html" %}
+      {% elif child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+        {% include "campaign/child/_outcome-triage.html" %}
       {% else %}
-        {% include "campaign/child/_outcome-banner.html" %}
+        {% include "campaign/child/_outcome-consent.html" %}
       {% endif %}
 
       {% include "campaign/child/_details.html" %}
-
       {% include "campaign/child/_responses.html" %}
       {% include "campaign/child/_consent-gillick.html" %}
 
       {% if hasHealthAnswers %}
-        {% include "campaign/child/_triage.html" %}
+        {% include "campaign/child/_triage-notes.html" %}
       {% endif %}
 
       {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}

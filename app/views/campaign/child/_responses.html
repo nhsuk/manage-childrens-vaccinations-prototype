@@ -34,8 +34,6 @@
         ])
       })
     }) }}
-  {% else %}
-    <p class="nhsuk-body nhsuk-u-margin-bottom-0">No responses yet</p>
   {% endfor %}
 
   {% set detailsHtml %}
@@ -47,11 +45,11 @@
     attributes: { open: true } if child.consent.answersNeedTriage,
     HTML: detailsHtml,
     classes: "nhsuk-expander"
-  }) if child.responses.length }}
+  }) }}
 {% endset %}
 
 {{ card({
   heading: "Consent responses",
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml
-}) }}
+}) if child.responses.length }}

@@ -35,8 +35,8 @@ export const VACCINATION_OUTCOME = {
 
 export const CONSENT_OUTCOME = {
   NO_RESPONSE: 'No response',
-  VALID: 'Given',
-  REFUSED: 'Refused',
+  VALID: 'Consent given',
+  REFUSED: 'Consent refused',
   FINAL_REFUSAL: 'Final refusal, do not contact',
   INCONSISTENT: 'Conflicting',
   ONLY_MENACWY: 'Only MenACWY',
@@ -51,11 +51,11 @@ export const PATIENT_OUTCOME = {
 }
 
 export const RESPONSE_CONSENT = {
-  GIVEN: 'Given',
-  REFUSED: 'Refused',
-  INVALID: 'Invalid',
-  ONLY_MENACWY: 'MenACWY only',
-  ONLY_3_IN_1: '3-in-1 only'
+  GIVEN: 'Consent given',
+  REFUSED: 'Consent refused',
+  INVALID: 'Consent invalid',
+  ONLY_MENACWY: 'Consent given for MenACWY only',
+  ONLY_3_IN_1: 'Consent given for 3-in-1 only'
 }
 
 export const RESPONSE_METHOD = {

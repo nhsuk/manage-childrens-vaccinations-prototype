@@ -1,0 +1,16 @@
+{% set descriptionHtml %}
+  <ul class="nhsuk-list">
+  {% for note in child.triage.notes | reverse %}
+    <li>
+      <p class="nhsuk-u-margin-bottom-1">{{ note.note }}</p>
+      <p class="nhsuk-u-secondary-text-color nhsuk-u-font-size-16 {% if loop.last %}nhsuk-u-margin-bottom-0{% endif %}">{{ note.user.fullName }}, {{ note.date | govukDate }} at {{ note.date | govukTime }}</p>
+    </li>
+  {% endfor %}
+  </ul>
+{% endset %}
+
+{{ card({
+  heading: "Triage notes",
+  headingClasses: "nhsuk-heading-m",
+  descriptionHtml: descriptionHtml
+}) if child.triage.notes.length }}
