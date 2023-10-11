@@ -1,5 +1,5 @@
-{% if not child.consent.outcome === CONSENT_OUTCOME.VALID %}
-  {% set warningConsentFor = "the 3-in-1 booster" if child.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 else "MenACWY" %}
+{% if not patient.consent.outcome === CONSENT_OUTCOME.VALID %}
+  {% set warningConsentFor = "the 3-in-1 booster" if patient.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 else "MenACWY" %}
   {{ warningCallout({
     heading: "Do not give both vaccines",
     classes: "nhsuk-u-margin-bottom-6",
@@ -26,7 +26,7 @@
                 { text: VACCINATION_SITE.OTHER }
               ],
               classes: "nhsuk-radios--inline",
-              decorate: ["vaccination", campaign.id, child.nhsNumber, "siteMenACWY"]
+              decorate: ["vaccination", campaign.id, patient.nhsNumber, "siteMenACWY"]
             })
           }
         }, {
@@ -40,7 +40,7 @@
                 { text: VACCINATION_SITE.OTHER }
               ],
               classes: "nhsuk-radios--inline",
-              decorate: ["vaccination", campaign.id, child.nhsNumber, "site3in1"]
+              decorate: ["vaccination", campaign.id, patient.nhsNumber, "site3in1"]
             })
           }
         }, {
@@ -52,7 +52,7 @@
         formGroup: {
           classes: "nhsuk-u-margin-bottom-7"
         },
-        decorate: ["vaccination", campaign.id, child.nhsNumber, "multi-given"]
+        decorate: ["vaccination", campaign.id, patient.nhsNumber, "multi-given"]
       }) }}
     {% else %}
       {% include "_radios-vaccination-outcome.html" %}

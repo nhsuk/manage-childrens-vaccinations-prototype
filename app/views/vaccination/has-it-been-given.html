@@ -1,5 +1,5 @@
 {% extends "_layouts/wizard.html" %}
-{% set title = "Was " + child.fullName + " given the " + type + " vaccine?" %}
+{% set title = "Was " + patient.fullName + " given the " + type + " vaccine?" %}
 
 {% block form %}
   {{ radios({
@@ -28,13 +28,13 @@
             { text: VACCINATION_SITE.BUTTOCK_LEFT },
             { text: VACCINATION_SITE.BUTTOCK_RIGHT }
           ],
-          decorate: [dataLocation, campaign.id, child.nhsNumber, "site"]
+          decorate: [dataLocation, campaign.id, patient.nhsNumber, "site"]
         })
       } if campaign.vaccines[0].method == "Injection"
     }, {
       text: "No, they did not get the vaccine",
       value: false
     }],
-    decorate: [dataLocation, campaign.id, child.nhsNumber, "outcome"]
+    decorate: [dataLocation, campaign.id, patient.nhsNumber, "outcome"]
   }) }}
 {% endblock %}

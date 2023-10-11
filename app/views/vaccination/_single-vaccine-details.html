@@ -8,13 +8,13 @@
 {% endif %}
 {% set batch = data.vaccines.batches[vaccination.batch] %}
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
-{% set basePath = rootPath + campaign.id + "/" + child.nhsNumber %}
+{% set basePath = rootPath + campaign.id + "/" + patient.nhsNumber %}
 
 {{ summaryList({
   rows: decorateRows([
     {
       key: "Child",
-      value: child.fullName
+      value: patient.fullName
     },
     {
       key: "Vaccine",

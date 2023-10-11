@@ -1,10 +1,10 @@
 {% extends "_layouts/default.html" %}
 
-{% set title = child.fullName %}
+{% set title = patient.fullName %}
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
-{% set hasNoResponse = child.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
-{% set hasRefused = child.consent.outcome == CONSENT_OUTCOME.REFUSED %}
-{% set hasHealthAnswers = child.consent.answersNeedTriage %}
+{% set hasNoResponse = patient.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
+{% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
+{% set hasHealthAnswers = patient.consent.answersNeedTriage %}
 
 {% block outerContent %}
   {{ backLink({
@@ -18,30 +18,30 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% if child.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET %}
-        {% include "campaign/child/_outcome.html" %}
-      {% elif child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-        {% include "campaign/child/_outcome-triage.html" %}
+      {% if patient.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET %}
+        {% include "campaign/patient/_outcome.html" %}
+      {% elif patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+        {% include "campaign/patient/_outcome-triage.html" %}
       {% else %}
-        {% include "campaign/child/_outcome-consent.html" %}
+        {% include "campaign/patient/_outcome-consent.html" %}
       {% endif %}
 
-      {% include "campaign/child/_details.html" %}
-      {% include "campaign/child/_responses.html" %}
-      {% include "campaign/child/_consent-gillick.html" %}
+      {% include "campaign/patient/_details.html" %}
+      {% include "campaign/patient/_responses.html" %}
+      {% include "campaign/patient/_gillick-competence.html" %}
 
       {% if hasHealthAnswers %}
-        {% include "campaign/child/_triage-notes.html" %}
+        {% include "campaign/patient/_triage-notes.html" %}
       {% endif %}
 
-      {% if child.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
+      {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% if hasNoResponse or hasRefused %}
-          {% include "campaign/child/_action-get-consent.html" %}
-        {% elif child.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-          {% include "campaign/child/_action-triage.html" %}
-        {% elif child.triage.outcome == TRIAGE_OUTCOME.VACCINATE or
-          child.triage.outcome == TRIAGE_OUTCOME.NONE %}
-          {% include "campaign/child/_action-vaccinate.html" %}
+          {% include "campaign/patient/_action-get-consent.html" %}
+        {% elif patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+          {% include "campaign/patient/_action-triage.html" %}
+        {% elif patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE or
+          patient.triage.outcome == TRIAGE_OUTCOME.NONE %}
+          {% include "campaign/patient/_action-vaccinate.html" %}
         {% endif %}
       {% endif %}
     </div>
@@ -54,18 +54,18 @@
               {{ icon("tick") }} Available offline
             </span>
           </h2>
-          {% if not child.seen.isOffline and not child.hadOfflineChanges %}
+          {% if not patient.seen.isOffline and not patient.hadOfflineChanges %}
             <p>You can make changes to this child’s record while not connected to the internet.</p>
           {% endif %}
         </div>
 
-        {% if child.seen.isOffline %}
+        {% if patient.seen.isOffline %}
           <hr>
           <h2 class="nhsuk-heading-s">You made changes offline</h2>
           <p>Your changes will automatically sync when you’re back online.</p>
         {% endif %}
 
-        {% if child.hadOfflineChanges and not child.seen.isOffline %}
+        {% if patient.hadOfflineChanges and not patient.seen.isOffline %}
           <hr>
           <h2 class="nhsuk-heading-s">Your changes were synced</h2>
           <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>

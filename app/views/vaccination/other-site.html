@@ -4,7 +4,7 @@
 
 {% block form %}
   {{ heading({
-    caption: child.fullName,
+    caption: patient.fullName,
     title: title
   }) }}
 
@@ -23,7 +23,7 @@
         text: "Subcutaneous"
       }
     ],
-    decorate: [dataLocation, campaign.id, child.nhsNumber, "how-given"]
+    decorate: [dataLocation, campaign.id, patient.nhsNumber, "how-given"]
   }) }}
 
   {{ radios({
@@ -43,6 +43,6 @@
       { text: VACCINATION_SITE.BUTTOCK_LEFT },
       { text: VACCINATION_SITE.BUTTOCK_RIGHT }
     ],
-    decorate: [dataLocation, campaign.id, child.nhsNumber, "site"]
+    decorate: [dataLocation, campaign.id, patient.nhsNumber, "site"]
   }) }}
 {% endblock %}

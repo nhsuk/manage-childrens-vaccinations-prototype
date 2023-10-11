@@ -1,0 +1,20 @@
+{% set description = "Responses to health questions need triage" %}
+
+{% if patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE %}
+  {% set colour = "purple" %}
+  {% set description = "Jane Doe decided that " + patient.fullName + " can be vaccinated." %}
+{% endif %}
+
+{% if (patient.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
+      (patient.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
+  {% set colour = "red" %}
+  {% set description = "Jane Doe decided that " + patient.fullName + " should not be vaccinated." %}
+{% endif %}
+
+{{ card({
+  classes: ("nhsuk-card--" + colour) if colour,
+  heading: patient.triage.outcome,
+  headingClasses: "nhsuk-heading-m",
+  description: description,
+  feature: true
+}) }}

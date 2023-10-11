@@ -17,8 +17,8 @@
   {% endset %}
 
   {% if isGillickCompetent %}
-    {% set consentRecord = d("consent." + campaign.id + "." + child.nhsNumber) %}
-    {% include "campaign/child/_consent-gillick.html" %}
+    {% set consentRecord = d("consent." + campaign.id + "." + patient.nhsNumber) %}
+    {% include "campaign/patient/_gillick-competence.html" %}
   {% else %}
     {{ card({
       heading: "Consent",
@@ -37,7 +37,7 @@
           } if not (hasConsented or hasRefused),
           {
             key: "For",
-            value: child.fullName
+            value: patient.fullName
           },
           {
             key: "By",
@@ -64,7 +64,7 @@
 
       {{ summaryList({
         classes: "app-summary-list--full-width",
-        rows: healthAnswerRows(campaign, child)
+        rows: healthAnswerRows(campaign, patient)
       }) }}
     {% endset %}
 
@@ -81,12 +81,12 @@
         rows: decorateRows([
           {
             key: "Status",
-            value: d("triage." + campaign.id + "." + child.nhsNumber + ".outcome") or "Not provided",
+            value: d("triage." + campaign.id + "." + patient.nhsNumber + ".outcome") or "Not provided",
             href: "#"
           },
           {
             key: "Triage notes",
-            value: d("triage." + campaign.id + "." + child.nhsNumber + ".note") or "Not provided",
+            value: d("triage." + campaign.id + "." + patient.nhsNumber + ".note") or "Not provided",
             href: "#"
           }
         ])

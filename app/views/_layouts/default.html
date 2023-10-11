@@ -70,8 +70,8 @@
 
 {% block bodyEnd %}
   {{ super() }}
-  {% if child %}
-    <script>console.log('Child', {{ child | dump | safe }});</script>
+  {% if patient %}
+    <script>console.log('Patient', {{ patient | dump | safe }});</script>
   {% endif %}
   {% if vaccination %}
     <script>console.log('Vaccination', {{ vaccination | dump | safe }});</script>

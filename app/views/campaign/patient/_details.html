@@ -5,29 +5,29 @@
     rows: decorateRows([
       {
         key: "Name",
-        value: child.fullName
+        value: patient.fullName
       },
       {
         key: "Known as",
-        value: child.knownAs
-      } if child.knownAs,
+        value: patient.knownAs
+      } if patient.knownAs,
       {
         key: "Date of birth",
-        value: child.dob | govukDate + " (aged " + child.dob | age + ")"
+        value: patient.dob | govukDate + " (aged " + patient.dob | age + ")"
       },
       {
         key: "Address",
         value: {
-          html: child.address | nl2br
+          html: patient.address | nl2br
         }
       } if not hasNoResponse,
       {
         key: "GP",
-        value: child.gpSurgery
+        value: patient.gpSurgery
       } if not hasNoResponse,
       {
         key: "NHS Number",
-        value: child.nhsNumber | formatNHSNumber
+        value: patient.nhsNumber | formatNHSNumber
       } if not hasNoResponse,
       {
         key: "Vaccination history",

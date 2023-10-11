@@ -7,14 +7,13 @@ const goOnline = (req) => {
 }
 
 const syncOfflineChanges = (req) => {
-  const campaigns = req.session.data.campaigns
+  const { campaigns } = req.session.data
+
   Object.values(campaigns)
-    .map(c => c.children)
+    .map(campaign => campaign.children)
     .flat()
-    .filter(child => child.seen.isOffline)
-    .forEach(child => {
-      child.seen.isOffline = false
-    })
+    .filter(patient => patient.seen.isOffline)
+    .forEach(patient => { patient.seen.isOffline = false })
 }
 
 export default (router, hasAnyOfflineChanges) => {

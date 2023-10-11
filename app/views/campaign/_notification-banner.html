@@ -13,7 +13,7 @@
       </p>
     {% endif %}
     <p>
-      <a href="/campaign/{{ campaign.id }}/child/{{ successChild.nhsNumber }}">View child record</a>
+      <a href="/campaign/{{ campaign.id }}/patient/{{ successChild.nhsNumber }}">View child record</a>
     </p>
   {% endset %}
 
@@ -36,7 +36,7 @@
       </p>
     {% endif %}
     <p>
-      <a href="/campaign/{{ campaign.id }}/child/{{ successChild.nhsNumber or success }}">View child record</a>
+      <a href="/campaign/{{ campaign.id }}/patient/{{ successChild.nhsNumber or success }}">View child record</a>
     </p>
   {% endset %}
 

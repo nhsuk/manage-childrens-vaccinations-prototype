@@ -13,23 +13,23 @@ const router = express.Router()
 
 const hasAnyOfflineChanges = (campaigns) => {
   const children = Object.values(campaigns)
-    .map(c => c.children)
+    .map(campaign => campaign.children)
     .flat()
 
-  children.forEach(child => {
-    if (child.seen.isOffline) {
-      child.hadOfflineChanges = true
+  children.forEach(patient => {
+    if (patient.seen.isOffline) {
+      patient.hadOfflineChanges = true
     }
   })
 
-  return children.some(child => child.seen.isOffline)
+  return children.some(patient => patient.seen.isOffline)
 }
 
 const offlineChangesCount = (campaigns) => {
   const offlineCount = Object.values(campaigns)
-    .map(c => c.children)
+    .map(campaign => campaign.children)
     .flat()
-    .reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
+    .reduce((count, patient) => count + (patient.seen.isOffline ? 1 : 0), 0)
 
   return offlineCount
 }
@@ -39,6 +39,7 @@ router.all('*', (req, res, next) => {
   res.locals.isOffline = req.session.data.features.offline.on
   res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
   res.locals.totalOfflineChangesCount = offlineChangesCount(req.session.data.campaigns)
+
   next()
 })
 
@@ -54,13 +55,21 @@ vaccineBatchRoutes(router)
 
 router.get('/dashboard', (req, res, next) => {
   res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
+
   next()
 })
 
 router.get('/school-sessions', (req, res, next) => {
-  res.locals.hasFluCampaigns = Object.values(req.session.data.campaigns).some(c => c.type === 'Flu')
-  res.locals.hasHPVCampaigns = Object.values(req.session.data.campaigns).some(c => c.type === 'HPV')
-  res.locals.has3in1Campaigns = Object.values(req.session.data.campaigns).some(c => c.type === '3-in-1 and MenACWY')
+  res.locals.hasFluCampaigns = Object
+    .values(req.session.data.campaigns)
+    .some(campaign => campaign.type === 'Flu')
+  res.locals.hasHPVCampaigns = Object
+    .values(req.session.data.campaigns)
+    .some(campaign => campaign.type === 'HPV')
+  res.locals.has3in1Campaigns = Object
+    .values(req.session.data.campaigns)
+    .some(campaign => campaign.type === '3-in-1 and MenACWY')
+
   next()
 })
 

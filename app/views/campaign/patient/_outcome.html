@@ -1,8 +1,8 @@
-{% if child.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
+{% if patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set colour = "red" %}
-  {% if (child.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
-        (child.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
-    {% set description = child.triage.notes[0].user.fullName + " decided that " + child.fullName + " should not be vaccinated." %}
+  {% if (patient.triage.outcome == TRIAGE_OUTCOME.DO_NOT_VACCINATE) or
+        (patient.triage.outcome == TRIAGE_OUTCOME.DELAY_VACCINATION) %}
+    {% set description = patient.triage.notes[0].user.fullName + " decided that " + patient.fullName + " should not be vaccinated." %}
   {% else %}
     {% set description = vaccination.outcome %}
     {% set descriptionHtml %}
@@ -33,7 +33,7 @@
       }) }}
     {% endset %}
   {% endif %}
-{% elif child.outcome == PATIENT_OUTCOME.VACCINATED %}
+{% elif patient.outcome == PATIENT_OUTCOME.VACCINATED %}
   {% set colour = "green" %}
   {% set descriptionHtml %}
     {% set batch = data.vaccines.batches[vaccination.batch] %}
@@ -78,7 +78,7 @@
 
 {{ card({
   classes: "nhsuk-card--" + colour,
-  heading: child.outcome,
+  heading: patient.outcome,
   headingClasses: "nhsuk-heading-m",
   description: description if description,
   descriptionHtml: descriptionHtml if descriptionHtml,

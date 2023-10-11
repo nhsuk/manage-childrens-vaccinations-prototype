@@ -6,12 +6,12 @@ const getData = (data, keyPath) => {
   return _.get(data, _.toPath(keyPath))
 }
 
-const journeyForEverythingElse = (data, campaign, child) => {
-  const nhsNumber = child.nhsNumber
+const journeyForEverythingElse = (data, campaign, patient) => {
+  const nhsNumber = patient.nhsNumber
   const campaignId = campaign.id
   const hasDefaultBatch = !!data['todays-batch']
-  const hasNoResponse = child.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
-  const hasRefused = child.consent.outcome === CONSENT_OUTCOME.REFUSED
+  const hasNoResponse = patient.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
+  const hasRefused = patient.consent.outcome === CONSENT_OUTCOME.REFUSED
   const hasConsent = !(hasNoResponse || hasRefused)
   const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
   const askForNoReason = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`) !== VACCINATION_OUTCOME.VACCINATED
@@ -55,11 +55,11 @@ const journeyForEverythingElse = (data, campaign, child) => {
   return journey
 }
 
-const journeyFor3in1MenAcwy = (data, campaignId, child) => {
-  const nhsNumber = child.nhsNumber
+const journeyFor3in1MenAcwy = (data, campaignId, patient) => {
+  const nhsNumber = patient.nhsNumber
   const givenVaccines = getData(data, `vaccination.${campaignId}.${nhsNumber}.multi-given`) || []
-  const askForNoMenAcwyReason = child.consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY && !givenVaccines.includes('men-acwy')
-  const askForNo3in1Reason = child.consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1 && !givenVaccines.includes('3-in-1')
+  const askForNoMenAcwyReason = patient.consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY && !givenVaccines.includes('men-acwy')
+  const askForNo3in1Reason = patient.consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1 && !givenVaccines.includes('3-in-1')
 
   if (askForNoMenAcwyReason) {
     return {
@@ -80,13 +80,14 @@ export function vaccination (req) {
   const nhsNumber = req.params.nhsNumber
   const campaignId = req.params.campaignId
   const campaign = req.session.data.campaigns[campaignId]
-  const child = campaign.children.find(p => p.nhsNumber === req.params.nhsNumber)
+  const patient = campaign.children
+    .find(patient => patient.nhsNumber === req.params.nhsNumber)
 
   const journey = {
-    [`/campaign/${campaignId}/child/${nhsNumber}`]: {},
+    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
     ...campaign.is3in1MenACWY
-      ? journeyFor3in1MenAcwy(req.session.data, campaignId, child)
-      : journeyForEverythingElse(req.session.data, campaign, child),
+      ? journeyFor3in1MenAcwy(req.session.data, campaignId, patient)
+      : journeyForEverythingElse(req.session.data, campaign, patient),
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
     [`/campaign/${campaignId}/record?success=${nhsNumber}`]: {}
   }

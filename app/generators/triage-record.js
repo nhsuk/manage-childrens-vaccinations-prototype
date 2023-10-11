@@ -11,13 +11,13 @@ export default (campaigns) => {
   ]
 
   inProgressCampaigns.forEach(campaign => {
-    const campaignId = campaign.id
-    const children = campaign.children
-    triageRecord[campaignId] = {}
+    triageRecord[campaign.id] = {}
 
-    children.filter(c => triageOutcomeToEnrich.includes(c.triage.outcome)).forEach(child => {
-      triageRecord[campaignId][child.nhsNumber] = child.triage
-    })
+    campaign.children
+      .filter(patient => triageOutcomeToEnrich.includes(patient.triage.outcome))
+      .forEach(patient => {
+        triageRecord[campaign.id][patient.nhsNumber] = patient.triage
+      })
   })
 
   return triageRecord

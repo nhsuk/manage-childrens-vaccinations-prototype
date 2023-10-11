@@ -12,7 +12,8 @@ export default (router) => {
     const campaign = data.campaigns[req.params.campaignId]
 
     res.locals.campaign = campaign
-    res.locals.child = campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
+    res.locals.patient = campaign.children
+      .find(patient => patient.nhsNumber === req.params.nhsNumber)
     res.locals.base = `consent.${campaign.id}.${req.params.nhsNumber}.`
     next()
   })
@@ -26,7 +27,7 @@ export default (router) => {
   })
 
   router.post('/consent/:campaignId/:nhsNumber/health-questions', (req, res, next) => {
-    const child = res.locals.child
+    const { patient } = res.locals
     const healthAnswers = {}
     const formAnswers = _.get(
       req.body,
@@ -39,7 +40,7 @@ export default (router) => {
       }
 
       if (formAnswers[key] === 'Yes') {
-        child.consent.answersNeedTriage = true
+        patient.consent.answersNeedTriage = true
 
         // Use detail answer if provided, else return `true`
         healthAnswers[key] = formAnswers.details[key] || true
@@ -49,37 +50,37 @@ export default (router) => {
     }
 
     // Add consent response
-    child.responses = [{ healthAnswers }]
+    patient.responses = [{ healthAnswers }]
 
     next()
   })
 
-  // Copy consent values to the child object
+  // Copy consent values to the patient object
   router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
-    const { child } = res.locals
+    const { patient } = res.locals
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
     const triageData = req.session.data.triage[req.params.campaignId][req.params.nhsNumber]
     const gillickCompetent = consentData['gillick-competent'] === 'Yes'
     const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
 
-    child.consent.outcome = consentData.consent
-    child.consent.responses = consentData.consent !== CONSENT_OUTCOME.NO_RESPONSE
+    patient.consent.outcome = consentData.consent
+    patient.consent.responses = consentData.consent !== CONSENT_OUTCOME.NO_RESPONSE
 
-    const consentResponse = child.responses[0]
+    const consentResponse = patient.responses[0]
     consentResponse.date = DateTime.local().toISODate()
     consentResponse.method = 'Phone'
 
     const hasConsented = consentData.consent.outcome === CONSENT_OUTCOME.VALID
     if (hasConsented && triageData && triageData.outcome) {
-      child.triage.outcome = triageData.outcome
+      patient.triage.outcome = triageData.outcome
 
       // If triage outcome is not to vaccinate, set patient outcome
       if (triageData.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
-        child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
+        patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
     }
 
-    if (child.consent.outcome === CONSENT_OUTCOME.REFUSED) {
+    if (patient.consent.outcome === CONSENT_OUTCOME.REFUSED) {
       consentResponse.refusalReason = consentData.refusalReason
       consentResponse.refusalReasonOther = consentData.refusalReasonOther
     }

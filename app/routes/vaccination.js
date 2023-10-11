@@ -40,7 +40,8 @@ export default (router) => {
     const campaign = data.campaigns[req.params.campaignId]
 
     res.locals.campaign = campaign
-    res.locals.child = campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
+    res.locals.patient = campaign.children
+      .find(patient => patient.nhsNumber === req.params.nhsNumber)
     res.locals.paths = vaccination(req)
     next()
   })
@@ -122,28 +123,28 @@ export default (router) => {
   router.post([
     '/vaccination/:campaignId/:nhsNumber/details'
   ], (req, res, next) => {
-    const { child, vaccination } = res.locals
+    const { patient, vaccination } = res.locals
     const { batch, outcome, notes } = vaccination
     const vaccineGiven = outcome === VACCINATION_OUTCOME.VACCINATED
 
     if (vaccineGiven) {
-      child.outcome = PATIENT_OUTCOME.VACCINATED
-      child.batch = batch
-      child.seen = {
+      patient.outcome = PATIENT_OUTCOME.VACCINATED
+      patient.batch = batch
+      patient.seen = {
         text: PATIENT_OUTCOME.VACCINATED,
         outcome: VACCINATION_OUTCOME.VACCINATED,
         notes
       }
     } else {
-      child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
-      child.seen = {
+      patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
+      patient.seen = {
         text: PATIENT_OUTCOME.COULD_NOT_VACCINATE,
         outcome: VACCINATION_OUTCOME.REFUSED,
         notes
       }
     }
 
-    res.locals.child.seen.isOffline = res.locals.isOffline
+    res.locals.patient.seen.isOffline = res.locals.isOffline
     next()
   })
 

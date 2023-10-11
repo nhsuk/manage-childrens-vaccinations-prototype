@@ -1,5 +1,5 @@
 {% set descriptionHtml %}
-  {% for response in child.responses %}
+  {% for response in patient.responses %}
     {% set detailText %}
       {{ response.status + " by " + response.parentOrGuardian.relationship }} on {{ response.date | govukDate }}
     {% endset %}
@@ -38,10 +38,10 @@
 
   {{ details({
     text: "Responses to health questions",
-    attributes: { open: true } if child.consent.answersNeedTriage,
+    attributes: { open: true } if patient.consent.answersNeedTriage,
     HTML: summaryList({
       classes: "app-summary-list--full-width",
-      rows: healthAnswerRows(campaign, child)
+      rows: healthAnswerRows(campaign, patient)
     }),
     classes: "nhsuk-expander"
   }) }}
@@ -51,4 +51,4 @@
   heading: "Consent responses",
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml
-}) if child.responses.length }}
+}) if patient.responses.length }}

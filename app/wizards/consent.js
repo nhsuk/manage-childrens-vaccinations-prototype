@@ -8,7 +8,7 @@ export default (req, res) => {
   const baseData = `consent.${campaignId}.${nhsNumber}`
 
   const journey = {
-    [`/campaign/${campaignId}/child/${nhsNumber}`]: {},
+    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
     [basePath]: {},
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
@@ -27,7 +27,7 @@ export default (req, res) => {
       [`${basePath}/confirm`]: true
     },
     [`${basePath}/confirm`]: {
-      [`/campaign/${campaignId}/child/${nhsNumber}`]: {
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: {
         data: `${baseData}.consent`,
         excludedValue: CONSENT_OUTCOME.VALID
       }
@@ -40,17 +40,17 @@ export default (req, res) => {
     },
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
 
-    [`/campaign/${campaignId}/child/${nhsNumber}?gillick`]: {},
+    [`/campaign/${campaignId}/patient/${nhsNumber}?gillick`]: {},
     [`${basePath}/pre-gillick`]: {},
     [`${basePath}/gillick`]: {
       [`${basePath}/consent?gillick`]: {
         data: `${baseData}.gillick-competent`,
         value: 'Yes'
       },
-      [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
-        res.locals.child.outcome = PATIENT_OUTCOME.NO_CONSENT
-        res.locals.child.assessedAsNotGillickCompetent = true
-        res.locals.child.seen.isOffline = res.locals.isOffline
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: () => {
+        res.locals.patient.outcome = PATIENT_OUTCOME.NO_CONSENT
+        res.locals.patient.assessedAsNotGillickCompetent = true
+        res.locals.patient.seen.isOffline = res.locals.isOffline
         return true
       }
     },
@@ -59,9 +59,9 @@ export default (req, res) => {
         data: `${baseData}.consent`,
         value: CONSENT_OUTCOME.VALID
       },
-      [`/campaign/${campaignId}/child/${nhsNumber}`]: () => {
-        res.locals.child.outcome = PATIENT_OUTCOME.NO_CONSENT
-        res.locals.child.seen.isOffline = res.locals.isOffline
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: () => {
+        res.locals.patient.outcome = PATIENT_OUTCOME.NO_CONSENT
+        res.locals.patient.seen.isOffline = res.locals.isOffline
         return true
       }
     }

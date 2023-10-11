@@ -1,9 +1,9 @@
-{% set colour = consentOutcome(child).colour %}
-{% set description = consentOutcome(child).description %}
+{% set colour = consentOutcome(patient).colour %}
+{% set description = consentOutcome(patient).description %}
 
 {{ card({
   classes: ("nhsuk-card--" + colour) if colour,
-  heading: child.consent.outcome,
+  heading: patient.consent.outcome,
   headingClasses: "nhsuk-heading-m",
   description: description,
   feature: true

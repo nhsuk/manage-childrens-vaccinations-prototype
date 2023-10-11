@@ -4,7 +4,9 @@ import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
 const offlineChangesCount = (campaign) => {
-  const offlineCount = campaign.children.reduce((count, child) => count + (child.seen.isOffline ? 1 : 0), 0)
+  const offlineCount = campaign.children
+    .reduce((count, patient) => count + (patient.seen.isOffline ? 1 : 0), 0)
+
   return offlineCount
 }
 
@@ -28,10 +30,11 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId/child/:nhsNumber',
-    '/campaign/:campaignId/child/:nhsNumber/*'
+    '/campaign/:campaignId/patient/:nhsNumber',
+    '/campaign/:campaignId/patient/:nhsNumber/*'
   ], (req, res, next) => {
-    res.locals.child = res.locals.campaign.children.find(c => c.nhsNumber === req.params.nhsNumber)
+    res.locals.patient = res.locals.campaign.children
+      .find(patient => patient.nhsNumber === req.params.nhsNumber)
     if (res.locals.campaign.is3in1MenACWY) {
       res.locals['3in1Vaccination'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
       res.locals.menAcwyVaccination = _.get(req.session.data, `men-acwy-vaccination.${req.params.campaignId}.${req.params.nhsNumber}`)
@@ -44,23 +47,23 @@ export default (router) => {
     next()
   })
 
-  router.post('/campaign/:campaignId/child/:nhsNumber', (req, res, next) => {
-    const { child } = res.locals
+  router.post('/campaign/:campaignId/patient/:nhsNumber', (req, res, next) => {
+    const { patient } = res.locals
     const { campaignId, nhsNumber } = req.params
     const { isTriage } = req.session.data
     const triage = _.get(req.body, `triage.${campaignId}.${nhsNumber}`, {})
 
     if (isTriage && triage) {
-      child.triage.outcome = triage.outcome
+      patient.triage.outcome = triage.outcome
 
       // If triage outcome is not to vaccinate, set patient outcome
       if (triage.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {
-        child.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
+        patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       }
 
       // Update triage notes
       if (triage.note) {
-        child.triage.notes.push({
+        patient.triage.notes.push({
           date: new Date().toISOString(),
           note: triage.note,
           user: {
@@ -92,9 +95,9 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId/child/:nhsNumber'
+    '/campaign/:campaignId/patient/:nhsNumber'
   ], (req, res) => {
-    res.render('campaign/child')
+    res.render('campaign/patient')
   })
 
   router.all([
@@ -105,14 +108,14 @@ export default (router) => {
     if (req.query.noConsent) {
       res.locals.noConsent = req.query.noConsent
       const nhsNumber = req.query.noConsent
-      const child = campaign.children.find(c => c.nhsNumber === nhsNumber)
-      child.outcome = PATIENT_OUTCOME.NO_CONSENT
-      child.seen.isOffline = res.locals.isOffline
-      res.locals.successChild = child
+      const patient = campaign.children
+        .find(patient => patient.nhsNumber === nhsNumber)
+      patient.outcome = PATIENT_OUTCOME.NO_CONSENT
+      patient.seen.isOffline = res.locals.isOffline
+      res.locals.successChild = patient
     } else if (res.locals.success) {
-      res.locals.successChild = campaign.children.find(c => {
-        return c.nhsNumber === req.query.success
-      })
+      res.locals.successChild = campaign.children
+        .find(patient => patient.nhsNumber === req.query.success)
     }
 
     next()

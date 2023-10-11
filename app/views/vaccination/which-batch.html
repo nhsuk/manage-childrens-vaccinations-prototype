@@ -68,10 +68,10 @@
     fieldset: {
       legend: {
         classes: "nhsuk-fieldset__legend--l",
-        text: heading({ caption: child.fullName, title: title })
+        text: heading({ caption: patient.fullName, title: title })
       }
     },
     items: items,
-    decorate: [dataLocation, campaign.id, child.nhsNumber, "batch"]
+    decorate: [dataLocation, campaign.id, patient.nhsNumber, "batch"]
   }) }}
 {% endblock %}

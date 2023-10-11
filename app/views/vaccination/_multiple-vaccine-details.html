@@ -5,7 +5,7 @@
   rows: decorateRows([
     {
       key: "Child",
-      value: child.fullName
+      value: patient.fullName
     },
     {
       key: "Date",
@@ -31,12 +31,12 @@
 }) }}
 
 <h2 class="nhsuk-heading-m">MenACWY</h2>
-{% set basePath = "/men-acwy-vaccination/" + campaign.id + "/" + child.nhsNumber %}
+{% set basePath = "/men-acwy-vaccination/" + campaign.id + "/" + patient.nhsNumber %}
 {% set vaccine = campaign.vaccines[1] %}
 {% set batch = vaccine.batches[0] %}
 {% set brand = vaccine.brand + " (Injection)" %}
 
-{% if child.consent.outcome == CONSENT_OUTCOME.ONLY_MENACWY or menACWYVaccineGiven %}
+{% if patient.consent.outcome == CONSENT_OUTCOME.ONLY_MENACWY or menACWYVaccineGiven %}
   {{ summaryList({
     rows: decorateRows([
       {
@@ -66,12 +66,12 @@
 {% endif %}
 
 <h2 class="nhsuk-heading-m">3-in-1 booster</h2>
-{% set basePath = "/3-in-1-vaccination/" + campaign.id + "/" + child.nhsNumber %}
+{% set basePath = "/3-in-1-vaccination/" + campaign.id + "/" + patient.nhsNumber %}
 {% set vaccine = campaign.vaccines[0] %}
 {% set batch = vaccine.batches[0] %}
 {% set brand = vaccine.brand + " (Injection)" %}
 
-{% if child.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 or 3in1VaccineGiven %}
+{% if patient.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 or 3in1VaccineGiven %}
   {{ summaryList({
     rows: decorateRows([
       {

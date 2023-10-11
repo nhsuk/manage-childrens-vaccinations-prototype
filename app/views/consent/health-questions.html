@@ -3,7 +3,7 @@
 {% set title = "Health questions" %}
 
 {% block form %}
-  {{ heading({ caption: child.fullName, title: title }) }}
+  {{ heading({ caption: patient.fullName, title: title }) }}
 
   {% for id, question in campaign.healthQuestions %}
     {% set giveDetailsHtml %}
@@ -62,7 +62,7 @@
         value: TRIAGE_OUTCOME.NEEDS_TRIAGE
       }
     ],
-    decorate: ["triage", campaign.id, child.nhsNumber, "outcome"]
+    decorate: ["triage", campaign.id, patient.nhsNumber, "outcome"]
   }) }}
 
   {{ textarea({
@@ -75,6 +75,6 @@
     },
     rows: 5,
     value: "",
-    decorate: ["triage", campaign.id, child.nhsNumber, "note"]
+    decorate: ["triage", campaign.id, patient.nhsNumber, "note"]
   }) }}
 {% endblock %}

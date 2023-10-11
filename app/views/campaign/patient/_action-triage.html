@@ -22,7 +22,7 @@
           value: TRIAGE_OUTCOME.NEEDS_TRIAGE
         }
       ],
-      decorate: ["triage", campaign.id, child.nhsNumber, "outcome"]
+      decorate: ["triage", campaign.id, patient.nhsNumber, "outcome"]
     }) }}
 
     {{ textarea({
@@ -32,7 +32,7 @@
       },
       rows: 5,
       value: "",
-      decorate: ["triage", campaign.id, child.nhsNumber, "note"]
+      decorate: ["triage", campaign.id, patient.nhsNumber, "note"]
     }) }}
 
     {{ button({
@@ -45,7 +45,7 @@
 {% endset %}
 
 {{ card({
-  heading: "Is it safe to vaccinate " + child.fullName + "?",
+  heading: "Is it safe to vaccinate " + patient.fullName + "?",
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml
 }) }}

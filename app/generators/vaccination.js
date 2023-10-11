@@ -33,9 +33,9 @@ export default (campaigns, batches) => {
   }
 
   children
-    .filter(child => child.outcome === PATIENT_OUTCOME.VACCINATED)
-    .forEach(child => {
-      vaccination[id][child.nhsNumber] = {
+    .filter(patient => patient.outcome === PATIENT_OUTCOME.VACCINATED)
+    .forEach(patient => {
+      vaccination[id][patient.nhsNumber] = {
         outcome: VACCINATION_OUTCOME.VACCINATED,
         site: VACCINATION_SITE.ARM_LEFT,
         batch: batch.name
@@ -43,9 +43,9 @@ export default (campaigns, batches) => {
     })
 
   children
-    .filter(child => child.outcome === PATIENT_OUTCOME.COULD_NOT_VACCINATE)
-    .forEach(child => {
-      vaccination[id][child.nhsNumber] = {
+    .filter(patient => patient.outcome === PATIENT_OUTCOME.COULD_NOT_VACCINATE)
+    .forEach(patient => {
+      vaccination[id][patient.nhsNumber] = {
         outcome: faker.helpers.arrayElement([
           VACCINATION_OUTCOME.CONTRAINDICATIONS,
           VACCINATION_OUTCOME.REFUSED,
