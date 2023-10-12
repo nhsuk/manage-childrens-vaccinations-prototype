@@ -1,23 +1,22 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import { CONSENT_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
+import { RESPONSE_CONSENT, PATIENT_OUTCOME } from '../enums.js'
 
 export default (req, res) => {
   const nhsNumber = req.params.nhsNumber
   const campaignId = req.params.campaignId
   const basePath = `/consent/${campaignId}/${nhsNumber}`
-  const baseData = `consent.${campaignId}.${nhsNumber}`
 
   const journey = {
     [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
     [basePath]: {},
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
-        data: `${baseData}.consent`,
-        value: CONSENT_OUTCOME.VALID
+        data: 'response.status',
+        value: RESPONSE_CONSENT.GIVEN
       },
       [`${basePath}/confirm`]: {
-        data: `${baseData}.consent`,
-        value: CONSENT_OUTCOME.NO_RESPONSE
+        data: 'response.status',
+        value: RESPONSE_CONSENT.INVALID
       }
     },
     [`${basePath}/why-not-consenting`]: {
@@ -30,11 +29,10 @@ export default (req, res) => {
       [`/campaign/${campaignId}/patient/${nhsNumber}`]: true
     },
 
-    [`/campaign/${campaignId}/patient/${nhsNumber}?gillick`]: {},
     [`${basePath}/pre-gillick`]: {},
     [`${basePath}/gillick`]: {
       [`${basePath}/consent?gillick`]: {
-        data: `${baseData}.gillickCompetent`,
+        data: 'response.gillickCompetent',
         value: 'Yes'
       },
       [`/campaign/${campaignId}/patient/${nhsNumber}`]: () => {
@@ -46,8 +44,8 @@ export default (req, res) => {
     },
     [`${basePath}/consent?gillick`]: {
       [`${basePath}/health-questions`]: {
-        data: `${baseData}.consent`,
-        value: CONSENT_OUTCOME.VALID
+        data: 'response.status',
+        value: RESPONSE_CONSENT.GIVEN
       },
       [`/campaign/${campaignId}/patient/${nhsNumber}`]: () => {
         res.locals.patient.outcome = PATIENT_OUTCOME.NO_CONSENT

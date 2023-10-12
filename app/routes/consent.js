@@ -1,109 +1,116 @@
+import { RESPONSE_CONSENT } from '../enums.js'
+import getNote from '../generators/note.js'
 import wizard from '../wizards/consent.js'
-import _ from 'lodash'
-import { CONSENT_OUTCOME, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
-import { DateTime } from 'luxon'
+
+const getHealthAnswers = (consent) => {
+  const healthAnswers = {}
+
+  // Use detail answer if provided, else return `true`
+  for (const key of Object.keys(consent.healthAnswerDetails)) {
+    if (consent.healthAnswers?.[key] === 'Yes') {
+      healthAnswers[key] = consent.healthAnswerDetails[key] || 'No details provided'
+    } else {
+      healthAnswers[key] = false
+    }
+  }
+
+  return healthAnswers
+}
 
 export default (router) => {
-  router.all([
-    '/consent/:campaignId/:nhsNumber',
-    '/consent/:campaignId/:nhsNumber/:view'
-  ], (req, res, next) => {
-    const data = req.session.data
-    const campaign = data.campaigns[req.params.campaignId]
+  /**
+   * Provide data to all consent views
+   */
+  router.all('/consent/:campaignId/:nhsNumber/:view?', (req, res, next) => {
+    const { campaignId, nhsNumber } = req.params
+    const { campaigns, responseId } = req.session.data
+    const campaign = campaigns[campaignId]
 
     res.locals.campaign = campaign
-    res.locals.patient = campaign.cohort
-      .find(patient => patient.nhsNumber === req.params.nhsNumber)
-    res.locals.base = `consent.${campaign.id}.${req.params.nhsNumber}.`
-    next()
-  })
-
-  router.all([
-    '/consent/:campaignId/:nhsNumber',
-    '/consent/:campaignId/:nhsNumber/:view'
-  ], (req, res, next) => {
+    res.locals.patient = campaign.cohort.find(p => p.nhsNumber === nhsNumber)
     res.locals.paths = wizard(req, res, false)
-    next()
-  })
-
-  router.post('/consent/:campaignId/:nhsNumber/health-questions', (req, res, next) => {
-    const { patient } = res.locals
-    const healthAnswers = {}
-    const formAnswers = _.get(
-      req.body,
-      `consent.${req.params.campaignId}.${req.params.nhsNumber}.health`, {}
-    )
-
-    for (const key of Object.keys(formAnswers)) {
-      if (key === 'details') {
-        continue
-      }
-
-      if (formAnswers[key] === 'Yes') {
-        patient.consent.answersNeedTriage = true
-
-        // Use detail answer if provided, else return `true`
-        healthAnswers[key] = formAnswers.details[key] || true
-      } else {
-        healthAnswers[key] = false
-      }
-    }
-
-    // Add consent response
-    patient.responses = [{ healthAnswers }]
+    res.locals.responseId = responseId || 0
+    res.locals.response = req.session.data.response
+    res.locals.triage = req.session.data.triage
 
     next()
   })
 
-  // Copy consent values to the patient object
+  /**
+   * Show consent view
+   */
+  router.get('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
+    res.render(`consent/${req.params.view || 'index'}`)
+  })
+
+  /**
+   * Update patient record upon confirming changes
+   */
   router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
-    const { patient } = res.locals
-    const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
-    const gillickCompetent = consentData.gillickCompetent === 'Yes'
-    const assessedAsNotGillickCompetent = consentData.gillickCompetent === 'No'
+    const { patient, responseId } = res.locals
+    const { response, triage } = req.session.data
 
-    patient.consent.outcome = consentData.consent
-    patient.consent.responses = consentData.consent !== CONSENT_OUTCOME.NO_RESPONSE
-
-    const consentResponse = patient.responses[0]
-    consentResponse.date = DateTime.local().toISODate()
-    consentResponse.method = 'Phone'
-
-    if (patient.consent.outcome === CONSENT_OUTCOME.REFUSED) {
-      consentResponse.refusalReason = consentData.refusalReason
-      consentResponse.refusalReasonOther = consentData.refusalReasonOther
-
-      // Set consent and patient outcome
-      patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
-      patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
+    // Add response to local patient data
+    if (response.status !== RESPONSE_CONSENT.INVALID) {
+      patient.responses[responseId] = response
     }
 
-    if (gillickCompetent || assessedAsNotGillickCompetent) {
-      next()
-    } else {
-      consentResponse.parentOrGuardian.fullName = consentData.parent.name
-      consentResponse.parentOrGuardian.tel = consentData.parent.tel
-      consentResponse.parentOrGuardian.relationship =
-        (consentData.parent.relationship === 'Other' && consentData.parent.relationshipOther)
-          ? consentData.parent.relationshipOther
-          : consentData.parent.relationship
-
-      next()
+    // Update derived consent metadata
+    if (response.status === RESPONSE_CONSENT.REFUSED) {
+      patient.consent.refusalReasons.push(response.refusalReason)
+    } else if (response.status === RESPONSE_CONSENT.GIVEN) {
+      patient.consent.answersNeedTriage =
+        Object.values(response.healthAnswers).includes(true)
     }
+
+    // Add any consent notes
+    if (response.note) {
+      patient.consent.notes.push(getNote(response.note, true))
+    }
+
+    // Add any triage notes
+    if (triage.note) {
+      patient.triage.notes.push(getNote(triage.note))
+    }
+
+    // Add any triage outcome
+    if (triage) {
+      patient.triage.outcome = triage.outcome
+    }
+
+    // Delete temporary session data
+    delete req.session.data.response
+    delete req.session.data.triage
+
+    next()
   })
 
-  router.get('/consent/:campaignId/:nhsNumber', (_req, res) => {
-    res.render('consent/index')
-  })
+  /**
+   * Update session data during question flow
+   */
+  router.post('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
+    const { patient, responseId } = res.locals
+    const { view } = req.params
+    const { response } = req.session.data
+    const parentOrGuardian = patient.responses[responseId]?.parentOrGuardian
 
-  router.get('/consent/:campaignId/:nhsNumber/:view', (req, res) => {
-    res.render(`consent/${req.params.view}`)
-  })
+    req.session.data.response = {
+      date: new Date(),
+      method: 'Phone',
+      ...response
+    }
 
-  router.post([
-    '/consent/:campaignId/:nhsNumber',
-    '/consent/:campaignId/:nhsNumber/:view'
-  ], (_req, res) => {
+    // Use existing parent or guardian information when checking refusal
+    if (view === 'consent' && parentOrGuardian) {
+      req.session.data.response.parentOrGuardian = parentOrGuardian
+    }
+
+    // Use correct format for `response.healthAnswers`
+    if (view === 'health-questions') {
+      req.session.data.response.healthAnswers = getHealthAnswers(response)
+      delete req.session.data.response.healthAnswerDetails
+    }
+
     res.redirect(res.locals.paths.next)
   })
 }

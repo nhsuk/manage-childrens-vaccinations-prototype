@@ -11,7 +11,7 @@
         label: {
           text: "Give details"
         },
-        decorate: base + "health.details." + id
+        decorate: ["response", "healthAnswerDetails", id]
       }) }}
     {% endset %}
 
@@ -33,7 +33,7 @@
           text: "No"
         }
       ],
-      decorate: base + "health." + id
+      decorate: ["response", "healthAnswers", id]
     }) }}
   {% endfor %}
 
@@ -62,7 +62,7 @@
         value: TRIAGE_OUTCOME.NEEDS_TRIAGE
       }
     ],
-    decorate: ["triage", campaign.id, patient.nhsNumber, "outcome"]
+    decorate: ["triage", "outcome"]
   }) }}
 
   {{ textarea({
@@ -75,6 +75,6 @@
     },
     rows: 5,
     value: "",
-    decorate: ["triage", campaign.id, patient.nhsNumber, "note"]
+    decorate: ["triage", "note"]
   }) }}
 {% endblock %}

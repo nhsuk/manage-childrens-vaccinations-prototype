@@ -1,6 +1,6 @@
 {% extends "_layouts/wizard.html" %}
 
-{% set isGillickCompetent = d(base + "gillickCompetent") === "Yes" %}
+{% set isGillickCompetent = response.gillickCompetent === "Yes" %}
 {% set campaignName = campaign.type | lower if campaign.type == "Flu" else campaign.type %}
 {% if isGillickCompetent %}
   {% set title = "Do they agree to having the " + campaignName + " vaccination?" %}
@@ -19,17 +19,17 @@
     items: [
       {
         text: "Yes, they agree",
-        value: CONSENT_OUTCOME.VALID
+        value: RESPONSE_CONSENT.GIVEN
       },
       {
         text: "No, they do not agree",
-        value: CONSENT_OUTCOME.REFUSED
+        value: RESPONSE_CONSENT.REFUSED
       },
       {
         text: "No response",
-        value: CONSENT_OUTCOME.NO_RESPONSE
+        value: RESPONSE_CONSENT.INVALID
       } if not isGillickCompetent
     ],
-    decorate: base + "consent"
+    decorate: ["response", "status"]
   }) }}
 {% endblock %}

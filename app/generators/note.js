@@ -17,7 +17,7 @@ import getUser from './user.js'
 export default (note, createdNow = false) => {
   return {
     note,
-    date: createdNow ? new Date().toISOString : faker.date.recent({ days: 30 }),
+    date: createdNow ? new Date() : faker.date.recent({ days: 30 }),
     user: getUser()
   }
 }

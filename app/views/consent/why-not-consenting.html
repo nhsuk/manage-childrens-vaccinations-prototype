@@ -25,11 +25,11 @@
             label: {
               text: "Give details"
             },
-            decorate: base + "refusalReasonOther"
+            decorate: ["response", "refusalReasonOther"]
           })
         }
       }
     ],
-    decorate: base + "refusalReason"
+    decorate: ["response", "refusalReason"]
   }) }}
 {% endblock %}
