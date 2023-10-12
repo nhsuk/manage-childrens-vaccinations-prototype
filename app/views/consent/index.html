@@ -9,14 +9,14 @@
     label: {
       text: "Full name"
     },
-    decorate: base + "parent.name"
+    decorate: ["response", "parentOrGuardian", "fullName"]
   }) }}
 
   {{ input({
     label: {
       text: "Phone number"
     },
-    decorate: base + "parent.tel"
+    decorate: ["response", "parentOrGuardian", "tel"]
   }) }}
 
   {% set other %}
@@ -28,7 +28,7 @@
       hint: {
         text: "For example, carer"
       },
-      decorate: base + "parent.relationshipOther"
+      decorate: ["response", "parentOrGuardian", "relationshipOther"]
     }) }}
   {% endset %}
 
@@ -49,6 +49,6 @@
         }
       }
     ],
-    decorate: base + "parent.relationship"
+    decorate: ["response", "parentOrGuardian", "relationship"]
   }) }}
 {% endblock %}

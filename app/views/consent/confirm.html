@@ -2,91 +2,67 @@
 
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
-{% set hasConsented = d(base + "consent") == CONSENT_OUTCOME.VALID %}
-{% set hasRefused = d(base + "consent") == CONSENT_OUTCOME.REFUSED %}
-{% set isGillickCompetent = d(base + "gillickCompetent") === "Yes" %}
+{% set hasConsented = response.status == CONSENT_OUTCOME.VALID %}
+{% set hasRefused = response.status == CONSENT_OUTCOME.REFUSED %}
+{% set isGillickCompetent = response.gillickCompetent === "Yes" %}
 
 {% block form %}
-  {{ heading({ title: title }) }}
-
-  {% set parentContactDetailsHtml %}
-    <div class="nhsuk-u-margin-top-2 nhsuk-u-font-size-16">
-      {{ d(base + "parent.name") }}<br>
-      Phone: {{ d(base + "parent.tel") }}
-    </div>
-  {% endset %}
+  {{ heading({ caption: patient.fullName, title: title }) }}
 
   {% if isGillickCompetent %}
-    {% set consentRecord = d("consent." + campaign.id + "." + patient.nhsNumber) %}
+    {% set consentRecord = d("response.") %}
     {% include "campaign/patient/_gillick-competence.html" %}
   {% else %}
+    {% set descriptionHtml %}
+      {% set showActions = true %}
+      {% include "campaign/patient/_response-summary.html" %}
+
+      {{ textarea({
+        label: {
+          text: "Add a note (optional)",
+          classes: "nhsuk-label--s nhsuk-u-margin-bottom-2"
+        },
+        rows: 5,
+        decorate: ["response", "note"]
+      }) }}
+    {% endset %}
+
     {{ card({
-      heading: "Consent",
+      heading: responseHeading(response),
       headingClasses: "nhsuk-heading-m",
-      descriptionHtml: summaryList({
-        rows: decorateRows([
-          {
-            key: "Consent",
-            value: d(base + "consent"),
-            href: "#"
-          } if hasConsented or hasRefused,
-          {
-            key: "Consent",
-            value: "No response",
-            href: "#"
-          } if not (hasConsented or hasRefused),
-          {
-            key: "For",
-            value: patient.fullName
-          },
-          {
-            key: "By",
-            value: {
-              html: d(base + "parent.relationship") + parentContactDetailsHtml
-            },
-            href: "#"
-          },
-          {
-            key: "Reason",
-            value: {
-              html: d(base + "refusalReason") + (" – " + d(base + "refusalReasonOther") if d(base + "refusalReason") == "Other")
-            },
-            href: "#"
-          } if hasRefused
-        ])
-      })
+      descriptionHtml: descriptionHtml
     }) }}
   {% endif %}
 
   {% if hasConsented %}
-    {% set description %}
+    {% set descriptionHtml %}
       <p><a href="#">Change</a></p>
 
       {{ summaryList({
         classes: "app-summary-list--full-width",
-        rows: healthAnswerRows(campaign, patient.responses)
+        rows: healthAnswerRows(campaign, [response])
       }) }}
     {% endset %}
 
     {{ card({
       heading: "Health questions",
       headingClasses: "nhsuk-heading-m",
-      description: description
+      descriptionHtml: descriptionHtml
     }) }}
 
     {{ card({
       heading: "Triage",
       headingClasses: "nhsuk-heading-m",
-      description: summaryList({
+      descriptionHtml: summaryList({
         rows: decorateRows([
           {
             key: "Status",
-            value: d("triage." + campaign.id + "." + patient.nhsNumber + ".outcome") or "Not provided",
+            value: triage.outcome or "Not provided",
             href: "#"
           },
           {
             key: "Triage notes",
-            value: d("triage." + campaign.id + "." + patient.nhsNumber + ".note") or "Not provided",
+            value: triage.note or "Not provided",
             href: "#"
           }
         ])

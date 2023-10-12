@@ -6,6 +6,7 @@ import { CONSENT_OUTCOME, RESPONSE_CONSENT } from '../enums.js'
  * @property {string} outcome - Consent outcome, derived from responses
  * @property {boolean} answersNeedTriage - Answers need triage?
  * @property {Array} refusalReasons - Unique refusal reasons
+ * @property {Array} notes - Consent notes
  */
 
 /**
@@ -59,7 +60,8 @@ export default (type, responses) => {
   const consent = {
     outcome,
     answersNeedTriage: answersNeedingTriage.length > 0,
-    refusalReasons
+    refusalReasons,
+    notes: []
   }
 
   return consent

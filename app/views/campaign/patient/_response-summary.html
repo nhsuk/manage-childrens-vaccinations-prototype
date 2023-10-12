@@ -1,0 +1,30 @@
+{{ summaryList({
+  rows: decorateRows([
+    {
+      key: response.parentOrGuardian.relationship,
+      value: {
+        html: response.parentOrGuardian.fullName
+      },
+      href: "#" if showActions
+    },
+    {
+      key: "Contact",
+      value: {
+        html: [response.parentOrGuardian.tel, response.parentOrGuardian.email] | removeEmptyFromArray | join("<br>") or "Not provided"
+      },
+      href: "#" if showActions
+    },
+    {
+      key: "Method",
+      value: response.method,
+      href: "#" if showActions
+    },
+    {
+      key: "Reason for refusal",
+      value: {
+        html: response.refusalReason | default("Personal choice") + (" – " + response.refusalReasonOther if response.refusalReason == "Other")
+      },
+      href: "#" if showActions
+    } if response.refusalReason
+  ])
+}) }}
