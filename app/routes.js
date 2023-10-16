@@ -59,18 +59,4 @@ router.get('/dashboard', (req, res, next) => {
   next()
 })
 
-router.get('/school-sessions', (req, res, next) => {
-  res.locals.hasFluCampaigns = Object
-    .values(req.session.data.campaigns)
-    .some(campaign => campaign.type === 'Flu')
-  res.locals.hasHPVCampaigns = Object
-    .values(req.session.data.campaigns)
-    .some(campaign => campaign.type === 'HPV')
-  res.locals.has3in1Campaigns = Object
-    .values(req.session.data.campaigns)
-    .some(campaign => campaign.type === '3-in-1 and MenACWY')
-
-  next()
-})
-
 export default router

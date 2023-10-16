@@ -22,24 +22,12 @@
     <p><a href="/campaign/new/start">Add a session</a></p>
   {% endif %}
 
-  {% if hasFluCampaigns %}
-    <h2 class="nhsuk-heading-l">Flu</h2>
+  {% set flu = data.campaigns | objectToArray | selectFromArray("type", "Flu") %}
+  {{ sessions(flu, isOffline) if flu.length }}
 
-    {% set type = "Flu" %}
-    {% include "_sessions-table.html" %}
-  {% endif %}
+  {% set hpv = data.campaigns | objectToArray | selectFromArray("type", "HPV") %}
+  {{ sessions(hpv, isOffline) if hpv.length }}
 
-  {% if hasHPVCampaigns %}
-    <h2 class="nhsuk-heading-l">HPV</h2>
-
-    {% set type = "HPV" %}
-    {% include "_sessions-table.html" %}
-  {% endif %}
-
-  {% if has3in1Campaigns %}
-    <h2 class="nhsuk-heading-l">3-in-1 and MenACWY</h2>
-
-    {% set type = "3-in-1 and MenACWY" %}
-    {% include "_sessions-table.html" %}
-  {% endif %}
+  {% set 3in1 = data.campaigns | objectToArray | selectFromArray("type", "3-in-1 and MenACWY") %}
+  {{ sessions(3in1, isOffline) if 3in1.length }}
 {% endblock %}
