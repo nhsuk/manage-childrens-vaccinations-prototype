@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { DateTime } from 'luxon'
 
 export default (_env) => {
