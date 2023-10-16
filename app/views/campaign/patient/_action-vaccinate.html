@@ -54,7 +54,27 @@
       decorate: ["vaccination", campaign.id, patient.nhsNumber, "multi-given"]
     }) }}
   {% else %}
-    {% include "_radios-vaccination-outcome.html" %}
+    {{ radios({
+      items: [{
+        text: "Yes, they got the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine",
+        value: VACCINATION_OUTCOME.VACCINATED,
+        conditional: {
+          html: radios({
+            items: [
+              { text: VACCINATION_SITE.ARM_LEFT },
+              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.OTHER }
+            ],
+            classes: "nhsuk-radios--inline",
+            decorate: ["vaccination", campaign.id, patient.nhsNumber, "site"]
+          })
+        } if not campaign.isFlu
+      }, {
+        text: "No, they did not get it",
+        value: false
+      }],
+      decorate: ["vaccination", campaign.id, patient.nhsNumber, "outcome"]
+    }) }}
   {% endif %}
 
   {{ button({

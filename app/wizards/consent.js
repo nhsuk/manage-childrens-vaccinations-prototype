@@ -27,18 +27,8 @@ export default (req, res) => {
       [`${basePath}/confirm`]: true
     },
     [`${basePath}/confirm`]: {
-      [`/campaign/${campaignId}/patient/${nhsNumber}`]: {
-        data: `${baseData}.consent`,
-        excludedValue: CONSENT_OUTCOME.VALID
-      }
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: true
     },
-    [`${basePath}/vaccinate`]: {
-      [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {
-        data: `vaccination.${campaignId}.${nhsNumber}.outcome`,
-        value: 'false'
-      }
-    },
-    [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
 
     [`/campaign/${campaignId}/patient/${nhsNumber}?gillick`]: {},
     [`${basePath}/pre-gillick`]: {},
