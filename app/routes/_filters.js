@@ -8,62 +8,66 @@ const filters = {
     })
   },
   actionNeeded: (cohort, action) => {
-    return cohort.filter((patient) => {
+    return cohort.filter(({ consent, triage }) => {
       switch (action) {
         case 'get-consent':
-          return patient.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
+          return consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
         case 'check-refusal':
-          return patient.consent.outcome === CONSENT_OUTCOME.REFUSED
+          return consent.outcome === CONSENT_OUTCOME.REFUSED
         case 'triage':
-          return patient.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
+          return triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
         case 'vaccinate':
-          return patient.triage.outcome === TRIAGE_OUTCOME.VACCINATE ||
-            (patient.consent.outcome === CONSENT_OUTCOME.VALID &&
-            patient.triage.outcome === TRIAGE_OUTCOME.NONE)
+          return triage.outcome === TRIAGE_OUTCOME.VACCINATE ||
+            (consent.outcome === CONSENT_OUTCOME.VALID &&
+            triage.outcome === TRIAGE_OUTCOME.NONE)
         default:
           return false
       }
     })
   },
-  consentOutcome: (cohort, outcome) => {
-    return cohort.filter((patient) => {
-      return patient.outcome === PATIENT_OUTCOME.NO_OUTCOME_YET &&
-      patient.consent.outcome === CONSENT_OUTCOME[outcome]
+  consentOutcome: (cohort, value) => {
+    return cohort.filter(({ consent }) => {
+      return consent.outcome === CONSENT_OUTCOME[value]
     })
   },
-  triageOutcome: (cohort, outcome, req, res) => {
-    return cohort.filter((patient) => {
-      const triage = req.session.data.triage
-      const triageRecord = triage && triage[res.locals.campaign.id]
-      if (triageRecord && triageRecord[patient.nhsNumber]) {
-        return triageRecord[patient.nhsNumber].outcome === TRIAGE_OUTCOME[outcome]
+  triageOutcome: (cohort, value, req, res) => {
+    return cohort.filter(({ nhsNumber, triage, outcome }) => {
+      const triageRecord = req.session.data.triage[res.locals.campaign.id]
+
+      if (triageRecord?.[nhsNumber]) {
+        return triageRecord[nhsNumber].outcome === TRIAGE_OUTCOME[value] &&
+          outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
       }
 
-      return patient.triage.outcome === TRIAGE_OUTCOME[outcome]
+      return triage.outcome === TRIAGE_OUTCOME[value] &&
+        outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     })
   },
   triageNeeded: (cohort) => {
-    return cohort.filter((patient) =>
-      patient.consent.outcome === CONSENT_OUTCOME.VALID &&
-      patient.triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
+    return cohort.filter(({ consent, triage, outcome }) =>
+      consent.outcome === CONSENT_OUTCOME.VALID &&
+      triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE &&
+      outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     )
   },
   triageCompleted: (cohort) => {
-    return cohort.filter((patient) =>
-      patient.consent.outcome === CONSENT_OUTCOME.VALID &&
-      patient.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
-      patient.triage.outcome !== TRIAGE_OUTCOME.NONE
+    return cohort.filter(({ consent, triage, outcome }) =>
+      consent.outcome === CONSENT_OUTCOME.VALID &&
+      triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
+      triage.outcome !== TRIAGE_OUTCOME.NONE &&
+      outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     )
   },
   noTriageNeeded: (cohort) => {
-    return cohort.filter((patient) =>
-      patient.consent.outcome === CONSENT_OUTCOME.VALID &&
-      patient.triage.outcome === TRIAGE_OUTCOME.NONE
+    return cohort.filter(({ consent, triage, outcome }) =>
+      outcome === PATIENT_OUTCOME.NO_OUTCOME_YET &&
+      consent.outcome === CONSENT_OUTCOME.VALID &&
+      triage.outcome === TRIAGE_OUTCOME.NONE
     )
   },
-  hasOutcome: (cohort, outcome) => {
-    return cohort.filter((patient) => {
-      return patient.outcome === PATIENT_OUTCOME[outcome]
+  hasOutcome: (cohort, value) => {
+    return cohort.filter(({ outcome }) => {
+      return outcome === PATIENT_OUTCOME[value]
     })
   }
 }
