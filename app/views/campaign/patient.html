@@ -4,6 +4,11 @@
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set hasNoResponse = patient.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
 {% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
+{% set hasConsented = patient.consent.outcome == CONSENT_OUTCOME.VALID %}
+{% set triageNeeded = patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+{% set readyToVaccinate = (patient.triage.outcome == TRIAGE_OUTCOME.NONE) or
+                          (patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE)
+%}
 
 {% block outerContent %}
   {{ backLink({
@@ -33,10 +38,9 @@
       {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% if hasNoResponse or hasRefused %}
           {% include "campaign/patient/_action-get-consent.html" %}
-        {% elif patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+        {% elif triageNeeded %}
           {% include "campaign/patient/_action-triage.html" %}
-        {% elif patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE or
-          patient.triage.outcome == TRIAGE_OUTCOME.NONE %}
+        {% elif hasConsented and readyToVaccinate %}
           {% include "campaign/patient/_action-vaccinate.html" %}
         {% endif %}
       {% endif %}
