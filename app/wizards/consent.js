@@ -34,7 +34,7 @@ export default (req, res) => {
     [`${basePath}/pre-gillick`]: {},
     [`${basePath}/gillick`]: {
       [`${basePath}/consent?gillick`]: {
-        data: `${baseData}.gillick-competent`,
+        data: `${baseData}.gillickCompetent`,
         value: 'Yes'
       },
       [`/campaign/${campaignId}/patient/${nhsNumber}`]: () => {

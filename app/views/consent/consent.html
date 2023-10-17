@@ -1,6 +1,6 @@
 {% extends "_layouts/wizard.html" %}
 
-{% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
+{% set isGillickCompetent = d(base + "gillickCompetent") === "Yes" %}
 {% set campaignName = campaign.type | lower if campaign.type == "Flu" else campaign.type %}
 {% if isGillickCompetent %}
   {% set title = "Do they agree to having the " + campaignName + " vaccination?" %}

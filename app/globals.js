@@ -276,7 +276,7 @@ export default (_env) => {
    */
   globals.consentOutcome = (patient, consentRecord) => {
     const { assessedAsNotGillickCompetent, consent } = patient
-    const isGillickCompetent = consentRecord?.['gillick-competent'] === 'Yes'
+    const isGillickCompetent = consentRecord?.gillickCompetent === 'Yes'
     let colour
     let description
 

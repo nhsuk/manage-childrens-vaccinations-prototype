@@ -2,7 +2,7 @@
   <p>
     <a href="#">Change</a>
   </p>
-  {% set isGillickCompetent = consentRecord["gillick-competent"] === "Yes" %}
+  {% set isGillickCompetent = consentRecord.gillickCompetent === "Yes" %}
 
   {{ summaryList({
     rows: decorateRows([
@@ -15,15 +15,15 @@
       {
         key: "Gillick competent",
         value: {
-          html: consentRecord["gillick-competent"]
+          html: consentRecord.gillickCompetent
         }
-      } if consentRecord and consentRecord["gillick-competent"],
+      } if consentRecord and consentRecord.gillickCompetent,
       {
         key: "Details",
         value: {
-          html: consentRecord["gillick-assessment"]
+          html: consentRecord.gillickAssessment
         }
-      } if consentRecord and consentRecord["gillick-assessment"],
+      } if consentRecord and consentRecord.gillickAssessment,
       {
         key: "Consent",
         value: "Given by child" if consentRecord.consent === CONSENT_OUTCOME.VALID else "Refused by child"
@@ -40,4 +40,4 @@
   heading: "Gillick competence",
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml
-}) if consentRecord and consentRecord["gillick-competent"] }}
+}) if consentRecord and consentRecord.gillickCompetent }}

@@ -4,7 +4,7 @@
 {% set buttonText = "Confirm" %}
 {% set hasConsented = d(base + "consent") == CONSENT_OUTCOME.VALID %}
 {% set hasRefused = d(base + "consent") == CONSENT_OUTCOME.REFUSED %}
-{% set isGillickCompetent = d(base + "gillick-competent") === "Yes" %}
+{% set isGillickCompetent = d(base + "gillickCompetent") === "Yes" %}
 
 {% block form %}
   {{ heading({ title: title }) }}

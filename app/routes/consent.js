@@ -59,8 +59,8 @@ export default (router) => {
   router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
     const { patient } = res.locals
     const consentData = req.session.data.consent[req.params.campaignId][req.params.nhsNumber]
-    const gillickCompetent = consentData['gillick-competent'] === 'Yes'
-    const assessedAsNotGillickCompetent = consentData['gillick-competent'] === 'No'
+    const gillickCompetent = consentData.gillickCompetent === 'Yes'
+    const assessedAsNotGillickCompetent = consentData.gillickCompetent === 'No'
 
     patient.consent.outcome = consentData.consent
     patient.consent.responses = consentData.consent !== CONSENT_OUTCOME.NO_RESPONSE
