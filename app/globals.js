@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import _ from 'lodash'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_CONSENT, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
 
@@ -247,6 +248,24 @@ export default (_env) => {
       default:
         return { text: patient.outcome, colour: 'white' }
     }
+  }
+
+  /**
+   * Get consent response heading
+   * @param {object} response - Consent response
+   * @returns {string} Consent response heading
+   */
+  globals.responseHeading = (response) => {
+    let { date, status, parentOrGuardian } = response
+    date = DateTime.fromISO(date).toFormat('d MMMM yyyy')
+    const statusText = status === RESPONSE_CONSENT.INVALID
+      ? 'No response'
+      : status
+    const preposition = status === RESPONSE_CONSENT.INVALID
+      ? 'from'
+      : 'by'
+
+    return `${statusText} ${preposition} ${parentOrGuardian.relationship} on ${date}`
   }
 
   /**
