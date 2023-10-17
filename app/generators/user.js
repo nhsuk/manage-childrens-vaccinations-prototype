@@ -1,8 +1,17 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 
 /**
+ * @typedef {object} User
+ * @property {string} id - UUID
+ * @property {string} firstName - First/given name
+ * @property {string} lastName - Last/family name
+ * @property {string} fullName - Full name
+ * @property {string} email - Email address
+ */
+
+/**
  * Generate user
- * @returns {object} User
+ * @returns {User} User
  */
 export default () => {
   const firstName = faker.person.lastName()

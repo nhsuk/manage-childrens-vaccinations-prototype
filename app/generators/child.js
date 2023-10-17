@@ -4,10 +4,21 @@ import getGpSurgery from './gp-surgery.js'
 import { yearGroups } from './year-group.js'
 
 /**
+ * @typedef {object} Child
+ * @property {string} firstName - First/given name
+ * @property {string} lastName - Last/family name
+ * @property {string} fullName - Full name
+ * @property {string} knownAs - Name also known by
+ * @property {string} sex - Sex
+ * @property {string} dob - Date of birth (ISO 8601)
+ * @property {string} gpSurgery - GP surgery
+ */
+
+/**
  * Generate child
  * @param {number} minYearGroup - Minimum year group
  * @param {number} maxYearGroup - Maximum year group
- * @returns {object} Child
+ * @returns {Child} Child
  */
 export default (minYearGroup, maxYearGroup) => {
   const sex = faker.helpers.arrayElement(['Male', 'Female'])

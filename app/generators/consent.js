@@ -1,6 +1,19 @@
 import _ from 'lodash'
 import { CONSENT_OUTCOME, RESPONSE_CONSENT } from '../enums.js'
 
+/**
+ * @typedef {object} Consent
+ * @property {string} outcome - Consent outcome, derived from responses
+ * @property {boolean} answersNeedTriage - Answers need triage?
+ * @property {Array} refusalReasons - Unique refusal reasons
+ */
+
+/**
+ * Generate derived consent
+ * @param {string} type - Campaign type
+ * @param {Array} responses - Consent responses
+ * @returns {Consent} Derived consent
+ */
 export default (type, responses) => {
   // Only derive consent from responses for this campaign type
   responses = _.uniqBy(responses, type)

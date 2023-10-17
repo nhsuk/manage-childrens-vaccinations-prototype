@@ -2,9 +2,22 @@ import { fakerEN_GB as faker } from '@faker-js/faker'
 import { CONTACT_PREFERENCE, PARENTAL_RELATIONSHIP } from '../enums.js'
 
 /**
+ * @typedef {object} Parent
+ * @property {string} firstName - First/given name
+ * @property {string} lastName - Last/family name
+ * @property {string} fullName - Full name
+ * @property {string} email - Email address
+ * @property {string} [tel] - Telephone number
+ * @property {string} [contactPreference] - Contact preference
+ * @property {string} [contactPreferenceOther] - Contact preference details
+ * @property {string} relationship - Relationship to child
+ * @property {string} [relationshipOther] - Relationship to child details
+ */
+
+/**
  * Generate parent
  * @param {object} patient - Patient
- * @returns {object} Parent
+ * @returns {Parent} Parent
  */
 export default (patient) => {
   const { MUM, DAD, GUARDIAN, CARER, STEP_PARENT, GRANDPARENT, OTHER } = PARENTAL_RELATIONSHIP
