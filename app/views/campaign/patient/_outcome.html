@@ -1,4 +1,9 @@
-{% if patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
+{% if patient.outcome == PATIENT_OUTCOME.NO_CONSENT %}
+  {% set colour = "red" %}
+  {% set descriptionHtml %}
+    <p>{{ patient.consent.outcome }}</p>
+  {% endset %}
+{% elif patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
   {% set colour = "red" %}
   {% set descriptionHtml %}
     {% set batch = data.vaccines.batches[vaccination.batch] %}
