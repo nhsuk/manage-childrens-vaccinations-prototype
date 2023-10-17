@@ -125,10 +125,6 @@ $govuk-assets-path: "/govuk/assets/";
     padding-bottom: nhsuk-spacing(1);
     padding-top: nhsuk-spacing(1);
   }
-
-  .nhsuk-summary-list__row:last-of-type > * {
-    border-bottom: none;
-  }
 }
 
 .app-summary-list--full-width {
