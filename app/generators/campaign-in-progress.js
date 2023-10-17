@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import _ from 'lodash'
 import { CONSENT_OUTCOME, TRIAGE_OUTCOME, PATIENT_OUTCOME } from '../enums.js'
 import getCampaign from './campaign.js'
-import getUser from './user.js'
+import getNote from './note.js'
 
 const setConsentOutcome = (patient) => {
   // 20% of refusals chased, and all confirmed their refusal
@@ -29,11 +29,7 @@ const setTriageOutcome = (patient) => {
 
   // Add realistic triage note
   if (patient.__triageNote) {
-    patient.triage.notes.push({
-      date: faker.date.recent({ days: 30 }),
-      note: patient.__triageNote,
-      user: getUser()
-    })
+    patient.triage.notes.push(getNote(patient.__triageNote))
 
     delete patient.__triageNote
   }

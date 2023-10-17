@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import filters from './_filters.js'
+import getNote from '../generators/note.js'
 import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
@@ -63,14 +64,7 @@ export default (router) => {
 
       // Update triage notes
       if (triage.note) {
-        patient.triage.notes.push({
-          date: new Date().toISOString(),
-          note: triage.note,
-          user: {
-            fullName: 'Jacinta Dodds',
-            email: 'jacinta.dodds@example.com'
-          }
-        })
+        patient.triage.notes.push(getNote(triage.note, true))
       }
 
       res.redirect(`/campaign/${campaignId}/triage?success=${nhsNumber}`)

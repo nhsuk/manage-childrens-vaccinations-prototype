@@ -3,8 +3,9 @@ import { fakerEN_GB as faker } from '@faker-js/faker'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
-import getResponse from './response.js'
 import getConsent from './consent.js'
+import getNote from './note.js'
+import getResponse from './response.js'
 import { getYearGroup } from './year-group.js'
 
 const handleInProgressTriage = (patient) => {
@@ -26,14 +27,7 @@ const handleInProgressTriage = (patient) => {
 
   // Add realistic triage note
   if (patient.__triageNote) {
-    patient.triage.notes.push({
-      date: faker.date.recent({ days: 30 }),
-      note: patient.__triageNote,
-      user: {
-        fullName: 'James Davidson',
-        email: 'james.davidson@example.com'
-      }
-    })
+    patient.triage.notes.push(getNote(patient.__triageNote))
 
     delete patient.__triageNote
   }
