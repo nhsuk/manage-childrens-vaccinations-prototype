@@ -22,6 +22,8 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
+      {{ inspect(patient) }}
+
       {% if patient.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% include "campaign/patient/_outcome.html" %}
       {% elif patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
