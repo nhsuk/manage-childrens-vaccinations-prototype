@@ -4,7 +4,6 @@
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set hasNoResponse = patient.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
 {% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
-{% set hasHealthAnswers = patient.consent.answersNeedTriage %}
 
 {% block outerContent %}
   {{ backLink({
@@ -29,10 +28,7 @@
       {% include "campaign/patient/_details.html" %}
       {% include "campaign/patient/_responses.html" %}
       {% include "campaign/patient/_gillick-competence.html" %}
-
-      {% if hasHealthAnswers %}
-        {% include "campaign/patient/_triage-notes.html" %}
-      {% endif %}
+      {% include "campaign/patient/_triage-notes.html" %}
 
       {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% if hasNoResponse or hasRefused %}
