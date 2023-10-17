@@ -41,7 +41,7 @@
     attributes: { open: true } if patient.consent.answersNeedTriage,
     HTML: summaryList({
       classes: "app-summary-list--full-width",
-      rows: healthAnswerRows(campaign, patient)
+      rows: healthAnswerRows(campaign, patient.responses)
     }),
     classes: "nhsuk-expander"
   }) }}

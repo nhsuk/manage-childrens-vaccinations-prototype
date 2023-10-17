@@ -64,7 +64,7 @@
 
       {{ summaryList({
         classes: "app-summary-list--full-width",
-        rows: healthAnswerRows(campaign, patient)
+        rows: healthAnswerRows(campaign, patient.responses)
       }) }}
     {% endset %}
 
