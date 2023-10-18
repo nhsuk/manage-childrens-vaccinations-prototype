@@ -6,12 +6,29 @@ import getChild from './child.js'
 import getResponse from './response.js'
 import { getYearGroup } from './year-group.js'
 
-const getPatient = (options) => {
+/**
+ * @typedef {object} Patient
+ * @property {string} nhsNumber - NHS number
+ * @property {string} address - Address
+ * @property {object} yearGroup - Response method
+ * @property {[import('./response.js').Response]} responses - Parent
+ * @property {object} consent - Consent outcome
+ * @property {string} outcome - Overall patient outcome
+ * @property {object} [seen] - Seen offline
+ * @property {object} triage - Triage outcome
+ */
+
+/**
+ * @private
+ * @param {object} options - Patient options
+ * @returns {Patient} Patient record
+ */
+const _getPatient = (options) => {
   const { minYearGroup, maxYearGroup, type } = options
   const patient = getChild(minYearGroup, maxYearGroup)
 
   let responses = faker.helpers.multiple(getResponse(type, patient), {
-    count: { min: 0, max: 4 }
+    count: { min: 0, max: 3 }
   })
   responses = _.uniqBy(responses, 'parentOrGuardian.relationship')
 
@@ -30,7 +47,7 @@ const getPatient = (options) => {
 
 export default (options) => {
   const patient = () => ({
-    ...getPatient(options)
+    ..._getPatient(options)
   })
 
   return patient
