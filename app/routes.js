@@ -1,4 +1,5 @@
 import express from 'express'
+import getConsentOutcome from './utils/consent-outcome.js'
 import getTriageOutcome from './utils/triage-outcome.js'
 import vaccinationRoutes from './routes/vaccination.js'
 import daySetupRoutes from './routes/day-setup.js'
@@ -33,6 +34,15 @@ const offlineChangesCount = (campaigns) => {
   return offlineCount
 }
 
+const updateConsentOutcomes = (campaigns) => {
+  Object.values(campaigns)
+    .map(campaign => campaign.cohort)
+    .flat()
+    .forEach(patient => getConsentOutcome(patient))
+
+  return campaigns
+}
+
 const updateTriageOutcomes = (campaigns) => {
   Object.values(campaigns)
     .filter(campaign => campaign.triageInProgress)
@@ -45,12 +55,13 @@ const updateTriageOutcomes = (campaigns) => {
 
 router.all('*', (req, res, next) => {
   const { campaigns, features } = req.session.data
+  const campaignsWithConsentOutcomes = updateConsentOutcomes(campaigns)
 
   res.locals.success = req.query.success
   res.locals.isOffline = features.offline.on
   res.locals.hasOfflineChanges = hasOfflineChanges(campaigns)
   res.locals.offlineChangesCount = offlineChangesCount(campaigns)
-  res.locals.campaigns = updateTriageOutcomes(campaigns)
+  res.locals.campaigns = updateTriageOutcomes(campaignsWithConsentOutcomes)
 
   next()
 })

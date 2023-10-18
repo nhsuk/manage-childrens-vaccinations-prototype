@@ -1,9 +1,8 @@
 import _ from 'lodash'
 import { fakerEN_GB as faker } from '@faker-js/faker'
-import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
+import { PATIENT_OUTCOME } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
-import getConsent from './consent.js'
 import getResponse from './response.js'
 import { getYearGroup } from './year-group.js'
 
@@ -21,17 +20,10 @@ const getPatient = (options) => {
   patient.address = getAddress()
   patient.yearGroup = getYearGroup(patient.dob)
   patient.responses = responses
-  patient.consent = getConsent(type, responses)
+  patient.consent = { notes: [] }
   patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
-
   patient.seen = {}
-
-  patient.triage = {
-    notes: [],
-    outcome: patient.consent.answersNeedTriage
-      ? TRIAGE_OUTCOME.NEEDS_TRIAGE
-      : TRIAGE_OUTCOME.NONE
-  }
+  patient.triage = { notes: [] }
 
   return patient
 }

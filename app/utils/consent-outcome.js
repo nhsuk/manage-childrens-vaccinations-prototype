@@ -11,13 +11,11 @@ import { CONSENT_OUTCOME, RESPONSE_CONSENT } from '../enums.js'
 
 /**
  * Generate derived consent
- * @param {string} type - Campaign type
- * @param {Array} responses - Consent responses
+ * @param {object} patient - Patient record
  * @returns {Consent} Derived consent
  */
-export default (type, responses) => {
-  // Only derive consent from responses for this campaign type
-  responses = _.uniqBy(responses, type)
+export default (patient) => {
+  const { responses } = patient
 
   let outcome = CONSENT_OUTCOME.NO_RESPONSE
 
@@ -57,12 +55,10 @@ export default (type, responses) => {
     }
   }
 
-  const consent = {
+  patient.consent = {
     outcome,
     answersNeedTriage: answersNeedingTriage.length > 0,
     refusalReasons,
     notes: []
   }
-
-  return consent
 }

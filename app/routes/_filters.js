@@ -11,15 +11,14 @@ const filters = {
     return cohort.filter(({ consent, triage }) => {
       switch (action) {
         case 'get-consent':
-          return consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
+          return consent?.outcome === CONSENT_OUTCOME.NO_RESPONSE
         case 'check-refusal':
-          return consent.outcome === CONSENT_OUTCOME.REFUSED
+          return consent?.outcome === CONSENT_OUTCOME.REFUSED
         case 'triage':
-          return triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
+          return triage?.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
         case 'vaccinate':
-          return triage.outcome === TRIAGE_OUTCOME.VACCINATE ||
-            (consent.outcome === CONSENT_OUTCOME.VALID &&
-            triage.outcome === TRIAGE_OUTCOME.NONE)
+          return triage?.outcome === TRIAGE_OUTCOME.VACCINATE ||
+            consent?.outcome === CONSENT_OUTCOME.VALID
         default:
           return false
       }
@@ -27,7 +26,7 @@ const filters = {
   },
   consentOutcome: (cohort, value) => {
     return cohort.filter(({ consent }) => {
-      return consent.outcome === CONSENT_OUTCOME[value]
+      return consent?.outcome === CONSENT_OUTCOME[value]
     })
   },
   triageOutcome: (cohort, value, req, res) => {
@@ -39,30 +38,29 @@ const filters = {
           outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
       }
 
-      return triage.outcome === TRIAGE_OUTCOME[value] &&
+      return triage?.outcome === TRIAGE_OUTCOME[value] &&
         outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     })
   },
   triageNeeded: (cohort) => {
     return cohort.filter(({ consent, triage, outcome }) =>
-      consent.outcome === CONSENT_OUTCOME.VALID &&
-      triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE &&
+      consent?.outcome === CONSENT_OUTCOME.VALID &&
+      triage?.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE &&
       outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     )
   },
   triageCompleted: (cohort) => {
     return cohort.filter(({ consent, triage, outcome }) =>
-      consent.outcome === CONSENT_OUTCOME.VALID &&
-      triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
-      triage.outcome !== TRIAGE_OUTCOME.NONE &&
+      consent?.outcome === CONSENT_OUTCOME.VALID &&
+      triage?.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
       outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     )
   },
   noTriageNeeded: (cohort) => {
     return cohort.filter(({ consent, triage, outcome }) =>
       outcome === PATIENT_OUTCOME.NO_OUTCOME_YET &&
-      consent.outcome === CONSENT_OUTCOME.VALID &&
-      triage.outcome === TRIAGE_OUTCOME.NONE
+      consent?.outcome === CONSENT_OUTCOME.VALID &&
+      !triage.outcome
     )
   },
   hasOutcome: (cohort, value) => {
