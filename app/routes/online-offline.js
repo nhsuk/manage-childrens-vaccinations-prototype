@@ -16,10 +16,10 @@ const syncOfflineChanges = (req) => {
     .forEach(patient => { patient.seen.isOffline = false })
 }
 
-export default (router, hasAnyOfflineChanges) => {
+export default (router, hasOfflineChanges) => {
   router.post(['/scenario-office', '/scenario-back-online'], (req, res) => {
     goOnline(req)
-    hasAnyOfflineChanges ? res.redirect('/back-online') : res.redirect('/dashboard')
+    hasOfflineChanges ? res.redirect('/back-online') : res.redirect('/dashboard')
   })
 
   router.post('/scenario-offline', (req, res) => {
@@ -34,8 +34,8 @@ export default (router, hasAnyOfflineChanges) => {
 
   router.get('/synced-ok', (req, _res, next) => {
     console.log('/synced-ok')
-    if (hasAnyOfflineChanges(req)) {
-      console.log('hasAnyOfflineChanges')
+    if (hasOfflineChanges(req)) {
+      console.log('hasOfflineChanges')
       syncOfflineChanges(req)
       console.log('syncOfflineChanges done')
     }

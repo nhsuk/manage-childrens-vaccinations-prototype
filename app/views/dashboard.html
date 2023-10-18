@@ -3,7 +3,7 @@
 {% set title = "Manage vaccinations for school-aged children" %}
 
 {% block content %}
-  {% if hasAnyOfflineChanges %}
+  {% if hasOfflineChanges %}
     {{ warningCallout({
       heading: "You have offline changes",
       HTML: "<p>Your offline changes will automatically sync when you’re back&nbsp;online.</p>"

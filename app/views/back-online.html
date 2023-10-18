@@ -5,14 +5,14 @@
 {% block content %}
   {{ heading({ title: title }) }}
 
-  {% if totalOfflineChangesCount == 1 %}
+  {% if offlineChangesCount == 1 %}
     <p>1 offline change needs syncing.</p>
   {% else %}
-    <p>{{ totalOfflineChangesCount }} offline changes need syncing.</p>
+    <p>{{ offlineChangesCount }} offline changes need syncing.</p>
   {% endif %}
 
   {{ button({
-    text: "Sync your changes" if totalOfflineChangesCount > 1 else "Sync your change",
+    text: "Sync your changes" if offlineChangesCount > 1 else "Sync your change",
     href: "/synced-ok",
     classes: "nhsuk-u-margin-bottom-2"
   }) }}
@@ -21,7 +21,7 @@
   <p class="nhsuk-u-margin-bottom-2">
     <a href="/dashboard">Continue without syncing</a>
   </p>
-  {% if totalOfflineChangesCount == 1 %}
+  {% if offlineChangesCount == 1 %}
     <p>You will need to sync your change later.</p>
   {% else %}
     <p>You will need to sync your changes later.</p>

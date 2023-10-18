@@ -11,15 +11,13 @@ import vaccineBatchRoutes from './routes/vaccine-batches.js'
 
 const router = express.Router()
 
-const hasAnyOfflineChanges = (campaigns) => {
+const hasOfflineChanges = (campaigns) => {
   const cohort = Object.values(campaigns)
     .map(campaign => campaign.cohort)
     .flat()
 
   cohort.forEach(patient => {
-    if (patient.seen.isOffline) {
-      patient.hadOfflineChanges = true
-    }
+    patient.hadOfflineChanges = patient.seen.isOffline
   })
 
   return cohort.some(patient => patient.seen.isOffline)
@@ -35,10 +33,12 @@ const offlineChangesCount = (campaigns) => {
 }
 
 router.all('*', (req, res, next) => {
+  const { campaigns, features } = req.session.data
+
   res.locals.success = req.query.success
-  res.locals.isOffline = req.session.data.features.offline.on
-  res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
-  res.locals.totalOfflineChangesCount = offlineChangesCount(req.session.data.campaigns)
+  res.locals.isOffline = features.offline.on
+  res.locals.hasOfflineChanges = hasOfflineChanges(campaigns)
+  res.locals.offlineChangesCount = offlineChangesCount(campaigns)
 
   next()
 })
@@ -48,7 +48,7 @@ daySetupRoutes(router)
 newCampaignRoutes(router)
 campaignRoutes(router)
 userRoutes(router)
-onlineOfflineRoutes(router, hasAnyOfflineChanges)
+onlineOfflineRoutes(router, hasOfflineChanges)
 redirects(router)
 consent(router)
 vaccineBatchRoutes(router)
