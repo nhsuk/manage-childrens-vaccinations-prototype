@@ -26,8 +26,7 @@ export default () => {
   const school = getSchool(type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.number.int({ min: 2, max: 100 })
-  const triageInProgress = daysUntil < 28
-  const options = { ...ageRange(type), triageInProgress }
+  const options = { ...ageRange(type) }
   const cohort = faker.helpers.multiple(getPatient(options), { count: 100 })
     .sort((a, b) => a.fullName.localeCompare(b.fullName))
 
@@ -38,7 +37,7 @@ export default () => {
     date: DateTime.now().plus({ days: daysUntil }).toISODate() + 'T' + atTime,
     type,
     healthQuestions: getHealthQuestions(type),
-    triageInProgress,
+    triageInProgress: daysUntil < 28,
     yearGroups: getYearGroups(type),
     school,
     isFlu: type === 'Flu',

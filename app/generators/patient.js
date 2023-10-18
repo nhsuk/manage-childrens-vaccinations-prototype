@@ -4,42 +4,11 @@ import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 import getAddress from './address.js'
 import getChild from './child.js'
 import getConsent from './consent.js'
-import getNote from './note.js'
 import getResponse from './response.js'
 import { getYearGroup } from './year-group.js'
 
-const handleInProgressTriage = (patient) => {
-  // Only relevant to patients needing triage
-  if (patient.triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
-    return
-  }
-
-  // Only half done
-  if (faker.helpers.maybe(() => true, { probability: 0.5 })) {
-    return
-  }
-
-  // Set triage outcome to vaccinate
-  patient.triage.outcome = faker.helpers.weightedArrayElement([
-    { value: TRIAGE_OUTCOME.NEEDS_TRIAGE, weight: 1 },
-    { value: TRIAGE_OUTCOME.VACCINATE, weight: 1 }
-  ])
-
-  // Add realistic triage note
-  if (patient.__triageNote) {
-    patient.triage.notes.push(getNote(patient.__triageNote))
-
-    delete patient.__triageNote
-  }
-
-  // A small number still need follow-up triage, the rest can vaccinate
-  if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
-    patient.triage.outcome = TRIAGE_OUTCOME.VACCINATE
-  }
-}
-
 const getPatient = (options) => {
-  const { minYearGroup, maxYearGroup, triageInProgress, type } = options
+  const { minYearGroup, maxYearGroup, type } = options
   const patient = getChild(minYearGroup, maxYearGroup)
 
   let responses = faker.helpers.multiple(getResponse(type, patient), {
@@ -62,10 +31,6 @@ const getPatient = (options) => {
     outcome: patient.consent.answersNeedTriage
       ? TRIAGE_OUTCOME.NEEDS_TRIAGE
       : TRIAGE_OUTCOME.NONE
-  }
-
-  if (triageInProgress) {
-    handleInProgressTriage(patient)
   }
 
   return patient
