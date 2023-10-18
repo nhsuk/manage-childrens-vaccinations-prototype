@@ -4,7 +4,6 @@ import _ from 'lodash'
 import getCampaign from './generators/campaign.js'
 import getCampaignInProgress from './generators/campaign-in-progress.js'
 import getVaccination from './generators/vaccination.js'
-import getTriageRecord from './generators/triage-record.js'
 import getUser from './generators/user.js'
 import getVaccines from './generators/vaccines.js'
 
@@ -38,7 +37,6 @@ export default {
   campaigns,
   vaccines,
   vaccination: getVaccination(campaigns, vaccines.batches),
-  triage: getTriageRecord(campaigns),
   users,
   // Set feature flags using the `features` key
   features: {
