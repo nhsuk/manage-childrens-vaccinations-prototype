@@ -5,34 +5,59 @@ import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
 
 /**
- * Generate consent response
- * @param {string} type - Vaccine type
- * @param {object} patient - Patient record
- * @returns {object} Consent response
+ * @typedef {object} Response
+ * @property {string} date - Response date (ISO 8601)
+ * @property {string} status - Response status
+ * @property {string} method - Response method
+ * @property {import('./parent.js').Parent} parentOrGuardian - Parent
+ * @property {object} [healthAnswers] - Health answers
+ * @property {string} [refusalReason] - Refusal reason
+ * @property {string} [refusalReasonOther] - Refusal reason details
  */
-export default (type, patient) => {
-  let status
+
+/**
+ * @private
+ * @param {string} type - Campaign type
+ * @returns {string} Consent status
+ */
+const _getStatus = (type) => {
   switch (type) {
     case '3-in-1 and MenACWY':
-      status = faker.helpers.weightedArrayElement([
+      return faker.helpers.weightedArrayElement([
         { value: RESPONSE_CONSENT.GIVEN, weight: 5 },
         { value: RESPONSE_CONSENT.ONLY_MENACWY, weight: 5 },
         { value: RESPONSE_CONSENT.ONLY_3_IN_1, weight: 5 },
         { value: RESPONSE_CONSENT.REFUSED, weight: 2 }
       ])
-      break
     default:
-      status = faker.helpers.weightedArrayElement([
-        { value: RESPONSE_CONSENT.GIVEN, weight: 10 },
+      return faker.helpers.weightedArrayElement([
+        { value: RESPONSE_CONSENT.GIVEN, weight: 2 },
         { value: RESPONSE_CONSENT.REFUSED, weight: 1 }
       ])
   }
+}
 
+/**
+ * @private
+ * @param {string} type - Campaign type
+ * @returns {string} Refusal reason
+ */
+const _getRefusalReason = (type) => {
   // Gelatine content only a valid refusal reason for flu campaign
   const refusalReasons = Object.values(RESPONSE_REFUSAL)
     .filter(a => (type !== 'Flu') ? a !== RESPONSE_REFUSAL.GELATINE : a)
-  const refusalReason = faker.helpers.arrayElement(refusalReasons)
+  return faker.helpers.arrayElement(refusalReasons)
+}
 
+/**
+ * Generate consent response
+ * @param {string} type - Vaccine type
+ * @param {object} patient - Patient record
+ * @returns {Response} Consent response
+ */
+const _getResponse = (type, patient) => {
+  const status = _getStatus(type)
+  const refusalReason = _getRefusalReason(type)
   const method = faker.helpers.weightedArrayElement([
     { value: RESPONSE_METHOD.WEBSITE, weight: 5 },
     { value: RESPONSE_METHOD.TEXT, weight: 1 },
@@ -40,10 +65,9 @@ export default (type, patient) => {
     { value: RESPONSE_METHOD.PERSON, weight: 1 },
     { value: RESPONSE_METHOD.PAPER, weight: 1 }
   ])
-
   const days = faker.number.int({ min: 10, max: 35 })
 
-  const response = () => ({
+  const response = {
     date: DateTime.local().minus({ days }).toISODate(),
     status,
     method,
@@ -57,6 +81,14 @@ export default (type, patient) => {
         refusalReasonOther: 'My family rejects vaccinations on principle.'
       }
     }
+  }
+
+  return response
+}
+
+export default (type, patient) => {
+  const response = () => ({
+    ..._getResponse(type, patient)
   })
 
   return response
