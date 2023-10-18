@@ -5,24 +5,18 @@ import getHealthQuestions from './health-questions.js'
 const healthConditionsData = 'app/generators/data/health-conditions.json'
 const healthConditions = JSON.parse(fs.readFileSync(healthConditionsData))
 
-const enrichWithRealisticAnswers = (patient, answers) => {
-  // Do not give health question responses to 80% of patients who consent
-  if (faker.helpers.maybe(() => true, { probability: 0.8 })) {
-    return answers
-  }
-
+// Save realistic triage note for use later in generation process
+const enrichWithRealisticAnswer = (patient, key) => {
   const condition = faker.helpers.objectKey(healthConditions)
+  const useAnswer = faker.helpers.maybe(() => true, { probability: 0.2 })
 
-  for (const key of Object.keys(healthConditions)) {
-    if (healthConditions[condition][key]) {
-      answers[key] = healthConditions[condition][key]
+  if (healthConditions[condition][key] && useAnswer) {
+    patient.__triageNote = healthConditions[condition].triageNote
 
-      // Save realistic triage note for use later in generation process
-      patient.__triageNote = healthConditions[condition].triageNote
-    }
+    return healthConditions[condition][key]
   }
 
-  return answers
+  return false
 }
 
 export default (type, patient) => {
@@ -30,13 +24,9 @@ export default (type, patient) => {
 
   const answers = {}
 
-  // Default answer to `false` for most questions
   for (const key of Object.keys(healthQuestions)) {
-    answers[key] = false
+    answers[key] = enrichWithRealisticAnswer(patient, key)
   }
 
-  // Enrich answers with realistic responses
-  const healthAnswers = enrichWithRealisticAnswers(patient, answers)
-
-  return healthAnswers
+  return answers
 }
