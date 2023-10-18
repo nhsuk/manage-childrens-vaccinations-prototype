@@ -22,17 +22,15 @@ export default (patient) => {
   if (responses.length === 1) {
     outcome = responses[0].status
   } else if (responses.length > 1) {
-    const allConsented = _.uniqBy(responses, 'status') === RESPONSE_CONSENT.GIVEN
-    if (allConsented) {
-      outcome = CONSENT_OUTCOME.VALID
-    }
+    const uniqueStatuses = _.uniqBy(responses, 'status')
 
-    const allRefused = _.uniqBy(responses, 'status') === RESPONSE_CONSENT.REFUSED
-    if (allRefused) {
+    if (uniqueStatuses.length > 1) {
+      outcome = CONSENT_OUTCOME.INCONSISTENT
+    } else if (uniqueStatuses[0].status === RESPONSE_CONSENT.GIVEN) {
+      outcome = CONSENT_OUTCOME.VALID
+    } else if (uniqueStatuses[0].status === RESPONSE_CONSENT.REFUSED) {
       outcome = CONSENT_OUTCOME.REFUSED
     }
-
-    outcome = CONSENT_OUTCOME.INCONSISTENT
   }
 
   // Build a list of health answers with responses
@@ -48,11 +46,12 @@ export default (patient) => {
   }
 
   // Build a list of refusal reasons
-  const refusalReasons = []
+  let refusalReasons = []
   if (outcome === CONSENT_OUTCOME.REFUSED) {
     for (const response of Object.values(responses)) {
       refusalReasons.push(response.refusalReason)
     }
+    refusalReasons = [...new Set(refusalReasons)]
   }
 
   patient.consent = {

@@ -34,7 +34,7 @@ export const VACCINATION_OUTCOME = {
 
 export const CONSENT_OUTCOME = {
   NO_RESPONSE: 'No response',
-  VALID: 'Consent given',
+  GIVEN: 'Consent given',
   REFUSED: 'Consent refused',
   FINAL_REFUSAL: 'Confirmed refusal, do not contact',
   INCONSISTENT: 'Conflicting',
