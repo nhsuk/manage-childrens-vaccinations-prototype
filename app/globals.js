@@ -214,16 +214,16 @@ export default (_env) => {
         return { text: 'Refused, do not contact', colour: 'red' }
 
       // Triage actions
-      case consent.outcome === CONSENT_OUTCOME.VALID &&
+      case consent.outcome === CONSENT_OUTCOME.GIVEN &&
         triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE:
         return { text: 'Triage', colour: 'blue' }
-      case consent.outcome === CONSENT_OUTCOME.VALID &&
+      case consent.outcome === CONSENT_OUTCOME.GIVEN &&
         triage.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE:
         return { text: 'Do not vaccinate', colour: 'red' }
 
       // Record actions
-      case consent.outcome === CONSENT_OUTCOME.VALID:
-      case consent.outcome === CONSENT_OUTCOME.VALID &&
+      case consent.outcome === CONSENT_OUTCOME.GIVEN:
+      case consent.outcome === CONSENT_OUTCOME.GIVEN &&
         triage.outcome === TRIAGE_OUTCOME.VACCINATE:
         return { text: 'Vaccinate', colour: 'purple' }
 
@@ -308,7 +308,7 @@ export default (_env) => {
       }
 
       // Flu or HPV
-      if (consent.outcome === CONSENT_OUTCOME.VALID) {
+      if (consent.outcome === CONSENT_OUTCOME.GIVEN) {
         if (isGillickCompetent) {
           description = 'The child was assessed as Gillick competent and they gave consent.'
         } else {

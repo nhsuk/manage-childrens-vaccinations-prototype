@@ -4,7 +4,7 @@
 {% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
 {% set hasNoResponse = patient.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
 {% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
-{% set hasConsented = patient.consent.outcome == CONSENT_OUTCOME.VALID %}
+{% set hasConsented = patient.consent.outcome == CONSENT_OUTCOME.GIVEN %}
 {% set triageNeeded = patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
 {% set readyToVaccinate = patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE %}
 

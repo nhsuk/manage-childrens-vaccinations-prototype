@@ -1,4 +1,4 @@
-{% if not patient.consent.outcome === CONSENT_OUTCOME.VALID %}
+{% if not patient.consent.outcome === CONSENT_OUTCOME.GIVEN %}
   {% set warningConsentFor = "the 3-in-1 booster" if patient.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 else "MenACWY" %}
   {{ warningCallout({
     heading: "Do not give both vaccines",

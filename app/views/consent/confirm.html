@@ -2,7 +2,7 @@
 
 {% set title = "Check and confirm answers" %}
 {% set buttonText = "Confirm" %}
-{% set hasConsented = response.status == CONSENT_OUTCOME.VALID %}
+{% set hasConsented = response.status == CONSENT_OUTCOME.GIVEN %}
 {% set hasRefused = response.status == CONSENT_OUTCOME.REFUSED %}
 {% set isGillickCompetent = response.gillickCompetent === "Yes" %}
 

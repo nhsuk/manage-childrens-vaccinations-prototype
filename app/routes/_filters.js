@@ -18,7 +18,7 @@ const filters = {
           return triage?.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
         case 'vaccinate':
           return triage?.outcome === TRIAGE_OUTCOME.VACCINATE ||
-            consent?.outcome === CONSENT_OUTCOME.VALID
+            consent?.outcome === CONSENT_OUTCOME.GIVEN
         default:
           return false
       }
@@ -44,14 +44,14 @@ const filters = {
   },
   triageNeeded: (cohort) => {
     return cohort.filter(({ consent, triage, outcome }) =>
-      consent?.outcome === CONSENT_OUTCOME.VALID &&
+      consent?.outcome === CONSENT_OUTCOME.GIVEN &&
       triage?.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE &&
       outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     )
   },
   triageCompleted: (cohort) => {
     return cohort.filter(({ consent, triage, outcome }) =>
-      consent?.outcome === CONSENT_OUTCOME.VALID &&
+      consent?.outcome === CONSENT_OUTCOME.GIVEN &&
       triage?.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
       outcome === PATIENT_OUTCOME.NO_OUTCOME_YET
     )
@@ -59,7 +59,7 @@ const filters = {
   noTriageNeeded: (cohort) => {
     return cohort.filter(({ consent, triage, outcome }) =>
       outcome === PATIENT_OUTCOME.NO_OUTCOME_YET &&
-      consent?.outcome === CONSENT_OUTCOME.VALID &&
+      consent?.outcome === CONSENT_OUTCOME.GIVEN &&
       !triage.outcome
     )
   },
@@ -84,7 +84,7 @@ export default (req, res) => {
 
   // Consent filters
   let noResponseResults = filter(cohort, 'consentOutcome', 'NO_RESPONSE')
-  let consentValidResults = filter(cohort, 'consentOutcome', 'VALID')
+  let consentValidResults = filter(cohort, 'consentOutcome', 'GIVEN')
   let consentRefusedResults = filter(cohort, 'consentOutcome', 'REFUSED')
   let consentConflictsResults = filter(cohort, 'consentOutcome', 'INCONSISTENT')
 

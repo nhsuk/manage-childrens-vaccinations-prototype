@@ -29,7 +29,7 @@
       rows: healthAnswerRows(campaign, patient.responses)
     }),
     classes: "nhsuk-expander"
-  }) if patient.consent.outcome == CONSENT_OUTCOME.VALID }}
+  }) if patient.consent.outcome == CONSENT_OUTCOME.GIVEN }}
 
   {% if patient.consent.notes.length %}
     <hr>

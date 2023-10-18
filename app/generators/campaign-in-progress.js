@@ -40,7 +40,7 @@ const setTriageOutcome = (patient) => {
 const setOutcome = (patient) => {
   // 20% of patients could not be vaccinated
   if (
-    patient.consent.outcome === CONSENT_OUTCOME.VALID &&
+    patient.consent.outcome === CONSENT_OUTCOME.GIVEN &&
     patient.triage.outcome === TRIAGE_OUTCOME.VACCINATE
   ) {
     const couldNotVaccinate = faker.helpers.maybe(
