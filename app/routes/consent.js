@@ -64,12 +64,12 @@ export default (router) => {
     }
 
     // Add any consent notes
-    if (response.note) {
+    if (response?.note) {
       patient.consent.notes.push(getNote(response.note, true))
     }
 
     // Add any triage notes
-    if (triage.note) {
+    if (triage?.note) {
       patient.triage.notes.push(getNote(triage.note))
     }
 
