@@ -6,9 +6,7 @@
 {% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
 {% set hasConsented = patient.consent.outcome == CONSENT_OUTCOME.VALID %}
 {% set triageNeeded = patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-{% set readyToVaccinate = (patient.triage.outcome == TRIAGE_OUTCOME.NONE) or
-                          (patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE)
-%}
+{% set readyToVaccinate = patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE %}
 
 {% block outerContent %}
   {% set referrer = data.referrer or "record" %}

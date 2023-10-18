@@ -1,5 +1,4 @@
 export const TRIAGE_OUTCOME = {
-  NONE: 'No screening information',
   NEEDS_TRIAGE: 'Needs triage',
   DELAY_VACCINATION: 'Delay vaccination to a later date',
   DO_NOT_VACCINATE: 'Do not vaccinate in campaign',
