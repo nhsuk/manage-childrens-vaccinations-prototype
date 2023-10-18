@@ -53,10 +53,4 @@ redirects(router)
 consent(router)
 vaccineBatchRoutes(router)
 
-router.get('/dashboard', (req, res, next) => {
-  res.locals.hasAnyOfflineChanges = hasAnyOfflineChanges(req.session.data.campaigns)
-
-  next()
-})
-
 export default router
