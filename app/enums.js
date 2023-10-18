@@ -1,3 +1,10 @@
+export const PATIENT_OUTCOME = {
+  NO_OUTCOME_YET: 'No outcome yet',
+  NO_CONSENT: 'No consent given',
+  VACCINATED: 'Vaccinated',
+  COULD_NOT_VACCINATE: 'Could not vaccinate'
+}
+
 export const TRIAGE_OUTCOME = {
   NEEDS_TRIAGE: 'Needs triage',
   DELAY_VACCINATION: 'Delay vaccination to a later date',
@@ -42,16 +49,10 @@ export const CONSENT_OUTCOME = {
   ONLY_3_IN_1: 'Only 3-in-1'
 }
 
-export const PATIENT_OUTCOME = {
-  NO_OUTCOME_YET: 'No outcome yet',
-  NO_CONSENT: 'No consent given',
-  VACCINATED: 'Vaccinated',
-  COULD_NOT_VACCINATE: 'Could not vaccinate'
-}
-
 export const RESPONSE_CONSENT = {
   GIVEN: 'Consent given',
   REFUSED: 'Consent refused',
+  FINAL_REFUSAL: 'Consent refusal confirmed',
   INVALID: 'Consent invalid',
   ONLY_MENACWY: 'Consent given for MenACWY only',
   ONLY_3_IN_1: 'Consent given for 3-in-1 only'

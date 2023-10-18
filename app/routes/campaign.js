@@ -16,8 +16,8 @@ export default (router) => {
     '/campaign/:campaignId',
     '/campaign/:campaignId/*'
   ], (req, res, next) => {
-    const data = req.session.data
-    const campaign = data.campaigns[req.params.campaignId]
+    const { campaigns } = res.locals
+    const campaign = campaigns[req.params.campaignId]
 
     res.locals.campaign = campaign
     res.locals.campaignOfflineChangesCount = offlineChangesCount(campaign)

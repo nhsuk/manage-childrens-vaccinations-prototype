@@ -56,7 +56,7 @@ export default (router) => {
     }
 
     // Update derived consent metadata
-    if (response.status === RESPONSE_CONSENT.REFUSED) {
+    if (response.status === RESPONSE_CONSENT.FINAL_REFUSAL) {
       patient.consent.refusalReasons.push(response.refusalReason)
     } else if (response.status === RESPONSE_CONSENT.GIVEN) {
       patient.consent.answersNeedTriage =

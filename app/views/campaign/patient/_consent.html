@@ -6,10 +6,8 @@
       {{ button({
         classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
         href: "/consent/" + campaign.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
-        text: "Check refusal" if response.status == RESPONSE_CONSENT.REFUSED else "Get consent"
-      }) if (response.status != RESPONSE_CONSENT.GIVEN)
-        and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL)
-        and (patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET) }}
+        text: "Check refusal"
+      }) if response.status == RESPONSE_CONSENT.REFUSED }}
     {% endset %}
 
     {{ details({
