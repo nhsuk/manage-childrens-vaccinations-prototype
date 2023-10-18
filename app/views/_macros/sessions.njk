@@ -14,26 +14,27 @@
   <tbody class="nhsuk-table__body">
     {% for campaign in campaigns %}
       <tr class="nhsuk-table__row">
-        <td class="nhsuk-table__cell app-u-nowrap">
+        <td class="nhsuk-table__cell app-u-width-one-fifth app-u-nowrap">
           {{ campaign.date | govukDate("truncate") }}
         </td>
-        <td class="nhsuk-table__cell">
+        <td class="nhsuk-table__cell app-u-width-one-fifth">
           {{ campaign.date | govukTime }}
         </td>
         <td class="nhsuk-table__cell">
           <a href="/campaign/{{ campaign.id }}">{{ campaign.school.name }}</a>
         </td>
-        {% if campaign["available-offline"] %}
+        {% if isOffline %}
           <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-            <span class="app-online-status app-online-status--online">
-              {{ icon("tick") }} Available offline
-            </span>
+            {% if campaign["available-offline"] %}
+              <span class="app-online-status app-online-status--online">
+                {{ icon("tick") }} Available offline
+              </span>
+            {% else %}
+              <span class="nhsuk-hint nhsuk-u-margin-bottom-0">
+                Unavailable
+              </span>
+            {% endif %}
           </td>
-        {% elseif isOffline %}
-          <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-            <span class="nhsuk-hint nhsuk-u-margin-bottom-0">Unavailable</span>
-          </td>
-        </td>
         {% endif %}
       </tr>
     {% endfor %}

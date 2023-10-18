@@ -91,6 +91,14 @@ $govuk-assets-path: "/govuk/assets/";
   }
 }
 
+.app-u-width-one-fifth {
+  width: 100% !important;
+
+  @include mq($from: tablet) {
+    width: 20% !important;
+  }
+}
+
 .app-u-nowrap {
   white-space: nowrap;
 }
