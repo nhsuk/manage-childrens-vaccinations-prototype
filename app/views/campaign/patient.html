@@ -6,7 +6,7 @@
 {% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
 {% set hasConsented = patient.consent.outcome == CONSENT_OUTCOME.GIVEN %}
 {% set triageNeeded = patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-{% set readyToVaccinate = patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE %}
+{% set readyToVaccinate = (patient.triage != true) or (patient.triage.outcome == TRIAGE_OUTCOME.VACCINATE) %}
 
 {% block outerContent %}
   {% set referrer = data.referrer or "record" %}
@@ -21,14 +21,7 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% if patient.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET %}
-        {% include "campaign/patient/_outcome.html" %}
-      {% elif patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE %}
-        {% include "campaign/patient/_outcome-triage.html" %}
-      {% else %}
-        {% include "campaign/patient/_outcome-consent.html" %}
-      {% endif %}
-
+      {% include "campaign/patient/_outcome.html" %}
       {% include "campaign/patient/_details.html" %}
       {% include "campaign/patient/_consent.html" %}
       {% include "campaign/patient/_gillick-competence.html" %}

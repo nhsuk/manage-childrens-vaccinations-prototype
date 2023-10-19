@@ -1,84 +1,52 @@
-{% if patient.outcome == PATIENT_OUTCOME.NO_CONSENT %}
-  {% set colour = "red" %}
-  {% set descriptionHtml %}
-    <p>{{ patient.consent.outcome }}</p>
-  {% endset %}
-{% elif patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
-  {% set colour = "red" %}
-  {% set descriptionHtml %}
-    {% set batch = data.vaccines.batches[vaccination.batch] %}
-    {{ summaryList({
-      rows: decorateRows([
-        {
-          key: "Reason",
-          value: patient.consent.outcome or patient.triage.outcome or vaccination.outcome
-        },
-        {
-          key: "Date",
-          value: "Today (" + "today" | govukDate + ")"
-        },
-        {
-          key: "Location",
-          value: campaign.location
-        },
-        {
-          key: "Vaccinator",
-          value: "You (" + data.user.fullName + ")"
-        },
-        {
-          key: "Notes",
-          value: vaccination.notes | default("None", true)
-        }
-      ])
-    }) }}
-  {% endset %}
-{% elif patient.outcome == PATIENT_OUTCOME.VACCINATED %}
-  {% set colour = "green" %}
-  {% set descriptionHtml %}
-    {% set batch = data.vaccines.batches[vaccination.batch] %}
-    {{ summaryList({
-      rows: decorateRows([
-        {
-          key: "Vaccine",
-          value: batch.summary
-        },
-        {
-          key: "Dose",
-          value: "1 of 2"
-        } if vaccineGiven and campaign.type == "HPV",
-        {
-          key: "Site",
-          value: vaccination.site
-        } if vaccineGiven and vaccination.site,
-        {
-          key: "Date",
-          value: "Today (" + "today" | govukDate + ")"
-        },
-        {
-          key: "Time",
-          value: "now" | govukTime
-        } if vaccineGiven,
-        {
-          key: "Location",
-          value: campaign.location
-        },
-        {
-          key: "Vaccinator",
-          value: "You (" + data.user.fullName + ")"
-        },
-        {
-          key: "Notes",
-          value: vaccination.notes | default("None", true)
-        }
-      ])
-    }) }}
-  {% endset %}
-{% endif %}
+{% set descriptionHtml %}
+  <p>{{ outcome(patient, consentRecord).description }}</p>
+
+  {{ summaryList({
+    rows: decorateRows([
+      {
+        key: "Reason",
+        value: patient.consent.outcome or patient.triage.outcome or vaccination.outcome
+      } if not vaccineGiven,
+      {
+        key: "Vaccine",
+        value: data.vaccines.batches[vaccination.batch].summary
+      } if vaccineGiven,
+      {
+        key: "Dose",
+        value: "1 of 2"
+      } if vaccineGiven and campaign.type == "HPV",
+      {
+        key: "Site",
+        value: vaccination.site
+      } if vaccineGiven and vaccination.site,
+      {
+        key: "Date",
+        value: "Today (" + "today" | govukDate + ")"
+      },
+      {
+        key: "Time",
+        value: "now" | govukTime
+      } if vaccineGiven,
+      {
+        key: "Location",
+        value: campaign.location
+      },
+      {
+        key: "Vaccinator",
+        value: "You (" + data.user.fullName + ")"
+      },
+      {
+        key: "Notes",
+        value: vaccination.notes | default("None", true)
+      } if vaccineGiven
+    ])
+  }) if patient.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET }}
+{% endset %}
 
 {{ card({
-  classes: "nhsuk-card--" + colour,
-  heading: patient.outcome,
+  classes: "nhsuk-card--" + outcome(patient, consentRecord).colour,
+  heading: outcome(patient, consentRecord).text,
   headingClasses: "nhsuk-heading-m",
-  descriptionHtml: descriptionHtml if descriptionHtml,
+  descriptionHtml: descriptionHtml,
   feature: true
 }) }}

@@ -236,18 +236,87 @@ export default (_env) => {
   /**
    * Outcome properties
    * @param {object} patient - Patient
+   * @param {object} [consentRecord] - Consent record
    * @returns {object} Outcome properties
    */
-  globals.outcome = (patient) => {
-    switch (patient.outcome) {
-      case PATIENT_OUTCOME.VACCINATED:
-        return { text: patient.outcome, colour: 'green' }
-      case PATIENT_OUTCOME.COULD_NOT_VACCINATE:
-      case PATIENT_OUTCOME.NO_CONSENT:
-        return { text: patient.outcome, colour: 'red' }
-      default:
-        return { text: patient.outcome, colour: 'white' }
+  globals.outcome = (patient, consentRecord) => {
+    let colour = 'blue'
+    let text = 'test'
+    let description = 'test'
+
+    // No outcome yet
+    if (patient.outcome !== PATIENT_OUTCOME.NO_OUTCOME_YET) {
+      text = patient.outcome
+
+      switch (patient.outcome) {
+        case PATIENT_OUTCOME.COULD_NOT_VACCINATE:
+          colour = 'red'
+          description = patient.vaccination.outcome
+          break
+        case PATIENT_OUTCOME.NO_CONSENT:
+          colour = 'red'
+          description = patient.consent.outcome
+          break
+        default:
+          colour = 'green'
+          description = patient.vaccination.outcome
+      }
+    } else if (patient.triage.outcome) {
+      text = patient.triage.outcome
+
+      switch (patient.triage.outcome) {
+        case TRIAGE_OUTCOME.NEEDS_TRIAGE:
+          description = 'Responses to health questions need triage'
+          break
+        case TRIAGE_OUTCOME.DO_NOT_VACCINATE:
+          colour = 'red'
+          description = `Jane Doe decided that ${patient.fullName} should not be vaccinated.`
+          break
+        case TRIAGE_OUTCOME.DELAY_VACCINATION:
+          colour = 'red'
+          description = `Jane Doe decided that ${patient.fullName}’s vaccination should be delayed.`
+          break
+        default:
+          colour = 'purple'
+          description = `Jane Doe decided that ${patient.fullName} is safe to vaccinate.`
+      }
+    } else {
+      colour = 'orange'
+      text = patient.consent.outcome
+
+      switch (patient.consent.outcome) {
+        case CONSENT_OUTCOME.NO_RESPONSE:
+          colour = 'blue'
+          description = 'No-one responded to our requests for consent.'
+          break
+        case CONSENT_OUTCOME.ONLY_MENACWY:
+          description = 'Parent or guardian gave consent for MenACWY.'
+          break
+        case CONSENT_OUTCOME.ONLY_3_IN_1:
+          description = 'Parent or guardian gave consent for the 3-in-1 booster.'
+          break
+        case CONSENT_OUTCOME.INCONSISTENT:
+          description = 'Check that all respondents have given consent.'
+          break
+        case CONSENT_OUTCOME.GIVEN:
+          colour = 'purple'
+          description = `${patient.fullName} is ready vaccinate`
+          break
+        default:
+          description = 'Parent or guardian refused to give consent.'
+      }
+
+      const isGillickCompetent = consentRecord?.gillickCompetent === 'Yes'
+      if (patient.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE) {
+        if (patient.assessedAsNotGillickCompetent) {
+          description += 'When assessed, the child was not Gillick competent.'
+        } else if (isGillickCompetent) {
+          description += 'The child was assessed as Gillick competent, but they refused consent.'
+        }
+      }
     }
+
+    return { colour, description, text }
   }
 
   /**
@@ -266,61 +335,6 @@ export default (_env) => {
       : 'by'
 
     return `${statusText} ${preposition} ${parentOrGuardian.relationship} on ${date}`
-  }
-
-  /**
-   * Get consent outcome
-   * @param {object} patient - Patient
-   * @param {object} [consentRecord] - Consent record
-   * @returns {object} Consent outcome properties
-   */
-  globals.consentOutcome = (patient, consentRecord) => {
-    const { assessedAsNotGillickCompetent, consent } = patient
-    const isGillickCompetent = consentRecord?.gillickCompetent === 'Yes'
-    let colour
-    let description
-
-    if (consent.outcome === CONSENT_OUTCOME.NO_RESPONSE) {
-      description = 'No-one responded to our requests for consent.'
-
-      if (assessedAsNotGillickCompetent) {
-        description += 'When assessed, the child was not Gillick competent.'
-      } else if (isGillickCompetent) {
-        description += 'The child was assessed as Gillick competent, but they refused consent.'
-      }
-    } else {
-      // MenACWY only
-      if (consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY) {
-        colour = 'purple'
-        description = 'Parent or guardian gave consent for MenACWY.'
-      } else {
-        colour = 'orange'
-        description = 'Parent or guardian refused to give consent for MenACWY.'
-      }
-
-      // 3-in-1 only
-      if (consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1) {
-        colour = 'purple'
-        description = 'Parent or guardian gave consent for the 3-in-1 booster.'
-      } else {
-        colour = 'orange'
-        description = 'Parent or guardian refused to give consent for the 3-in-1 booster.'
-      }
-
-      // Flu or HPV
-      if (consent.outcome === CONSENT_OUTCOME.GIVEN) {
-        if (isGillickCompetent) {
-          description = 'The child was assessed as Gillick competent and they gave consent.'
-        } else {
-          description = false
-        }
-      } else {
-        colour = 'orange'
-        description = 'Parent or guardian refused to give consent'
-      }
-    }
-
-    return { colour, description }
   }
 
   /**
