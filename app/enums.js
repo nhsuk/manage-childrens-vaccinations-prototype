@@ -67,7 +67,7 @@ export const RESPONSE_METHOD = {
 }
 
 export const RESPONSE_REFUSAL = {
-  GELATINE: 'Vaccine contains gelatine from pigs',
+  GELATINE: 'Vaccine contains gelatine',
   ALREADY_GIVEN: 'Vaccine already received',
   GETTING_ELSEWHERE: 'Vaccine will be given elsewhere',
   MEDICAL: 'Medical reasons',
