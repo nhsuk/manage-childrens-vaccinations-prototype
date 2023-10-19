@@ -15,7 +15,7 @@ import { CONSENT_OUTCOME, RESPONSE_CONSENT } from '../enums.js'
  * @returns {Consent} Derived consent
  */
 export default (patient) => {
-  const { responses } = patient
+  const { consent, responses } = patient
 
   let outcome = CONSENT_OUTCOME.NO_RESPONSE
   let answersNeedTriage = false
@@ -58,8 +58,8 @@ export default (patient) => {
   }
 
   patient.consent = {
+    ...consent,
     outcome,
-    notes: [],
     answersNeedTriage,
     ...refusalReasons && { refusalReasons }
   }
