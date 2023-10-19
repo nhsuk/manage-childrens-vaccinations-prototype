@@ -55,14 +55,6 @@ export default (router) => {
       patient.responses[responseId] = response
     }
 
-    // Update derived consent metadata
-    if (response.status === RESPONSE_CONSENT.FINAL_REFUSAL) {
-      patient.consent.refusalReasons.push(response.refusalReason)
-    } else if (response.status === RESPONSE_CONSENT.GIVEN) {
-      patient.consent.answersNeedTriage =
-        Object.values(response.healthAnswers).includes(true)
-    }
-
     // Add any consent notes
     if (response?.note) {
       patient.consent.notes.push(getNote(response.note, true))
