@@ -18,8 +18,9 @@ export default (patient) => {
   const { responses } = patient
 
   let outcome = CONSENT_OUTCOME.NO_RESPONSE
+  let answersNeedTriage = false
 
-  if (responses.length === 1) {
+  if (responses?.length === 1) {
     outcome = responses[0].status
   } else if (responses.length > 1) {
     const uniqueStatuses = _.uniqBy(responses, 'status')
@@ -43,6 +44,8 @@ export default (patient) => {
         }
       }
     }
+
+    answersNeedTriage = answersNeedingTriage.length > 0
   }
 
   // Build a list of refusal reasons
@@ -56,8 +59,8 @@ export default (patient) => {
 
   patient.consent = {
     outcome,
-    answersNeedTriage: answersNeedingTriage.length > 0,
-    refusalReasons,
-    notes: []
+    notes: [],
+    answersNeedTriage,
+    ...refusalReasons && { refusalReasons }
   }
 }
