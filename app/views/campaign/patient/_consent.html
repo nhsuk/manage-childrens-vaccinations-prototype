@@ -1,13 +1,30 @@
 {% set descriptionHtml %}
+  {%- set consentIcon = consentStatus(patient).icon -%}
+  {%- set consentColour = consentStatus(patient).colour -%}
+  <p class="app-status{{ " app-status--" + consentColour if consentColour }}">
+    {{- icon(consentIcon) if consentIcon -}}
+    {{- consentStatus(patient).text -}}
+  </p>
+
   {% for response in patient.responses %}
     {% set detailsHtml %}
       {% include "campaign/patient/_response-summary.html" %}
 
+      {# Check refusal if refused and no other response has confirmed refusal #}
       {{ button({
         classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
         href: "/consent/" + campaign.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
         text: "Check refusal"
-      }) if response.status == RESPONSE_CONSENT.REFUSED }}
+      }) if (response.status == RESPONSE_CONSENT.REFUSED)
+        and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL)
+      }}
+
+      {# Get consent if previously contacted but no response #}
+      {{ button({
+        classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
+        href: "/consent/" + campaign.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
+        text: "Get consent"
+      }) if response.status == RESPONSE_CONSENT.NO_RESPONSE }}
     {% endset %}
 
     {{ details({
@@ -15,8 +32,6 @@
       text: responseHeading(response),
       HTML: detailsHtml
     }) }}
-  {% else %}
-    <p>No responses yet.</p>
   {% endfor %}
 
   {{ details({
@@ -28,12 +43,6 @@
     }),
     classes: "nhsuk-expander"
   }) if patient.consent.outcome == CONSENT_OUTCOME.GIVEN }}
-
-  {% if patient.consent.notes.length %}
-    <hr>
-    <h3 class="nhsuk-heading-s">Consent log</h3>
-    {{ notes(patient.consent.notes) }}
-  {% endif %}
 
   {% if not patient.responses.length %}
     {#- Add a new response to any existing -#}

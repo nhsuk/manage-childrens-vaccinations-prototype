@@ -1,18 +1,16 @@
 import { faker } from '@faker-js/faker'
-import { DateTime } from 'luxon'
 import { RESPONSE_CONSENT, RESPONSE_REFUSAL, RESPONSE_METHOD } from '../enums.js'
 import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
 
 /**
  * @typedef {object} Response
- * @property {string} date - Response date (ISO 8601)
  * @property {string} status - Response status
- * @property {string} method - Response method
  * @property {import('./parent.js').Parent} parentOrGuardian - Parent
  * @property {object} [healthAnswers] - Health answers
  * @property {string} [refusalReason] - Refusal reason
  * @property {string} [refusalReasonOther] - Refusal reason details
+ * @property {Array} events - Event log
  */
 
 /**
@@ -60,17 +58,13 @@ const _getResponse = (type, patient) => {
   const refusalReason = _getRefusalReason(type)
   const method = faker.helpers.weightedArrayElement([
     { value: RESPONSE_METHOD.WEBSITE, weight: 5 },
-    { value: RESPONSE_METHOD.TEXT, weight: 1 },
     { value: RESPONSE_METHOD.CALL, weight: 1 },
-    { value: RESPONSE_METHOD.PERSON, weight: 1 },
     { value: RESPONSE_METHOD.PAPER, weight: 1 }
   ])
   const days = faker.number.int({ min: 10, max: 35 })
 
   const response = {
-    date: DateTime.local().minus({ days }).toISODate(),
     status,
-    method,
     parentOrGuardian: getParent(patient),
     ...(status === RESPONSE_CONSENT.GIVEN) && {
       healthAnswers: getHealthAnswers(type, patient)
@@ -80,7 +74,11 @@ const _getResponse = (type, patient) => {
       ...(refusalReason === RESPONSE_REFUSAL.OTHER) && {
         refusalReasonOther: 'My family rejects vaccinations on principle.'
       }
-    }
+    },
+    events: [{
+      name: `${status} (${method})`,
+      date: faker.date.recent({ days })
+    }]
   }
 
   return response
