@@ -76,7 +76,7 @@ const _getResponse = (type, patient) => {
       }
     },
     events: [{
-      name: `${status} (${method})`,
+      name: `${status} (${method.toLowerCase()})`,
       date: faker.date.recent({ days })
     }]
   }
