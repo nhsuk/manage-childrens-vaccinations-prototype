@@ -26,7 +26,11 @@ export default (patient) => {
     const uniqueStatuses = _.uniqBy(responses, 'status')
 
     if (uniqueStatuses.length > 1) {
-      outcome = CONSENT_OUTCOME.INCONSISTENT
+      if (uniqueStatuses.find(response => response.status === RESPONSE_CONSENT.FINAL_REFUSAL)) {
+        outcome = CONSENT_OUTCOME.FINAL_REFUSAL
+      } else {
+        outcome = CONSENT_OUTCOME.INCONSISTENT
+      }
     } else if (uniqueStatuses[0].status === RESPONSE_CONSENT.GIVEN) {
       outcome = CONSENT_OUTCOME.GIVEN
     } else if (uniqueStatuses[0].status === RESPONSE_CONSENT.REFUSED) {
