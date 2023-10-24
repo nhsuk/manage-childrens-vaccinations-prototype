@@ -135,6 +135,7 @@ $govuk-assets-path: "/govuk/assets/";
 .nhsuk-details__text {
   &:has(.nhsuk-summary-list) {
     padding-bottom: nhsuk-spacing(1);
+    padding-right: 0;
     padding-top: nhsuk-spacing(1);
   }
 }
