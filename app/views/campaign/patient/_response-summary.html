@@ -1,9 +1,16 @@
 {{ summaryList({
   rows: decorateRows([
     {
-      key: response.parentOrGuardian.relationship,
+      key: "Name",
       value: {
         html: response.parentOrGuardian.fullName
+      },
+      href: "#" if showActions
+    },
+    {
+      key: "Relationship",
+      value: {
+        html: response.parentOrGuardian.relationship
       },
       href: "#" if showActions
     },
@@ -15,16 +22,19 @@
       href: "#" if showActions
     },
     {
-      key: "Method",
-      value: response.method,
+      key: "Response",
+      value: {
+        html: eventsList(response.events)
+      },
       href: "#" if showActions
     },
     {
-      key: "Reason for refusal",
+      key: "Refusal reason",
       value: {
         html: response.refusalReason | default("Personal choice") + (" – " + response.refusalReasonOther if response.refusalReason == "Other")
       },
       href: "#" if showActions
-    } if response.refusalReason
+    } if response.status == RESPONSE_CONSENT.REFUSED or
+      response.status == RESPONSE_CONSENT.FINAL_REFUSAL
   ])
 }) }}

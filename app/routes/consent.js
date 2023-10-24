@@ -1,3 +1,4 @@
+import merge from 'deepmerge'
 import { RESPONSE_CONSENT } from '../enums.js'
 import getNote from '../generators/note.js'
 import wizard from '../wizards/consent.js'
@@ -50,24 +51,18 @@ export default (router) => {
     const { patient, responseId } = res.locals
     const { response, triage } = req.session.data
 
-    // Add response to local patient data
-    if (response.status !== RESPONSE_CONSENT.INVALID) {
-      patient.responses[responseId] = response
-    }
+    // Update local patient data with response
+    const originalResponse = patient.responses[responseId]
+    patient.responses[responseId] = merge(originalResponse, response)
 
-    // Add any consent notes
-    if (response?.note) {
-      patient.consent.notes.push(getNote(response.note, true))
+    // Add any triage outcome
+    if (triage) {
+      patient.triage.outcome = triage.outcome
     }
 
     // Add any triage notes
     if (triage?.note) {
       patient.triage.notes.push(getNote(triage.note))
-    }
-
-    // Add any triage outcome
-    if (triage) {
-      patient.triage.outcome = triage.outcome
     }
 
     // Delete temporary session data
@@ -83,13 +78,25 @@ export default (router) => {
   router.post('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
     const { patient, responseId } = res.locals
     const { view } = req.params
-    const { response } = req.session.data
+    const { response, user } = req.session.data
     const parentOrGuardian = patient.responses[responseId]?.parentOrGuardian
 
-    req.session.data.response = {
-      date: new Date(),
-      method: 'Phone',
-      ...response
+    if (view === 'consent') {
+      let name = response.status
+      switch (response.status) {
+        case RESPONSE_CONSENT.GIVEN:
+          name = 'Consent updated to given (by phone)'
+          break
+        case RESPONSE_CONSENT.FINAL_REFUSAL:
+          name = 'Refusal confirmed (by phone)'
+          break
+        default:
+          name = 'No response when contacted'
+      }
+
+      const date = new Date()
+
+      response.events = [{ name, date, user }]
     }
 
     // Use existing parent or guardian information when checking refusal

@@ -16,15 +16,6 @@
     {% set descriptionHtml %}
       {% set showActions = true %}
       {% include "campaign/patient/_response-summary.html" %}
-
-      {{ textarea({
-        label: {
-          text: "Add a note (optional)",
-          classes: "nhsuk-label--s nhsuk-u-margin-bottom-2"
-        },
-        rows: 5,
-        decorate: ["response", "note"]
-      }) }}
     {% endset %}
 
     {{ card({

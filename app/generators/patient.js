@@ -37,7 +37,7 @@ const _getPatient = (options) => {
   patient.address = getAddress()
   patient.yearGroup = getYearGroup(patient.dob)
   patient.responses = responses
-  patient.consent = { notes: [] }
+  patient.consent = { events: [] }
   patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
   patient.seen = {}
   patient.triage = { notes: [] }

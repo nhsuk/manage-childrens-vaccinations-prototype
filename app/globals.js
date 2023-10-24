@@ -320,21 +320,44 @@ export default (_env) => {
   }
 
   /**
+   * Get consent summary
+   * @param {object} patient - Patient
+   * @returns {object} Text and icon for consent summary
+   */
+  globals.consentStatus = (patient) => {
+    const { outcome } = patient.consent
+    switch (outcome) {
+      case (CONSENT_OUTCOME.NO_RESPONSE):
+        return {
+          text: `${outcome} yet`,
+          icon: false,
+          colour: false
+        }
+      case (CONSENT_OUTCOME.GIVEN):
+        return {
+          text: outcome,
+          icon: 'tick',
+          colour: 'green'
+        }
+      default:
+        return {
+          text: outcome,
+          icon: 'cross',
+          colour: 'red'
+        }
+    }
+  }
+
+  /**
    * Get consent response heading
    * @param {object} response - Consent response
    * @returns {string} Consent response heading
    */
   globals.responseHeading = (response) => {
-    let { date, status, parentOrGuardian } = response
-    date = DateTime.fromISO(date).toFormat('d MMMM yyyy')
-    const statusText = status === RESPONSE_CONSENT.INVALID
-      ? 'No response'
-      : status
-    const preposition = status === RESPONSE_CONSENT.INVALID
-      ? 'from'
-      : 'by'
-
-    return `${statusText} ${preposition} ${parentOrGuardian.relationship} on ${date}`
+    const { status, parentOrGuardian } = response
+    return status === RESPONSE_CONSENT.NO_RESPONSE
+      ? `${parentOrGuardian.fullName} (${parentOrGuardian.relationship})`
+      : `${status} by ${parentOrGuardian.fullName} (${parentOrGuardian.relationship})`
   }
 
   /**

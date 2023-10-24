@@ -16,7 +16,7 @@ export default (req, res) => {
       },
       [`${basePath}/confirm`]: {
         data: 'response.status',
-        value: RESPONSE_CONSENT.INVALID
+        value: RESPONSE_CONSENT.NO_RESPONSE
       }
     },
     [`${basePath}/why-not-consenting`]: {
