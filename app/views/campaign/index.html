@@ -84,7 +84,7 @@
         {% if campaign["available-offline"] %}
           <div id="available-offline">
             <h2 class="nhsuk-heading-s" style="color: #007f3b">
-              <span class="app-online-status app-online-status--online">
+              <span class="app-status app-status--green">
                 {{ icon("tick") }} Available offline
               </span>
             </h2>
@@ -114,7 +114,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% set headingHtml %}
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
-          <span class="app-online-status app-online-status--offline">
+          <span class="app-status app-status--red">
             {{ icon("cross") }} Not available offline
           </span>
         </h2>
