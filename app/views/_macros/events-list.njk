@@ -1,0 +1,18 @@
+{% macro eventsList(items) -%}
+<ul class="nhsuk-list{% if items.length > 1 %} nhsuk-list--bullet{% endif %}">
+{% for item in items | reverse %}
+  <li>
+    <p class="nhsuk-u-margin-bottom-0">{{ item.name }}</p>
+    <p class="nhsuk-u-margin-bottom-2 nhsuk-u-secondary-text-color nhsuk-u-font-size-16 {% if loop.last %}nhsuk-u-margin-bottom-0{% endif %}">
+      {%- if item.user -%}
+        <a href="mailto:{{ item.user.email }}">{{ item.user.fullName }}</a>,
+      {% endif -%}
+      {{ item.date | govukDate("truncate") }}
+      {% if not item.name | arrayOrStringIncludes("paper") %}
+       at {{ item.date | govukTime }}
+      {% endif %}
+    </p>
+  </li>
+{% endfor %}
+</ul>
+{% endmacro %}
