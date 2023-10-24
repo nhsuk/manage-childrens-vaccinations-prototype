@@ -300,7 +300,7 @@ export default (_env) => {
           break
         case CONSENT_OUTCOME.GIVEN:
           colour = 'purple'
-          description = `${patient.fullName} is ready vaccinate`
+          description = `${patient.fullName} is ready to vaccinate`
           break
         default:
           description = 'Parent or guardian refused to give consent.'
