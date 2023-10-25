@@ -251,7 +251,7 @@ export default (_env) => {
       switch (patient.outcome) {
         case PATIENT_OUTCOME.COULD_NOT_VACCINATE:
           colour = 'red'
-          description = patient.vaccination.outcome
+          description = patient.outcome
           break
         case PATIENT_OUTCOME.NO_CONSENT:
           colour = 'red'
@@ -259,7 +259,7 @@ export default (_env) => {
           break
         default:
           colour = 'green'
-          description = patient.vaccination.outcome
+          description = patient.outcome
       }
     } else if (patient.triage.outcome) {
       text = patient.triage.outcome
