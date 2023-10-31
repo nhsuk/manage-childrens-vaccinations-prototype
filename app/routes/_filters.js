@@ -78,7 +78,10 @@ export default (req, res) => {
   // Consent filters
   let noResponseResults = filter(cohort, 'consentOutcome', 'NO_RESPONSE')
   let consentValidResults = filter(cohort, 'consentOutcome', 'GIVEN')
-  let consentRefusedResults = filter(cohort, 'consentOutcome', 'REFUSED')
+  let consentRefusedResults = [
+    ...filter(cohort, 'consentOutcome', 'REFUSED'),
+    ...filter(cohort, 'consentOutcome', 'FINAL_REFUSAL')
+  ]
   let consentConflictsResults = filter(cohort, 'consentOutcome', 'INCONSISTENT')
 
   // Triage filters

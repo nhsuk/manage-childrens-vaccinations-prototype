@@ -53,18 +53,17 @@ export default (patient) => {
   }
 
   // Build a list of refusal reasons
-  let refusalReasons = []
-  if (outcome === CONSENT_OUTCOME.REFUSED) {
+  const refusalReasons = []
+  if (outcome === CONSENT_OUTCOME.REFUSED || outcome === CONSENT_OUTCOME.FINAL_REFUSAL) {
     for (const response of Object.values(responses)) {
       refusalReasons.push(response.refusalReason)
     }
-    refusalReasons = [...new Set(refusalReasons)]
+    consent.refusalReasons = [...new Set(refusalReasons)]
   }
 
   patient.consent = {
     ...consent,
     outcome,
-    answersNeedTriage,
-    ...refusalReasons && { refusalReasons }
+    answersNeedTriage
   }
 }
