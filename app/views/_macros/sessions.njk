@@ -1,3 +1,4 @@
+{% from "tag/macro.njk" import tag %}
 {% from "_macros/icon.njk" import icon %}
 
 {% macro sessions(campaigns, isOffline) %}
@@ -21,7 +22,11 @@
           {{ campaign.date | govukTime }}
         </td>
         <td class="nhsuk-table__cell">
-          <a href="/campaign/{{ campaign.id }}">{{ campaign.school.name }}</a>
+          <a class="nhsuk-u-margin-right-2" href="/campaign/{{ campaign.id }}">{{ campaign.school.name }}</a>
+          {{ tag({
+            classes: "nhsuk-tag--blue",
+            text: "In progress"
+          }) if campaign.inProgress }}
         </td>
         {% if isOffline %}
           <td class="nhsuk-table__cell nhsuk-u-text-align-right">
