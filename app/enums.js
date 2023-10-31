@@ -43,7 +43,7 @@ export const CONSENT_OUTCOME = {
   NO_RESPONSE: 'No response',
   GIVEN: 'Consent given',
   REFUSED: 'Consent refused',
-  FINAL_REFUSAL: 'Confirmed refusal, do not contact',
+  FINAL_REFUSAL: 'Refusal confirmed',
   INCONSISTENT: 'Conflicting consent',
   ONLY_MENACWY: 'Only MenACWY',
   ONLY_3_IN_1: 'Only 3-in-1'
@@ -52,7 +52,7 @@ export const CONSENT_OUTCOME = {
 export const RESPONSE_CONSENT = {
   GIVEN: 'Consent given',
   REFUSED: 'Consent refused',
-  FINAL_REFUSAL: 'Confirmed refusal',
+  FINAL_REFUSAL: 'Refusal confirmed',
   INVALID: 'Consent invalid',
   NO_RESPONSE: 'No response',
   ONLY_MENACWY: 'Consent given for MenACWY only',
