@@ -211,7 +211,7 @@ export default (_env) => {
       case consent.outcome === CONSENT_OUTCOME.REFUSED:
         return { text: 'Check refusal', colour: 'orange' }
       case consent.outcome === CONSENT_OUTCOME.FINAL_REFUSAL:
-        return { text: 'Refused, do not contact', colour: 'red' }
+        return { text: 'Refusal confirmed', colour: 'red' }
 
       // Triage actions
       case consent.outcome === CONSENT_OUTCOME.GIVEN &&
@@ -296,7 +296,7 @@ export default (_env) => {
           description = 'Parent or guardian gave consent for the 3-in-1 booster.'
           break
         case CONSENT_OUTCOME.INCONSISTENT:
-          description = 'Check that all respondents have given consent.'
+          description = 'You can only vaccinate if all respondents give consent.'
           break
         case CONSENT_OUTCOME.GIVEN:
           colour = 'purple'

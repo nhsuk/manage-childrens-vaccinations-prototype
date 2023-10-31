@@ -14,7 +14,7 @@
       {{ button({
         classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
         href: "/consent/" + campaign.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
-        text: "Check refusal"
+        text: "Contact parent or guardian"
       }) if (response.status == RESPONSE_CONSENT.REFUSED)
         and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL)
       }}
