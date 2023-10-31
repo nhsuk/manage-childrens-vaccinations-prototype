@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { CONSENT_OUTCOME, RESPONSE_CONSENT } from '../enums.js'
+import { CONSENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
 
 /**
  * @typedef {object} Consent
@@ -18,7 +18,6 @@ export default (patient) => {
   const { consent, responses } = patient
 
   let outcome = CONSENT_OUTCOME.NO_RESPONSE
-  let answersNeedTriage = false
 
   if (responses?.length === 1) {
     outcome = responses[0].status
@@ -49,7 +48,10 @@ export default (patient) => {
       }
     }
 
-    answersNeedTriage = answersNeedingTriage.length > 0
+    if (answersNeedingTriage.length > 0) {
+      consent.answersNeedTriage = true
+      patient.triage.outcome = TRIAGE_OUTCOME.NEEDS_TRIAGE
+    }
   }
 
   // Build a list of refusal reasons
@@ -63,7 +65,6 @@ export default (patient) => {
 
   patient.consent = {
     ...consent,
-    outcome,
-    answersNeedTriage
+    outcome
   }
 }
