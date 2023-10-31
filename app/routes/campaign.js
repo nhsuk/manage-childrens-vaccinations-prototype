@@ -5,7 +5,7 @@ import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
 const offlineChangesCount = (campaign) => {
-  const offlineCount = campaign.cohort
+  const offlineCount = campaign?.cohort
     .reduce((count, patient) => count + (patient.seen.isOffline ? 1 : 0), 0)
 
   return offlineCount
