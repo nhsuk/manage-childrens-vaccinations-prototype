@@ -263,6 +263,7 @@ export default (_env) => {
       }
     } else if (patient.triage.outcome) {
       text = patient.triage.outcome
+      const user = patient.triage.notes.at(-1)?.user.fullName || 'Jane Doe'
 
       switch (patient.triage.outcome) {
         case TRIAGE_OUTCOME.NEEDS_TRIAGE:
@@ -270,15 +271,15 @@ export default (_env) => {
           break
         case TRIAGE_OUTCOME.DO_NOT_VACCINATE:
           colour = 'red'
-          description = `Jane Doe decided that ${patient.fullName} should not be vaccinated.`
+          description = `${user} decided that ${patient.fullName} should not be vaccinated.`
           break
         case TRIAGE_OUTCOME.DELAY_VACCINATION:
           colour = 'red'
-          description = `Jane Doe decided that ${patient.fullName}’s vaccination should be delayed.`
+          description = `${user} decided that ${patient.fullName}’s vaccination should be delayed.`
           break
         default:
           colour = 'purple'
-          description = `Jane Doe decided that ${patient.fullName} is safe to vaccinate.`
+          description = `${user} decided that ${patient.fullName} is safe to vaccinate.`
       }
     } else {
       colour = 'orange'
