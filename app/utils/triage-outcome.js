@@ -17,8 +17,10 @@ export default (patient) => {
   if (faker.helpers.maybe(() => true, { probability: 0.5 })) {
     patient.triage.outcome = TRIAGE_OUTCOME.VACCINATE
 
-    patient.triage.notes.push(getNote(patient.__triageNote))
-
-    delete patient.__triageNote
+    // Add example triage note if not already added
+    if (patient.__triageNote) {
+      patient.triage.notes.push(getNote(patient.__triageNote))
+      delete patient.__triageNote
+    }
   }
 }
