@@ -8,21 +8,26 @@ import { PATIENT_OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums
  * @returns {object} Vaccination
  */
 export default (campaigns, batches) => {
-  const campaign = Object
+  const inProgressCampaign = Object
     .values(campaigns)
     .find(campaign => campaign.inProgress)
-  const { cohort, id } = campaign
+
+  if (!inProgressCampaign) {
+    return
+  }
+
+  const { cohort, id } = inProgressCampaign
 
   let batch = null
-  if (campaign.isFlu) {
+  if (inProgressCampaign.isFlu) {
     batch = Object
       .values(batches)
       .find(batch => batch.isFlu)
-  } else if (campaign.isHPV) {
+  } else if (inProgressCampaign.isHPV) {
     batch = Object
       .values(batches)
       .find(batch => batch.isHPV)
-  } else if (campaign.is3in1MenACWY) {
+  } else if (inProgressCampaign.is3in1MenACWY) {
     batch = Object
       .values(batches)
       .find(batch => batch.isMenACWY || batch.is3in1)
