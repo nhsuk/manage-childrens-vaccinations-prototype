@@ -56,6 +56,7 @@ export default (router) => {
 
     if (isTriage && triage) {
       patient.triage.outcome = triage.outcome
+      patient.triage.completed = true
 
       // If triage outcome is not to vaccinate, set patient outcome
       if (triage.outcome === TRIAGE_OUTCOME.DO_NOT_VACCINATE) {

@@ -4,7 +4,6 @@ import { CONSENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
 /**
  * @typedef {object} Consent
  * @property {string} outcome - Consent outcome, derived from responses
- * @property {boolean} answersNeedTriage - Answers need triage?
  * @property {Array} refusalReasons - Unique refusal reasons
  * @property {Array} notes - Consent notes
  */
@@ -48,9 +47,9 @@ export default (patient) => {
       }
     }
 
-    if (answersNeedingTriage.length > 0) {
-      consent.answersNeedTriage = true
+    if (answersNeedingTriage.length > 0 && !patient.triage.completed) {
       patient.triage.outcome = TRIAGE_OUTCOME.NEEDS_TRIAGE
+      patient.triage.completed = true
     }
   }
 

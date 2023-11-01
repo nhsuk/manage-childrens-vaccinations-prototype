@@ -16,6 +16,7 @@ export default (patient) => {
   // Triage half, adding triage note and changing outcome to VACCINATE
   if (patient.__triageOutcome) {
     patient.triage.outcome = TRIAGE_OUTCOME.VACCINATE
+    patient.triage.completed = true
 
     // Add example triage note if not already added
     if (patient.__triageNote) {
