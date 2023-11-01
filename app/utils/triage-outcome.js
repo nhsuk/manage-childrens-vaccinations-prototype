@@ -14,7 +14,7 @@ export default (patient) => {
   }
 
   // Triage half, adding triage note and changing outcome to VACCINATE
-  if (faker.helpers.maybe(() => true, { probability: 0.5 })) {
+  if (patient.__triageOutcome) {
     patient.triage.outcome = TRIAGE_OUTCOME.VACCINATE
 
     // Add example triage note if not already added

@@ -42,6 +42,11 @@ const _getPatient = (options) => {
   patient.seen = {}
   patient.triage = { notes: [] }
 
+  // Mark 50% of records as ready for triaged
+  patient.__triageOutcome = faker.helpers.maybe(() => true, {
+    probability: 0.5
+  })
+
   return patient
 }
 
