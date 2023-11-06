@@ -56,6 +56,13 @@ const filters = {
       consent?.outcome === CONSENT_OUTCOME.GIVEN
     )
   },
+  readyToVaccinate: (cohort) => {
+    return cohort.filter(({ consent, triage, outcome }) =>
+      (triage?.outcome === TRIAGE_OUTCOME.VACCINATE ||
+      consent?.outcome === CONSENT_OUTCOME.GIVEN) &&
+      outcome !== PATIENT_OUTCOME.VACCINATED
+    )
+  },
   hasOutcome: (cohort, value) => {
     return cohort.filter(({ outcome }) => {
       return outcome === PATIENT_OUTCOME[value]
@@ -95,6 +102,7 @@ export default (req, res) => {
     ...filter(cohort, 'hasOutcome', 'COULD_NOT_VACCINATE'),
     ...filter(cohort, 'hasOutcome', 'NO_CONSENT')
   ]
+  const readyToVaccinateResults = filter(cohort, 'readyToVaccinate')
 
   // Action needed filter
   let actionNeededResults = cohort.filter((c) => {
@@ -163,6 +171,10 @@ export default (req, res) => {
       label: `No triage needed (${noTriageNeededResults.length})`,
       results: sort(noTriageNeededResults),
       actionNeeded: true
+    },
+    readyToVaccinate: {
+      label: `Not vaccinated (${readyToVaccinateResults.length})`,
+      results: sort(readyToVaccinateResults)
     },
     vaccinated: {
       label: `Vaccinated (${vaccinatedResults.length})`,
