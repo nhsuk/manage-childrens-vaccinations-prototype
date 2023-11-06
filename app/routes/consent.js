@@ -111,6 +111,9 @@ export default (router) => {
       delete req.session.data.response.healthAnswerDetails
     }
 
-    res.redirect(res.locals.paths.next)
+    // Remove ?responseId from path
+    const next = res.locals.paths.next.replace(/\?responseId=\d/, '')
+
+    res.redirect(next)
   })
 }
