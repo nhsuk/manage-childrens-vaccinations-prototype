@@ -8,12 +8,13 @@
         <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
             <th class="nhsuk-table__header">Name</th>
-            <th class="nhsuk-table__header">
-              {{- "Reason for refusal" if isRefusalReasonNeeded else "Date of birth" -}}
-            </th>
-            <th class="nhsuk-table__header">
-              {{- "Action needed" if tab.actionNeeded else "Outcome" -}}
-            </th>
+            <th class="nhsuk-table__header app-u-nowrap">Date of birth</th>
+            {% if isRefusalReasonNeeded %}
+            <th class="nhsuk-table__header">Reason for refusal</th>
+            {% endif %}
+            {% if tab.statusColumn %}
+            <th class="nhsuk-table__header">{{ tab.statusColumn }}</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody class="nhsuk-table__body">
@@ -26,24 +27,27 @@
                 {% endif %}
               </td>
               <td class="nhsuk-table__cell nhsuk-u-font-size-16">
-                {% if isRefusalReasonNeeded %}
-                  {% for reason in patient.consent.refusalReasons %}
-                    {{ reason | noOrphans | safe }}
-                    {% if not loop.last %}<br>{% endif %}
-                  {% endfor %}
-                {% else %}
-                  {{ patient.dob | govukDate("truncate") }}
-                {% endif %}
+                {{ patient.dob | govukDate("truncate") }}
               </td>
+              {% if isRefusalReasonNeeded %}
+              <td class="nhsuk-table__cell nhsuk-u-font-size-16">
+                {% for reason in patient.consent.refusalReasons %}
+                  {{ reason | noOrphans | safe }}
+                  {% if not loop.last %}<br>{% endif %}
+                {% endfor %}
+              </td>
+              {% endif %}
+              {% if tab.statusColumn %}
               <td class="nhsuk-table__cell">
                 {{ tag({
                   text: action(patient).text,
                   classes: "nhsuk-tag--" + action(patient).colour + " nhsuk-u-font-size-16 nhsuk-u-width-full"
-                }) if tab.actionNeeded else tag({
+                }) if tab.statusColumn == "Action needed" else tag({
                   text: outcome(patient).text,
                   classes: "nhsuk-tag--" + outcome(patient).colour + " nhsuk-u-font-size-16 nhsuk-u-width-full"
                 }) }}
               </td>
+              {% endif %}
             </tr>
           {% endfor %}
         </tbody>

@@ -207,7 +207,7 @@ export default (_env) => {
       case consent.outcome === CONSENT_OUTCOME.NO_RESPONSE:
         return { text: 'Get consent', colour: 'blue' }
       case consent.outcome === CONSENT_OUTCOME.INCONSISTENT:
-        return { text: 'Review conflicting consent', colour: 'orange' }
+        return { text: 'Check conflicting consent', colour: 'orange' }
       case consent.outcome === CONSENT_OUTCOME.REFUSED:
         return { text: 'Check refusal', colour: 'orange' }
       case consent.outcome === CONSENT_OUTCOME.FINAL_REFUSAL:
