@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon'
+import filters from '@x-govuk/govuk-prototype-filters'
 import _ from 'lodash'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_CONSENT, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
 
@@ -244,6 +244,17 @@ export default (_env) => {
     let text = 'test'
     let description = 'test'
 
+    // Build list of relationships that have responded
+    const relationships = []
+    patient.responses.forEach(response => {
+      if (response.parentOrGuardian.relationship === 'Other') {
+        relationships.push(response.parentOrGuardian.relationshipOther)
+      } else {
+        relationships.push(response.parentOrGuardian.relationship)
+      }
+    })
+    const respondents = filters.formatList(relationships)
+
     // No outcome yet
     if (patient.outcome !== PATIENT_OUTCOME.NO_OUTCOME_YET) {
       text = patient.outcome
@@ -291,10 +302,10 @@ export default (_env) => {
           description = 'No-one responded to our requests for consent.'
           break
         case CONSENT_OUTCOME.ONLY_MENACWY:
-          description = 'Parent or guardian gave consent for MenACWY.'
+          description = `${respondents} gave consent for MenACWY.`
           break
         case CONSENT_OUTCOME.ONLY_3_IN_1:
-          description = 'Parent or guardian gave consent for the 3-in-1 booster.'
+          description = `${respondents} gave consent for the 3-in-1 booster.`
           break
         case CONSENT_OUTCOME.INCONSISTENT:
           description = 'You can only vaccinate if all respondents give consent.'
@@ -304,7 +315,7 @@ export default (_env) => {
           description = `${patient.fullName} is ready to vaccinate`
           break
         default:
-          description = 'Parent or guardian refused to give consent.'
+          description = `${respondents} refused to give consent.`
       }
 
       const isGillickCompetent = consentRecord?.gillickCompetent === 'Yes'
