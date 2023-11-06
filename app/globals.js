@@ -241,8 +241,8 @@ export default (_env) => {
    */
   globals.outcome = (patient, consentRecord) => {
     let colour = 'blue'
-    let text = 'test'
-    let description = 'test'
+    let description
+    let text
 
     // Build list of relationships that have responded
     const relationships = []
@@ -261,16 +261,11 @@ export default (_env) => {
 
       switch (patient.outcome) {
         case PATIENT_OUTCOME.COULD_NOT_VACCINATE:
-          colour = 'red'
-          description = patient.outcome
-          break
         case PATIENT_OUTCOME.NO_CONSENT:
           colour = 'red'
-          description = patient.consent.outcome
           break
         default:
           colour = 'green'
-          description = patient.outcome
       }
     } else if (patient.triage.outcome) {
       text = patient.triage.outcome

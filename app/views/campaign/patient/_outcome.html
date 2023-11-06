@@ -1,11 +1,14 @@
 {% set descriptionHtml %}
-  <p>{{ outcome(patient, consentRecord).description }}</p>
+  {% set description = outcome(patient, consentRecord).description %}
+  {% if description %}
+    <p>{{ description }}</p>
+  {% endif %}
 
   {{ summaryList({
     rows: decorateRows([
       {
         key: "Reason",
-        value: patient.consent.outcome or patient.triage.outcome or vaccination.outcome
+        value: vaccination.outcome or patient.triage.outcome or patient.consent.outcome
       } if not vaccineGiven,
       {
         key: "Vaccine",
