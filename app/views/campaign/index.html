@@ -49,17 +49,17 @@
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/responses">Check consent responses</a>
               </h2>
-              <p>{{ filters.noResponse.results.length }} children need a consent response</p>
+              <p>{{ filters.noResponse.results.length | replace("0", "No") }} children need a consent response</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/triage">Triage health questions</a>
               </h2>
-              <p>{{ filters.triageNeeded.results.length }} children need triage</p>
+              <p>{{ filters.triageNeeded.results.length | replace("0", "No") }} children need triage</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/record">Record vaccinations</a>
               </h2>
-              <p>{{ filters.readyToVaccinate.results.length }} children ready to vaccinate</p>
+              <p>{{ filters.readyToVaccinate.results.length | replace("0", "No") }} children ready to vaccinate</p>
             {% endif %}
 
             <p class="nhsuk-body nhsuk-u-margin-top-6">
