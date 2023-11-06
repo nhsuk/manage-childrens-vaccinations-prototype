@@ -24,7 +24,7 @@
 
   <h1 class="nhsuk-heading-l">
     {{ title | noOrphans | safe }}
-    <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ campaign.date | govukDate() }} at {{ campaign.date | govukTime }}</span>
+    <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ campaign.date | govukDate() }} at {{ campaign.date | govukTime }} · {{ campaign.cohort.length | plural("child") }}</span>
   </h1>
 
   {% if not isOffline or campaign["available-offline"] %}
@@ -49,17 +49,17 @@
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/responses">Check consent responses</a>
               </h2>
-              <p>{{ filters.noResponse.results.length | replace("0", "No") }} children need a consent response</p>
+              <p>{{ filters.noResponse.results.length | plural("child") }} without a response, {{ filters.consentRefused.results.length | plural("respondent") }} refused</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/triage">Triage health questions</a>
               </h2>
-              <p>{{ filters.triageNeeded.results.length | replace("0", "No") }} children need triage</p>
+              <p>{{ filters.triageNeeded.results.length | plural("child") }} needing triage</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/record">Record vaccinations</a>
               </h2>
-              <p>{{ filters.readyToVaccinate.results.length | replace("0", "No") }} children ready to vaccinate</p>
+              <p>{{ filters.readyToVaccinate.results.length | plural("child") }} ready to vaccinate</p>
             {% endif %}
 
             <p class="nhsuk-body nhsuk-u-margin-top-6">
