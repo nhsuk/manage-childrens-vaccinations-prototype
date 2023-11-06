@@ -58,6 +58,16 @@ export default (_env) => {
   }
 
   /**
+   * Get patient record from NHS number
+   * @param {string} nhsNumber - NHS Number
+   * @param {object} campaign - Campaign
+   * @returns {string} Formatted NHS number
+   */
+  filters.patientFromNHSNumber = (string, campaign) => {
+    return campaign.cohort.find(patient => patient.nhsNumber === string)
+  }
+
+  /**
    * Convert div.nhsuk-card to form.nhsuk-card
    * @param {string} string - HTML
    * @returns {string} Formatted HTML
