@@ -31,10 +31,17 @@
               </td>
               {% if isRefusalReasonNeeded %}
               <td class="nhsuk-table__cell nhsuk-u-font-size-16">
-                {% for reason in patient.consent.refusalReasons %}
-                  {{ reason | noOrphans | safe }}
-                  {% if not loop.last %}<br>{% endif %}
-                {% endfor %}
+                {% if patient.outcome == PATIENT_OUTCOME.NO_CONSENT %}
+                  {{ tag({
+                    text: "Confirmed",
+                    classes: "nhsuk-tag--red nhsuk-u-font-size-16 nhsuk-u-width-full"
+                  }) }}
+                {% else %}
+                  {% for reason in patient.consent.refusalReasons %}
+                    {{ reason | noOrphans | safe }}
+                    {% if not loop.last %}<br>{% endif %}
+                  {% endfor %}
+                {% endif %}
               </td>
               {% endif %}
               {% if tab.statusColumn %}
