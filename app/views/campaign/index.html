@@ -33,30 +33,33 @@
         <div class="nhsuk-card">
           <div class="nhsuk-card__content">
             {% if not data.features.pilot.on %}
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+              <h2 class="nhsuk-heading-s">
                 <a href="#">Send consent requests</a>
               </h2>
             {% endif %}
 
             {% if not hasPatients %}
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="#">Add children</a>
               </h2>
               <p>Upload a list of children in this school</p>
             {% endif %}
 
             {% if hasPatients %}
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/responses">Check consent responses</a>
               </h2>
+              <p>{{ filters.noResponse.results.length }} children need a consent response</p>
 
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/triage">Triage health questions</a>
               </h2>
+              <p>{{ filters.triageNeeded.results.length }} children need triage</p>
 
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
+              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/campaign/{{ campaign.id }}/record">Record vaccinations</a>
               </h2>
+              <p>{{ filters.readyToVaccinate.results.length }} children ready to vaccinate</p>
             {% endif %}
 
             <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">
@@ -69,7 +72,7 @@
       <div class="nhsuk-grid-column-one-third">
         {% if hasPatients and not campaign["available-offline"] %}
         <div id="save-offline">
-          <h2 class="nhsuk-heading-s">Save offline</h2>
+          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">Save offline</h2>
           <p>Record vaccinations while not connected to the internet.</p>
 
           <form method="post">

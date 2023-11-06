@@ -27,6 +27,8 @@ export default (router) => {
       campaign.hadOfflineChanges = true
     }
 
+    res.locals.filters = filters(req, res)
+
     next()
   })
 
@@ -121,8 +123,6 @@ export default (router) => {
     '/campaign/:campaignId/triage',
     '/campaign/:campaignId/record'
   ], (req, res, next) => {
-    res.locals.filters = filters(req, res)
-
     if (res.locals.success) {
       const campaign = req.session.data.campaigns[req.params.campaignId]
       res.locals.successChild = campaign.cohort.find(patient => {
