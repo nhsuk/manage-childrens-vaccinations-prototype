@@ -23,6 +23,12 @@
           decorate: "user.password"
         }) }}
 
+        {{ input({
+          value: "true",
+          type: "hidden",
+          decorate: "token"
+        }) }}
+
         <p><a href="#">I’ve forgotten my password</a></p>
 
         {{ button({
