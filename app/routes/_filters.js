@@ -11,14 +11,18 @@ const filters = {
     return cohort.filter(({ consent, triage }) => {
       switch (action) {
         case 'get-consent':
-          return consent?.outcome === CONSENT_OUTCOME.NO_RESPONSE
+          return consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
         case 'check-refusal':
-          return consent?.outcome === CONSENT_OUTCOME.REFUSED
+          return consent.outcome === CONSENT_OUTCOME.REFUSED
         case 'triage':
-          return triage?.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
+          return triage.outcome === TRIAGE_OUTCOME.NEEDS_TRIAGE
         case 'vaccinate':
-          return triage?.outcome === TRIAGE_OUTCOME.VACCINATE ||
-            consent?.outcome === CONSENT_OUTCOME.GIVEN
+          if (triage.outcome) {
+            return triage.outcome === TRIAGE_OUTCOME.VACCINATE &&
+              consent.outcome === CONSENT_OUTCOME.GIVEN
+          } else {
+            return consent.outcome === CONSENT_OUTCOME.GIVEN
+          }
         default:
           return false
       }
