@@ -34,8 +34,9 @@
   {{ button({
     classes: "nhsuk-u-margin-bottom-0",
     text: "Save triage",
-    name: "isTriage",
-    value: true
+    attributes: {
+      formaction: "?flow=triage"
+    }
   }) }}
 {% endset %}
 

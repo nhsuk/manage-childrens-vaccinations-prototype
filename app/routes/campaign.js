@@ -53,10 +53,10 @@ export default (router) => {
   router.post('/campaign/:campaignId/patient/:nhsNumber', (req, res, next) => {
     const { patient } = res.locals
     const { campaignId, nhsNumber } = req.params
-    const { isTriage } = req.session.data
+    const { flow } = req.query
     const triage = _.get(req.body, `triage.${campaignId}.${nhsNumber}`, {})
 
-    if (isTriage && triage) {
+    if (flow === 'triage' && triage) {
       patient.triage.outcome = triage.outcome
       patient.triage.completed = true
 
