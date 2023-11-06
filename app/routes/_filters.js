@@ -139,38 +139,31 @@ export default (req, res) => {
   return {
     noResponse: {
       label: `No response (${noResponseResults.length})`,
-      results: sort(noResponseResults),
-      actionNeeded: true
+      results: sort(noResponseResults)
     },
     consentValid: {
       label: `Consent given (${consentValidResults.length})`,
-      results: sort(consentValidResults),
-      actionNeeded: true
+      results: sort(consentValidResults)
     },
     consentRefused: {
       label: `Consent refused (${consentRefusedResults.length})`,
-      results: sort(consentRefusedResults),
-      actionNeeded: true
+      results: sort(consentRefusedResults)
     },
     consentConflicts: {
       label: `Consent conflicts (${consentConflictsResults.length})`,
-      results: sort(consentConflictsResults),
-      actionNeeded: true
+      results: sort(consentConflictsResults)
     },
     triageNeeded: {
       label: `Triage needed (${triageNeededResults.length})`,
-      results: sort(triageNeededResults),
-      actionNeeded: true
+      results: sort(triageNeededResults)
     },
     triageCompleted: {
       label: `Triage completed (${triageCompletedResults.length})`,
-      results: sort(triageCompletedResults),
-      actionNeeded: true
+      results: sort(triageCompletedResults)
     },
     noTriageNeeded: {
       label: `No triage needed (${noTriageNeededResults.length})`,
-      results: sort(noTriageNeededResults),
-      actionNeeded: true
+      results: sort(noTriageNeededResults)
     },
     readyToVaccinate: {
       label: `Not vaccinated (${readyToVaccinateResults.length})`,
@@ -178,16 +171,18 @@ export default (req, res) => {
     },
     vaccinated: {
       label: `Vaccinated (${vaccinatedResults.length})`,
-      results: sort(vaccinatedResults)
+      results: sort(vaccinatedResults),
+      statusColumn: 'Outcome'
     },
     couldNotVaccinate: {
       label: `Could not vaccinate (${couldNotVaccinateResults.length})`,
-      results: sort(couldNotVaccinateResults)
+      results: sort(couldNotVaccinateResults),
+      statusColumn: 'Outcome'
     },
     actionNeeded: {
       label: `Action needed (${actionNeededResults.length})`,
       results: sort(actionNeededResults),
-      actionNeeded: true,
+      statusColumn: 'Action needed',
       actionNeededFilter: true
     }
   }
