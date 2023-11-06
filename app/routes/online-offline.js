@@ -1,5 +1,5 @@
-const goOffline = (session) => {
-  session.data.features.offline.on = true
+const goOffline = (req) => {
+  req.session.data.features.offline.on = true
 }
 
 const goOnline = (req) => {
@@ -41,6 +41,11 @@ export default (router, hasOfflineChanges) => {
     }
 
     next()
+  })
+
+  router.get('/go-offline', (req, res) => {
+    goOffline(req)
+    res.redirect('back')
   })
 
   router.get('/go-online', (req, res) => {
