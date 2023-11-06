@@ -17,12 +17,12 @@ const syncOfflineChanges = (req) => {
 }
 
 export default (router, hasOfflineChanges) => {
-  router.post(['/scenario-office', '/scenario-back-online'], (req, res) => {
+  router.post(['/scenarios/office', '/scenarios/back-online'], (req, res) => {
     goOnline(req)
     hasOfflineChanges ? res.redirect('/back-online') : res.redirect('/dashboard')
   })
 
-  router.post('/scenario-offline', (req, res) => {
+  router.post('/scenarios/offline', (req, res) => {
     goOffline(req.session)
 
     if (req.session.data.hasOfflineCode) {
