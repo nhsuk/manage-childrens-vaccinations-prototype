@@ -79,10 +79,10 @@ router.all('*', (req, res, next) => {
 })
 
 accountRoutes(router)
+newCampaignRoutes(router)
 campaignRoutes(router)
 consent(router)
 daySetupRoutes(router)
-newCampaignRoutes(router)
 onlineOfflineRoutes(router, hasOfflineChanges)
 redirects(router)
 userRoutes(router)
