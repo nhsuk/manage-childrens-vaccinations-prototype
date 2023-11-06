@@ -110,26 +110,8 @@ export default (router) => {
         .find(patient => patient.nhsNumber === nhsNumber)
       patient.outcome = PATIENT_OUTCOME.NO_CONSENT
       patient.seen.isOffline = res.locals.isOffline
-      res.locals.successChild = patient
-    } else if (res.locals.success) {
-      res.locals.successChild = campaign.cohort
-        .find(patient => patient.nhsNumber === req.query.success)
     }
 
-    next()
-  })
-
-  router.all([
-    '/campaign/:campaignId/responses',
-    '/campaign/:campaignId/triage',
-    '/campaign/:campaignId/record'
-  ], (req, res, next) => {
-    if (res.locals.success) {
-      const campaign = req.session.data.campaigns[req.params.campaignId]
-      res.locals.successChild = campaign.cohort.find(patient => {
-        return patient.nhsNumber === req.query.success
-      })
-    }
     next()
   })
 

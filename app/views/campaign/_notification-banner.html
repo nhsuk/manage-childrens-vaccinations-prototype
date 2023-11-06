@@ -1,19 +1,20 @@
+{% set patient = data.success | patientFromNHSNumber(campaign) %}
 {% if noConsent %}
   {% set html %}
     {% if isOffline %}
       <p class="govuk-notification-banner__heading">
-        Offline changes saved for {{ successChild.fullName }}
+        Offline changes saved for {{ patient.fullName }}
       </p>
       <p>
         You will need to go online to sync your changes.
       </p>
     {% else %}
       <p class="govuk-notification-banner__heading">
-        Outcome saved for {{ successChild.fullName }}
+        Outcome saved for {{ patient.fullName }}
       </p>
     {% endif %}
     <p>
-      <a href="/campaign/{{ campaign.id }}/patient/{{ successChild.nhsNumber }}">View child record</a>
+      <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">View child record</a>
     </p>
   {% endset %}
 
@@ -25,18 +26,18 @@
   {% set html %}
     {% if isOffline %}
       <p class="govuk-notification-banner__heading">
-        Offline changes saved for {{ successChild.fullName }}
+        Offline changes saved for {{ patient.fullName }}
       </p>
       <p>
         You will need to go online to sync your changes.
       </p>
     {% else %}
       <p class="govuk-notification-banner__heading">
-        Record saved for {{ successChild.fullName }}
+        Record saved for {{ patient.fullName }}
       </p>
     {% endif %}
     <p>
-      <a href="/campaign/{{ campaign.id }}/patient/{{ successChild.nhsNumber or success }}">View child record</a>
+      <a href="/campaign/{{ campaign.id }}/patient/{{ patient.nhsNumber or success }}">View child record</a>
     </p>
   {% endset %}
 
