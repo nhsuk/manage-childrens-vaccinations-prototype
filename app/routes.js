@@ -2,14 +2,15 @@ import express from 'express'
 import getConsentOutcome from './utils/consent-outcome.js'
 import getTriageOutcome from './utils/triage-outcome.js'
 import getPatientOutcome from './utils/patient-outcome.js'
-import vaccinationRoutes from './routes/vaccination.js'
+import accountRoutes from './routes/account.js'
+import campaignRoutes from './routes/campaign.js'
+import consent from './routes/consent.js'
 import daySetupRoutes from './routes/day-setup.js'
 import newCampaignRoutes from './routes/new-campaign.js'
-import campaignRoutes from './routes/campaign.js'
-import userRoutes from './routes/user.js'
-import onlineOfflineRoutes from './routes/online-offline.js'
 import redirects from './routes/redirects.js'
-import consent from './routes/consent.js'
+import onlineOfflineRoutes from './routes/online-offline.js'
+import userRoutes from './routes/user.js'
+import vaccinationRoutes from './routes/vaccination.js'
 import vaccineBatchRoutes from './routes/vaccine-batches.js'
 
 const router = express.Router()
@@ -77,14 +78,15 @@ router.all('*', (req, res, next) => {
   next()
 })
 
-vaccinationRoutes(router)
+accountRoutes(router)
+campaignRoutes(router)
+consent(router)
 daySetupRoutes(router)
 newCampaignRoutes(router)
-campaignRoutes(router)
-userRoutes(router)
 onlineOfflineRoutes(router, hasOfflineChanges)
 redirects(router)
-consent(router)
+userRoutes(router)
+vaccinationRoutes(router)
 vaccineBatchRoutes(router)
 
 export default router

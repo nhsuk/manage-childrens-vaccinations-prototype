@@ -29,12 +29,32 @@
   {% endif %}
 
   {{ header({
-    transactionalService: {
+    classes: "app-header",
+    service: {
       name: serviceName,
-      href: "/"
+      href: "/dashboard" if data.token else "/"
     },
-    showNav: "false",
-    showSearch: "false"
+    homeHref: "/dashboard" if data.token else "/",
+    showNav: "true" if data.token else "false",
+    showSearch: "false",
+    primaryLinks: [
+      {
+        url: "/school-sessions",
+        label: "School sessions"
+      },
+      {
+        url: "/vaccines",
+        label: "Manage vaccines"
+      },
+      {
+        url: "#",
+        label: data.user.email
+      },
+      {
+        url: "/account/sign-out",
+        label: "Sign out"
+      }
+    ]
   }) }}
 {% endblock %}
 
