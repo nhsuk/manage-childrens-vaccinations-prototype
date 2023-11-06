@@ -5,26 +5,20 @@
 {% block content %}
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {{ heading({ title: serviceName + " prototype", size: "xl" }) }}
+      {{ heading({ title: title, size: "xl" }) }}
 
-      <ul class="nhsuk-list">
-        <li><a href="/start">Start page</a></li>
-        <li><a href="/dashboard">Signed in dashboard</a></li>
-        <li><a href="/go/record">Record vaccinations view</a></li>
-        <li><a href="/go/in-progress">In progress session</a></li>
-        <li><a href="/go/in-progress-triage">In progress triage</a></li>
-        <li><a href="/go/triage">Triage view</a></li>
+      <p>Use this service to:</p>
+
+      <ul class="nhsuk-list nhsuk-list--bullet nhsuk-u-margin-bottom-6">
+        <li>triage consent requests</li>
+        <li>approve children for vaccination</li>
+        <li>keep a record of vaccinations given to children</li>
       </ul>
 
-      <h2 class="nhsuk-heading-m">Other prototypes</h2>
-      <p>
-        <a href="https://consent-prototype.herokuapp.com/">Give or refuse consent for vaccinations</a>
-      </p>
-
-      <h2 class="nhsuk-heading-m">Design history</h2>
-      <p>
-        <a href="https://childhood-vaccinations.designhistory.app/">Design history</a>
-      </p>
+      {{ button({
+        text: "Start now",
+        href: "/sign-in"
+      }) }}
     </div>
   </div>
 {% endblock %}
