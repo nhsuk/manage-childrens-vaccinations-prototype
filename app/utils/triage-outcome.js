@@ -1,4 +1,3 @@
-import { fakerEN_GB as faker } from '@faker-js/faker'
 import { TRIAGE_OUTCOME } from '../enums.js'
 import getNote from '../generators/note.js'
 

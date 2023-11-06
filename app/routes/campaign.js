@@ -67,7 +67,8 @@ export default (router) => {
 
       // Update triage notes
       if (triage.note) {
-        patient.triage.notes.push(getNote(triage.note, true))
+        const { user } = req.session.data
+        patient.triage.notes.push(getNote(triage.note, user, true))
       }
 
       res.redirect(`/campaign/${campaignId}/triage?success=${nhsNumber}`)

@@ -62,7 +62,8 @@ export default (router) => {
 
     // Add any triage notes
     if (triage?.note) {
-      patient.triage.notes.push(getNote(triage.note))
+      const { user } = req.session.data
+      patient.triage.notes.push(getNote(triage.note, user))
     }
 
     // Delete temporary session data
