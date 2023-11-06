@@ -2,13 +2,6 @@
 
 {% set title = "School sessions" %}
 
-{% block outerContent %}
-  {{ breadcrumb({
-    text: "Home",
-    href: "/dashboard"
-  }) }}
-{% endblock %}
-
 {% block content %}
   {{ warningCallout({
     heading: "You have offline changes",
@@ -19,7 +12,10 @@
   {{ heading({ title: title, size: "xl" }) }}
 
   {% if not isOffline %}
-    <p><a href="/campaign/new/start">Add a session</a></p>
+    {{ button({
+      href: "/campaign/new/start",
+      text: "Add a new session"
+    }) }}
   {% endif %}
 
   {% set flu = data.campaigns | objectToArray | selectFromArray("type", "Flu") %}

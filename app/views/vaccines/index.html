@@ -1,18 +1,16 @@
 {% extends "_layouts/default.html" %}
 {% set title = "Manage vaccines" %}
 
-{% block outerContent %}
-  {{ breadcrumb({
-    text: "Home",
-    href: "/dashboard"
-  }) }}
-{% endblock %}
-
 {% block content %}
-  {{ heading({ title: title }) }}
-
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
+      {{ heading({ title: title, size: "xl" }) }}
+
+      {{ button({
+        href: "#",
+        text: "Add a new vaccine"
+      }) }}
+
       {% for vaccine in data.vaccines.brands %}
         {% set descriptionHtml %}
           <p class="nhsuk-body"><a href="#">Add a batch</a></p>
@@ -51,11 +49,6 @@
           descriptionHtml: descriptionHtml
         }) }}
       {% endfor %}
-
-      {{ button({
-        href: "#",
-        text: "Add a new vaccine"
-      }) }}
     </div>
   </div>
 {% endblock %}
