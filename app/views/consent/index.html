@@ -3,52 +3,35 @@
 {% set title = "Who are you trying to get consent from?" %}
 
 {% block form %}
-  {{ heading({ caption: patient.fullName, title: title }) }}
-
-  {{ input({
-    label: {
-      text: "Full name"
-    },
-    decorate: ["response", "parentOrGuardian", "fullName"]
-  }) }}
-
-  {{ input({
-    label: {
-      text: "Phone number"
-    },
-    decorate: ["response", "parentOrGuardian", "tel"]
-  }) }}
-
-  {% set other %}
-    <p>They need parental responsibility to give consent.</p>
-    {{ input({
-      label: {
-        text: "Relationship to the child"
-      },
-      hint: {
-        text: "For example, carer"
-      },
-      decorate: ["response", "parentOrGuardian", "relationshipOther"]
-    }) }}
-  {% endset %}
-
   {{ radios({
     fieldset: {
       legend: {
-        text: "Relationship to the child"
+        text: heading({ caption: patient.fullName, title: title }),
+        classes: "nhsuk-fieldset__legend--l"
       }
     },
     items: [
-      { text: "Mum" },
-      { text: "Dad" },
-      { text: "Guardian" },
       {
-        text: "Other",
-        conditional: {
-          html: other
-        }
+        text: exampleParents.a.fullName,
+        label: {
+          classes: "nhsuk-label--s"
+        },
+        hint: {
+          html: patient.address | replace("\n", ", ") + "<br>" + exampleParents.a.tel
+        },
+        value: "a"
+      },
+      {
+        text: exampleParents.b.fullName,
+        label: {
+          classes: "nhsuk-label--s"
+        },
+        hint: {
+          html: patient.address | replace("\n", ", ") + "<br>" + exampleParents.b.tel
+        },
+        value: "b"
       }
     ],
-    decorate: ["response", "parentOrGuardian", "relationship"]
+    decorate: ["exampleParent"]
   }) }}
 {% endblock %}

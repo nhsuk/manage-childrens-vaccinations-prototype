@@ -34,6 +34,24 @@ export default (router) => {
     res.locals.response = req.session.data.response
     res.locals.triage = req.session.data.triage
 
+    const { lastName } = res.locals.patient
+    res.locals.exampleParents = {
+      a: {
+        firstName: 'Anthony',
+        lastName,
+        fullName: `Anthony ${lastName}`,
+        tel: '0117 123 4567',
+        relationship: 'Dad'
+      },
+      b: {
+        firstName: 'Laura',
+        lastName,
+        fullName: `Laura ${lastName}`,
+        tel: '0117 987 6543',
+        relationship: 'Mum'
+      }
+    }
+
     next()
   })
 
@@ -77,10 +95,17 @@ export default (router) => {
    * Update session data during question flow
    */
   router.post('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
-    const { patient, responseId } = res.locals
+    const { exampleParents, patient, responseId } = res.locals
     const { view } = req.params
-    const { response, user } = req.session.data
+    let { exampleParent, response, user } = req.session.data
     const parentOrGuardian = patient.responses[responseId]?.parentOrGuardian
+
+    if (!view) {
+      exampleParent = exampleParent || 'a'
+      req.session.data.response = {
+        parentOrGuardian: exampleParents[exampleParent]
+      }
+    }
 
     if (view === 'consent') {
       let name = response.status
@@ -111,8 +136,12 @@ export default (router) => {
       delete req.session.data.response.healthAnswerDetails
     }
 
-    // Remove ?responseId from path
-    const next = res.locals.paths.next.replace(/\?responseId=\d/, '')
+    // Remove ?responseId and ?referrer from path
+    // TODO: Find out which function is appending queries incorrectly
+    // Is this an upstream issue in the NHS Prototype Rig?
+    const next = res.locals.paths.next
+      .replace(/\?responseId=\d/, '')
+      .replace(/\?referrer=.*/, '')
 
     res.redirect(next)
   })
