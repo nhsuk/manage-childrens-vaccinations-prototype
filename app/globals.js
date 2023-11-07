@@ -267,7 +267,7 @@ export default (_env) => {
         default:
           colour = 'green'
       }
-    } else if (patient.triage.outcome) {
+    } else if (patient.triage.outcome && patient.consent.outcome === CONSENT_OUTCOME.GIVEN) {
       text = patient.triage.outcome
       const user = patient.triage.notes.at(-1)?.user.fullName || 'Jane Doe'
 
