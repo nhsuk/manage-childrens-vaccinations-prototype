@@ -105,7 +105,7 @@ $govuk-assets-path: "/govuk/assets/";
 
 // App components
 .app-header {
-  .nhsuk-header__navigation-item:has(a[href="/users"]) {
+  .nhsuk-header__navigation-item:has(a[href="/vaccines"]) {
     margin-right: auto;
   }
 }
