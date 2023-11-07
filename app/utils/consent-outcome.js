@@ -62,6 +62,9 @@ export default (patient) => {
     consent.refusalReasons = [...new Set(refusalReasons)]
   }
 
+  // Add value to indicate presence of health answers
+  consent.hasHealthAnswers = responses.filter(response => response.healthAnswers).length > 0
+
   patient.consent = {
     ...consent,
     outcome
