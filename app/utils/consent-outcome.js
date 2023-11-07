@@ -57,6 +57,8 @@ export default (patient) => {
   const refusalReasons = []
   if (outcome === CONSENT_OUTCOME.REFUSED || outcome === CONSENT_OUTCOME.FINAL_REFUSAL) {
     for (const response of Object.values(responses)) {
+      if (!response.refusalReason) { continue }
+
       refusalReasons.push(response.refusalReason)
     }
     consent.refusalReasons = [...new Set(refusalReasons)]

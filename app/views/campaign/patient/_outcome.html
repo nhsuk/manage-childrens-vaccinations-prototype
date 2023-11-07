@@ -11,6 +11,12 @@
         value: vaccination.outcome or patient.triage.outcome or patient.consent.outcome
       } if not vaccineGiven,
       {
+        key: "Refusal " + (patient.consent.refusalReasons.length | plural("reason", showNumber=false)),
+        value: {
+          html: patient.consent.refusalReasons.join("<br>")
+        }
+      } if not vaccineGiven and patient.consent.refusalReasons,
+      {
         key: "Vaccine",
         value: data.vaccines.batches[vaccination.batch].summary
       } if vaccineGiven,
