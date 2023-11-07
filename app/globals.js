@@ -1,5 +1,6 @@
 import filters from '@x-govuk/govuk-prototype-filters'
 import _ from 'lodash'
+import { relationshipName } from './utils/relationship.js'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_CONSENT, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
 
 export default (_env) => {
@@ -163,9 +164,11 @@ export default (_env) => {
       let answer
       const answers = []
       for (const response of uniqueResponses) {
+        const relationship = relationshipName(response.parentOrGuardian)
+
         if (responses.length > 1) {
           const who = uniqueResponses.length > 1
-            ? `${response.parentOrGuardian.relationship} responded: `
+            ? `${relationship} responded: `
             : 'All responded: '
 
           answers.push(`<p>${who} ${getHealthAnswer(response, id)}</p>`)
@@ -247,11 +250,8 @@ export default (_env) => {
     // Build list of relationships that have responded
     const relationships = []
     patient.responses.forEach(response => {
-      if (response.parentOrGuardian.relationship === 'Other') {
-        relationships.push(response.parentOrGuardian.relationshipOther)
-      } else {
-        relationships.push(response.parentOrGuardian.relationship)
-      }
+      const relationship = relationshipName(response.parentOrGuardian)
+      relationships.push(relationship)
     })
     const respondents = filters.formatList(relationships)
 
@@ -362,9 +362,11 @@ export default (_env) => {
    */
   globals.responseHeading = (response) => {
     const { status, parentOrGuardian } = response
+    const relationship = relationshipName(parentOrGuardian)
+
     return status === RESPONSE_CONSENT.NO_RESPONSE
-      ? `${parentOrGuardian.fullName} (${parentOrGuardian.relationship})`
-      : `${status} by ${parentOrGuardian.fullName} (${parentOrGuardian.relationship})`
+      ? `${parentOrGuardian.fullName} (${relationship})`
+      : `${status} by ${parentOrGuardian.fullName} (${relationship})`
   }
 
   /**

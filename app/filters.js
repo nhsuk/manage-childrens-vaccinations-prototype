@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import { relationshipName } from './utils/relationship.js'
 
 export default (_env) => {
   const filters = {}
@@ -79,6 +80,15 @@ export default (_env) => {
       .replace(/<\/div>\n$/, '</form>')
 
     return filters.safe(html)
+  }
+
+  /**
+   * Return fully resolved relationship name
+   * @param {object} object - Object containing parent or guardian
+   * @returns {string} Relationship name
+   */
+  filters.relationshipName = (object) => {
+    return relationshipName(object)
   }
 
   /**
