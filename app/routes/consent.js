@@ -1,5 +1,5 @@
 import merge from 'deepmerge'
-import { RESPONSE_CONSENT } from '../enums.js'
+import { RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
 import getNote from '../generators/note.js'
 import wizard from '../wizards/consent.js'
 
@@ -78,6 +78,11 @@ export default (router) => {
       patient.triage.outcome = triage.outcome
     }
 
+    // If triage completed, set completed boolean
+    if (triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
+      patient.triage.completed = true
+    }
+
     // Add any triage notes
     if (triage?.note) {
       const { user } = req.session.data
@@ -85,6 +90,7 @@ export default (router) => {
     }
 
     // Delete temporary session data
+    delete req.session.data.exampleParent
     delete req.session.data.response
     delete req.session.data.triage
 
