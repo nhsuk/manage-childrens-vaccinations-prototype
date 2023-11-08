@@ -79,7 +79,7 @@ export default (router) => {
     }
 
     // If triage completed, set completed boolean
-    if (triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
+    if (triage?.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) {
       patient.triage.completed = true
     }
 
