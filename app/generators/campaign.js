@@ -21,8 +21,14 @@ const ageRange = (type) => {
   }
 }
 
-export default () => {
-  const type = faker.helpers.arrayElement(['HPV', 'Flu']) // Exclude 3-in-1 and MenACWY for now, as the design is not ready
+/**
+ * Generate campaign
+ * @param {string} type - Campaign type
+ */
+export default (type) => {
+  // Exclude 3-in-1 and MenACWY for now, as the design is not ready
+  type = type || faker.helpers.arrayElement(['HPV', 'Flu'])
+
   const school = getSchool(type)
   const atTime = faker.helpers.arrayElement(['09:00', '10:00', '11:00', '12:30', '13:00', '14:00'])
   const daysUntil = faker.number.int({ min: 2, max: 100 })

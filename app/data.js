@@ -18,7 +18,10 @@ import getVaccines from './generators/vaccines.js'
 
 // Create campaigns, with one in progress
 const campaignsArray = faker.helpers.multiple(getCampaign, { count: 20 })
-campaignsArray.push(getCampaignInProgress())
+
+// Add in progress campaigns
+campaignsArray.push(getCampaignInProgress('Flu'))
+campaignsArray.push(getCampaignInProgress('HPV'))
 
 // Sort campaigns by date
 campaignsArray.sort((a, b) =>
