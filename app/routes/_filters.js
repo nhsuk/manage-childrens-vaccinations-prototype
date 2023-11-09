@@ -47,9 +47,8 @@ const filters = {
     )
   },
   triageCompleted: (cohort) => {
-    return cohort.filter(({ consent, triage, outcome }) =>
-      outcome === PATIENT_OUTCOME.NO_OUTCOME_YET &&
-      triage.outcome && triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE &&
+    return cohort.filter(({ consent, triage }) =>
+      (triage.outcome && triage.outcome !== TRIAGE_OUTCOME.NEEDS_TRIAGE) &&
       consent.outcome === CONSENT_OUTCOME.GIVEN
     )
   },
