@@ -108,7 +108,7 @@ export default (router) => {
 
     if (!view) {
       exampleParent = exampleParent || 'a'
-      req.session.data.response = {
+      response = {
         parentOrGuardian: exampleParents[exampleParent]
       }
     }
@@ -129,17 +129,15 @@ export default (router) => {
       const date = new Date()
 
       response.events = [{ name, date, user }]
-    }
 
-    // Use existing parent or guardian information when checking refusal
-    // or use user getting consent
-    if (view === 'consent') {
-      req.session.data.response.parentOrGuardian = parentOrGuardian || patient
+      // Use existing parent or guardian information when checking refusal
+      // or use user getting consent
+      response.parentOrGuardian = parentOrGuardian || patient
     }
 
     // Use correct format for `response.healthAnswers`
     if (view === 'health-questions') {
-      req.session.data.response.healthAnswers = getHealthAnswers(response)
+      response.healthAnswers = getHealthAnswers(response)
       delete req.session.data.response.healthAnswerDetails
     }
 
