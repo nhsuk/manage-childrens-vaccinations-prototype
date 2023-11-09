@@ -15,7 +15,7 @@ const setConsentOutcome = (patient) => {
     if (checkedRefusal) {
       const contact = patient.responses[0].parentOrGuardian.relationship
       patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
-      patient.outcome = PATIENT_OUTCOME.NO_CONSENT
+      patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       patient.consent.notes.push(getNote(`Spoke to ${contact.toLowerCase()} who confirmed decision.`))
     }
   }

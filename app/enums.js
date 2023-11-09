@@ -1,6 +1,5 @@
 export const PATIENT_OUTCOME = {
   NO_OUTCOME_YET: 'No outcome yet',
-  NO_CONSENT: 'No consent given',
   VACCINATED: 'Vaccinated',
   COULD_NOT_VACCINATE: 'Could not vaccinate'
 }
