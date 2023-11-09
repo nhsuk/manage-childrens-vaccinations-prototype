@@ -3,7 +3,7 @@
 {% set title = campaign.title %}
 {% set hasPatients = campaign.cohort.length > 0 %}
 
-{% block outerContent %}
+{% block beforeContent %}
   {{ breadcrumb({
     items: [
       {
