@@ -132,8 +132,17 @@ export default (router) => {
     }
 
     // Use existing parent or guardian information when checking refusal
-    if (view === 'consent' && parentOrGuardian) {
-      req.session.data.response.parentOrGuardian = parentOrGuardian
+    // or use user getting consent
+    if (view === 'consent') {
+      const { firstName, lastName, fullName, email } = user
+
+      req.session.data.response.parentOrGuardian = parentOrGuardian || {
+        firstName,
+        lastName,
+        fullName,
+        email,
+        relationship: 'Nurse'
+      }
     }
 
     // Use correct format for `response.healthAnswers`
@@ -148,6 +157,7 @@ export default (router) => {
     const next = res.locals.paths.next
       .replace(/\?responseId=\d/, '')
       .replace(/\?referrer=.*/, '')
+      .replace(/\?gillick*/, '')
 
     res.redirect(next)
   })
