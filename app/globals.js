@@ -245,15 +245,18 @@ export default (_env) => {
   globals.outcome = (patient, consentRecord) => {
     let colour = 'blue'
     let description
+    let respondents
     let text
 
     // Build list of relationships that have responded
-    const relationships = []
     patient.responses.forEach(response => {
-      const relationship = relationshipName(response.parentOrGuardian)
-      relationships.push(relationship)
+      const relationships = []
+      if (response.parentOrGuardian.relationship) {
+        const relationship = relationshipName(response.parentOrGuardian)
+        relationships.push(relationship)
+      }
+      respondents = filters.formatList(relationships)
     })
-    const respondents = filters.formatList(relationships)
 
     // No outcome yet
     if (patient.outcome !== PATIENT_OUTCOME.NO_OUTCOME_YET) {
@@ -313,9 +316,9 @@ export default (_env) => {
           description = `${respondents} refused to give consent.`
       }
 
-      const isGillickCompetent = consentRecord?.gillickCompetent === 'Yes'
+      const { isGillickCompetent, isNotGillickCompetent } = patient.consent
       if (patient.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE) {
-        if (patient.assessedAsNotGillickCompetent) {
+        if (isNotGillickCompetent) {
           description += 'When assessed, the child was not Gillick competent.'
         } else if (isGillickCompetent) {
           description += 'The child was assessed as Gillick competent, but they refused consent.'
@@ -364,9 +367,13 @@ export default (_env) => {
     const { status, parentOrGuardian } = response
     const relationship = relationshipName(parentOrGuardian)
 
-    return status === RESPONSE_CONSENT.NO_RESPONSE
-      ? `${parentOrGuardian.fullName} (${relationship})`
-      : `${status} by ${parentOrGuardian.fullName} (${relationship})`
+    const statusText = status === RESPONSE_CONSENT.NO_RESPONSE
+      ? parentOrGuardian.fullName
+      : `${status} by ${parentOrGuardian.fullName}`
+
+    return relationship
+      ? statusText + ` (${relationship})`
+      : statusText
   }
 
   /**

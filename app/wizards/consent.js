@@ -36,8 +36,6 @@ export default (req, res) => {
         value: 'Yes'
       },
       [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
-        res.locals.patient.outcome = PATIENT_OUTCOME.NO_CONSENT
-        res.locals.patient.assessedAsNotGillickCompetent = true
         res.locals.patient.seen.isOffline = res.locals.isOffline
         return true
       }
@@ -48,7 +46,6 @@ export default (req, res) => {
         value: RESPONSE_CONSENT.GIVEN
       },
       [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
-        res.locals.patient.outcome = PATIENT_OUTCOME.NO_CONSENT
         res.locals.patient.seen.isOffline = res.locals.isOffline
         return true
       }

@@ -134,15 +134,7 @@ export default (router) => {
     // Use existing parent or guardian information when checking refusal
     // or use user getting consent
     if (view === 'consent') {
-      const { firstName, lastName, fullName, email } = user
-
-      req.session.data.response.parentOrGuardian = parentOrGuardian || {
-        firstName,
-        lastName,
-        fullName,
-        email,
-        relationship: 'Nurse'
-      }
+      req.session.data.response.parentOrGuardian = parentOrGuardian || patient
     }
 
     // Use correct format for `response.healthAnswers`

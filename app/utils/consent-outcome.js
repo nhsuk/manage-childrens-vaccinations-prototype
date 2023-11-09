@@ -67,6 +67,11 @@ export default (patient) => {
   // Add value to indicate presence of health answers
   consent.hasHealthAnswers = responses.filter(response => response.healthAnswers).length > 0
 
+  // Add Gillick assessment outcome
+  consent.isGillickCompetent = responses.filter(response => response.gillickCompetent === 'Yes').length > 0
+
+  consent.isNotGillickCompetent = responses.filter(response => response.gillickCompetent === 'No').length > 0
+
   patient.consent = {
     ...consent,
     outcome

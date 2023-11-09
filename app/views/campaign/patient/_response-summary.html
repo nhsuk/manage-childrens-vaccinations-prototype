@@ -13,14 +13,19 @@
         html: response.parentOrGuardian | relationshipName
       },
       href: "#" if showActions
-    },
+    } if response.parentOrGuardian.relationship,
     {
       key: "Contact",
       value: {
         html: [response.parentOrGuardian.tel, response.parentOrGuardian.email] | removeEmptyFromArray | join("<br>") or "Not provided"
       },
       href: "#" if showActions
-    },
+    } if response.parentOrGuardian.tel or response.parentOrGuardian.email,
+    {
+      key: "Gillick competent?",
+      value: response.gillickCompetent + (" – " + response.gillickAssessment if response.gillickAssessment),
+      href: "#" if showActions
+    } if response.gillickCompetent,
     {
       key: "Response",
       value: {
