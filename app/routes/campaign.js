@@ -108,7 +108,7 @@ export default (router) => {
       const nhsNumber = req.query.noConsent
       const patient = campaign.cohort
         .find(patient => patient.nhsNumber === nhsNumber)
-      patient.outcome = PATIENT_OUTCOME.NO_CONSENT
+      patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       patient.seen.isOffline = res.locals.isOffline
     }
 

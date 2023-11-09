@@ -8,7 +8,7 @@ import { CONSENT_OUTCOME, PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 export default (patient) => {
   // Update outcome if final refusal for consent given
   if (patient.consent.outcome === CONSENT_OUTCOME.FINAL_REFUSAL) {
-    patient.outcome = PATIENT_OUTCOME.NO_CONSENT
+    patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
   }
 
   // Update outcome if triage outcome is could not vaccinate

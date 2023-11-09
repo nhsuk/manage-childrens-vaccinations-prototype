@@ -31,7 +31,7 @@
               </td>
               {% if isRefusalReasonNeeded %}
               <td class="nhsuk-table__cell nhsuk-u-font-size-16">
-                {% if patient.outcome == PATIENT_OUTCOME.NO_CONSENT %}
+                {% if patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
                   {{ tag({
                     text: "Confirmed",
                     classes: "nhsuk-tag--red nhsuk-u-font-size-16 nhsuk-u-width-full"

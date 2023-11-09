@@ -101,10 +101,7 @@ export default (req, res) => {
 
   // Record filters
   let vaccinatedResults = filter(cohort, 'hasOutcome', 'VACCINATED')
-  let couldNotVaccinateResults = [
-    ...filter(cohort, 'hasOutcome', 'COULD_NOT_VACCINATE'),
-    ...filter(cohort, 'hasOutcome', 'NO_CONSENT')
-  ]
+  let couldNotVaccinateResults = filter(cohort, 'hasOutcome', 'COULD_NOT_VACCINATE')
   const readyToVaccinateResults = filter(cohort, 'readyToVaccinate')
 
   // Action needed filter
