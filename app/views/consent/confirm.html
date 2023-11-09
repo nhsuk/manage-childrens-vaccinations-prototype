@@ -9,21 +9,16 @@
 {% block form %}
   {{ heading({ caption: patient.fullName, title: title }) }}
 
-  {% if isGillickCompetent %}
-    {% set consentRecord = d("response.") %}
-    {% include "campaign/patient/_gillick-competence.html" %}
-  {% else %}
-    {% set descriptionHtml %}
-      {% set showActions = true %}
-      {% include "campaign/patient/_response-summary.html" %}
-    {% endset %}
+  {% set descriptionHtml %}
+    {% include "campaign/patient/_response-summary.html" %}
+    {% set showActions = true %}
+  {% endset %}
 
-    {{ card({
-      heading: responseHeading(response),
-      headingClasses: "nhsuk-heading-m",
-      descriptionHtml: descriptionHtml
-    }) }}
-  {% endif %}
+  {{ card({
+    heading: responseHeading(response),
+    headingClasses: "nhsuk-heading-m",
+    descriptionHtml: descriptionHtml
+  }) }}
 
   {% if hasConsented %}
     {% set descriptionHtml %}
