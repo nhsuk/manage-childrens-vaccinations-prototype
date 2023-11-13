@@ -1,7 +1,10 @@
 {% extends "_layouts/default.html" %}
 
 {% set title = patient.fullName %}
-{% set vaccineGiven = vaccination.outcome == VACCINATION_OUTCOME.VACCINATED %}
+{% set vaccineGiven =
+  vaccination.outcome == VACCINATION_OUTCOME.VACCINATED or
+  vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED
+%}
 {% set hasNoResponse = patient.consent.outcome == CONSENT_OUTCOME.NO_RESPONSE %}
 {% set hasRefused = patient.consent.outcome == CONSENT_OUTCOME.REFUSED %}
 {% set hasConsented = patient.consent.outcome == CONSENT_OUTCOME.GIVEN %}

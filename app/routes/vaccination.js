@@ -125,7 +125,7 @@ export default (router) => {
   ], (req, res, next) => {
     const { patient, vaccination } = res.locals
     const { batch, outcome, notes } = vaccination
-    const vaccineGiven = outcome === VACCINATION_OUTCOME.VACCINATED
+    const vaccineGiven = outcome === VACCINATION_OUTCOME.VACCINATED || VACCINATION_OUTCOME.PART_VACCINATED
 
     if (vaccineGiven) {
       patient.outcome = PATIENT_OUTCOME.VACCINATED

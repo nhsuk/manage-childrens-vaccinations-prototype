@@ -14,12 +14,15 @@ const journeyForEverythingElse = (data, campaign, patient) => {
   const hasRefused = patient.consent.outcome === CONSENT_OUTCOME.REFUSED
   const hasConsent = !(hasNoResponse || hasRefused)
   const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
-  const askForNoReason = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`) !== VACCINATION_OUTCOME.VACCINATED
+  const vaccinationOutcome = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`)
+  const vaccineGiven =
+    (vaccinationOutcome === VACCINATION_OUTCOME.VACCINATED) ||
+    (vaccinationOutcome === VACCINATION_OUTCOME.PART_VACCINATED)
   const isOtherSite = getData(data, `vaccination.${campaignId}.${nhsNumber}.site`) === VACCINATION_SITE.OTHER
 
   const journey = {}
 
-  if (hasConsent && askForNoReason) {
+  if (hasConsent && !vaccineGiven) {
     return {
       [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
     }
