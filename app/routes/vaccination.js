@@ -156,6 +156,12 @@ export default (router) => {
     '/men-acwy-vaccination/:campaignId/:nhsNumber',
     '/men-acwy-vaccination/:campaignId/:nhsNumber/:view'
   ], (req, res) => {
-    res.redirect(res.locals.paths.next)
+    // Remove ?referrer from path
+    // TODO: Find out which function is appending queries incorrectly
+    // Is this an upstream issue in the NHS Prototype Rig?
+    const next = res.locals.paths.next
+      .replace(/\?referrer=.*/, '')
+
+    res.redirect(next)
   })
 }
