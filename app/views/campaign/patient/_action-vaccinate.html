@@ -56,7 +56,8 @@
   {% else %}
     {{ radios({
       items: [{
-        text: "Yes, they got the " + (campaign.type | lower if campaign.type == "Flu" else campaign.type) + " vaccine",
+        text: "Yes, they got the full dose" if campaign.isFlu else
+              "Yes, they got the " + campaign.type + " vaccine",
         value: VACCINATION_OUTCOME.VACCINATED,
         conditional: {
           html: radios({
@@ -70,6 +71,9 @@
           })
         } if not campaign.isFlu
       }, {
+        text: "Yes, they got half a dose",
+        value: VACCINATION_OUTCOME.PART_VACCINATED
+      } if campaign.isFlu, {
         text: "No, they did not get it",
         value: false
       }],
@@ -83,7 +87,7 @@
 {% endset %}
 
 {{ card({
-  heading: "Which vaccines did they get?" if campaign.is3in1MenACWY else "Did they get the vaccine?",
+  heading: "Which vaccines did they get?" if campaign.is3in1MenACWY else "Did they get the " + campaign.type + " vaccine?",
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml
 }) | formCard }}
