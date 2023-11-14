@@ -103,15 +103,8 @@ export default (router) => {
   router.post('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
     const { exampleParents, patient, responseId } = res.locals
     const { view } = req.params
-    let { exampleParent, response, user } = req.session.data
+    const { exampleParent, response, user } = req.session.data
     const parentOrGuardian = patient.responses[responseId]?.parentOrGuardian
-
-    if (!view) {
-      exampleParent = exampleParent || 'a'
-      response = {
-        parentOrGuardian: exampleParents[exampleParent]
-      }
-    }
 
     if (view === 'consent') {
       let name = response.status
@@ -130,9 +123,19 @@ export default (router) => {
 
       response.events = [{ name, date, user }]
 
-      // Use existing parent or guardian information when checking refusal
-      // or use user getting consent
-      response.parentOrGuardian = parentOrGuardian || patient
+      if (!parentOrGuardian && response?.gillickCompetent === 'Yes') {
+        // Use child as consenting party
+        response.parentOrGuardian = {
+          relationship: 'Child',
+          ...patient
+        }
+      } else if (!parentOrGuardian) {
+        // Use selected (example) parent record as consenting party
+        response.parentOrGuardian = exampleParents[exampleParent || 'a']
+      } else {
+        // Use parent from response as consenting party
+        response.parentOrGuardian = parentOrGuardian
+      }
     }
 
     // Use correct format for `response.healthAnswers`
