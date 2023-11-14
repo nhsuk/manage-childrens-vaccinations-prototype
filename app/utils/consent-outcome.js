@@ -55,13 +55,25 @@ export default (patient) => {
 
   // Build a list of refusal reasons
   const refusalReasons = []
+  const refusalReasonsDetailed = []
   if (outcome === CONSENT_OUTCOME.REFUSED || outcome === CONSENT_OUTCOME.FINAL_REFUSAL) {
     for (const response of Object.values(responses)) {
       if (!response.refusalReason) { continue }
 
-      refusalReasons.push(response.refusalReason)
+      const { refusalReason, refusalReasonOther } = response
+
+      const refusalReasonDetail = refusalReason === 'Other'
+        ? `Other – ${refusalReasonOther}`
+        : refusalReason
+
+      refusalReasons.push(refusalReason)
+      refusalReasonsDetailed.push(refusalReasonDetail)
     }
+    // Refusal reasons (short)
     consent.refusalReasons = [...new Set(refusalReasons)]
+
+    // Refusal reasons (with other provided details)
+    consent.refusalReasonsDetailed = [...new Set(refusalReasonsDetailed)]
   }
 
   // Add value to indicate presence of health answers
