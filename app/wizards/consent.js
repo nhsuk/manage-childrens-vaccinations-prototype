@@ -1,56 +1,87 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import { RESPONSE_CONSENT, PATIENT_OUTCOME } from '../enums.js'
+import { RESPONSE_CONSENT } from '../enums.js'
 
-export default (req, res) => {
-  const nhsNumber = req.params.nhsNumber
-  const campaignId = req.params.campaignId
-  const basePath = `/consent/${campaignId}/${nhsNumber}`
+export const consentWizard = (req, res) => {
+  const { campaignId, nhsNumber, id } = req.params
+  const basePath = `/consent/${campaignId}/${nhsNumber}/${id}`
 
-  const journey = {
-    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
-    [basePath]: {},
-    [`${basePath}/consent`]: {
-      [`${basePath}/health-questions`]: {
-        data: 'response.status',
-        value: RESPONSE_CONSENT.GIVEN
+  const journeys = {
+    // Confirm refusal from an existing respondent
+    confirm: {
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
+      [`${basePath}/consent`]: {
+        [`${basePath}/health-questions`]: {
+          data: 'response.status',
+          value: RESPONSE_CONSENT.GIVEN
+        },
+        [`${basePath}/confirm`]: {
+          data: 'response.status',
+          value: RESPONSE_CONSENT.NO_RESPONSE
+        }
       },
+      [`${basePath}/refusal-reason`]: {
+        [`${basePath}/confirm`]: true
+      },
+      [`${basePath}/health-questions`]: {},
       [`${basePath}/confirm`]: {
-        data: 'response.status',
-        value: RESPONSE_CONSENT.NO_RESPONSE
+        [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: true
       }
     },
-    [`${basePath}/why-not-consenting`]: {
-      [`${basePath}/confirm`]: true
-    },
-    [`${basePath}/health-questions`]: {
-      [`${basePath}/confirm`]: true
-    },
-    [`${basePath}/confirm`]: {
-      [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: true
-    },
-
-    [`${basePath}/pre-gillick`]: {},
-    [`${basePath}/gillick`]: {
-      [`${basePath}/consent?gillick`]: {
-        data: 'response.gillickCompetent',
-        value: 'Yes'
+    // Select and contact a parent from external record
+    contact: {
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
+      [basePath]: {},
+      [`${basePath}/consent`]: {
+        [`${basePath}/health-questions`]: {
+          data: 'response.status',
+          value: RESPONSE_CONSENT.GIVEN
+        },
+        [`${basePath}/confirm`]: {
+          data: 'response.status',
+          value: RESPONSE_CONSENT.NO_RESPONSE
+        }
       },
-      [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
-        res.locals.patient.seen.isOffline = res.locals.isOffline
-        return true
+      [`${basePath}/refusal-reason`]: {
+        [`${basePath}/confirm`]: true
+      },
+      [`${basePath}/health-questions`]: {},
+      [`${basePath}/confirm`]: {
+        [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: true
       }
     },
-    [`${basePath}/consent?gillick`]: {
-      [`${basePath}/health-questions`]: {
-        data: 'response.status',
-        value: RESPONSE_CONSENT.GIVEN
+    // Assess gillick consent
+    gillick: {
+      [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
+      [`${basePath}/start`]: {},
+      [`${basePath}/assessment`]: {
+        [`${basePath}/consent`]: {
+          data: 'response.gillickCompetent',
+          value: 'Yes'
+        },
+        [`${basePath}/confirm`]: true
       },
-      [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
-        res.locals.patient.seen.isOffline = res.locals.isOffline
-        return true
+      [`${basePath}/consent`]: {
+        [`${basePath}/health-questions`]: {
+          data: 'response.status',
+          value: RESPONSE_CONSENT.GIVEN
+        },
+        [`${basePath}/confirm`]: {
+          data: 'response.status',
+          value: RESPONSE_CONSENT.NO_RESPONSE
+        }
+      },
+      [`${basePath}/health-questions`]: {},
+      [`${basePath}/confirm`]: {
+        [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
+          res.locals.patient.seen.isOffline = res.locals.isOffline
+          return true
+        }
       }
     }
   }
 
-  return wizard(journey, req)
+  // Use named journey, else use confirm journey
+  const paths = journeys[id] || journeys.confirm
+
+  return wizard(paths, req)
 }

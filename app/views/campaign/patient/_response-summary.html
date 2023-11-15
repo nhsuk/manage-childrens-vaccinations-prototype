@@ -32,7 +32,7 @@
         html: eventsList(response.events)
       },
       href: "#" if showActions
-    },
+    } if response.events,
     {
       key: "Refusal reason",
       value: {

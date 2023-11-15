@@ -1,36 +1,22 @@
 import merge from 'deepmerge'
-import { RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
+import { PATIENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
 import getNote from '../generators/note.js'
-import wizard from '../wizards/consent.js'
-
-const getHealthAnswers = (consent) => {
-  const healthAnswers = {}
-
-  // Use detail answer if provided, else return `true`
-  for (const key of Object.keys(consent.healthAnswerDetails)) {
-    if (consent.healthAnswers?.[key] === 'Yes') {
-      healthAnswers[key] = consent.healthAnswerDetails[key] || 'No details provided'
-    } else {
-      healthAnswers[key] = false
-    }
-  }
-
-  return healthAnswers
-}
+import { consentWizard } from '../wizards/consent.js'
+import { getHealthAnswers } from '../utils/health-answers.js'
 
 export default (router) => {
   /**
    * Provide data to all consent views
    */
-  router.all('/consent/:campaignId/:nhsNumber/:view?', (req, res, next) => {
+  router.all('/consent/:campaignId/:nhsNumber/:id/:view?', (req, res, next) => {
     const { campaignId, nhsNumber } = req.params
-    const { campaigns, responseId } = req.session.data
+    const { campaigns } = req.session.data
     const campaign = campaigns[campaignId]
 
     res.locals.campaign = campaign
     res.locals.patient = campaign.cohort.find(p => p.nhsNumber === nhsNumber)
-    res.locals.paths = wizard(req, res, false)
-    res.locals.responseId = responseId || 0
+    res.locals.paths = consentWizard(req, res)
+    console.log('res.locals.paths', res.locals.paths)
     res.locals.response = req.session.data.response
     res.locals.triage = req.session.data.triage
 
@@ -58,18 +44,20 @@ export default (router) => {
   /**
    * Show consent view
    */
-  router.get('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
+  router.get('/consent/:campaignId/:nhsNumber/:id/:view?', (req, res) => {
     res.render(`consent/${req.params.view || 'index'}`)
   })
 
   /**
    * Update patient record upon confirming changes
    */
-  router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
-    const { patient, responseId } = res.locals
+  router.post('/consent/:campaignId/:nhsNumber/:id/confirm', (req, res, next) => {
+    const { patient } = res.locals
+    const { id } = req.params
     const { response, triage } = req.session.data
 
     // Update local patient data with response
+    const responseId = (id !== 'gillick') && (id !== 'contact') ? id : 0
     const originalResponse = patient.responses[responseId]
     patient.responses[responseId] = merge(originalResponse, response)
 
@@ -100,41 +88,51 @@ export default (router) => {
   /**
    * Update session data during question flow
    */
-  router.post('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
-    const { exampleParents, patient, responseId } = res.locals
-    const { view } = req.params
+  router.post('/consent/:campaignId/:nhsNumber/:id/:view?', (req, res) => {
+    const { exampleParents, patient } = res.locals
+    const { id, view } = req.params
     const { exampleParent, response, user } = req.session.data
-    const parentOrGuardian = patient.responses[responseId]?.parentOrGuardian
 
-    if (view === 'consent') {
-      let name = response.status
-      switch (response.status) {
-        case RESPONSE_CONSENT.GIVEN:
-          name = 'Consent updated to given (by phone)'
-          break
-        case RESPONSE_CONSENT.FINAL_REFUSAL:
-          name = 'Refusal confirmed (by phone)'
-          break
-        default:
-          name = 'No response when contacted'
+    if (view === 'assessment') {
+      // Use child as consenting party
+      response.parentOrGuardian = {
+        relationship: 'Child',
+        ...patient
+      }
+    }
+
+    console.log('response', response)
+
+    if (view === 'confirm') {
+      let name
+
+      // If not gillick competent, mark no response and could not vaccinate
+      if (response.gillickCompetent === 'No') {
+        name = 'Gillick assessment carried out'
+        response.status = RESPONSE_CONSENT.NO_RESPONSE
+        patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
+      } else {
+        switch (response.status) {
+          case RESPONSE_CONSENT.GIVEN:
+            name = 'Consent updated to given (by phone)'
+            break
+          case RESPONSE_CONSENT.FINAL_REFUSAL:
+            name = 'Refusal confirmed (by phone)'
+            break
+          default:
+            name = 'No response when contacted'
+        }
       }
 
-      const date = new Date()
+      response.events = [{ name, date: new Date(), user }]
 
-      response.events = [{ name, date, user }]
-
-      if (!parentOrGuardian && response?.gillickCompetent === 'Yes') {
-        // Use child as consenting party
-        response.parentOrGuardian = {
-          relationship: 'Child',
-          ...patient
-        }
-      } else if (!parentOrGuardian) {
+      console.log('hi')
+      if (id === 'contact') {
         // Use selected (example) parent record as consenting party
         response.parentOrGuardian = exampleParents[exampleParent || 'a']
       } else {
         // Use parent from response as consenting party
-        response.parentOrGuardian = parentOrGuardian
+        response.parentOrGuardian = patient.responses[id]?.parentOrGuardian
       }
     }
 
@@ -144,13 +142,10 @@ export default (router) => {
       delete req.session.data.response.healthAnswerDetails
     }
 
-    // Remove ?responseId and ?referrer from path
+    // Remove ?referrer from path
     // TODO: Find out which function is appending queries incorrectly
     // Is this an upstream issue in the NHS Prototype Rig?
-    const next = res.locals.paths.next
-      .replace(/\?responseId=\d/, '')
-      .replace(/\?referrer=.*/, '')
-      .replace(/\?gillick*/, '')
+    const next = res.locals.paths.next.replace(/\?referrer=.*/, '')
 
     res.redirect(next)
   })
