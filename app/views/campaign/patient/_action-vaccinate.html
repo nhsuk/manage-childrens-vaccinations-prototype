@@ -8,10 +8,6 @@
 {% endif %}
 
 {% set descriptionHtml %}
-  {% if campaign.type == "HPV" %}
-    <p>They need their 1st dose.</p>
-  {% endif %}
-
   {% if campaign.is3in1MenACWY %}
     {{ checkboxes({
       items: [{
@@ -58,18 +54,7 @@
       items: [{
         text: "Yes, they got the full dose" if campaign.isFlu else
               "Yes, they got the " + campaign.type + " vaccine",
-        value: VACCINATION_OUTCOME.VACCINATED,
-        conditional: {
-          html: radios({
-            items: [
-              { text: VACCINATION_SITE.ARM_LEFT },
-              { text: VACCINATION_SITE.ARM_RIGHT },
-              { text: VACCINATION_SITE.OTHER }
-            ],
-            classes: "nhsuk-radios--inline",
-            decorate: ["vaccination", campaign.id, patient.nhsNumber, "site"]
-          })
-        } if not campaign.isFlu
+        value: VACCINATION_OUTCOME.VACCINATED
       }, {
         text: "Yes, they got half a dose",
         value: VACCINATION_OUTCOME.PART_VACCINATED

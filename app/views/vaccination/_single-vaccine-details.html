@@ -25,11 +25,6 @@
     } if vaccineGiven,
     {
       key: "Dose",
-      value: "1 of 2",
-      href: "#"
-    } if vaccineGiven and type == "HPV",
-    {
-      key: "Dose",
       value: "Half" if vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED else "Full"
     } if vaccineGiven and type == "Flu",
     {
