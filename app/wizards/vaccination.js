@@ -1,4 +1,4 @@
-import { CONSENT_OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums.js'
+import { CONSENT_OUTCOME, VACCINATION_OUTCOME } from '../enums.js'
 import { wizard } from 'nhsuk-prototype-rig'
 import _ from 'lodash'
 
@@ -10,49 +10,25 @@ const journeyForEverythingElse = (data, campaign, patient) => {
   const nhsNumber = patient.nhsNumber
   const campaignId = campaign.id
   const hasDefaultBatch = !!data['todays-batch']
-  const hasNoResponse = patient.consent.outcome === CONSENT_OUTCOME.NO_RESPONSE
-  const hasRefused = patient.consent.outcome === CONSENT_OUTCOME.REFUSED
-  const hasConsent = !(hasNoResponse || hasRefused)
-  const askingForConsent = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`) !== 'No'
   const vaccinationOutcome = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`)
   const vaccineGiven =
     (vaccinationOutcome === VACCINATION_OUTCOME.VACCINATED) ||
     (vaccinationOutcome === VACCINATION_OUTCOME.PART_VACCINATED)
-  const isOtherSite = getData(data, `vaccination.${campaignId}.${nhsNumber}.site`) === VACCINATION_SITE.OTHER
 
   const journey = {}
 
-  if (hasConsent && !vaccineGiven) {
+  if (!vaccineGiven) {
     return {
       [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
     }
   }
 
-  if (!hasConsent && askingForConsent) {
-    const consentType = getData(data, `vaccination.${campaignId}.${nhsNumber}.get-consent`)
-    if (consentType === 'Gillick') {
-      return {
-        [`/consent/${campaignId}/${nhsNumber}/pre-gillick`]: {}
-      }
-    }
-
-    return {
-      [`/consent/${campaignId}/${nhsNumber}`]: {}
-    }
-  }
-
-  if (!hasConsent && !askingForConsent) {
-    return {
-      [`/campaign/${campaignId}/record?noConsent=${nhsNumber}`]: {}
-    }
-  }
-
-  if (isOtherSite) {
-    journey[`/vaccination/${campaignId}/${nhsNumber}/other-site`] = {}
+  if (campaign.type === 'HPV') {
+    journey[`/vaccination/${campaignId}/${nhsNumber}/site`] = {}
   }
 
   if (!hasDefaultBatch) {
-    journey[`/vaccination/${campaignId}/${nhsNumber}/which-batch`] = {}
+    journey[`/vaccination/${campaignId}/${nhsNumber}/batch`] = {}
   }
 
   return journey
@@ -80,8 +56,7 @@ const journeyFor3in1MenAcwy = (data, campaignId, patient) => {
 }
 
 export function vaccination (req) {
-  const nhsNumber = req.params.nhsNumber
-  const campaignId = req.params.campaignId
+  const { campaignId, nhsNumber } = req.params
   const campaign = req.session.data.campaigns[campaignId]
   const patient = campaign.cohort
     .find(patient => patient.nhsNumber === req.params.nhsNumber)
