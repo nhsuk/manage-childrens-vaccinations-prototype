@@ -58,7 +58,7 @@ export default (router) => {
   })
 
   router.all([
-    '/vaccination/:campaignId/:nhsNumber/which-batch'
+    '/vaccination/:campaignId/:nhsNumber/batch'
   ], (req, res, next) => {
     const campaignType = res.locals.campaign.type
     const batchesForCampaign = Object
@@ -70,7 +70,7 @@ export default (router) => {
   })
 
   router.all([
-    '/vaccination/:campaignId/:nhsNumber/which-batch'
+    '/vaccination/:campaignId/:nhsNumber/batch'
   ], (req, res, next) => {
     const body = req.body
 
