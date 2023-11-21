@@ -4,7 +4,7 @@ import getTriageOutcome from './utils/triage-outcome.js'
 import getPatientOutcome from './utils/patient-outcome.js'
 import accountRoutes from './routes/account.js'
 import campaignRoutes from './routes/campaign.js'
-import consent from './routes/consent.js'
+import consentRoutes from './routes/consent.js'
 import daySetupRoutes from './routes/day-setup.js'
 import newCampaignRoutes from './routes/new-campaign.js'
 import redirects from './routes/redirects.js'
@@ -81,7 +81,7 @@ router.all('*', (req, res, next) => {
 accountRoutes(router)
 newCampaignRoutes(router)
 campaignRoutes(router)
-consent(router)
+consentRoutes(router)
 daySetupRoutes(router)
 onlineOfflineRoutes(router, hasOfflineChanges)
 redirects(router)
