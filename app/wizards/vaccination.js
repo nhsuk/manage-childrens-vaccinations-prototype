@@ -7,7 +7,7 @@ const getData = (data, keyPath) => {
 }
 
 const journeyForEverythingElse = (data, campaign, patient) => {
-  const nhsNumber = patient.nhsNumber
+  const { nhsNumber } = patient
   const campaignId = campaign.id
   const hasDefaultBatch = !!data['todays-batch']
   const vaccinationOutcome = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`)
@@ -35,7 +35,7 @@ const journeyForEverythingElse = (data, campaign, patient) => {
 }
 
 const journeyFor3in1MenAcwy = (data, campaignId, patient) => {
-  const nhsNumber = patient.nhsNumber
+  const { nhsNumber } = patient
   const givenVaccines = getData(data, `vaccination.${campaignId}.${nhsNumber}.multi-given`) || []
   const askForNoMenAcwyReason = patient.consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY && !givenVaccines.includes('men-acwy')
   const askForNo3in1Reason = patient.consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1 && !givenVaccines.includes('3-in-1')
@@ -59,7 +59,7 @@ export function vaccination (req) {
   const { campaignId, nhsNumber } = req.params
   const campaign = req.session.data.campaigns[campaignId]
   const patient = campaign.cohort
-    .find(patient => patient.nhsNumber === req.params.nhsNumber)
+    .find(patient => patient.nhsNumber === nhsNumber)
 
   const journey = {
     [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},

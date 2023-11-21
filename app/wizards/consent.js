@@ -1,9 +1,8 @@
 import { wizard } from 'nhsuk-prototype-rig'
-import { RESPONSE_CONSENT, PATIENT_OUTCOME } from '../enums.js'
+import { RESPONSE_CONSENT } from '../enums.js'
 
 export default (req, res) => {
-  const nhsNumber = req.params.nhsNumber
-  const campaignId = req.params.campaignId
+  const { campaignId, nhsNumber } = req.params
   const basePath = `/consent/${campaignId}/${nhsNumber}`
 
   const journey = {

@@ -1,7 +1,7 @@
 import { wizard } from 'nhsuk-prototype-rig'
 
 export function newCampaignWizard (req) {
-  const campaignId = req.params.campaignId
+  const { campaignId } = req.params
   const journey = {
     '/dashboard': {},
     [`/campaign/new/${campaignId}`]: {},
