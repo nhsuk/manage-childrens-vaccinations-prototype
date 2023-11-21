@@ -2,7 +2,7 @@
 
 {% set title = "Check and confirm details" %}
 {% set subject = "You can now record vaccinations" %}
-{% set from = "Manage vaccinations for school-aged children <manage-school-aged-vaccinations@nhs.net>" %}
+{% set from = serviceName + " <manage-vaccinations-in-schools@nhs.net>" %}
 {% set name = data.users["123"].fullName if data.users["123"] else "Jane Doe" %}
 {% set to = name + " <" + data.users["123"].email + ">" if data.users["123"] else false %}
 
@@ -10,7 +10,7 @@
   <p>Dear {{ name }},</p>
   <p>You can now use the Record children’s vaccinations service.</p>
   <p>Confirm your contact details and set a password by going to:</p>
-  <p><a href="#">https://www.manage-school-aged-vaccinations.service.nhs.uk/invitation?w=12345</a></p>
+  <p><a href="#">https://manage-vaccinations-in-schools.nhs.uk/invitation?w=12345</a></p>
   <p>If you have any problems, contact [contact telephone number]</p>
   <p>[Name of SAIS team]</p>
 {% endblock %}

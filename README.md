@@ -1,4 +1,4 @@
-# Manage vaccinations for school-aged children prototype
+# Manage vaccinations in schools prototype
 
 View the prototype:
 https://poc-prototype.herokuapp.com/

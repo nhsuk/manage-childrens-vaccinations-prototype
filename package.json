@@ -8,7 +8,7 @@
     "node": "^20"
   },
   "prototype": {
-    "serviceName": "Manage vaccinations for school-aged children",
+    "serviceName": "Manage vaccinations in schools",
     "defaultRigLayout": "_layouts/default.html"
   },
   "stylelint": {
