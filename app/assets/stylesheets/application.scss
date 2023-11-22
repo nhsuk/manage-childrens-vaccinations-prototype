@@ -16,6 +16,12 @@ $govuk-assets-path: "/govuk/assets/";
 @import "email";
 
 // NHS.UK frontend overrides
+.nhsuk-label--s,
+.nhsuk-fieldset__legend--s {
+  padding-top: nhsuk-spacing(2);
+  margin-bottom: nhsuk-spacing(2);
+}
+
 .nhsuk-summary-list:where(:not(:has(.nhsuk-summary-list__actions))) {
   .nhsuk-summary-list__value {
     @include mq($from: tablet) {
