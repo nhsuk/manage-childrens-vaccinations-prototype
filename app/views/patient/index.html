@@ -24,16 +24,16 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% include "sessions/patient/_outcome.html" %}
-      {% include "sessions/patient/_details.html" %}
-      {% include "sessions/patient/_consent.html" %}
-      {% include "sessions/patient/_triage-notes.html" %}
+      {% include "patient/_outcome.html" %}
+      {% include "patient/_details.html" %}
+      {% include "patient/_consent.html" %}
+      {% include "patient/_triage-notes.html" %}
 
       {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% if triageNeeded %}
-          {% include "sessions/patient/_action-triage.html" %}
+          {% include "patient/_action-triage.html" %}
         {% elif hasConsented and readyToVaccinate and session.inProgress %}
-          {% include "sessions/patient/_action-vaccinate.html" %}
+          {% include "patient/_action-vaccinate.html" %}
         {% endif %}
       {% endif %}
     </div>

@@ -95,7 +95,7 @@ export default (router) => {
   router.all([
     '/sessions/:sessionId/patient/:nhsNumber'
   ], (req, res) => {
-    res.render('sessions/patient')
+    res.render('patient/index')
   })
 
   router.all([

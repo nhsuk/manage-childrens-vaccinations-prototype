@@ -8,7 +8,7 @@
 
   {% for response in patient.responses %}
     {% set detailsHtml %}
-      {% include "sessions/patient/_response-summary.html" %}
+      {% include "patient/_response-summary.html" %}
 
       {# Check refusal if refused and no other response has confirmed refusal #}
       {{ button({
