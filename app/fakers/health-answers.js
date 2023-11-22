@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import { faker } from '@faker-js/faker'
-import getHealthQuestions from './health-questions.js'
+import { healthQuestions } from '../utils/campaign.js'
 
 const healthConditionsData = 'app/fakers/seeds/health-conditions.json'
 const healthConditions = JSON.parse(fs.readFileSync(healthConditionsData))
@@ -20,11 +20,9 @@ const enrichWithRealisticAnswer = (patient, key) => {
 }
 
 export default (type, patient) => {
-  const healthQuestions = getHealthQuestions(type)
-
   const answers = {}
 
-  for (const key of Object.keys(healthQuestions)) {
+  for (const key of Object.keys(healthQuestions(type))) {
     answers[key] = enrichWithRealisticAnswer(patient, key)
   }
 
