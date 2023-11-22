@@ -1,8 +1,8 @@
 import { newCampaignWizard } from '../wizards/new-campaign.js'
 import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
 import { faker } from '@faker-js/faker'
-import vaccines from '../generators/vaccines.js'
-import yearGroups from '../generators/year-groups.js'
+import vaccines from '../fakers/vaccines.js'
+import yearGroups from '../fakers/year-groups.js'
 
 const generateRandomString = (length) => {
   length = length || 3
@@ -55,7 +55,10 @@ export default (router) => {
       name: tempCampaign.where
     }
 
+    // TODO: Get vaccines from session data and filter by campaign type
     campaign.vaccines = vaccines(faker, campaign.type)
+
+    // TODO: Get year groups from session data and filter by campaign type
     campaign.yearGroups = yearGroups(campaign.type)
 
     req.session.data.campaigns[campaign.id] = campaign

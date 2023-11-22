@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import fs from 'node:fs'
 
-const gpSurgeriesData = 'app/generators/data/gp-surgeries.txt'
+const gpSurgeriesData = 'app/fakers/seeds/gp-surgeries.txt'
 const gpSurgeries = fs.readFileSync(gpSurgeriesData)
 
 /**

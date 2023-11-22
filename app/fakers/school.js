@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import fs from 'node:fs'
 
-const schoolData = 'app/generators/data/schools-sample.json'
+const schoolData = 'app/fakers/seeds/schools.json'
 const schools = JSON.parse(fs.readFileSync(schoolData))
 
 /**

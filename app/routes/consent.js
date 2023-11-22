@@ -1,6 +1,6 @@
 import merge from 'deepmerge'
 import { RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
-import getNote from '../generators/note.js'
+import getNote from '../fakers/note.js'
 import wizard from '../wizards/consent.js'
 
 const getHealthAnswers = (consent) => {

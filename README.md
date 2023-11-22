@@ -11,14 +11,21 @@ Point of Care Systems record data when someone is vaccinated, including product 
 
 ## Requirements
 
-Node.js v18
+Node.js v20
 
 ## Installation
 
 1. Clone this repository
 
-2. Install the dependencies:\
+2. Install the dependencies and create data:\
 `npm install`
 
 3. Start the application:\
 `npm run dev`
+
+## Creating session data
+
+Session data uses pre-compiled JSON files saved to a `.data` folder.
+
+To regenerate this data run:\
+`npm run create-data`
