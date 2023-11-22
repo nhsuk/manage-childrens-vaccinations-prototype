@@ -1,5 +1,5 @@
 {
-  "name": "record-childrens-vaccinations",
+  "name": "manage-vaccinations-in-schools",
   "description": "A point of care (POC) prototype",
   "version": "1.0.0",
   "private": true,
