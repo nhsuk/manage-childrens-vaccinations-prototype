@@ -12,7 +12,7 @@ export default {
   user: Object.values(users)[0],
   sessions,
   vaccines,
-  vaccination: getVaccination(sessions, vaccines.batches),
+  vaccination: getVaccination(sessions, vaccines),
   users,
   // Set feature flags using the `features` key
   features: {

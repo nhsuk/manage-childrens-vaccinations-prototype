@@ -6,12 +6,13 @@
   {% set rootPath = "/men-acwy-vaccination/" %}
   {% set index = 1 %}
 {% endif %}
-{% set batch = data.vaccines.batches[vaccination.batch] %}
+{% set vaccine = data.vaccines[vaccination.vaccineId] %}
+{% set batch = vaccine.batches[vaccination.batchId] %}
 {% set vaccineGiven =
   vaccination.outcome == VACCINATION_OUTCOME.VACCINATED or
   vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED
 %}
-{% set basePath = rootPath + session.id + "/" + patient.nhsNumber %}
+{% set hrefBase = rootPath + session.id + "/" + patient.nhsNumber %}
 
 {{ summaryList({
   rows: decorateRows([
@@ -21,7 +22,7 @@
     },
     {
       key: "Vaccine",
-      value: batch.vaccine
+      value: vaccine.vaccine
     } if vaccineGiven,
     {
       key: "Dose",
@@ -29,23 +30,23 @@
     } if vaccineGiven and type == "Flu",
     {
       key: "Brand",
-      value: batch.brand + " (" + batch.method + ")",
+      value: vaccine.brand + " (" + vaccine.method + ")",
       href: "#"
     } if vaccineGiven,
     {
       key: "Batch",
-      value: batch.name + " (expires " + (batch.expiryDate | govukDate("truncate")) + ")",
+      value: batch.id + " (expires " + (batch.expiryDate | govukDate("truncate")) + ")",
       href: "#"
     } if vaccineGiven,
     {
       key: "Site",
       value: vaccination.site,
-      href: basePath + "/has-it-been-given"
+      href: hrefBase + "/has-it-been-given"
     }  if vaccineGiven and vaccination.site,
     {
       key: "Outcome",
       value: vaccination.outcome,
-      href: basePath + "/not-given" if not vaccineGiven
+      href: hrefBase + "/not-given" if not vaccineGiven
     },
     {
       key: "Date",

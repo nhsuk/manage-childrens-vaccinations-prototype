@@ -4,6 +4,11 @@
     <p>{{ description }}</p>
   {% endif %}
 
+  {% set vaccineSummary %}
+    {% set vaccine = data.vaccines[vaccination.vaccineId] %}
+    {{ vaccine.summary | replace(")", "") }}, {{ vaccine.batches[vaccination.batchId].id }})
+  {% endset %}
+
   {{ summaryList({
     rows: decorateRows([
       {
@@ -18,7 +23,7 @@
       } if not vaccineGiven and patient.consent.refusalReasonsDetailed,
       {
         key: "Vaccine",
-        value: data.vaccines.batches[vaccination.batch].summary
+        value: vaccineSummary
       } if vaccineGiven,
       {
         key: "Dose",

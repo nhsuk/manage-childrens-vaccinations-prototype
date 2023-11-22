@@ -38,20 +38,19 @@
   {% endset %}
 
   {% set items = [] %}
-  {% for batchKey in batchItems %}
-    {% set batch = data.vaccines.batches[batchKey] %}
+  {% for batchId, batch in vaccine.batches %}
     {% set items = (items.push({
-      text: batch.name + " (expires " + batch.expiryDate | govukDate + ")",
-      value: batchKey,
+      text: batchId + " (expires " + batch.expiryDate | govukDate + ")",
+      value: batchId,
       conditional: {
         html: checkboxes({
           items: [
             {
               text: defaultText,
-              value: batchKey
+              value: batchId
             }
           ],
-          decorate: "todays-batch-" + batchKey
+          decorate: "todays-batch-" + batchId
         })
       }
     }), items) %}
@@ -72,6 +71,12 @@
       }
     },
     items: items,
-    decorate: [dataLocation, session.id, patient.nhsNumber, "batch"]
+    decorate: [dataLocation, session.id, patient.nhsNumber, "batchId"]
+  }) }}
+
+  {{ input({
+    type: "hidden",
+    value: vaccine.id,
+    decorate: [dataLocation, session.id, patient.nhsNumber, "vaccineId"]
   }) }}
 {% endblock %}

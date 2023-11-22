@@ -1,6 +1,7 @@
 {% extends "_layouts/default.html" %}
 
 {% set title = "Edit batch" %}
+{% set kayPath = "vaccines." + vaccine.id + ".batches." + batch.id + "." %}
 
 {% block outerContent %}
   {{ backLink({
@@ -14,30 +15,30 @@
     <div class="nhsuk-grid-column-two-thirds">
       {{ heading({
         title: title,
-        caption: batch.brand
+        caption: vaccine.brand
       }) }}
 
       <form method="post">
         {{ input({
           label: {
             text: "Batch",
-            classes: "nhsuk-label--s nhsuk-u-margin-bottom-1"
+            classes: "nhsuk-label--s"
           },
           classes: "nhsuk-input--width-10",
-          decorate: "vaccines.batches." + batch.name + ".name"
+          decorate: kayPath + "id"
         }) }}
 
         {{ dateInput({
           fieldset: {
             legend: {
               text: "Expiry date",
-              classes: "nhsuk-fieldset__legend--s nhsuk-u-margin-bottom-1"
+              classes: "nhsuk-fieldset__legend--s"
             }
           },
           hint: {
             text: "For example, 27 10 2023"
           },
-          decorate: "vaccines.batches." + batch.name + ".expiry"
+          decorate: kayPath + "expiry"
         }) }}
 
         {{ button({

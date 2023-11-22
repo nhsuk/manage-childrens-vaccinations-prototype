@@ -67,7 +67,7 @@ export function vaccination (req) {
     ...session.is3in1MenACWY
       ? journeyFor3in1MenAcwy(data, sessionId, patient)
       : journeyForEverythingElse(data, session, patient),
-    [`/vaccination/${sessionId}/${nhsNumber}/details`]: {},
+    [`/vaccination/${sessionId}/${nhsNumber}/confirm`]: {},
     [`/sessions/${sessionId}/record?success=${nhsNumber}`]: {}
   }
 

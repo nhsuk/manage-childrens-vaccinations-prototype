@@ -1,9 +1,8 @@
+import _ from 'lodash'
 import { newSessionWizard } from '../wizards/new-session.js'
 import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
-import { faker } from '@faker-js/faker'
 import { healthQuestions, yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
-import vaccines from '../fakers/vaccines.js'
 
 export default (router) => {
   router.all('/sessions/new/start', (req, res) => {
@@ -33,6 +32,7 @@ export default (router) => {
     '/sessions/new/:sessionId/confirm'
   ], (req, res, next) => {
     const { session } = res.locals
+    const { vaccines } = req.session.data
     const time = session.time === 'Afternoon' ? '13:00' : '09:00'
 
     session.date = `${isoDateFromDateInput(session.date)}T${time}`
@@ -47,9 +47,7 @@ export default (router) => {
     session.isHPV = session.type === 'HPV'
     session.healthQuestions = healthQuestions(session.type)
     session.yearGroups = yearGroups(session.type)
-
-    // TODO: Get vaccines from session data and filter by session type
-    session.vaccines = vaccines(faker, session.type)
+    session.vaccines = _.filter(vaccines, { type: session.type })
 
     req.session.data.sessions[session.id] = session
     delete req.session.data.newSession

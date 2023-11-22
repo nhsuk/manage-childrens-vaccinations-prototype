@@ -34,19 +34,18 @@
 {% set basePath = "/men-acwy-vaccination/" + session.id + "/" + patient.nhsNumber %}
 {% set vaccine = session.vaccines[1] %}
 {% set batch = vaccine.batches[0] %}
-{% set brand = vaccine.brand + " (Injection)" %}
 
 {% if patient.consent.outcome == CONSENT_OUTCOME.ONLY_MENACWY or menACWYVaccineGiven %}
   {{ summaryList({
     rows: decorateRows([
       {
         key: "Brand",
-        value: brand,
+        value: vaccine.summary,
         href: "#"
       } if menACWYVaccineGiven,
       {
         key: "Batch",
-        value: batch.name + " (expires " + (batch.expiry | govukDate("truncate")) + ")",
+        value: batch.id + " (expires " + (batch.expiry | govukDate("truncate")) + ")",
         href: "#"
       } if menACWYVaccineGiven,
       {
@@ -69,19 +68,18 @@
 {% set basePath = "/3-in-1-vaccination/" + session.id + "/" + patient.nhsNumber %}
 {% set vaccine = session.vaccines[0] %}
 {% set batch = vaccine.batches[0] %}
-{% set brand = vaccine.brand + " (Injection)" %}
 
 {% if patient.consent.outcome == CONSENT_OUTCOME.ONLY_3_IN_1 or 3in1VaccineGiven %}
   {{ summaryList({
     rows: decorateRows([
       {
         key: "Brand",
-        value: brand,
+        value: vaccine.summary,
         href: "#"
       } if 3in1VaccineGiven,
       {
         key: "Batch",
-        value: batch.name + " (expires " + (batch.expiry | govukDate("truncate")) + ")",
+        value: batch.id + " (expires " + (batch.expiry | govukDate("truncate")) + ")",
         href: "#"
       } if 3in1VaccineGiven,
       {

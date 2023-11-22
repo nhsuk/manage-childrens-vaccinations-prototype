@@ -25,7 +25,8 @@ const sessions = _.keyBy(sessionsArray, 'id')
 const usersArray = faker.helpers.multiple(getUser, { count: 20 })
 const users = _.keyBy(usersArray, 'id')
 
-const vaccines = getVaccines()
+const vaccinesArray = getVaccines()
+const vaccines = _.keyBy(vaccinesArray, 'id')
 
 const generateDataFile = async (outputPath, data) => {
   try {

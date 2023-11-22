@@ -10,7 +10,7 @@ import redirects from './routes/redirects.js'
 import onlineOfflineRoutes from './routes/online-offline.js'
 import userRoutes from './routes/user.js'
 import vaccinationRoutes from './routes/vaccination.js'
-import vaccineBatchRoutes from './routes/vaccine-batches.js'
+import vaccineRoutes from './routes/vaccine.js'
 
 const router = express.Router()
 
@@ -85,6 +85,6 @@ onlineOfflineRoutes(router, hasOfflineChanges)
 redirects(router)
 userRoutes(router)
 vaccinationRoutes(router)
-vaccineBatchRoutes(router)
+vaccineRoutes(router)
 
 export default router

@@ -60,12 +60,14 @@ export default (router) => {
   router.all([
     '/vaccination/:sessionId/:nhsNumber/batch'
   ], (req, res, next) => {
-    const sessionType = res.locals.session.type
-    const batchesForSession = Object
-      .values(req.session.data.vaccines.batches)
-      .filter(b => b.vaccine === sessionType)
+    const { type } = res.locals.session
+    const { vaccines } = req.session.data
 
-    res.locals.batchItems = batchesForSession.map(v => v.name)
+    // TODO: Allow users to select vaccination method for flu sessions
+    const method = type === 'Flu' ? 'Nasal spray' : 'Injection'
+    const vaccine = _.find(vaccines, { type, method })
+
+    res.locals.vaccine = vaccine
     next()
   })
 
@@ -91,7 +93,7 @@ export default (router) => {
   })
 
   router.all([
-    '/vaccination/:sessionId/:nhsNumber/details'
+    '/vaccination/:sessionId/:nhsNumber/confirm'
   ], (req, res, next) => {
     res.locals['3in1Vaccination'] = _.get(req.session.data, `3-in-1-vaccination.${req.params.sessionId}.${req.params.nhsNumber}`)
     res.locals.menACWYVaccination = _.get(req.session.data, `men-acwy-vaccination.${req.params.sessionId}.${req.params.nhsNumber}`)
@@ -121,7 +123,7 @@ export default (router) => {
   })
 
   router.post([
-    '/vaccination/:sessionId/:nhsNumber/details'
+    '/vaccination/:sessionId/:nhsNumber/confirm'
   ], (req, res, next) => {
     const { patient, vaccination } = res.locals
     const { batch, outcome, notes } = vaccination

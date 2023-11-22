@@ -42,6 +42,69 @@ export const healthQuestions = (type) => {
 }
 
 /**
+ * Get vaccines used in a campaign
+ * @param {string} type - Campaign type
+ * @returns {Array} Vaccines
+ */
+export const vaccines = (type) => {
+  switch (type) {
+    case 'Flu':
+      return [
+        // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1107978/Influenza-green-book-chapter19-16September22.pdf
+        {
+          type: 'Flu',
+          vaccine: 'Flu',
+          brand: 'Fluenz Tetra',
+          method: 'Nasal spray',
+          isFlu: true
+        },
+        {
+          type: 'Flu',
+          vaccine: 'Flu',
+          brand: 'Fluarix Tetra',
+          method: 'Injection',
+          isFlu: true
+        }
+      ]
+    case 'HPV':
+      return [
+        // Possible others: Gardasil, Cervarix
+        // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1065283/HPV-greenbook-chapter-18a.pdf
+        {
+          type: 'HPV',
+          vaccine: 'HPV',
+          brand: 'Gardasil 9',
+          method: 'Injection',
+          isHPV: true
+        }
+      ]
+    case '3-in-1 and MenACWY':
+      return [
+        // Possible others: Pediacel, Repevax, Infanrix IPV
+        // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/147952/Green-Book-Chapter-15.pdf
+        {
+          type: '3-in-1 and MenACWY',
+          vaccine: '3-in-1',
+          brand: 'Revaxis',
+          method: 'Injection',
+          is3in1: true
+        },
+        // Menveo, Nimenrix and MenQuadfi
+        // https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1076053/Meningococcal-greenbook-chapter-22_17May2022.pdf
+        {
+          type: '3-in-1 and MenACWY',
+          vaccine: 'MenACWY',
+          brand: 'Nimenrix',
+          method: 'Injection',
+          isMenACWY: true
+        }
+      ]
+    default:
+      return []
+  }
+}
+
+/**
  * Get year groups vaccinated in a campaign
  * @param {string} type - Campaign type
  * @returns {Array} Year groups

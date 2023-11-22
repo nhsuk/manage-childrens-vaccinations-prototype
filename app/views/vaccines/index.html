@@ -11,7 +11,7 @@
         text: "Add a new vaccine"
       }) }}
 
-      {% for vaccine in data.vaccines.brands %}
+      {% for vaccine in vaccines %}
         {% set descriptionHtml %}
           <p class="nhsuk-body"><a href="#">Add a batch</a></p>
 
@@ -25,20 +25,18 @@
               </tr>
             </thead>
             <tbody class="nhsuk-table__body">
-              {% for batch in batches %}
-                {% if batch.brand == vaccine.brand %}
-                  <tr class="nhsuk-table__row">
-                    <td class="nhsuk-table__cell">{{ batch.name }}</td>
-                    <td class="nhsuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
-                    <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-                      <a href="/vaccines/{{ batch.name }}">Change</a>
-                    </td>
-                    <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-                      <a href="#">Move&nbsp;to&nbsp;archive</a>
-                    </td>
-                  </tr>
-                {% endif %}
-              {% endfor %}
+            {% for batchId, batch in vaccine.batches %}
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell">{{ batchId }}</td>
+                <td class="nhsuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
+                <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                  <a href="/vaccines/{{ vaccine.id }}/{{ batchId }}">Change</a>
+                </td>
+                <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+                  <a href="#">Move&nbsp;to&nbsp;archive</a>
+                </td>
+              </tr>
+            {% endfor %}
             </tbody>
           </table>
         {% endset %}

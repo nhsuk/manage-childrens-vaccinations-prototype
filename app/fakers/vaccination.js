@@ -4,10 +4,10 @@ import { PATIENT_OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums
 /**
  * Get vaccination
  * @param {Array} sessions - Sessions
- * @param {Array} batches - Vaccine batches
+ * @param {Array} vaccines - Vaccines
  * @returns {object} Vaccination
  */
-export default (sessions, batches) => {
+export default (sessions, vaccines) => {
   const inProgressSession = Object
     .values(sessions)
     .find(session => session.inProgress)
@@ -20,17 +20,14 @@ export default (sessions, batches) => {
 
   let batch = null
   if (inProgressSession.isFlu) {
-    batch = Object
-      .values(batches)
-      .find(batch => batch.isFlu)
+    batch = Object.values(vaccines)
+      .find(vaccine => vaccine.isFlu)
   } else if (inProgressSession.isHPV) {
-    batch = Object
-      .values(batches)
-      .find(batch => batch.isHPV)
+    batch = Object.values(vaccines)
+      .find(vaccine => vaccine.isHPV)
   } else if (inProgressSession.is3in1MenACWY) {
-    batch = Object
-      .values(batches)
-      .find(batch => batch.isMenACWY || batch.is3in1)
+    batch = Object.values(vaccines)
+      .find(vaccine => vaccine.isMenACWY || vaccine.is3in1)
   }
 
   const vaccination = {
@@ -43,7 +40,7 @@ export default (sessions, batches) => {
       vaccination[id][patient.nhsNumber] = {
         outcome: VACCINATION_OUTCOME.VACCINATED,
         site: VACCINATION_SITE.ARM_LEFT,
-        batch: batch.name
+        batch: batch.id
       }
     })
 
