@@ -1,9 +1,9 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
+import { yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
 import getSchool from './school.js'
 import getPatient from './patient.js'
-import getYearGroups from './year-groups.js'
 import getHealthQuestions from './health-questions.js'
 
 const ageRange = (type) => {
@@ -40,7 +40,7 @@ export default (type) => {
     type,
     healthQuestions: getHealthQuestions(type),
     triageInProgress: daysUntil < 28,
-    yearGroups: getYearGroups(type),
+    yearGroups: yearGroups(type),
     school,
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',

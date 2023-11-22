@@ -1,4 +1,9 @@
-export default (type) => {
+/**
+ * Get year groups vaccinated in a campaign
+ * @param {string} type - Campaign type
+ * @returns {Array} Year groups
+ */
+export const yearGroups = (type) => {
   switch (type) {
     case 'Flu':
       return [

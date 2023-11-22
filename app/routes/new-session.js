@@ -1,9 +1,9 @@
 import { newSessionWizard } from '../wizards/new-session.js'
 import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
 import { faker } from '@faker-js/faker'
+import { yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
 import vaccines from '../fakers/vaccines.js'
-import yearGroups from '../fakers/year-groups.js'
 
 export default (router) => {
   router.all('/sessions/new/start', (req, res) => {
@@ -45,12 +45,10 @@ export default (router) => {
     session.is3in1MenACWY = session.type === '3-in-1 and MenACWY'
     session.isFlu = session.type === 'Flu'
     session.isHPV = session.type === 'HPV'
+    session.yearGroups = yearGroups(session.type)
 
     // TODO: Get vaccines from session data and filter by session type
     session.vaccines = vaccines(faker, session.type)
-
-    // TODO: Get year groups from session data and filter by session type
-    session.yearGroups = yearGroups(session.type)
 
     req.session.data.sessions[session.id] = session
     delete req.session.data.newSession
