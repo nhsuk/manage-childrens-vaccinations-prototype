@@ -1,20 +1,10 @@
-import { fakerEN_GB as faker } from '@faker-js/faker'
-import { DateTime } from 'luxon'
+import { faker } from '@faker-js/faker'
+import _ from 'lodash'
+import getBatch from './batch.js'
 
 const getBatches = () => {
-  const batches = {}
-  const count = faker.number.int({ min: 2, max: 5 })
-  const prefix = faker.string.alpha({ casing: 'upper', count: 2 })
-
-  for (let i = 0; i < count; i++) {
-    const name = `${prefix}${faker.helpers.replaceSymbolWithNumber('####')}`
-    const daysUntilExpiry = faker.number.int({ min: 10, max: 50 })
-    const expiryDate = DateTime.now().plus({ days: daysUntilExpiry }).toISODate()
-    const day = expiryDate.split('-')[2]
-    const month = expiryDate.split('-')[1]
-    const year = expiryDate.split('-')[0]
-    batches[name] = { name, expiryDate, expiry: { year, month, day } }
-  }
+  const batchesArray = faker.helpers.multiple(getBatch, { min: 2, max: 5 })
+  const batches = _.keyBy(batchesArray, 'id')
 
   return batches
 }
@@ -32,14 +22,14 @@ export default () => {
       brand: 'Fluenz Tetra',
       method: 'Nasal spray',
       isFlu: true,
-      batches: getBatches(faker)
+      batches: getBatches()
     },
     {
       vaccine: 'Flu',
       brand: 'Fluarix Tetra',
       method: 'Injection',
       isFlu: true,
-      batches: getBatches(faker)
+      batches: getBatches()
     }
   ]
   // Possible others: Gardasil, Cervarix
@@ -50,7 +40,7 @@ export default () => {
       brand: 'Gardasil 9',
       method: 'Injection',
       isHPV: true,
-      batches: getBatches(faker)
+      batches: getBatches()
     }
   ]
 
@@ -62,7 +52,7 @@ export default () => {
       brand: 'Revaxis',
       method: 'Injection',
       is3in1: true,
-      batches: getBatches(faker)
+      batches: getBatches()
     }
   ]
 
@@ -74,7 +64,7 @@ export default () => {
       brand: 'Nimenrix',
       method: 'Injection',
       isMenACWY: true,
-      batches: getBatches(faker)
+      batches: getBatches()
     }
   ]
 
