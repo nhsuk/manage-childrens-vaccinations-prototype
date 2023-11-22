@@ -16,23 +16,23 @@
       },
       {
         key: "School",
-        value: session.where,
-        href: baseHref + "/where"
+        value: session.location,
+        href: baseHref + "/location"
       },
       {
         key: "Vaccine",
-        value: session.which,
-        href: baseHref + "/which"
+        value: session.type,
+        href: baseHref + "/type"
       },
       {
         key: "Date",
         value: session.date | isoDateFromDateInput | dateWithDayOfWeek,
-        href: baseHref + "/when"
+        href: baseHref + "/date"
       },
       {
         key: "Time",
         value: session.time,
-        href: baseHref + "/when"
+        href: baseHref + "/date"
       }
     ])
   }) }}

@@ -8,7 +8,8 @@ import yearGroups from '../fakers/year-groups.js'
 export default (router) => {
   router.all('/sessions/new/start', (req, res) => {
     const sessionId = generateRandomString()
-    req.session.data['temp-session'] = { id: sessionId }
+
+    req.session.data.newSession = { id: sessionId }
     res.redirect(`/sessions/new/${sessionId}`)
   })
 
@@ -17,39 +18,33 @@ export default (router) => {
     '/sessions/new/:sessionId/*'
   ], (req, res, next) => {
     res.locals.sessionId = req.params.sessionId
-    res.locals.session = req.session.data['temp-session']
-    next()
-  })
-
-  router.all([
-    '/sessions/new/:sessionId',
-    '/sessions/new/:sessionId/*'
-  ], (req, res, next) => {
+    res.locals.session = req.session.data.newSession
     res.locals.paths = newSessionWizard(req)
     next()
   })
 
-  router.post([
-    '/sessions/new/:sessionId/check'
-  ], (req, res, next) => {
-    const tempSession = res.locals.session
-    const time = tempSession.time === 'Afternoon' ? '13:00' : '09:00'
-    const session = {
-      is3in1MenACWY: tempSession.which === '3-in-1 and MenACWY',
-      isFlu: tempSession.which === 'Flu',
-      isHPV: tempSession.which === 'HPV'
-    }
+  router.get('/sessions/new/:sessionId/:view?', (req, res) => {
+    const view = req.params.view || 'index'
 
-    session.id = tempSession.id
-    session.location = tempSession.where
-    session.date = `${isoDateFromDateInput(tempSession.date)}T${time}`
-    session.type = tempSession.which
+    res.render(`sessions/new/${view}`)
+  })
+
+  router.post([
+    '/sessions/new/:sessionId/confirm'
+  ], (req, res, next) => {
+    const { session } = res.locals
+    const time = session.time === 'Afternoon' ? '13:00' : '09:00'
+
+    session.date = `${isoDateFromDateInput(session.date)}T${time}`
     session.cohort = []
-    session.title = `${tempSession.which} campaign at ${tempSession.where}`
+    session.title = `${session.type} campaign at ${session.location}`
     session.school = {
       urn: 123456,
-      name: tempSession.where
+      name: session.location
     }
+    session.is3in1MenACWY = session.type === '3-in-1 and MenACWY'
+    session.isFlu = session.type === 'Flu'
+    session.isHPV = session.type === 'HPV'
 
     // TODO: Get vaccines from session data and filter by session type
     session.vaccines = vaccines(faker, session.type)
@@ -58,7 +53,7 @@ export default (router) => {
     session.yearGroups = yearGroups(session.type)
 
     req.session.data.sessions[session.id] = session
-    delete req.session.data['temp-session']
+    delete req.session.data.newSession
 
     next()
   })
@@ -68,17 +63,5 @@ export default (router) => {
     '/sessions/new/:sessionId/*'
   ], (req, res) => {
     res.redirect(res.locals.paths.next)
-  })
-
-  router.all([
-    '/sessions/new/:sessionId'
-  ], (req, res) => {
-    res.render('sessions/new/index')
-  })
-
-  router.all([
-    '/sessions/new/:sessionId/:view'
-  ], (req, res) => {
-    res.render(`sessions/new/${req.params.view}`)
   })
 }

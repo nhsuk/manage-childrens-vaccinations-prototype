@@ -5,10 +5,10 @@ export function newSessionWizard (req) {
   const journey = {
     '/dashboard': {},
     [`/sessions/new/${sessionId}`]: {},
-    [`/sessions/new/${sessionId}/where`]: {},
-    [`/sessions/new/${sessionId}/which`]: {},
-    [`/sessions/new/${sessionId}/when`]: {},
-    [`/sessions/new/${sessionId}/check`]: {},
+    [`/sessions/new/${sessionId}/location`]: {},
+    [`/sessions/new/${sessionId}/type`]: {},
+    [`/sessions/new/${sessionId}/date`]: {},
+    [`/sessions/new/${sessionId}/confirm`]: {},
     [`/sessions/${sessionId}?success=1`]: {}
   }
 

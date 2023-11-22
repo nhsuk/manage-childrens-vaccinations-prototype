@@ -16,7 +16,7 @@ export default (router) => {
     '/sessions/:sessionId',
     '/sessions/:sessionId/*'
   ], (req, res, next) => {
-    const { sessions } = res.locals
+    const { sessions } = req.session.data
     const session = sessions[req.params.sessionId]
 
     res.locals.session = session
