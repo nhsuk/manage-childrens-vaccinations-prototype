@@ -25,7 +25,7 @@
           <a class="nhsuk-u-margin-right-2" href="/sessions/{{ session.id }}">{{ session.school.name }}</a>
           {{ tag({
             classes: "nhsuk-tag--blue",
-            text: "In progress"
+            text: "Session in progress"
           }) if session.inProgress }}
         </td>
         {% if isOffline %}

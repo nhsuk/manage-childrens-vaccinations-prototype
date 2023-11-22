@@ -56,10 +56,12 @@
               </h2>
               <p>{{ filters.triageNeeded.results.length | plural("child") }} needing triage</p>
 
+              {% if session.inProgress %}
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/sessions/{{ session.id }}/record">Record vaccinations</a>
               </h2>
               <p>{{ filters.readyToVaccinate.results.length | plural("child") }} ready to vaccinate</p>
+              {% endif %}
             {% endif %}
 
             <p class="nhsuk-body nhsuk-u-margin-top-6">
