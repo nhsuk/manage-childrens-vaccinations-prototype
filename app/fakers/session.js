@@ -1,14 +1,10 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
+import { generateRandomString } from '../utils/string.js'
 import getSchool from './school.js'
 import getPatient from './patient.js'
 import getYearGroups from './year-groups.js'
 import getHealthQuestions from './health-questions.js'
-
-const generateRandomString = (length) => {
-  length = length || 3
-  return Math.random().toString(36).slice(2, 2 + length).toUpperCase()
-}
 
 const ageRange = (type) => {
   switch (type) {

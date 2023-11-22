@@ -1,13 +1,9 @@
 import { newSessionWizard } from '../wizards/new-session.js'
 import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
 import { faker } from '@faker-js/faker'
+import { generateRandomString } from '../utils/string.js'
 import vaccines from '../fakers/vaccines.js'
 import yearGroups from '../fakers/year-groups.js'
-
-const generateRandomString = (length) => {
-  length = length || 3
-  return Math.random().toString(36).substr(2, length).toUpperCase()
-}
 
 export default (router) => {
   router.all('/sessions/new/start', (req, res) => {
