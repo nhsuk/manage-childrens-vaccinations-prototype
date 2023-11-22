@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 
-const boysNamesData = 'app/generators/data/boys-names.txt'
+const boysNamesData = 'app/fakers/seeds/boys-names.txt'
 const boysNames = fs.readFileSync(boysNamesData)
-const girlsNamesData = 'app/generators/data/girls-names.txt'
+const girlsNamesData = 'app/fakers/seeds/girls-names.txt'
 const girlsNames = fs.readFileSync(girlsNamesData)
 
 /**

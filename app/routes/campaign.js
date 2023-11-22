@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import filters from './_filters.js'
-import getNote from '../generators/note.js'
+import getNote from '../fakers/note.js'
 import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 

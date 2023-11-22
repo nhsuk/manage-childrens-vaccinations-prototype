@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import { faker } from '@faker-js/faker'
 import getHealthQuestions from './health-questions.js'
 
-const healthConditionsData = 'app/generators/data/health-conditions.json'
+const healthConditionsData = 'app/fakers/seeds/health-conditions.json'
 const healthConditions = JSON.parse(fs.readFileSync(healthConditionsData))
 
 // Save realistic triage note for use later in generation process

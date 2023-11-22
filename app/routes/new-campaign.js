@@ -55,7 +55,10 @@ export default (router) => {
       name: tempCampaign.where
     }
 
+    // TODO: Get vaccines from session data and filter by campaign type
     campaign.vaccines = vaccines(faker, campaign.type)
+
+    // TODO: Get year groups from session data and filter by campaign type
     campaign.yearGroups = yearGroups(campaign.type)
 
     req.session.data.campaigns[campaign.id] = campaign

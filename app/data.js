@@ -1,42 +1,15 @@
-import { faker } from '@faker-js/faker'
-import { DateTime } from 'luxon'
-import _ from 'lodash'
-import getCampaign from './generators/campaign.js'
-import getCampaignInProgress from './generators/campaign-in-progress.js'
-import getVaccination from './generators/vaccination.js'
-import getUser from './generators/user.js'
-import getVaccines from './generators/vaccines.js'
+import { createRequire } from 'node:module'
 
-/**
- * Default values for user session data
- *
- * These are automatically added via the `autoStoreData` middleware. A values
- * will only be added to the session if it doesn't already exist. This may be
- * useful for testing journeys where users are returning or logging in to an
- * existing application.
- */
+import getVaccination from './fakers/vaccination.js'
 
-// Create campaigns, with one in progress
-const campaignsArray = faker.helpers.multiple(getCampaign, { count: 20 })
-
-// Add in progress campaigns
-campaignsArray.push(getCampaignInProgress('Flu'))
-campaignsArray.push(getCampaignInProgress('HPV'))
-
-// Sort campaigns by date
-campaignsArray.sort((a, b) =>
-  DateTime.fromISO(a.date).valueOf() - DateTime.fromISO(b.date).valueOf()
-)
-const campaigns = _.keyBy(campaignsArray, 'id')
-
-const usersArray = faker.helpers.multiple(getUser, { count: 20 })
-const users = _.keyBy(usersArray, 'id')
-
-const vaccines = getVaccines()
+const require = createRequire(import.meta.url)
+const campaigns = require('../.data/campaigns.json')
+const users = require('../.data/users.json')
+const vaccines = require('../.data/vaccines.json')
 
 export default {
   support: 'record-childrens-vaccinations@service.nhs.uk',
-  user: usersArray[0],
+  user: Object.values(users)[0],
   campaigns,
   vaccines,
   vaccination: getVaccination(campaigns, vaccines.batches),

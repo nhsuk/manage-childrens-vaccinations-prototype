@@ -1,5 +1,5 @@
 import { TRIAGE_OUTCOME } from '../enums.js'
-import getNote from '../generators/note.js'
+import getNote from '../fakers/note.js'
 
 /**
  * Update patient record with triage outcome

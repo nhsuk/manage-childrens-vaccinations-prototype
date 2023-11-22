@@ -17,10 +17,12 @@
   "scripts": {
     "assets:build": "rollup --config --silent",
     "assets:watch": "rollup --config --silent --watch",
+    "create-data": "node create-data.js",
     "serve": "nhsuk-prototype-rig",
     "start": "npm-run-all --serial assets:build serve",
     "dev": "npm-run-all --parallel assets:watch serve",
-    "lint": "standard && stylelint 'app/**/*.scss'"
+    "lint": "standard && stylelint 'app/**/*.scss'",
+    "postinstall": "npm run create-data"
   },
   "workspaces": [
     "packages/*"
