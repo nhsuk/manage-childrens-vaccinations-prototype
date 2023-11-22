@@ -7,28 +7,37 @@ import getResponse from './response.js'
 import getUser from './user.js'
 
 const setConsentOutcome = (patient, type) => {
+  // Chase 80% of responses
   const chasedConsent = faker.helpers.maybe(() => true, { probability: 0.8 })
 
   if (patient.responses.length === 0) {
-    // Chase a single response and get consent
-    patient.responses = faker.helpers.multiple(getResponse(type, patient), {
-      count: 1
-    })
-    patient.consent.outcome = CONSENT_OUTCOME.GIVEN
-  } else {
-    // Chase 80% of refusals and have them confirmed
-    for (const response of patient.responses) {
-      if (chasedConsent && response.status === RESPONSE_CONSENT.REFUSED) {
-        response.status = RESPONSE_CONSENT.FINAL_REFUSAL
-        response.events.push({
-          name: 'Refusal confirmed (by phone)',
-          date: faker.date.recent({ days: 7 }),
-          user: getUser()
-        })
-      }
+    // Get new given response
+    const givenResponse = getResponse(type, patient, RESPONSE_CONSENT.GIVEN)
+
+    // Get consent
+    if (chasedConsent) {
+      patient.responses = faker.helpers.multiple(givenResponse, { count: 1 })
+      patient.consent.outcome = CONSENT_OUTCOME.GIVEN
     }
-    patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
+  } else if (patient.responses.length > 0) {
+    // Find refusal response
+    const refusalResponse = patient.responses.find(response => {
+      return response.status === RESPONSE_CONSENT.REFUSED
+    })
+
+    // Confirm refusal
+    if (chasedConsent && refusalResponse) {
+      refusalResponse.status = RESPONSE_CONSENT.FINAL_REFUSAL
+      refusalResponse.events.push({
+        name: 'Refusal confirmed (by phone)',
+        date: faker.date.recent({ days: 7 }),
+        user: getUser()
+      })
+      patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
+    }
   }
+
+  return patient
 }
 
 const setOutcome = (patient) => {

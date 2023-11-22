@@ -51,10 +51,11 @@ const _getRefusalReason = (type) => {
  * Generate consent response
  * @param {string} type - Vaccine type
  * @param {object} patient - Patient record
+ * @param {object} [status] - Response status
  * @returns {Response} Consent response
  */
-const _getResponse = (type, patient) => {
-  const status = _getStatus(type)
+const _getResponse = (type, patient, status) => {
+  status = status || _getStatus(type)
   const refusalReason = _getRefusalReason(type)
   const method = faker.helpers.weightedArrayElement([
     { value: RESPONSE_METHOD.WEBSITE, weight: 5 },
@@ -84,9 +85,9 @@ const _getResponse = (type, patient) => {
   return response
 }
 
-export default (type, patient) => {
+export default (type, patient, status) => {
   const response = () => ({
-    ..._getResponse(type, patient)
+    ..._getResponse(type, patient, status)
   })
 
   return response
