@@ -1,4 +1,4 @@
-{% set patient = data.success | patientFromNHSNumber(campaign) %}
+{% set patient = data.success | patientFromNHSNumber(session) %}
 {% if noConsent %}
   {% set html %}
     {% if isOffline %}
@@ -14,7 +14,7 @@
       </p>
     {% endif %}
     <p>
-      <a href="/sessions/{{ campaign.id }}/patient/{{ patient.nhsNumber }}">View child record</a>
+      <a href="/sessions/{{ session.id }}/patient/{{ patient.nhsNumber }}">View child record</a>
     </p>
   {% endset %}
 
@@ -37,7 +37,7 @@
       </p>
     {% endif %}
     <p>
-      <a href="/sessions/{{ campaign.id }}/patient/{{ patient.nhsNumber or success }}">View child record</a>
+      <a href="/sessions/{{ session.id }}/patient/{{ patient.nhsNumber or success }}">View child record</a>
     </p>
   {% endset %}
 

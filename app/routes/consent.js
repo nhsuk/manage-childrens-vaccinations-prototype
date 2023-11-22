@@ -22,13 +22,13 @@ export default (router) => {
   /**
    * Provide data to all consent views
    */
-  router.all('/consent/:campaignId/:nhsNumber/:view?', (req, res, next) => {
-    const { campaignId, nhsNumber } = req.params
-    const { campaigns, responseId } = req.session.data
-    const campaign = campaigns[campaignId]
+  router.all('/consent/:sessionId/:nhsNumber/:view?', (req, res, next) => {
+    const { sessionId, nhsNumber } = req.params
+    const { sessions, responseId } = req.session.data
+    const session = sessions[sessionId]
 
-    res.locals.campaign = campaign
-    res.locals.patient = campaign.cohort.find(p => p.nhsNumber === nhsNumber)
+    res.locals.session = session
+    res.locals.patient = session.cohort.find(p => p.nhsNumber === nhsNumber)
     res.locals.paths = wizard(req, res, false)
     res.locals.responseId = responseId || 0
     res.locals.response = req.session.data.response
@@ -58,14 +58,14 @@ export default (router) => {
   /**
    * Show consent view
    */
-  router.get('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
+  router.get('/consent/:sessionId/:nhsNumber/:view?', (req, res) => {
     res.render(`consent/${req.params.view || 'index'}`)
   })
 
   /**
    * Update patient record upon confirming changes
    */
-  router.post('/consent/:campaignId/:nhsNumber/confirm', (req, res, next) => {
+  router.post('/consent/:sessionId/:nhsNumber/confirm', (req, res, next) => {
     const { patient, responseId } = res.locals
     const { response, triage } = req.session.data
 
@@ -100,7 +100,7 @@ export default (router) => {
   /**
    * Update session data during question flow
    */
-  router.post('/consent/:campaignId/:nhsNumber/:view?', (req, res) => {
+  router.post('/consent/:sessionId/:nhsNumber/:view?', (req, res) => {
     const { exampleParents, patient, responseId } = res.locals
     const { view } = req.params
     const { exampleParent, response, user } = req.session.data

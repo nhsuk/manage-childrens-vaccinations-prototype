@@ -1,11 +1,11 @@
 {% extends "_layouts/wizard.html" %}
 
 {% set isGillickCompetent = response.gillickCompetent === "Yes" %}
-{% set campaignName = campaign.type | lower if campaign.type == "Flu" else campaign.type %}
+{% set sessionName = session.type | lower if session.type == "Flu" else session.type %}
 {% if isGillickCompetent %}
-  {% set title = "Do they agree to having the " + campaignName + " vaccination?" %}
+  {% set title = "Do they agree to having the " + sessionName + " vaccination?" %}
 {% else %}
-  {% set title = "Do they agree to them having the " + campaignName + " vaccination?" %}
+  {% set title = "Do they agree to them having the " + sessionName + " vaccination?" %}
 {% endif %}
 
 {% block form %}

@@ -23,7 +23,7 @@
       {
         key: "Dose",
         value: "Half" if vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED else "Full"
-      } if vaccineGiven and campaign.type == "Flu",
+      } if vaccineGiven and session.type == "Flu",
       {
         key: "Site",
         value: vaccination.site
@@ -38,7 +38,7 @@
       } if vaccineGiven,
       {
         key: "Location",
-        value: campaign.location
+        value: session.location
       },
       {
         key: "Vaccinator",

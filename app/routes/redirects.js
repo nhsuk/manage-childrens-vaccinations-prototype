@@ -1,25 +1,25 @@
-const getCampaignId = (req) => {
-  return Object.keys(req.session.data.campaigns)[0]
+const getSessionId = (req) => {
+  return Object.keys(req.session.data.sessions)[0]
 }
 
 export default (router) => {
   router.get('/go/record', (req, res) => {
-    res.redirect(`/sessions/${getCampaignId(req)}/record`)
+    res.redirect(`/sessions/${getSessionId(req)}/record`)
   })
 
   router.get('/go/triage', (req, res) => {
-    res.redirect(`/sessions/${getCampaignId(req)}/triage`)
+    res.redirect(`/sessions/${getSessionId(req)}/triage`)
   })
 
   router.get('/go/in-progress', (req, res) => {
-    const campaignId = Object.values(req.session.data.campaigns)
-      .find(campaign => campaign.inProgress).id
-    res.redirect(`/sessions/${campaignId}/record`)
+    const sessionId = Object.values(req.session.data.sessions)
+      .find(session => session.inProgress).id
+    res.redirect(`/sessions/${sessionId}/record`)
   })
 
   router.get('/go/in-progress-triage', (req, res) => {
-    const campaignId = Object.values(req.session.data.campaigns)
-      .filter(campaign => campaign.triageInProgress)[0].id
-    res.redirect(`/sessions/${campaignId}/triage`)
+    const sessionId = Object.values(req.session.data.sessions)
+      .filter(session => session.triageInProgress)[0].id
+    res.redirect(`/sessions/${sessionId}/triage`)
   })
 }

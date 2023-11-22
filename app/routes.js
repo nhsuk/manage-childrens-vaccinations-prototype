@@ -3,10 +3,10 @@ import getConsentOutcome from './utils/consent-outcome.js'
 import getTriageOutcome from './utils/triage-outcome.js'
 import getPatientOutcome from './utils/patient-outcome.js'
 import accountRoutes from './routes/account.js'
-import campaignRoutes from './routes/campaign.js'
+import sessionRoutes from './routes/session.js'
 import consentRoutes from './routes/consent.js'
 import daySetupRoutes from './routes/day-setup.js'
-import newCampaignRoutes from './routes/new-campaign.js'
+import newSessionRoutes from './routes/new-session.js'
 import redirects from './routes/redirects.js'
 import onlineOfflineRoutes from './routes/online-offline.js'
 import userRoutes from './routes/user.js'
@@ -15,9 +15,9 @@ import vaccineBatchRoutes from './routes/vaccine-batches.js'
 
 const router = express.Router()
 
-const hasOfflineChanges = (campaigns) => {
-  const cohort = Object.values(campaigns)
-    .map(campaign => campaign.cohort)
+const hasOfflineChanges = (sessions) => {
+  const cohort = Object.values(sessions)
+    .map(session => session.cohort)
     .flat()
 
   cohort.forEach(patient => {
@@ -27,60 +27,60 @@ const hasOfflineChanges = (campaigns) => {
   return cohort.some(patient => patient.seen.isOffline)
 }
 
-const offlineChangesCount = (campaigns) => {
-  const offlineCount = Object.values(campaigns)
-    .map(campaign => campaign.cohort)
+const offlineChangesCount = (sessions) => {
+  const offlineCount = Object.values(sessions)
+    .map(session => session.cohort)
     .flat()
     .reduce((count, patient) => count + (patient.seen.isOffline ? 1 : 0), 0)
 
   return offlineCount
 }
 
-const updateConsentOutcomes = (campaigns) => {
-  Object.values(campaigns)
-    .map(campaign => campaign.cohort)
+const updateConsentOutcomes = (sessions) => {
+  Object.values(sessions)
+    .map(session => session.cohort)
     .flat()
     .forEach(patient => getConsentOutcome(patient))
 
-  return campaigns
+  return sessions
 }
 
-const updateTriageOutcomes = (campaigns) => {
-  Object.values(campaigns)
-    .filter(campaign => campaign.triageInProgress)
-    .map(campaign => campaign.cohort)
+const updateTriageOutcomes = (sessions) => {
+  Object.values(sessions)
+    .filter(session => session.triageInProgress)
+    .map(session => session.cohort)
     .flat()
     .forEach(patient => getTriageOutcome(patient))
 
-  return campaigns
+  return sessions
 }
 
-const updatePatientOutcomes = (campaigns) => {
-  Object.values(campaigns)
-    .map(campaign => campaign.cohort)
+const updatePatientOutcomes = (sessions) => {
+  Object.values(sessions)
+    .map(session => session.cohort)
     .flat()
     .forEach(patient => getPatientOutcome(patient))
 
-  return campaigns
+  return sessions
 }
 
 router.all('*', (req, res, next) => {
-  const { campaigns, features } = req.session.data
-  const consentOutcomes = updateConsentOutcomes(campaigns)
+  const { sessions, features } = req.session.data
+  const consentOutcomes = updateConsentOutcomes(sessions)
   const triageOutcomes = updateTriageOutcomes(consentOutcomes)
 
   res.locals.success = req.query.success
   res.locals.isOffline = features.offline.on
-  res.locals.hasOfflineChanges = hasOfflineChanges(campaigns)
-  res.locals.offlineChangesCount = offlineChangesCount(campaigns)
-  res.locals.campaigns = updatePatientOutcomes(triageOutcomes)
+  res.locals.hasOfflineChanges = hasOfflineChanges(sessions)
+  res.locals.offlineChangesCount = offlineChangesCount(sessions)
+  res.locals.sessions = updatePatientOutcomes(triageOutcomes)
 
   next()
 })
 
 accountRoutes(router)
-newCampaignRoutes(router)
-campaignRoutes(router)
+newSessionRoutes(router)
+sessionRoutes(router)
 consentRoutes(router)
 daySetupRoutes(router)
 onlineOfflineRoutes(router, hasOfflineChanges)

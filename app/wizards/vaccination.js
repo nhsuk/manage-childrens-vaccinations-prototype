@@ -6,11 +6,11 @@ const getData = (data, keyPath) => {
   return _.get(data, _.toPath(keyPath))
 }
 
-const journeyForEverythingElse = (data, campaign, patient) => {
+const journeyForEverythingElse = (data, session, patient) => {
   const { nhsNumber } = patient
-  const campaignId = campaign.id
+  const sessionId = session.id
   const hasDefaultBatch = !!data['todays-batch']
-  const vaccinationOutcome = getData(data, `vaccination.${campaignId}.${nhsNumber}.outcome`)
+  const vaccinationOutcome = getData(data, `vaccination.${sessionId}.${nhsNumber}.outcome`)
   const vaccineGiven =
     (vaccinationOutcome === VACCINATION_OUTCOME.VACCINATED) ||
     (vaccinationOutcome === VACCINATION_OUTCOME.PART_VACCINATED)
@@ -19,36 +19,36 @@ const journeyForEverythingElse = (data, campaign, patient) => {
 
   if (!vaccineGiven) {
     return {
-      [`/vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
+      [`/vaccination/${sessionId}/${nhsNumber}/not-given`]: {}
     }
   }
 
-  if (campaign.type === 'HPV') {
-    journey[`/vaccination/${campaignId}/${nhsNumber}/site`] = {}
+  if (session.type === 'HPV') {
+    journey[`/vaccination/${sessionId}/${nhsNumber}/site`] = {}
   }
 
   if (!hasDefaultBatch) {
-    journey[`/vaccination/${campaignId}/${nhsNumber}/batch`] = {}
+    journey[`/vaccination/${sessionId}/${nhsNumber}/batch`] = {}
   }
 
   return journey
 }
 
-const journeyFor3in1MenAcwy = (data, campaignId, patient) => {
+const journeyFor3in1MenAcwy = (data, sessionId, patient) => {
   const { nhsNumber } = patient
-  const givenVaccines = getData(data, `vaccination.${campaignId}.${nhsNumber}.multi-given`) || []
+  const givenVaccines = getData(data, `vaccination.${sessionId}.${nhsNumber}.multi-given`) || []
   const askForNoMenAcwyReason = patient.consent.outcome === CONSENT_OUTCOME.ONLY_MENACWY && !givenVaccines.includes('men-acwy')
   const askForNo3in1Reason = patient.consent.outcome === CONSENT_OUTCOME.ONLY_3_IN_1 && !givenVaccines.includes('3-in-1')
 
   if (askForNoMenAcwyReason) {
     return {
-      [`/men-acwy-vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
+      [`/men-acwy-vaccination/${sessionId}/${nhsNumber}/not-given`]: {}
     }
   }
 
   if (askForNo3in1Reason) {
     return {
-      [`/3-in-1-vaccination/${campaignId}/${nhsNumber}/not-given`]: {}
+      [`/3-in-1-vaccination/${sessionId}/${nhsNumber}/not-given`]: {}
     }
   }
 
@@ -56,18 +56,19 @@ const journeyFor3in1MenAcwy = (data, campaignId, patient) => {
 }
 
 export function vaccination (req) {
-  const { campaignId, nhsNumber } = req.params
-  const campaign = req.session.data.campaigns[campaignId]
-  const patient = campaign.cohort
+  const { sessionId, nhsNumber } = req.params
+  const { data } = req.session
+  const session = data.sessions[sessionId]
+  const patient = session.cohort
     .find(patient => patient.nhsNumber === nhsNumber)
 
   const journey = {
-    [`/sessions/${campaignId}/patient/${nhsNumber}`]: {},
-    ...campaign.is3in1MenACWY
-      ? journeyFor3in1MenAcwy(req.session.data, campaignId, patient)
-      : journeyForEverythingElse(req.session.data, campaign, patient),
-    [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
-    [`/sessions/${campaignId}/record?success=${nhsNumber}`]: {}
+    [`/sessions/${sessionId}/patient/${nhsNumber}`]: {},
+    ...session.is3in1MenACWY
+      ? journeyFor3in1MenAcwy(data, sessionId, patient)
+      : journeyForEverythingElse(data, session, patient),
+    [`/vaccination/${sessionId}/${nhsNumber}/details`]: {},
+    [`/sessions/${sessionId}/record?success=${nhsNumber}`]: {}
   }
 
   return wizard(journey, req)

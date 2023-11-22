@@ -2,7 +2,7 @@
 
 {% set title = "Check and confirm details" %}
 {% set buttonText = "Confirm" %}
-{% set baseHref = "/sessions/new/" + campaignId %}
+{% set baseHref = "/sessions/new/" + sessionId %}
 
 {% block form %}
   {{ heading({ title: title }) }}
@@ -11,27 +11,27 @@
     rows: decorateRows([
       {
         key: "Type of session",
-        value: campaign["type-of-session"],
+        value: session["type-of-session"],
         href: baseHref
       },
       {
         key: "School",
-        value: campaign.where,
+        value: session.where,
         href: baseHref + "/where"
       },
       {
         key: "Vaccine",
-        value: campaign.which,
+        value: session.which,
         href: baseHref + "/which"
       },
       {
         key: "Date",
-        value: campaign["session-date"] | isoDateFromDateInput | dateWithDayOfWeek,
+        value: session["session-date"] | isoDateFromDateInput | dateWithDayOfWeek,
         href: baseHref + "/when"
       },
       {
         key: "Time",
-        value: campaign.time,
+        value: session.time,
         href: baseHref + "/when"
       }
     ])

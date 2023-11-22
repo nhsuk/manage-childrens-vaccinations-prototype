@@ -6,7 +6,7 @@
   {{ heading({ title: title }) }}
 
   {% set detailsHtml %}
-    {% if campaign.is3in1MenACWY %}
+    {% if session.is3in1MenACWY %}
       {% include "vaccination/_multiple-vaccine-details.html" %}
     {% else %}
       {% include "vaccination/_single-vaccine-details.html" %}
@@ -29,7 +29,7 @@
         text: "For example, if the child had a reaction to the vaccine"
       },
       rows: 5,
-      decorate: [dataLocation, campaign.id, patient.nhsNumber, "notes"]
+      decorate: [dataLocation, session.id, patient.nhsNumber, "notes"]
     })
   }) }}
 {% endblock %}

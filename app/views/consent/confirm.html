@@ -10,7 +10,7 @@
   {{ heading({ caption: patient.fullName, title: title }) }}
 
   {% set descriptionHtml %}
-    {% include "campaign/patient/_response-summary.html" %}
+    {% include "sessions/patient/_response-summary.html" %}
     {% set showActions = true %}
   {% endset %}
 
@@ -26,7 +26,7 @@
 
       {{ summaryList({
         classes: "app-summary-list--full-width",
-        rows: healthAnswerRows(campaign, [response])
+        rows: healthAnswerRows(session, [response])
       }) }}
     {% endset %}
 

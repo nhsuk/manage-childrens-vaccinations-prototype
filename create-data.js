@@ -4,23 +4,23 @@ import { fileURLToPath } from 'node:url'
 import _ from 'lodash'
 import { DateTime } from 'luxon'
 import { faker } from '@faker-js/faker'
-import getCampaign from './app/fakers/campaign.js'
-import getCampaignInProgress from './app/fakers/campaign-in-progress.js'
+import getSession from './app/fakers/session.js'
+import getSessionInProgress from './app/fakers/session-in-progress.js'
 import getUser from './app/fakers/user.js'
 import getVaccines from './app/fakers/vaccines.js'
 
-// Create campaigns, with one in progress
-const campaignsArray = faker.helpers.multiple(getCampaign, { count: 20 })
+// Create sessions, with one in progress
+const sessionsArray = faker.helpers.multiple(getSession, { count: 20 })
 
-// Add in progress campaigns
-campaignsArray.push(getCampaignInProgress('Flu'))
-campaignsArray.push(getCampaignInProgress('HPV'))
+// Add in progress sessions
+sessionsArray.push(getSessionInProgress('Flu'))
+sessionsArray.push(getSessionInProgress('HPV'))
 
-// Sort campaigns by date
-campaignsArray.sort((a, b) =>
+// Sort sessions by date
+sessionsArray.sort((a, b) =>
   DateTime.fromISO(a.date).valueOf() - DateTime.fromISO(b.date).valueOf()
 )
-const campaigns = _.keyBy(campaignsArray, 'id')
+const sessions = _.keyBy(sessionsArray, 'id')
 
 const usersArray = faker.helpers.multiple(getUser, { count: 20 })
 const users = _.keyBy(usersArray, 'id')
@@ -39,6 +39,6 @@ const generateDataFile = async (outputPath, data) => {
   }
 }
 
-generateDataFile('.data/campaigns.json', campaigns)
+generateDataFile('.data/sessions.json', sessions)
 generateDataFile('.data/users.json', users)
 generateDataFile('.data/vaccines.json', vaccines)

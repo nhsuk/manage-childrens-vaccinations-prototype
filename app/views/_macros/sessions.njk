@@ -1,9 +1,9 @@
 {% from "tag/macro.njk" import tag %}
 {% from "_macros/icon.njk" import icon %}
 
-{% macro sessions(campaigns, isOffline) %}
+{% macro sessions(sessions, isOffline) %}
 <table class="nhsuk-table">
-  <caption class="nhsuk-table__caption nhsuk-u-font-size-32">{{ campaigns[0].type }}</caption>
+  <caption class="nhsuk-table__caption nhsuk-u-font-size-32">{{ sessions[0].type }}</caption>
   <thead class="nhsuk-table__head">
     <tr class="nhsuk-table__row">
       <th class="nhsuk-table__header">Date</th>
@@ -13,24 +13,24 @@
     </tr>
   </thead>
   <tbody class="nhsuk-table__body">
-    {% for campaign in campaigns %}
+    {% for session in sessions %}
       <tr class="nhsuk-table__row">
         <td class="nhsuk-table__cell app-u-width-one-fifth app-u-nowrap">
-          {{ campaign.date | govukDate("truncate") }}
+          {{ session.date | govukDate("truncate") }}
         </td>
         <td class="nhsuk-table__cell app-u-width-one-fifth">
-          {{ campaign.date | govukTime }}
+          {{ session.date | govukTime }}
         </td>
         <td class="nhsuk-table__cell">
-          <a class="nhsuk-u-margin-right-2" href="/sessions/{{ campaign.id }}">{{ campaign.school.name }}</a>
+          <a class="nhsuk-u-margin-right-2" href="/sessions/{{ session.id }}">{{ session.school.name }}</a>
           {{ tag({
             classes: "nhsuk-tag--blue",
             text: "In progress"
-          }) if campaign.inProgress }}
+          }) if session.inProgress }}
         </td>
         {% if isOffline %}
           <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-            {% if campaign["available-offline"] %}
+            {% if session["available-offline"] %}
               <span class="app-status app-status--green">
                 {{ icon("tick") }} Available offline
               </span>

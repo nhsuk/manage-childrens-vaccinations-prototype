@@ -22,8 +22,8 @@ const ageRange = (type) => {
 }
 
 /**
- * Generate campaign
- * @param {string} type - Campaign type
+ * Generate session
+ * @param {string} type - Session type
  */
 export default (type) => {
   // Exclude 3-in-1 and MenACWY for now, as the design is not ready
@@ -36,7 +36,7 @@ export default (type) => {
   const cohort = faker.helpers.multiple(getPatient(options), { count: 100 })
     .sort((a, b) => a.fullName.localeCompare(b.fullName))
 
-  const campaign = {
+  const session = {
     id: generateRandomString(3),
     title: `${type} session at ${school.name}`,
     location: school.name,
@@ -52,5 +52,5 @@ export default (type) => {
     cohort
   }
 
-  return campaign
+  return session
 }

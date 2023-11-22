@@ -15,7 +15,7 @@ import getParent from './parent.js'
 
 /**
  * @private
- * @param {string} type - Campaign type
+ * @param {string} type - Session type
  * @returns {string} Consent status
  */
 const _getStatus = (type) => {
@@ -37,11 +37,11 @@ const _getStatus = (type) => {
 
 /**
  * @private
- * @param {string} type - Campaign type
+ * @param {string} type - Session type
  * @returns {string} Refusal reason
  */
 const _getRefusalReason = (type) => {
-  // Gelatine content only a valid refusal reason for flu campaign
+  // Gelatine content only a valid refusal reason for flu vaccine
   const refusalReasons = Object.values(RESPONSE_REFUSAL)
     .filter(a => (type !== 'Flu') ? a !== RESPONSE_REFUSAL.GELATINE : a)
   return faker.helpers.arrayElement(refusalReasons)

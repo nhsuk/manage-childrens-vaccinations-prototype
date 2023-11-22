@@ -36,7 +36,7 @@
 
 <p class="nhsuk-u-margin-bottom-1">By year group</p>
 <ul class="nhsuk-list app-list--filters">
-  {% for group in campaign.yearGroups %}
+  {% for group in session.yearGroups %}
     {% set active = activeFilters.year == group.number %}
     <li>
       <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "year", group.number) }}">

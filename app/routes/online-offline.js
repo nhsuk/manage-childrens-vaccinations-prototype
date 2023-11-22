@@ -7,10 +7,10 @@ const goOnline = (req) => {
 }
 
 const syncOfflineChanges = (req) => {
-  const { campaigns } = req.session.data
+  const { sessions } = req.session.data
 
-  Object.values(campaigns)
-    .map(campaign => campaign.cohort)
+  Object.values(sessions)
+    .map(session => session.cohort)
     .flat()
     .filter(patient => patient.seen.isOffline)
     .forEach(patient => { patient.seen.isOffline = false })
@@ -54,18 +54,18 @@ export default (router, hasOfflineChanges) => {
   })
 
   router.all('/set-offline-code', (req, res, next) => {
-    const data = req.session.data
-    const campaign = data.campaigns[req.query.campaignId]
+    const { data } = req.session
+    const session = data.sessions[req.query.sessionId]
 
-    res.locals.campaign = campaign
-    res.locals.campaignId = req.query.campaignId
+    res.locals.session = session
+    res.locals.sessionId = req.query.sessionId
     next()
   })
 
   router.post('/set-offline-code', (req, res) => {
     req.session.data.hasOfflineCode = true
-    res.locals.campaign['available-offline'] = true
-    res.redirect(`/sessions/${res.locals.campaignId}`)
+    res.locals.session['available-offline'] = true
+    res.redirect(`/sessions/${res.locals.sessionId}`)
   })
 
   router.post('/give-offline-code', (req, res) => {

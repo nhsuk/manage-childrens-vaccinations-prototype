@@ -14,7 +14,7 @@
 {% block outerContent %}
   {% set referrer = data.referrer or "record" %}
   {{ backLink({
-    href: "/sessions/" + campaign.id + "/" + referrer,
+    href: "/sessions/" + session.id + "/" + referrer,
     classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
   }) }}
 {% endblock %}
@@ -24,22 +24,22 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% include "campaign/patient/_outcome.html" %}
-      {% include "campaign/patient/_details.html" %}
-      {% include "campaign/patient/_consent.html" %}
-      {% include "campaign/patient/_triage-notes.html" %}
+      {% include "sessions/patient/_outcome.html" %}
+      {% include "sessions/patient/_details.html" %}
+      {% include "sessions/patient/_consent.html" %}
+      {% include "sessions/patient/_triage-notes.html" %}
 
       {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% if triageNeeded %}
-          {% include "campaign/patient/_action-triage.html" %}
-        {% elif hasConsented and readyToVaccinate and campaign.inProgress %}
-          {% include "campaign/patient/_action-vaccinate.html" %}
+          {% include "sessions/patient/_action-triage.html" %}
+        {% elif hasConsented and readyToVaccinate and session.inProgress %}
+          {% include "sessions/patient/_action-vaccinate.html" %}
         {% endif %}
       {% endif %}
     </div>
 
     <div class="nhsuk-grid-column-one-third">
-      {% if campaign["available-offline"] %}
+      {% if session["available-offline"] %}
         <div id="available-offline">
           <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1 nhsuk-u-margin-top-5">
             <span class="app-status app-status--green">

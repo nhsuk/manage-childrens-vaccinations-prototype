@@ -3,31 +3,31 @@ import { PATIENT_OUTCOME, VACCINATION_OUTCOME, VACCINATION_SITE } from '../enums
 
 /**
  * Get vaccination
- * @param {Array} campaigns - Campaigns
+ * @param {Array} sessions - Sessions
  * @param {Array} batches - Vaccine batches
  * @returns {object} Vaccination
  */
-export default (campaigns, batches) => {
-  const inProgressCampaign = Object
-    .values(campaigns)
-    .find(campaign => campaign.inProgress)
+export default (sessions, batches) => {
+  const inProgressSession = Object
+    .values(sessions)
+    .find(session => session.inProgress)
 
-  if (!inProgressCampaign) {
+  if (!inProgressSession) {
     return
   }
 
-  const { cohort, id } = inProgressCampaign
+  const { cohort, id } = inProgressSession
 
   let batch = null
-  if (inProgressCampaign.isFlu) {
+  if (inProgressSession.isFlu) {
     batch = Object
       .values(batches)
       .find(batch => batch.isFlu)
-  } else if (inProgressCampaign.isHPV) {
+  } else if (inProgressSession.isHPV) {
     batch = Object
       .values(batches)
       .find(batch => batch.isHPV)
-  } else if (inProgressCampaign.is3in1MenACWY) {
+  } else if (inProgressSession.is3in1MenACWY) {
     batch = Object
       .values(batches)
       .find(batch => batch.isMenACWY || batch.is3in1)

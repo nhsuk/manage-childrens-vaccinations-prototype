@@ -26,7 +26,7 @@ export default (minYearGroup, maxYearGroup) => {
   const lastName = faker.person.lastName()
   const knownAs = `${firstName} ${faker.person.lastName()}`
 
-  // Only generate dates of birth applicable to campaign vaccine
+  // Only generate dates of birth applicable to vaccine
   const dob = faker.date.between({
     from: yearGroups()[maxYearGroup].start,
     to: yearGroups()[minYearGroup].end

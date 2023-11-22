@@ -61,11 +61,11 @@ export default (_env) => {
   /**
    * Get patient record from NHS number
    * @param {string} nhsNumber - NHS Number
-   * @param {object} campaign - Campaign
+   * @param {object} session - Session
    * @returns {string} Formatted NHS number
    */
-  filters.patientFromNHSNumber = (string, campaign) => {
-    return campaign.cohort.find(patient => patient.nhsNumber === string)
+  filters.patientFromNHSNumber = (string, session) => {
+    return session.cohort.find(patient => patient.nhsNumber === string)
   }
 
   /**

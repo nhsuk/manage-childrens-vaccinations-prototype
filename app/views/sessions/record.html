@@ -15,15 +15,15 @@
         href: "/sessions"
       }
     ],
-    text: campaign.title,
-    href: "/sessions/" + campaign.id
+    text: session.title,
+    href: "/sessions/" + session.id
   }) }}
 {% endblock %}
 
 {% block content %}
-  {% include "campaign/_notification-banner.html" %}
+  {% include "sessions/_notification-banner.html" %}
 
-  {% if campaign["available-offline"] %}
+  {% if session["available-offline"] %}
     <span class="app-status app-status--green">
       {{ icon("tick") }} Available offline
     </span>
@@ -36,17 +36,17 @@
 
   {% set actionNeeded %}
     {% set tab = filters.actionNeeded %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set vaccinated %}
     {% set tab = filters.vaccinated %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set couldNotVaccinate %}
     {% set tab = filters.couldNotVaccinate %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {{ tabs({

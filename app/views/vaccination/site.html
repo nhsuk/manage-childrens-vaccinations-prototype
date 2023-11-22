@@ -23,7 +23,7 @@
         text: "Subcutaneous"
       }
     ],
-    decorate: [dataLocation, campaign.id, patient.nhsNumber, "how-given"]
+    decorate: [dataLocation, session.id, patient.nhsNumber, "how-given"]
   }) }}
 
   {{ radios({
@@ -43,6 +43,6 @@
       { text: VACCINATION_SITE.BUTTOCK_LEFT },
       { text: VACCINATION_SITE.BUTTOCK_RIGHT }
     ],
-    decorate: [dataLocation, campaign.id, patient.nhsNumber, "site"]
+    decorate: [dataLocation, session.id, patient.nhsNumber, "site"]
   }) }}
 {% endblock %}

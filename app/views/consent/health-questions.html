@@ -5,7 +5,7 @@
 {% block form %}
   {{ heading({ caption: patient.fullName, title: title }) }}
 
-  {% for id, question in campaign.healthQuestions %}
+  {% for id, question in session.healthQuestions %}
     {% set giveDetailsHtml %}
       {{ textarea({
         label: {

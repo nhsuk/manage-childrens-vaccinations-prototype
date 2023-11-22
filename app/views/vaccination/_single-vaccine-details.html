@@ -11,7 +11,7 @@
   vaccination.outcome == VACCINATION_OUTCOME.VACCINATED or
   vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED
 %}
-{% set basePath = rootPath + campaign.id + "/" + patient.nhsNumber %}
+{% set basePath = rootPath + session.id + "/" + patient.nhsNumber %}
 
 {{ summaryList({
   rows: decorateRows([
@@ -59,7 +59,7 @@
     } if vaccineGiven,
     {
       key: "Location",
-      value: campaign.location,
+      value: session.location,
       href: "#"
     },
     {

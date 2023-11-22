@@ -1,7 +1,7 @@
 {% extends "_layouts/default.html" %}
 
-{% set title = campaign.title %}
-{% set hasPatients = campaign.cohort.length > 0 %}
+{% set title = session.title %}
+{% set hasPatients = session.cohort.length > 0 %}
 
 {% block beforeContent %}
   {{ breadcrumb({
@@ -24,10 +24,10 @@
 
   <h1 class="nhsuk-heading-l">
     {{ title | noOrphans | safe }}
-    <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ campaign.date | govukDate() }} at {{ campaign.date | govukTime }} · {{ campaign.cohort.length | plural("child") }}</span>
+    <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ session.date | govukDate() }} at {{ session.date | govukTime }} · {{ session.cohort.length | plural("child") }}</span>
   </h1>
 
-  {% if not isOffline or campaign["available-offline"] %}
+  {% if not isOffline or session["available-offline"] %}
     <div class="nhsuk-grid-row">
       <div class="nhsuk-grid-column-two-thirds">
         <div class="nhsuk-card">
@@ -47,17 +47,17 @@
 
             {% if hasPatients %}
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/sessions/{{ campaign.id }}/responses">Check consent responses</a>
+                <a href="/sessions/{{ session.id }}/responses">Check consent responses</a>
               </h2>
               <p>{{ filters.noResponse.results.length | plural("child") }} without a response, {{ filters.consentRefused.results.length | plural("respondent") }} refused</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/sessions/{{ campaign.id }}/triage">Triage health questions</a>
+                <a href="/sessions/{{ session.id }}/triage">Triage health questions</a>
               </h2>
               <p>{{ filters.triageNeeded.results.length | plural("child") }} needing triage</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/sessions/{{ campaign.id }}/record">Record vaccinations</a>
+                <a href="/sessions/{{ session.id }}/record">Record vaccinations</a>
               </h2>
               <p>{{ filters.readyToVaccinate.results.length | plural("child") }} ready to vaccinate</p>
             {% endif %}
@@ -70,7 +70,7 @@
       </div>
 
       <div class="nhsuk-grid-column-one-third">
-        {% if hasPatients and not campaign["available-offline"] %}
+        {% if hasPatients and not session["available-offline"] %}
         <div id="save-offline">
           <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">Save offline</h2>
           <p>Record vaccinations while not connected to the internet.</p>
@@ -84,27 +84,27 @@
         </div>
         {% endif %}
 
-        {% if campaign["available-offline"] %}
+        {% if session["available-offline"] %}
           <div id="available-offline">
             <h2 class="nhsuk-heading-s" style="color: #007f3b">
               <span class="app-status app-status--green">
                 {{ icon("tick") }} Available offline
               </span>
             </h2>
-            {% if campaignOfflineChangesCount == 0 and not campaign.hadOfflineChanges %}
+            {% if sessionOfflineChangesCount == 0 and not session.hadOfflineChanges %}
               <p>You can record vaccinations while not connected to the internet.</p>
             {% endif %}
           </div>
 
-          {% if campaignOfflineChangesCount == 1 %}
+          {% if sessionOfflineChangesCount == 1 %}
             <hr>
             <h2 class="nhsuk-heading-s">You changed 1 record offline</h2>
             <p>Your change will automatically sync when you’re back online.</p>
-          {% elif campaignOfflineChangesCount > 1 %}
+          {% elif sessionOfflineChangesCount > 1 %}
             <hr>
-            <h2 class="nhsuk-heading-s">You changed {{ campaignOfflineChangesCount }} records offline</h2>
+            <h2 class="nhsuk-heading-s">You changed {{ sessionOfflineChangesCount }} records offline</h2>
             <p>Your changes will automatically sync when you’re back online.</p>
-          {% elif campaign.hadOfflineChanges and campaignOfflineChangesCount == 0 %}
+          {% elif session.hadOfflineChanges and sessionOfflineChangesCount == 0 %}
             <hr>
             <h2 class="nhsuk-heading-s">Your changes were synced</h2>
             <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>

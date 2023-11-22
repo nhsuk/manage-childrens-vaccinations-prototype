@@ -2,8 +2,8 @@ import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import _ from 'lodash'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
-import getCampaign from './campaign.js'
 import getResponse from './response.js'
+import getSession from './session.js'
 import getUser from './user.js'
 
 const setConsentOutcome = (patient, type) => {
@@ -59,20 +59,20 @@ const setOutcome = (patient) => {
 }
 
 /**
- * Generate in progress campaign
- * @param {string} type - Campaign type
+ * Generate in progress session
+ * @param {string} type - Session type
  */
 export default (type) => {
-  const campaign = getCampaign(type)
+  const session = getSession(type)
 
-  campaign.inProgress = true
-  campaign.date = DateTime.now().toISODate() + 'T' + '09:00'
+  session.inProgress = true
+  session.date = DateTime.now().toISODate() + 'T' + '09:00'
 
   // Set consent outcome for all patients
-  campaign.cohort.forEach(patient => setConsentOutcome(patient, type))
+  session.cohort.forEach(patient => setConsentOutcome(patient, type))
 
   // Set patient outcome for 50% of patients
-  _.sampleSize(campaign.cohort, 50).forEach(patient => setOutcome(patient))
+  _.sampleSize(session.cohort, 50).forEach(patient => setOutcome(patient))
 
-  return campaign
+  return session
 }

@@ -28,13 +28,13 @@
             { text: VACCINATION_SITE.BUTTOCK_LEFT },
             { text: VACCINATION_SITE.BUTTOCK_RIGHT }
           ],
-          decorate: [dataLocation, campaign.id, patient.nhsNumber, "site"]
+          decorate: [dataLocation, session.id, patient.nhsNumber, "site"]
         })
-      } if campaign.vaccines[0].method == "Injection"
+      } if session.vaccines[0].method == "Injection"
     }, {
       text: "No, they did not get the vaccine",
       value: false
     }],
-    decorate: [dataLocation, campaign.id, patient.nhsNumber, "outcome"]
+    decorate: [dataLocation, session.id, patient.nhsNumber, "outcome"]
   }) }}
 {% endblock %}

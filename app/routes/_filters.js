@@ -83,7 +83,7 @@ const sort = (patients) => {
 
 export default (req, res) => {
   const query = req.query
-  const { cohort } = res.locals.campaign
+  const { cohort } = res.locals.session
 
   // Consent filters
   let noResponseResults = filter(cohort, 'consentOutcome', 'NO_RESPONSE')

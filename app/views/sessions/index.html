@@ -18,12 +18,12 @@
     }) }}
   {% endif %}
 
-  {% set flu = data.campaigns | objectToArray | selectFromArray("type", "Flu") %}
+  {% set flu = data.sessions | objectToArray | selectFromArray("type", "Flu") %}
   {{ sessions(flu, isOffline) if flu.length }}
 
-  {% set hpv = data.campaigns | objectToArray | selectFromArray("type", "HPV") %}
+  {% set hpv = data.sessions | objectToArray | selectFromArray("type", "HPV") %}
   {{ sessions(hpv, isOffline) if hpv.length }}
 
-  {% set 3in1 = data.campaigns | objectToArray | selectFromArray("type", "3-in-1 and MenACWY") %}
+  {% set 3in1 = data.sessions | objectToArray | selectFromArray("type", "3-in-1 and MenACWY") %}
   {{ sessions(3in1, isOffline) if 3in1.length }}
 {% endblock %}

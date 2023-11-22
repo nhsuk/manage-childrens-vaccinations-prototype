@@ -8,12 +8,12 @@
 
   {% for response in patient.responses %}
     {% set detailsHtml %}
-      {% include "campaign/patient/_response-summary.html" %}
+      {% include "sessions/patient/_response-summary.html" %}
 
       {# Check refusal if refused and no other response has confirmed refusal #}
       {{ button({
         classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
-        href: "/consent/" + campaign.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
+        href: "/consent/" + session.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
         text: "Contact parent or guardian"
       }) if (response.status == RESPONSE_CONSENT.REFUSED)
         and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL)
@@ -22,7 +22,7 @@
       {# Get consent if previously contacted but no response #}
       {{ button({
         classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
-        href: "/consent/" + campaign.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
+        href: "/consent/" + session.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
         text: "Get consent"
       }) if response.status == RESPONSE_CONSENT.NO_RESPONSE }}
     {% endset %}
@@ -39,7 +39,7 @@
     attributes: { open: true } if patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE,
     HTML: summaryList({
       classes: "app-summary-list--full-width",
-      rows: healthAnswerRows(campaign, patient.responses)
+      rows: healthAnswerRows(session, patient.responses)
     }),
     classes: "nhsuk-expander"
   }) if patient.consent.hasHealthAnswers }}
@@ -62,7 +62,7 @@
       classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-0",
       text: "Assess Gillick competence",
       value: "Gillick"
-    }) if not (campaign.type == "Flu") }}
+    }) if not (session.type == "Flu") }}
   {% endif %}
 {% endset %}
 

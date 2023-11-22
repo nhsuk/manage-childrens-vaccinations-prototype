@@ -15,15 +15,15 @@
         href: "/sessions"
       }
     ],
-    text: campaign.title,
-    href: "/sessions/" + campaign.id
+    text: session.title,
+    href: "/sessions/" + session.id
   }) }}
 {% endblock %}
 
 {% block content %}
-  {% include "campaign/_notification-banner.html" %}
+  {% include "sessions/_notification-banner.html" %}
 
-  {% if campaign["available-offline"] %}
+  {% if session["available-offline"] %}
     <span class="app-status app-status--green">
       {{ icon("tick") }} Available offline
     </span>
@@ -36,24 +36,24 @@
 
   {% set consentValid %}
     {% set tab = filters.consentValid %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set consentRefused %}
     {% set tab = filters.consentRefused %}
     {% set isRefusalReasonNeeded = true %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set consentConflicts %}
     {% set tab = filters.consentConflicts %}
     {% set isRefusalReasonNeeded = false %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set noResponse %}
     {% set tab = filters.noResponse %}
-    {% include "campaign/_tab.html" %}
+    {% include "sessions/_tab.html" %}
   {% endset %}
 
   {{ tabs({

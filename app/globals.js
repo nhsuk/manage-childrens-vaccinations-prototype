@@ -150,14 +150,14 @@ export default (_env) => {
 
   /**
    * Health answer summary list rows
-   * @param {object} campaign - Campaign
+   * @param {object} session - Session
    * @param {Array} responses - Consent responses
    * @returns {object} Parameters for summary list component
    */
-  globals.healthAnswerRows = function (campaign, responses) {
+  globals.healthAnswerRows = function (session, responses) {
     const rows = []
 
-    for (const [id, question] of Object.entries(campaign.healthQuestions)) {
+    for (const [id, question] of Object.entries(session.healthQuestions)) {
       const responsesWithAnswers = responses.filter(response => response.healthAnswers)
       const uniqueResponses = _.uniqBy(responsesWithAnswers, `healthAnswers[${id}]`)
 

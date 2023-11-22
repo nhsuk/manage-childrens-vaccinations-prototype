@@ -19,7 +19,7 @@
     },
     {
       key: "Location",
-      value: campaign.location,
+      value: session.location,
       href: "#"
     },
     {
@@ -31,8 +31,8 @@
 }) }}
 
 <h2 class="nhsuk-heading-m">MenACWY</h2>
-{% set basePath = "/men-acwy-vaccination/" + campaign.id + "/" + patient.nhsNumber %}
-{% set vaccine = campaign.vaccines[1] %}
+{% set basePath = "/men-acwy-vaccination/" + session.id + "/" + patient.nhsNumber %}
+{% set vaccine = session.vaccines[1] %}
 {% set batch = vaccine.batches[0] %}
 {% set brand = vaccine.brand + " (Injection)" %}
 
@@ -66,8 +66,8 @@
 {% endif %}
 
 <h2 class="nhsuk-heading-m">3-in-1 booster</h2>
-{% set basePath = "/3-in-1-vaccination/" + campaign.id + "/" + patient.nhsNumber %}
-{% set vaccine = campaign.vaccines[0] %}
+{% set basePath = "/3-in-1-vaccination/" + session.id + "/" + patient.nhsNumber %}
+{% set vaccine = session.vaccines[0] %}
 {% set batch = vaccine.batches[0] %}
 {% set brand = vaccine.brand + " (Injection)" %}
 
