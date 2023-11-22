@@ -11,7 +11,7 @@
     rows: decorateRows([
       {
         key: "Type of session",
-        value: session["type-of-session"],
+        value: session.type,
         href: baseHref
       },
       {
@@ -26,7 +26,7 @@
       },
       {
         key: "Date",
-        value: session["session-date"] | isoDateFromDateInput | dateWithDayOfWeek,
+        value: session.date | isoDateFromDateInput | dateWithDayOfWeek,
         href: baseHref + "/when"
       },
       {

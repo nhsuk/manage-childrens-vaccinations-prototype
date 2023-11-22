@@ -46,7 +46,7 @@ export default (router) => {
 
     session.id = tempSession.id
     session.location = tempSession.where
-    session.date = `${isoDateFromDateInput(tempSession['session-date'])}T${time}`
+    session.date = `${isoDateFromDateInput(tempSession.date)}T${time}`
     session.type = tempSession.which
     session.cohort = []
     session.title = `${tempSession.which} campaign at ${tempSession.where}`
