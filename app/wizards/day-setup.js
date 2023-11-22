@@ -8,7 +8,7 @@ export function daySetup (req) {
     '/day-setup/what': {},
     '/day-setup/batch': {},
     '/day-setup/check-answers': {},
-    '/campaign/flu': {}
+    '/sessions/flu': {}
   }
 
   return wizard(journey, req)

@@ -62,12 +62,12 @@ export function vaccination (req) {
     .find(patient => patient.nhsNumber === nhsNumber)
 
   const journey = {
-    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
+    [`/sessions/${campaignId}/patient/${nhsNumber}`]: {},
     ...campaign.is3in1MenACWY
       ? journeyFor3in1MenAcwy(req.session.data, campaignId, patient)
       : journeyForEverythingElse(req.session.data, campaign, patient),
     [`/vaccination/${campaignId}/${nhsNumber}/details`]: {},
-    [`/campaign/${campaignId}/record?success=${nhsNumber}`]: {}
+    [`/sessions/${campaignId}/record?success=${nhsNumber}`]: {}
   }
 
   return wizard(journey, req)

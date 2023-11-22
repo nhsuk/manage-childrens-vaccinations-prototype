@@ -13,8 +13,8 @@ const offlineChangesCount = (campaign) => {
 
 export default (router) => {
   router.all([
-    '/campaign/:campaignId',
-    '/campaign/:campaignId/*'
+    '/sessions/:campaignId',
+    '/sessions/:campaignId/*'
   ], (req, res, next) => {
     const { campaigns } = res.locals
     const campaign = campaigns[req.params.campaignId]
@@ -33,8 +33,8 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId/patient/:nhsNumber',
-    '/campaign/:campaignId/patient/:nhsNumber/*'
+    '/sessions/:campaignId/patient/:nhsNumber',
+    '/sessions/:campaignId/patient/:nhsNumber/*'
   ], (req, res, next) => {
     res.locals.patient = res.locals.campaign.cohort
       .find(patient => patient.nhsNumber === req.params.nhsNumber)
@@ -50,7 +50,7 @@ export default (router) => {
     next()
   })
 
-  router.post('/campaign/:campaignId/patient/:nhsNumber', (req, res, next) => {
+  router.post('/sessions/:campaignId/patient/:nhsNumber', (req, res, next) => {
     const { patient } = res.locals
     const { campaignId, nhsNumber } = req.params
     const { flow } = req.query
@@ -71,13 +71,13 @@ export default (router) => {
         patient.triage.notes.push(getNote(triage.note, user, true))
       }
 
-      res.redirect(`/campaign/${campaignId}/triage?success=${nhsNumber}`)
+      res.redirect(`/sessions/${campaignId}/triage?success=${nhsNumber}`)
     } else {
       res.redirect(res.locals.paths.next)
     }
   })
 
-  router.post('/campaign/:campaignId', (req, res, next) => {
+  router.post('/sessions/:campaignId', (req, res, next) => {
     if (req.session.data.hasOfflineCode) {
       res.locals.campaign['available-offline'] = true
       next()
@@ -87,19 +87,19 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId'
+    '/sessions/:campaignId'
   ], (req, res) => {
     res.render('campaign/index')
   })
 
   router.all([
-    '/campaign/:campaignId/patient/:nhsNumber'
+    '/sessions/:campaignId/patient/:nhsNumber'
   ], (req, res) => {
     res.render('campaign/patient')
   })
 
   router.all([
-    '/campaign/:campaignId/record'
+    '/sessions/:campaignId/record'
   ], (req, res, next) => {
     const campaign = req.session.data.campaigns[req.params.campaignId]
 
@@ -116,7 +116,7 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/:campaignId/:view'
+    '/sessions/:campaignId/:view'
   ], (req, res) => {
     res.render(`campaign/${req.params.view}`)
   })

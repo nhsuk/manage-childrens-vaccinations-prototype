@@ -14,7 +14,7 @@
 {% block outerContent %}
   {% set referrer = data.referrer or "record" %}
   {{ backLink({
-    href: "/campaign/" + campaign.id + "/" + referrer,
+    href: "/sessions/" + campaign.id + "/" + referrer,
     classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
   }) }}
 {% endblock %}

@@ -10,15 +10,15 @@ const generateRandomString = (length) => {
 }
 
 export default (router) => {
-  router.all('/campaign/new/start', (req, res) => {
+  router.all('/sessions/new/start', (req, res) => {
     const campaignId = generateRandomString()
     req.session.data['temp-campaign'] = { id: campaignId }
-    res.redirect(`/campaign/new/${campaignId}`)
+    res.redirect(`/sessions/new/${campaignId}`)
   })
 
   router.all([
-    '/campaign/new/:campaignId',
-    '/campaign/new/:campaignId/*'
+    '/sessions/new/:campaignId',
+    '/sessions/new/:campaignId/*'
   ], (req, res, next) => {
     res.locals.campaignId = req.params.campaignId
     res.locals.campaign = req.session.data['temp-campaign']
@@ -26,15 +26,15 @@ export default (router) => {
   })
 
   router.all([
-    '/campaign/new/:campaignId',
-    '/campaign/new/:campaignId/*'
+    '/sessions/new/:campaignId',
+    '/sessions/new/:campaignId/*'
   ], (req, res, next) => {
     res.locals.paths = newCampaignWizard(req)
     next()
   })
 
   router.post([
-    '/campaign/new/:campaignId/check'
+    '/sessions/new/:campaignId/check'
   ], (req, res, next) => {
     const tempCampaign = res.locals.campaign
     const time = tempCampaign.time === 'Afternoon' ? '13:00' : '09:00'
@@ -68,20 +68,20 @@ export default (router) => {
   })
 
   router.post([
-    '/campaign/new/:campaignId',
-    '/campaign/new/:campaignId/*'
+    '/sessions/new/:campaignId',
+    '/sessions/new/:campaignId/*'
   ], (req, res) => {
     res.redirect(res.locals.paths.next)
   })
 
   router.all([
-    '/campaign/new/:campaignId'
+    '/sessions/new/:campaignId'
   ], (req, res) => {
     res.render('campaign/new/index')
   })
 
   router.all([
-    '/campaign/new/:campaignId/:view'
+    '/sessions/new/:campaignId/:view'
   ], (req, res) => {
     res.render(`campaign/new/${req.params.view}`)
   })

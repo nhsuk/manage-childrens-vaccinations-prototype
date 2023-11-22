@@ -65,7 +65,7 @@ export default (router, hasOfflineChanges) => {
   router.post('/set-offline-code', (req, res) => {
     req.session.data.hasOfflineCode = true
     res.locals.campaign['available-offline'] = true
-    res.redirect(`/campaign/${res.locals.campaignId}`)
+    res.redirect(`/sessions/${res.locals.campaignId}`)
   })
 
   router.post('/give-offline-code', (req, res) => {

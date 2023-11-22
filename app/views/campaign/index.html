@@ -12,7 +12,7 @@
       }
     ],
     text: "School sessions",
-    href: "/school-sessions"
+    href: "/sessions"
   }) }}
 {% endblock %}
 
@@ -47,17 +47,17 @@
 
             {% if hasPatients %}
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/campaign/{{ campaign.id }}/responses">Check consent responses</a>
+                <a href="/sessions/{{ campaign.id }}/responses">Check consent responses</a>
               </h2>
               <p>{{ filters.noResponse.results.length | plural("child") }} without a response, {{ filters.consentRefused.results.length | plural("respondent") }} refused</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/campaign/{{ campaign.id }}/triage">Triage health questions</a>
+                <a href="/sessions/{{ campaign.id }}/triage">Triage health questions</a>
               </h2>
               <p>{{ filters.triageNeeded.results.length | plural("child") }} needing triage</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/campaign/{{ campaign.id }}/record">Record vaccinations</a>
+                <a href="/sessions/{{ campaign.id }}/record">Record vaccinations</a>
               </h2>
               <p>{{ filters.readyToVaccinate.results.length | plural("child") }} ready to vaccinate</p>
             {% endif %}

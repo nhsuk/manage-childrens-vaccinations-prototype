@@ -6,7 +6,7 @@ export default (req, res) => {
   const basePath = `/consent/${campaignId}/${nhsNumber}`
 
   const journey = {
-    [`/campaign/${campaignId}/patient/${nhsNumber}`]: {},
+    [`/sessions/${campaignId}/patient/${nhsNumber}`]: {},
     [basePath]: {},
     [`${basePath}/consent`]: {
       [`${basePath}/health-questions`]: {
@@ -25,7 +25,7 @@ export default (req, res) => {
       [`${basePath}/confirm`]: true
     },
     [`${basePath}/confirm`]: {
-      [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: true
+      [`/sessions/${campaignId}/responses?success=${nhsNumber}`]: true
     },
 
     [`${basePath}/pre-gillick`]: {},
@@ -34,7 +34,7 @@ export default (req, res) => {
         data: 'response.gillickCompetent',
         value: 'Yes'
       },
-      [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
+      [`/sessions/${campaignId}/responses?success=${nhsNumber}`]: () => {
         res.locals.patient.seen.isOffline = res.locals.isOffline
         return true
       }
@@ -44,7 +44,7 @@ export default (req, res) => {
         data: 'response.status',
         value: RESPONSE_CONSENT.GIVEN
       },
-      [`/campaign/${campaignId}/responses?success=${nhsNumber}`]: () => {
+      [`/sessions/${campaignId}/responses?success=${nhsNumber}`]: () => {
         res.locals.patient.seen.isOffline = res.locals.isOffline
         return true
       }
