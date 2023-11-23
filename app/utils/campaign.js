@@ -4,8 +4,9 @@
  * @returns {object} Health questions
  */
 export const healthQuestions = (type) => {
-  const allergy = 'Does the child have any severe allergies that have led to an anaphylactic reaction?'
-  const medicalConditions = 'Does the child have any existing medical conditions?'
+  const allergy = 'Does your child have any severe allergies?'
+  const medicalConditions = 'Does your child have any medical conditions for which they receive treatment?'
+  const previousReaction = 'Has your child ever had a severe reaction to any medicines, including vaccines?'
   const anythingElse = 'Is there anything else we should know?'
 
   switch (type) {
@@ -19,15 +20,14 @@ export const healthQuestions = (type) => {
         householdImmuneSystem: 'Is anyone in your household currently having treatment that severely affects their immune system?',
         eggAllergy: 'Has your child ever been admitted to intensive care due an allergic reaction to egg?',
         medicationAllergies: 'Does your child have any allergies to medication?',
-        previousReaction: 'Has your child ever had a reaction to previous vaccinations?',
+        previousReaction,
         aspirin: 'Does you child take regular aspirin?'
       }
     case 'HPV':
       return {
         allergy,
         medicalConditions,
-        medication: 'Does the child take any regular medication?',
-        anythingElse
+        previousReaction
       }
     case '3-in-1 and MenACWY':
       return {
