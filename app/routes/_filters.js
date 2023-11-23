@@ -66,6 +66,11 @@ const filters = {
       outcome !== PATIENT_OUTCOME.VACCINATED
     )
   },
+  vaccinateLater: (cohort) => {
+    return cohort.filter(({ triage }) =>
+      triage?.outcome === TRIAGE_OUTCOME.DELAY_VACCINATION
+    )
+  },
   hasOutcome: (cohort, value) => {
     return cohort.filter(({ outcome }) => {
       return outcome === PATIENT_OUTCOME[value]
@@ -101,6 +106,7 @@ export default (req, res) => {
 
   // Record filters
   let vaccinatedResults = filter(cohort, 'hasOutcome', 'VACCINATED')
+  const vaccinateLaterResults = filter(cohort, 'vaccinateLater')
   let couldNotVaccinateResults = filter(cohort, 'hasOutcome', 'COULD_NOT_VACCINATE')
   const readyToVaccinateResults = filter(cohort, 'readyToVaccinate')
 
@@ -172,6 +178,11 @@ export default (req, res) => {
     vaccinated: {
       label: `Vaccinated (${vaccinatedResults.length})`,
       results: sort(vaccinatedResults),
+      statusColumn: 'Outcome'
+    },
+    vaccinateLater: {
+      label: `Vaccinate later (${vaccinateLaterResults.length})`,
+      results: sort(vaccinateLaterResults),
       statusColumn: 'Outcome'
     },
     couldNotVaccinate: {

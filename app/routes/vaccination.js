@@ -1,5 +1,5 @@
 import { vaccination } from '../wizards/vaccination.js'
-import { PATIENT_OUTCOME, VACCINATION_OUTCOME } from '../enums.js'
+import { PATIENT_OUTCOME, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from '../enums.js'
 import _ from 'lodash'
 
 export default (router) => {
@@ -139,13 +139,21 @@ export default (router) => {
         outcome: VACCINATION_OUTCOME.VACCINATED,
         notes
       }
-    } else {
+    } else if (outcome === VACCINATION_OUTCOME.REFUSED) {
       patient.outcome = PATIENT_OUTCOME.COULD_NOT_VACCINATE
       patient.seen = {
         text: PATIENT_OUTCOME.COULD_NOT_VACCINATE,
-        outcome: VACCINATION_OUTCOME.REFUSED,
+        outcome,
         notes
       }
+    } else {
+      patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
+      patient.seen = {
+        text: PATIENT_OUTCOME.NO_OUTCOME_YET,
+        outcome,
+        notes
+      }
+      patient.triage.outcome = TRIAGE_OUTCOME.DELAY_VACCINATION
     }
 
     res.locals.patient.seen.isOffline = res.locals.isOffline

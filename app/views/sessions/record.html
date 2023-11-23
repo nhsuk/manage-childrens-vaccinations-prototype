@@ -44,6 +44,11 @@
     {% include "sessions/_tab.html" %}
   {% endset %}
 
+  {% set vaccinateLater %}
+    {% set tab = filters.vaccinateLater %}
+    {% include "sessions/_tab.html" %}
+  {% endset %}
+
   {% set couldNotVaccinate %}
     {% set tab = filters.couldNotVaccinate %}
     {% include "sessions/_tab.html" %}
@@ -60,6 +65,11 @@
         id: "vaccinated",
         label: filters.vaccinated.label,
         panel: { html: vaccinated }
+      },
+      {
+        id: "vaccinateLater",
+        label: filters.vaccinateLater.label,
+        panel: { html: vaccinateLater }
       },
       {
         id: "not-vaccinated",
