@@ -1,0 +1,15 @@
+{% macro breadcrumbs(params) %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+    {%- for item in params.items %}
+      {%- if item.href %}
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="{{ item.href }}" {%- for attribute, value in item.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>{{ item.html | safe if item.html else item.text }}</a></li>
+      {% else %}
+      <li class="nhsuk-breadcrumb__item" aria-current="page">{{ item.html | safe if item.html else item.text }}</li>
+      {%- endif -%}
+    {% endfor %}
+    </ol>
+  </div>
+</nav>
+{% endmacro %}

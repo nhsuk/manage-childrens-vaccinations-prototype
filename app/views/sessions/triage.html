@@ -4,19 +4,27 @@
 {% set section = "triage" %}
 
 {% block beforeContent %}
-  {{ breadcrumb({
+  {{ breadcrumbs({
     items: [
       {
+        attributes: {
+          class: "nhsuk-breadcrumb__item"
+        },
         text: "Home",
         href: "/dashboard"
       },
       {
         text: "School sessions",
         href: "/sessions"
+      },
+      {
+        text: session.title,
+        href: "/sessions/" + session.id
+      },
+      {
+        text: title
       }
-    ],
-    text: session.title,
-    href: "/sessions/" + session.id
+    ]
   }) }}
 {% endblock %}
 

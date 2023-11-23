@@ -3,9 +3,16 @@
 {% set title = "Help working offline" %}
 
 {% block beforeContent %}
-  {{ breadcrumb({
-    text: "Home",
-    href: "/dashboard"
+  {{ breadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard"
+      },
+      {
+        text: title
+      }
+    ]
   }) }}
 {% endblock %}
 

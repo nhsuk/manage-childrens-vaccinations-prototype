@@ -4,15 +4,20 @@
 {% set hasPatients = session.cohort.length > 0 %}
 
 {% block beforeContent %}
-  {{ breadcrumb({
+  {{ breadcrumbs({
     items: [
       {
         text: "Home",
         href: "/dashboard"
+      },
+      {
+        text: "School sessions",
+        href: "/sessions"
+      },
+      {
+        text: title
       }
-    ],
-    text: "School sessions",
-    href: "/sessions"
+    ]
   }) }}
 {% endblock %}
 

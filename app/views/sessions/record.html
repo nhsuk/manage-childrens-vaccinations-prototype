@@ -4,7 +4,7 @@
 {% set section = "record" %}
 
 {% block beforeContent %}
-  {{ breadcrumb({
+  {{ breadcrumbs({
     items: [
       {
         text: "Home",
@@ -13,10 +13,15 @@
       {
         text: "School sessions",
         href: "/sessions"
+      },
+      {
+        text: session.title,
+        href: "/sessions/" + session.id
+      },
+      {
+        text: title
       }
-    ],
-    text: session.title,
-    href: "/sessions/" + session.id
+    ]
   }) }}
 {% endblock %}
 
