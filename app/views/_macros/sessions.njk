@@ -22,11 +22,15 @@
           {{ session.date | govukTime }}
         </td>
         <td class="nhsuk-table__cell">
-          <a class="nhsuk-u-margin-right-2" href="/sessions/{{ session.id }}">{{ session.school.name }}</a>
-          {{ tag({
-            classes: "nhsuk-tag--blue",
-            text: "Session in progress"
-          }) if session.inProgress }}
+          {% if session.inProgress %}
+            <p class="nhsuk-u-margin-bottom-2">{{ tag({
+              classes: "nhsuk-tag--blue",
+              text: "Session in progress"
+            }) }}</p>
+          {% endif %}
+          <p class="nhsuk-u-margin-bottom-0 nhsuk-u-secondary-text-color">
+            <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>{{ session.school.town }}
+          </p>
         </td>
         {% if isOffline %}
           <td class="nhsuk-table__cell nhsuk-u-text-align-right">
