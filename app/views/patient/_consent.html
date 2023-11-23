@@ -54,8 +54,8 @@
 
     {{ button({
       classes: "nhsuk-u-margin-bottom-0",
-      text: "Get consent",
-      value: "Yes"
+      href: "/consent/" + session.id + "/" + patient.nhsNumber,
+      text: "Get consent"
     }) }}
 
     {{ button({

@@ -16,10 +16,6 @@ import { CONSENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
 export default (patient) => {
   const { consent, responses } = patient
 
-  if (consent.outcome) {
-    return
-  }
-
   let outcome = CONSENT_OUTCOME.NO_RESPONSE
 
   if (responses?.length === 1) {
