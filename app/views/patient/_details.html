@@ -28,12 +28,6 @@
       {
         key: "NHS Number",
         value: patient.nhsNumber | formatNHSNumber
-      } if not hasNoResponse,
-      {
-        key: "Vaccination history",
-        value: {
-          html: "<a href=\"#\">Record available</a>"
-        }
       } if not hasNoResponse
     ])
   })
