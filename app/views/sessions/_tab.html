@@ -25,23 +25,19 @@
                 {% if patient.knownAs %}
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ patient.knownAs }}</span>
                 {% endif %}
+                {% if patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
+                  <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-color">Refusal confirmed</span>
+                {% endif %}
               </td>
               <td class="nhsuk-table__cell nhsuk-u-font-size-16">
                 {{ patient.dob | govukDate("truncate") }}
               </td>
               {% if isRefusalReasonNeeded %}
               <td class="nhsuk-table__cell nhsuk-u-font-size-16">
-                {% if patient.outcome == PATIENT_OUTCOME.COULD_NOT_VACCINATE %}
-                  {{ tag({
-                    text: "Confirmed",
-                    classes: "nhsuk-tag--red nhsuk-u-font-size-16 nhsuk-u-width-full"
-                  }) }}
-                {% else %}
-                  {% for reason in patient.consent.refusalReasons %}
-                    {{ reason | noOrphans | safe }}
-                    {% if not loop.last %}<br>{% endif %}
-                  {% endfor %}
-                {% endif %}
+                {% for reason in patient.consent.refusalReasons %}
+                  {{ reason | noOrphans | safe }}
+                  {% if not loop.last %}<br>{% endif %}
+                {% endfor %}
               </td>
               {% endif %}
               {% if tab.statusColumn %}
