@@ -3,10 +3,14 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import _ from 'lodash'
 import { faker } from '@faker-js/faker'
+import getParticipant from './app/fakers/participant.js'
 import getSession from './app/fakers/session.js'
 import getSessionInProgress from './app/fakers/session-in-progress.js'
 import getUser from './app/fakers/user.js'
 import getVaccines from './app/fakers/vaccines.js'
+
+const participantsArray = faker.helpers.multiple(getParticipant, { count: 50 })
+const participants = _.keyBy(participantsArray, 'id')
 
 const sessionsArray = faker.helpers.multiple(getSession, { count: 20 })
 sessionsArray.push(getSessionInProgress('Flu'))
@@ -34,3 +38,4 @@ const generateDataFile = async (outputPath, data) => {
 generateDataFile('.data/sessions.json', sessions)
 generateDataFile('.data/users.json', users)
 generateDataFile('.data/vaccines.json', vaccines)
+generateDataFile('.data/participants.json', participants)
