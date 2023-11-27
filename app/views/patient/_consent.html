@@ -11,13 +11,12 @@
       {% include "patient/_response-summary.html" %}
 
       {# Check refusal if refused and no other response has confirmed refusal #}
-      {{ button({
-        classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-3",
-        href: "/consent/" + session.id + "/" + patient.nhsNumber + "/consent?responseId=" + loop.index0,
-        text: "Contact parent or guardian"
-      }) if (response.status == RESPONSE_CONSENT.REFUSED)
-        and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL)
-      }}
+      {% if (response.status == RESPONSE_CONSENT.REFUSED)
+        and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL) %}
+        <p>
+          <a class="nhsuk-u-font-weight-bold" href="/consent/{{ session.id}}/{{ patient.nhsNumber }}/consent?responseId={{ loop.index0 }}">Contact parent or guardian</a>
+        </p>
+      {% endif %}
 
       {# Get consent if previously contacted but no response #}
       {{ button({
@@ -57,7 +56,9 @@
       href: "/consent/" + session.id + "/" + patient.nhsNumber,
       text: "Get consent"
     }) }}
+  {% endif %}
 
+  {% if patient.consent.outcome != CONSENT_OUTCOME.GIVEN %}
     {{ button({
       classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-0",
       text: "Assess Gillick competence",
