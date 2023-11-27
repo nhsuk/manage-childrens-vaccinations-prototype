@@ -1,0 +1,26 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Manage pilot" %}
+
+{% block content %}
+  {{ govukNotificationBanner({
+    type: "success",
+    text: "Cohort data imported"
+  }) if success }}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {{ heading({ title: title, size: "xl" }) }}
+
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+        <a href="/pilot/participants">Parents interested in the pilot</a>
+      </h2>
+      <p>View and download a list of parents interested in the pilot</p>
+
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+        <a href="/pilot/cohort">Upload the cohort list</a>
+      </h2>
+      <p>Upload a list of children to vaccinate in the pilot</p>
+    </div>
+  </div>
+{% endblock %}

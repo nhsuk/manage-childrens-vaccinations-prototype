@@ -3,17 +3,19 @@ import { createRequire } from 'node:module'
 import getVaccination from './fakers/vaccination.js'
 
 const require = createRequire(import.meta.url)
+const participants = require('../.data/participants.json')
 const sessions = require('../.data/sessions.json')
 const users = require('../.data/users.json')
 const vaccines = require('../.data/vaccines.json')
 
 export default {
+  pilot: { participants },
   support: 'record-childrens-vaccinations@service.nhs.uk',
-  user: Object.values(users)[0],
   sessions,
+  user: Object.values(users)[0],
+  users,
   vaccines,
   vaccination: getVaccination(sessions, vaccines),
-  users,
   // Set feature flags using the `features` key
   features: {
     pilot: {

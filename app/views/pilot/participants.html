@@ -1,0 +1,59 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Parents interested in the pilot" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard"
+      },
+      {
+        text: "Manage pilot",
+        href: "/pilot"
+      },
+      {
+        text: title
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ heading({ title: title }) }}
+
+  {{ button({
+    text: "Download data for registered parents (CSV)"
+  }) }}
+
+  {% set rows = [] %}
+  {% for id, participant in data.pilot.participants %}
+    {% set rows = (rows.push([
+      {
+        header: "Name",
+        text: participant.fullName
+      },
+      {
+        header: "Email",
+        text: participant.email
+      },
+      {
+        header: "Phone number",
+        text: participant.tel
+      }
+    ]), rows) %}
+  {% endfor %}
+
+  {{ table({
+    responsive: true,
+    caption: (data.pilot.participants | length) + " responses",
+    firstCellIsHeader: false,
+    head: [
+      { text: "Name" },
+      { text: "Email address" },
+      { text: "Phone number" }
+    ],
+    rows: rows
+  }) }}
+{% endblock %}

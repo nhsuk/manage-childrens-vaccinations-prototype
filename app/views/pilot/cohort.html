@@ -1,0 +1,45 @@
+{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+
+{% extends "_layouts/default.html" %}
+
+{% set title = "Upload the cohort list" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/dashboard"
+      },
+      {
+        text: "Manage pilot",
+        href: "/pilot"
+      },
+      {
+        text: title
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <form method="post" action="/pilot?success=true">
+        {{ govukFileUpload({
+          label: {
+            text: heading({ title: title })
+          },
+          hint: {
+            text: "Make sure the CSV you upload has the same format as your standard cohort template"
+          },
+          decorate: "cohort"
+        }) }}
+
+        {{ button({
+          text: title
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
