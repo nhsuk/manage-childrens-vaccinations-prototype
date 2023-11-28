@@ -1,0 +1,271 @@
+{% extends "_layouts/pilot.html" %}
+{% set title = "Register your interest in the NHS school vaccinations pilot" %}
+
+{% set termsHtml %}
+<p>Taking part in the pilot is voluntary. You can withdraw at any time by emailing <mark>[address]</mark>.</p>
+
+<p>Any findings we make will be anonymised. This means you won’t be personally identified when we share the results of our research.</p>
+
+<h3>What happens to data in our service</h3>
+
+<p>We’ll save the responses you give in our digital service, as well as data recorded during vaccination sessions.</p>
+
+<p>This data will only be shared within the project team. We’ll store it securely with password protection.</p>
+
+<h3>How long we’ll keep your data</h3>
+
+<p>We’ll keep data in our digital service for 2 months after the project finishes.</p>
+
+<h3>Your child’s vaccination session</h3>
+
+<p>By taking part in the pilot, you agree to the NHS pilot team observing your child’s vaccination session. They won’t be able to see any personal data about your child.</p>
+
+<h3>What you’ll get for taking part in the pilot</h3>
+
+<p>We’ll send you a £20 high street shopping voucher once you’ve:</p>
+
+<ul>
+  <li>submitted a response through our digital service</li>
+  <li>completed a survey about your experience</li>
+</ul>
+
+<p>You need to do both these things to qualify for a voucher.</p>
+
+<p>Vouchers are limited to one per household. If you have more than one child eligible for the HPV vaccination, you should only submit a consent response for one of your children.</p>
+
+<h3>Follow-up research</h3>
+
+<p>Once you’ve completed the survey, you might be asked to take part in some follow-up research. There are separate incentives for this, and there’s no obligation to take part.</p>
+{% endset %}
+
+{% block content %}
+<form action="/pilot/confirmation">
+  <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+
+  <p>This pilot is for parents of children who are due to get their HPV vaccination this year.</p>
+
+  <p>Taking part involves responding to a request for consent through a digital service, and then completing a follow-up survey. It should take 15 to 30 minutes of your time.</p>
+
+  <p>To register your interest, complete the fields below.</p>
+
+  <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
+  {% call fieldset({
+    legend: {
+      classes: "nhsuk-fieldset__legend--l",
+      text: "About you"
+    }
+  }) %}
+    {{ input({
+      classes: "nhsuk-input--width-20",
+      label: {
+        classes: "nhsuk-label--s",
+        text: "Your name"
+      },
+      decorate: "parent.name"
+    }) }}
+
+    {% set other %}
+      {{ input({
+        label: {
+          text: "Relationship to the child"
+        },
+        hint: {
+          text: "For example, carer"
+        },
+        decorate: "parent.relationship-other"
+      }) }}
+    {% endset %}
+
+    {{ radios({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "Your relationship to the child"
+        }
+      },
+      items: [
+        { text: "Mum" },
+        { text: "Dad" },
+        { text: "Guardian" },
+        { text: "Other", conditional: { html: other } }
+      ],
+      decorate: "parent.relationship"
+    }) }}
+
+    {{ input({
+      label: {
+        classes: "nhsuk-label--s",
+        text: "Email address"
+      },
+      autocomplete: "email",
+      decorate: "parent.email"
+    }) }}
+
+    {{ input({
+      classes: "nhsuk-input--width-10",
+      label: {
+        classes: "nhsuk-label--s",
+        text: "Phone number (optional)"
+      },
+      autocomplete: "tel",
+      decorate: "parent.tel"
+    }) }}
+  {% endcall %}
+
+  <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
+  {% call fieldset({
+    legend: {
+      classes: "nhsuk-fieldset__legend--l",
+      text: "About your child"
+    }
+  }) %}
+
+    {{ input({
+      classes: "nhsuk-input--width-20",
+      label: {
+        classes: "nhsuk-label--s",
+        text: "First name"
+      },
+      decorate: "child.first-name"
+    }) }}
+
+    {{ input({
+      classes: "nhsuk-input--width-20",
+      label: {
+        classes: "nhsuk-label--s",
+        text: "Last name"
+      },
+      decorate: "child.last-name"
+    }) }}
+
+    {% set otherNameHtml %}
+      {{ input({
+        classes: "nhsuk-input--width-20",
+        label: {
+          text: "Preferred name"
+        },
+        decorate: "child.preferred-name"
+      }) }}
+    {% endset %}
+
+    {{ radios({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "Do they use a different name in school?"
+        }
+      },
+      items: [
+        { text: "Yes", conditional: { html: otherNameHtml } },
+        { text: "No" }
+      ],
+      decorate: "child.preferred-name-choice"
+    }) }}
+
+    {{ dateInput({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "Date of birth"
+        }
+      },
+      hint: {
+        text: "For example, 27 3 2017"
+      },
+      decorate: "child.dob"
+    }) }}
+
+    {% call fieldset({
+      legend: {
+        classes: "nhsuk-fieldset__legend--s",
+        text: "Address"
+      }
+    }) %}
+      <p class="nhsuk-hint">If your child lives at more than one address, enter the address registered with the&nbsp;GP.</p>
+
+      {{ input({
+        label: {
+          text: "Address line 1"
+        },
+        autocomplete: "address-line1",
+        decorate: "child.address.line1"
+      }) }}
+
+      {{ input({
+        label: {
+          text: "Address line 2 (optional)"
+        },
+        autocomplete: "address-line2",
+        decorate: "child.address.line2"
+      }) }}
+
+      {{ input({
+        classes: "nhsuk-!-width-two-thirds",
+        label: {
+          text: "Town or city"
+        },
+        autocomplete: "address-level2",
+        decorate: "child.address.level2"
+      }) }}
+
+      {{ input({
+        label: {
+          text: "Postcode"
+        },
+        classes: "nhsuk-input--width-10",
+        autocomplete: "postal-code",
+        decorate: "child.address.postal-code"
+      }) }}
+    {% endcall %}
+
+    {{ input({
+      classes: "nhsuk-input--width-10",
+      label: {
+        classes: "nhsuk-label--s",
+        text: "NHS number (optional)"
+      },
+      decorate: "child.nhs-number"
+    }) }}
+
+    {{ radios({
+      fieldset: {
+        legend: {
+          classes: "nhsuk-fieldset__legend--s",
+          text: "School"
+        }
+      },
+      items: [
+        { text: "Priestnall School" },
+        { text: "Kingshurst School" },
+        { text: "The Holy Cross School" }
+      ],
+      decorate: "child.school"
+    }) }}
+
+    <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
+    <h2>Terms and conditions</h2>
+
+    {{ insetText({
+      text: "View terms and conditions",
+      HTML: termsHtml
+    }) }}
+
+    {{ checkboxes({
+      items: [
+        { text: "I agree to the terms and conditions" }
+      ],
+      decorate: "terms"
+    }) }}
+
+    <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
+    {{ button({
+      classes: "nhsuk-button--secondary",
+      text: "Register your interest"
+    }) }}
+  {% endcall %}
+</form>
+{% endblock %}

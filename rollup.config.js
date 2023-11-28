@@ -31,6 +31,27 @@ export default [{
       sourceMap: true,
       verbose: false,
       watch: ['app/assets/stylesheets', 'node_modules/govuk-prototype-components/x-govuk']
+    }),
+    scss({
+      includePaths: ['node_modules'],
+      fileName: 'pilot.css',
+      quietDeps: true,
+      verbose: false
+    })
+  ]
+}, {
+  input: [
+    'app/assets/javascripts/pilot.js'
+  ],
+  output: {
+    dir: 'public'
+  },
+  plugins: [
+    scss({
+      includePaths: ['node_modules'],
+      fileName: 'pilot.css',
+      quietDeps: true,
+      verbose: false
     })
   ]
 }]

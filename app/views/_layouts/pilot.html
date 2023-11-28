@@ -1,0 +1,15 @@
+{% extends "template.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/public/pilot.css" media="all">
+{% endblock %}
+
+{% block pageTitle %}
+  {{- "Error: " if errors -}}
+  {{- title + " - " if title -}}
+  {{- serviceName + " - NHS.UK" -}}
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block footer %}{% endblock %}
