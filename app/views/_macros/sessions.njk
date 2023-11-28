@@ -29,7 +29,7 @@
             }) }}</p>
           {% endif %}
           <p class="nhsuk-u-margin-bottom-0 nhsuk-u-secondary-text-color">
-            <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>{{ session.school.town }}
+            <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>{{ session.school.town }}, {{ session.school.postcode }}
           </p>
         </td>
         {% if isOffline %}
