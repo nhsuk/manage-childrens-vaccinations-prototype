@@ -1,0 +1,17 @@
+{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+
+{% extends "_layouts/wizard.html" %}
+
+{% set title = "Upload the cohort list for this session" %}
+
+{% block form %}
+  {{ govukFileUpload({
+    label: {
+      text: heading({ title: title })
+    },
+    hint: {
+      text: "Make sure the CSV you upload has the same format as your standard cohort template"
+    },
+    decorate: "cohort"
+  }) }}
+{% endblock %}

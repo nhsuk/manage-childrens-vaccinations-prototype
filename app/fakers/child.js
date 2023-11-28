@@ -1,4 +1,5 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
+import { DateTime } from 'luxon'
 import getChildFirstName from './child-first-name.js'
 import getGpSurgery from './gp-surgery.js'
 import { yearGroups } from './year-group.js'
@@ -38,7 +39,7 @@ export default (minYearGroup, maxYearGroup) => {
     fullName: `${firstName} ${lastName}`,
     knownAs: faker.helpers.maybe(() => knownAs, { probability: 0.1 }),
     sex,
-    dob,
+    dob: DateTime.fromJSDate(dob).toISODate(),
     gpSurgery: getGpSurgery()
   }
 
