@@ -1,0 +1,29 @@
+{% extends "_layouts/wizard.html" %}
+
+{% set title = "Check and confirm cohort" %}
+
+{% block form %}
+  {{ heading({ title: title }) }}
+
+  {% set rows = [] %}
+  {% for patient in cohort %}
+    {% set rows = (rows.push([
+      {
+        text: patient.fullName
+      },
+      {
+        text: patient.dob | govukDate("truncate")
+      }
+    ]), rows) %}
+  {% endfor %}
+
+  {{ table({
+    caption: (cohort | length) + " patients",
+    firstCellIsHeader: false,
+    head: [
+      { text: "Name" },
+      { text: "Date of birth" }
+    ],
+    rows: rows
+  }) }}
+{% endblock %}
