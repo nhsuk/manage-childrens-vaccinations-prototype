@@ -32,15 +32,15 @@
     {% set rows = (rows.push([
       {
         header: "Name",
-        text: participant.fullName
+        text: participant.parent.fullName
       },
       {
         header: "Email",
-        text: participant.email
+        text: participant.parent.email
       },
       {
         header: "Phone number",
-        text: participant.tel
+        text: participant.parent.tel or "Not provided"
       }
     ]), rows) %}
   {% endfor %}
