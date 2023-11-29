@@ -306,7 +306,7 @@
   {
     "urn": "135221",
     "name": "Maple Grove Primary School",
-    "address": "St Agnell's Lane",
+    "address": "St Agnell’s Lane",
     "locality": "Grove Hill",
     "address3": "",
     "town": "Hemel Hempstead",
@@ -865,7 +865,7 @@
   },
   {
     "urn": "147928",
-    "name": "St Godrics Catholic Primary School, Thornley",
+    "name": "St Godrics Catholic Primary School",
     "address": "Thornley Road",
     "locality": "Wheatley Hill",
     "address3": "",
@@ -913,7 +913,7 @@
   },
   {
     "urn": "126547",
-    "name": "St Luke's School",
+    "name": "St Luke’s School",
     "address": "Cricklade Road",
     "locality": "",
     "address3": "",
@@ -961,7 +961,7 @@
   },
   {
     "urn": "100961",
-    "name": "St Saviour's Church of England Primary School",
+    "name": "St Saviour’s Church of England Primary School",
     "address": "Chrisp Street",
     "locality": "Poplar",
     "address3": "",
@@ -977,7 +977,7 @@
   },
   {
     "urn": "104918",
-    "name": "St Patrick's Catholic Primary School",
+    "name": "St Patrick’s Catholic Primary School",
     "address": "Radnor Drive",
     "locality": "Churchtown",
     "address3": "",
@@ -1041,7 +1041,7 @@
   },
   {
     "urn": "121336",
-    "name": "Scarborough, Overdale Community Primary School",
+    "name": "Overdale Community Primary School",
     "address": "Hawthorn Walk",
     "locality": "Eastfield",
     "address3": "",
@@ -1105,7 +1105,7 @@
   },
   {
     "urn": "130877",
-    "name": "St Andrew's Benn CofE (Voluntary Aided) Primary School",
+    "name": "St Andrew’s Benn CofE (Voluntary Aided) Primary School",
     "address": "Chester Street",
     "locality": "",
     "address3": "",
@@ -1169,7 +1169,7 @@
   },
   {
     "urn": "145790",
-    "name": "St Peter's CofE Primary School",
+    "name": "St Peter’s CofE Primary School",
     "address": "Shrubbery Gardens",
     "locality": "Wem",
     "address3": "",
@@ -1313,7 +1313,7 @@
   },
   {
     "urn": "120897",
-    "name": "Queensway Infant School and Nursery, Thetford",
+    "name": "Queensway Infant School and Nursery",
     "address": "Queensway",
     "locality": "",
     "address3": "",
@@ -1425,7 +1425,7 @@
   },
   {
     "urn": "138164",
-    "name": "St Thomas More's Catholic Primary School, Colchester",
+    "name": "St Thomas More’s Catholic Primary School",
     "address": "Priory Street",
     "locality": "",
     "address3": "",
@@ -1537,7 +1537,7 @@
   },
   {
     "urn": "120617",
-    "name": "The Saint Hugh's Catholic Primary School, Lincoln",
+    "name": "The Saint Hugh’s Catholic Primary School",
     "address": "Woodfield Avenue",
     "locality": "Doddington Park",
     "address3": "",
@@ -1569,7 +1569,7 @@
   },
   {
     "urn": "138667",
-    "name": "Lord Williams's School",
+    "name": "Lord Williams’s School",
     "address": "Oxford Road",
     "locality": "",
     "address3": "",
