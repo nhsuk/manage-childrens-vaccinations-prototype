@@ -54,7 +54,7 @@
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/sessions/{{ session.id }}/responses">Check consent responses</a>
               </h2>
-              <p>{{ filters.noResponse.results.length | plural("child") }} without a response, {{ filters.consentRefused.results.length | plural("respondent") }} refused</p>
+              <p>{{ filters.consentValid.results.length | plural("child") }} with consent given<br>{{ filters.consentRefused.results.length | plural("child") }} with consent refused<br>{{ filters.noResponse.results.length | plural("child") }} without a response</p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/sessions/{{ session.id }}/triage">Triage health questions</a>
