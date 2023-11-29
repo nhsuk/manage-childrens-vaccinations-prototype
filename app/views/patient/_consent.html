@@ -46,6 +46,9 @@
   {% if not patient.responses.length %}
     {#- Add a new response to any existing -#}
     {{ input({
+      formGroup: {
+        classes: "nhsuk-u-margin-0"
+      },
       name: "responseId",
       value: patient.responses.length,
       type: "hidden"
