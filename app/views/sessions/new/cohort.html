@@ -1,0 +1,47 @@
+{% extends "_layouts/wizard.html" %}
+
+{% set title = "Select cohort for this session" %}
+
+{% block form %}
+  {{ heading({ title: title }) }}
+
+  {% macro checkboxHtml(label) %}
+    {{ checkboxes({
+      formGroup: {
+        classes: "nhsuk-u-margin-0"
+      },
+      idPrefix: "selected",
+      name: "selected",
+      items: [{
+        html: "<span class=\"nhsuk-u-visually-hidden\">Select " + label + "</span>",
+        checked: true
+      }]
+    }) }}
+  {% endmacro %}
+
+  {% set rows = [] %}
+  {% for patient in cohort %}
+    {% set rows = (rows.push([
+      {
+        html: checkboxHtml(patient.name)
+      },
+      {
+        text: patient.fullName
+      },
+      {
+        text: patient.dob | govukDate("truncate")
+      }
+    ]), rows) %}
+  {% endfor %}
+
+  {{ table({
+    tableClasses: "app-table--select-cohort",
+    firstCellIsHeader: false,
+    head: [
+      { html: checkboxHtml("all") },
+      { text: "Name" },
+      { text: "Date of birth" }
+    ],
+    rows: rows
+  }) }}
+{% endblock %}

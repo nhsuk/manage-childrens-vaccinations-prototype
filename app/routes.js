@@ -4,7 +4,6 @@ import getTriageOutcome from './utils/triage-outcome.js'
 import getPatientOutcome from './utils/patient-outcome.js'
 import accountRoutes from './routes/account.js'
 import sessionRoutes from './routes/session.js'
-import sessionCohortRoutes from './routes/session-cohort.js'
 import consentRoutes from './routes/consent.js'
 import newSessionRoutes from './routes/new-session.js'
 import redirects from './routes/redirects.js'
@@ -81,7 +80,6 @@ router.all('*', (req, res, next) => {
 accountRoutes(router)
 newSessionRoutes(router)
 sessionRoutes(router)
-sessionCohortRoutes(router)
 consentRoutes(router)
 onlineOfflineRoutes(router, hasOfflineChanges)
 redirects(router)

@@ -37,19 +37,6 @@
       <div class="nhsuk-grid-column-two-thirds">
         <div class="nhsuk-card">
           <div class="nhsuk-card__content">
-            {% if not data.features.pilot.on %}
-              <h2 class="nhsuk-heading-s">
-                <a href="#">Send consent requests</a>
-              </h2>
-            {% endif %}
-
-            {% if not hasPatients %}
-              <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-                <a href="/sessions/{{ session.id }}/cohort/upload">Add children</a>
-              </h2>
-              <p>Upload a list of children in this school</p>
-            {% endif %}
-
             {% if hasPatients %}
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/sessions/{{ session.id }}/responses">Check consent responses</a>
