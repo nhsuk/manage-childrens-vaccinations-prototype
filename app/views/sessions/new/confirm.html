@@ -33,6 +33,21 @@
         key: "Time",
         value: session.time,
         href: baseHref + "/date"
+      },
+      {
+        key: "Cohort",
+        value: cohort.length + " children",
+        href: baseHref + "/cohort"
+      },
+      {
+        key: "Consent emails",
+        value: session.emailDate | isoDateFromDateInput | dateWithDayOfWeek,
+        href: baseHref + "/emails"
+      },
+      {
+        key: "Reminder emails",
+        value: session.reminderDate | isoDateFromDateInput | dateWithDayOfWeek,
+        href: baseHref + "/emails"
       }
     ])
   }) }}

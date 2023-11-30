@@ -3,6 +3,7 @@ import { newSessionWizard } from '../wizards/new-session.js'
 import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
 import { healthQuestions, yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
+import getSession from '../fakers/session.js'
 
 export default (router) => {
   router.all('/sessions/new/start', (req, res) => {
@@ -22,21 +23,40 @@ export default (router) => {
     next()
   })
 
+  router.get('/sessions/new/:sessionId/cohort', (req, res, next) => {
+    const { type } = res.locals.session
+    let { cohort } = getSession(type)
+    cohort = _.shuffle(cohort).slice(0, 27)
+    cohort = _.sortBy(cohort, ['firstName'])
+
+    for (const patient of cohort) {
+      patient.responses = []
+    }
+
+    req.session.data.newCohort = res.locals.cohort = cohort
+
+    next()
+  })
+
+  router.get('/sessions/new/:sessionId/confirm', (req, res, next) => {
+    res.locals.cohort = req.session.data.newCohort
+
+    next()
+  })
+
   router.get('/sessions/new/:sessionId/:view?', (req, res) => {
     const view = req.params.view || 'index'
 
     res.render(`sessions/new/${view}`)
   })
 
-  router.post([
-    '/sessions/new/:sessionId/confirm'
-  ], (req, res, next) => {
+  router.post('/sessions/new/:sessionId/confirm', (req, res, next) => {
     const { session } = res.locals
-    const { vaccines } = req.session.data
+    const { newCohort, vaccines } = req.session.data
     const time = session.time === 'Afternoon' ? '13:00' : '09:00'
 
     session.date = `${isoDateFromDateInput(session.date)}T${time}`
-    session.cohort = []
+    session.cohort = newCohort
     session.title = `${session.type} campaign at ${session.location}`
     session.school = {
       urn: 123456,
@@ -50,6 +70,7 @@ export default (router) => {
     session.vaccines = _.filter(vaccines, { type: session.type })
 
     req.session.data.sessions[session.id] = session
+    delete req.session.data.newCohort
     delete req.session.data.newSession
 
     next()

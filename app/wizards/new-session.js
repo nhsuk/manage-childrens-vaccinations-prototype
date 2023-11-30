@@ -8,6 +8,8 @@ export function newSessionWizard (req) {
     [`/sessions/new/${sessionId}/location`]: {},
     [`/sessions/new/${sessionId}/type`]: {},
     [`/sessions/new/${sessionId}/date`]: {},
+    [`/sessions/new/${sessionId}/cohort`]: {},
+    [`/sessions/new/${sessionId}/emails`]: {},
     [`/sessions/new/${sessionId}/confirm`]: {},
     [`/sessions/${sessionId}?success=1`]: {}
   }

@@ -1,0 +1,37 @@
+{% extends "_layouts/wizard.html" %}
+
+{% set title = "When do you want to send consent emails?" %}
+
+{% block form %}
+  {{ heading({ title: title }) }}
+
+  {{ dateInput({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Initial email"
+      }
+    },
+    hint: {
+      text: "For example, 27 3 2023"
+    },
+    decorate: ["newSession", "emailDate"]
+  }) }}
+
+  {{ dateInput({
+    formGroup: {
+      classes: "nhsuk-u-margin-top-6"
+    },
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Reminder email"
+      }
+    },
+    hint: {
+      text: "For example, 27 3 2023"
+    },
+    decorate: ["newSession", "reminderDate"]
+  }) }}
+
+{% endblock %}
