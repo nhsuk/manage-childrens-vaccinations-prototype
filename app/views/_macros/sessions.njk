@@ -2,34 +2,38 @@
 {% from "_macros/icon.njk" import icon %}
 
 {% macro sessions(sessions, isOffline) %}
-<table class="nhsuk-table">
+<table class="nhsuk-table-responsive">
   <caption class="nhsuk-table__caption nhsuk-u-font-size-32">{{ sessions[0].type }}</caption>
   <thead class="nhsuk-table__head">
     <tr class="nhsuk-table__row">
-      <th class="nhsuk-table__header">Date</th>
-      <th class="nhsuk-table__header">Time</th>
-      <th class="nhsuk-table__header">School</th>
+      <th class="nhsuk-table__header" scope="col">Date</th>
+      <th class="nhsuk-table__header" scope="col">Time</th>
+      <th class="nhsuk-table__header" scope="col">School</th>
       {% if isOffline %}<th class="nhsuk-table__header"></th>{% endif %}
     </tr>
   </thead>
   <tbody class="nhsuk-table__body">
     {% for session in sessions %}
       <tr class="nhsuk-table__row">
-        <td class="nhsuk-table__cell app-u-width-one-fifth app-u-nowrap">
+        <td class="nhsuk-table__cell">
+          <span class="nhsuk-table-responsive__heading">Date</span>
           {{ session.date | govukDate("truncate") }}
         </td>
-        <td class="nhsuk-table__cell app-u-width-one-fifth">
+        <td class="nhsuk-table__cell">
+          <span class="nhsuk-table-responsive__heading">Time</span>
           {{ session.date | govukTime }}
         </td>
         <td class="nhsuk-table__cell">
-          {% if session.inProgress %}
-            <p class="nhsuk-u-margin-bottom-2">{{ tag({
-              classes: "nhsuk-tag--blue",
-              text: "Session in progress"
-            }) }}</p>
-          {% endif %}
+          <span class="nhsuk-table-responsive__heading">School</span>
           <p class="nhsuk-u-margin-bottom-0 nhsuk-u-secondary-text-color">
-            <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>{{ session.school.town }}, {{ session.school.postcode }}
+            {% if session.inProgress %}
+              {{ tag({
+                classes: "nhsuk-tag--blue nhsuk-u-margin-bottom-2",
+                text: "Session in progress"
+              }) }}<br>
+            {% endif %}
+            <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>
+            {{ session.school.town }}, {{ session.school.postcode }}
           </p>
         </td>
         {% if isOffline %}
