@@ -14,7 +14,7 @@
       {% if (response.status == RESPONSE_CONSENT.REFUSED)
         and (patient.consent.outcome != CONSENT_OUTCOME.FINAL_REFUSAL) %}
         <p>
-          <a class="nhsuk-u-font-weight-bold" href="/consent/{{ session.id}}/{{ patient.nhsNumber }}/consent?responseId={{ loop.index0 }}">Contact parent or guardian</a>
+          <a class="nhsuk-u-font-weight-bold" href="/consent/{{ session.id}}/{{ patient.nhsNumber }}/consent?responseId={{ loop.index0 }}">Contact {{ response.parentOrGuardian.fullName }} (the parent who refused)</a>
         </p>
       {% endif %}
 
