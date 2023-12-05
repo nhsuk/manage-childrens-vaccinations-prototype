@@ -44,6 +44,10 @@ $govuk-assets-path: "/govuk/assets/";
   display: table-cell;
 }
 
+.nhsuk-table-responsive {
+  @include nhsuk-responsive-margin(7, "bottom");
+}
+
 .nhsuk-tag {
   &--white {
     font-weight: normal;
