@@ -19,8 +19,6 @@ export const VACCINATION_SITE = {
   ARM_RIGHT: 'Right arm',
   ARM_RIGHT_UPPER: 'Right arm (upper position)',
   ARM_RIGHT_LOWER: 'Right arm (lower position)',
-  BUTTOCK_LEFT: 'Left buttock',
-  BUTTOCK_RIGHT: 'Right buttock',
   THIGH_LEFT: 'Left thigh',
   THIGH_RIGHT: 'Right thigh',
   OTHER: 'Other'
