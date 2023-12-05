@@ -54,7 +54,18 @@
       items: [{
         text: "Yes, they got the full dose" if session.isFlu else
               "Yes, they got the " + session.type + " vaccine",
-        value: VACCINATION_OUTCOME.VACCINATED
+        value: VACCINATION_OUTCOME.VACCINATED,
+        conditional: {
+          html: radios({
+            items: [
+              { text: VACCINATION_SITE.ARM_LEFT },
+              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.OTHER }
+            ],
+            classes: "nhsuk-radios--inline",
+            decorate: ["vaccination", session.id, patient.nhsNumber, "site"]
+          })
+        } if session.isHPV
       }, {
         text: "Yes, they got half a dose",
         value: VACCINATION_OUTCOME.PART_VACCINATED

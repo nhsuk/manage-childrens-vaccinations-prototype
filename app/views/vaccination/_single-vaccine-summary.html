@@ -40,8 +40,8 @@
     } if vaccineGiven,
     {
       key: "Site",
-      value: vaccination.site,
-      href: hrefBase + "/has-it-been-given"
+      value: vaccination.otherSite or vaccination.site,
+      href: "#"
     }  if vaccineGiven and vaccination.site,
     {
       key: "Outcome",

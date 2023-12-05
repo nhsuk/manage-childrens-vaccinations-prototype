@@ -31,7 +31,7 @@
       } if vaccineGiven and session.type == "Flu",
       {
         key: "Site",
-        value: vaccination.site
+        value: vaccination.otherSite or vaccination.site
       } if vaccineGiven and vaccination.site,
       {
         key: "Date",

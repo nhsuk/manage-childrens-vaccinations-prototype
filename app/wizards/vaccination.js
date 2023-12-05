@@ -8,27 +8,28 @@ const getData = (data, keyPath) => {
 
 const journeyForEverythingElse = (data, session, patient) => {
   const { nhsNumber } = patient
-  const sessionId = session.id
+  const { id, type } = session
   const hasDefaultBatch = !!data['todays-batch']
-  const vaccinationOutcome = getData(data, `vaccination.${sessionId}.${nhsNumber}.outcome`)
+  const site = getData(data, `vaccination.${id}.${nhsNumber}.site`)
+  const outcome = getData(data, `vaccination.${id}.${nhsNumber}.outcome`)
   const vaccineGiven =
-    (vaccinationOutcome === VACCINATION_OUTCOME.VACCINATED) ||
-    (vaccinationOutcome === VACCINATION_OUTCOME.PART_VACCINATED)
+    (outcome === VACCINATION_OUTCOME.VACCINATED) ||
+    (outcome === VACCINATION_OUTCOME.PART_VACCINATED)
 
   const journey = {}
 
   if (!vaccineGiven) {
     return {
-      [`/vaccination/${sessionId}/${nhsNumber}/not-given`]: {}
+      [`/vaccination/${id}/${nhsNumber}/not-given`]: {}
     }
   }
 
-  if (session.type === 'HPV') {
-    journey[`/vaccination/${sessionId}/${nhsNumber}/site`] = {}
+  if (type === 'HPV' && site === 'Other') {
+    journey[`/vaccination/${id}/${nhsNumber}/site`] = {}
   }
 
   if (!hasDefaultBatch) {
-    journey[`/vaccination/${sessionId}/${nhsNumber}/batch`] = {}
+    journey[`/vaccination/${id}/${nhsNumber}/batch`] = {}
   }
 
   return journey
