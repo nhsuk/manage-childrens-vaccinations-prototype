@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
 import { relationshipName } from './utils/relationship.js'
+import prototypeFilters from '@x-govuk/govuk-prototype-filters/index.js'
+const { plural } = prototypeFilters
 
 export default (_env) => {
   const filters = {}
@@ -66,6 +68,23 @@ export default (_env) => {
    */
   filters.patientFromNHSNumber = (string, session) => {
     return session.cohort.find(patient => patient.nhsNumber === string)
+  }
+
+  /**
+   * Get the plural word form for an item for a given number,
+   * but returning ‘No’ if that number is 0
+   * @param {number} number - Number
+   * @param {object} singular - Singular
+   * @returns {string} Pluralised number
+   */
+  filters.plural = (number, singular) => {
+    let pluralised = plural(number, singular)
+
+    if (number === 0) {
+      pluralised = pluralised.replace('0', 'No')
+    }
+
+    return pluralised
   }
 
   /**
