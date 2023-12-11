@@ -1,0 +1,15 @@
+.govuk-notification-banner {
+  border-color: $color_nhsuk-blue;
+
+  .govuk-notification-banner__header {
+    background-color: $color_nhsuk-blue;
+  }
+
+  &--success {
+    border-color: $color_nhsuk-green;
+
+    .govuk-notification-banner__header {
+      background-color: $color_nhsuk-green;
+    }
+  }
+}

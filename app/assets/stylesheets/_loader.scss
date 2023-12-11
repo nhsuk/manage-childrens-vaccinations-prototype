@@ -1,0 +1,20 @@
+.app-loader {
+  @keyframes draw {
+    0% {
+      stroke-dashoffset: 25;
+    }
+
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  circle {
+    animation: draw 1.5s ease-in-out, pulse 10s ease-in;
+    animation-iteration-count: infinite, 1;
+    fill: none;
+    stroke: $color_nhsuk-blue;
+    stroke-width: 1;
+    stroke-dasharray: 25;
+  }
+}

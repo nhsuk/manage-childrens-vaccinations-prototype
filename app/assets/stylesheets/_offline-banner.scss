@@ -1,0 +1,8 @@
+.app-offline-banner {
+  background: #ccdff1;
+  padding: nhsuk-spacing(3) 0 nhsuk-spacing(3);
+
+  .nhsuk-link {
+    @include nhsuk-link-style-text;
+  }
+}

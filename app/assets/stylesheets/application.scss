@@ -16,8 +16,17 @@ $govuk-assets-path: "/govuk/assets/";
 @import "card";
 @import "email";
 @import "header";
+@import "list";
+@import "loader";
+@import "notification-banner";
+@import "offline-banner";
+@import "status";
+@import "summary-list";
+@import "table";
+@import "tag";
+@import "utilities";
 
-// NHS.UK frontend overrides
+// GOV.UK Frontend overrides
 .govuk-file-upload::file-selector-button {
   @extend .nhsuk-button;
   @extend .nhsuk-button--secondary;
@@ -26,191 +35,9 @@ $govuk-assets-path: "/govuk/assets/";
   font-weight: bold;
 }
 
+// NHS.UK Frontend overrides
 .nhsuk-label--s,
 .nhsuk-fieldset__legend--s {
   padding-top: nhsuk-spacing(2);
   margin-bottom: nhsuk-spacing(2);
-}
-
-.nhsuk-summary-list:where(:not(:has(.nhsuk-summary-list__actions))) {
-  .nhsuk-summary-list__value {
-    @include mq($from: tablet) {
-      width: 70%;
-    }
-  }
-}
-
-.nhsuk-summary-list__row:not(:has(.nhsuk-summary-list__actions))::after {
-  border-bottom: 1px solid $nhsuk-border-color;
-  content: "";
-  display: table-cell;
-}
-
-.nhsuk-table-responsive {
-  @include nhsuk-responsive-margin(7, "bottom");
-}
-
-.nhsuk-tag {
-  &--white {
-    font-weight: normal;
-    border-style: dashed;
-  }
-}
-
-// GOV.UK Frontend overrides
-.govuk-notification-banner {
-  border-color: $color_nhsuk-blue;
-
-  .govuk-notification-banner__header {
-    background-color: $color_nhsuk-blue;
-  }
-
-  &--success {
-    border-color: $color_nhsuk-green;
-
-    .govuk-notification-banner__header {
-      background-color: $color_nhsuk-green;
-    }
-  }
-}
-
-// App utilities
-.app-u-hidden-link {
-  text-decoration: none;
-  color: inherit !important; // stylelint-disable-line declaration-no-important
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.app-u-width-one-fifth {
-  width: 100% !important;
-
-  @include mq($from: tablet) {
-    width: 20% !important;
-  }
-}
-
-.app-u-nowrap {
-  white-space: nowrap;
-}
-
-// App components
-.app-status {
-  align-items: center;
-  display: inline-flex;
-  font-weight: bold;
-  gap: nhsuk-spacing(1);
-
-  .nhsuk-icon {
-    margin-left: nhsuk-spacing(1) * -1;
-  }
-
-  &--green {
-    color: $color_nhsuk-green;
-  }
-
-  &--red {
-    color: $color_nhsuk-red;
-  }
-}
-
-.app-offline-banner {
-  background: #ccdff1;
-  padding: nhsuk-spacing(3) 0 nhsuk-spacing(3);
-
-  .nhsuk-link {
-    @include nhsuk-link-style-text;
-  }
-}
-
-.app-summary-list--full-width {
-  .nhsuk-summary-list__row {
-    border-bottom: 1px solid $nhsuk-border-color;
-    display: block;
-    margin-bottom: nhsuk-spacing(3);
-
-    &:last-of-type {
-      border: none;
-      margin-bottom: 0;
-    }
-  }
-
-  .nhsuk-summary-list__key,
-  .nhsuk-summary-list__value,
-  .nhsuk-summary-list__actions {
-    border: none;
-    display: block;
-    text-align: left;
-    width: 100%;
-  }
-
-  .nhsuk-summary-list__key {
-    margin-bottom: 0;
-  }
-
-  .nhsuk-summary-list__value {
-    margin-bottom: nhsuk-spacing(2);
-  }
-}
-
-.app-table--patients {
-  .nhsuk-table__cell {
-    padding-top: nhsuk-spacing(2);
-    padding-bottom: nhsuk-spacing(2);
-  }
-}
-
-.app-table--select-cohort {
-  .nhsuk-table__cell,
-  th {
-    padding-top: nhsuk-spacing(1);
-    padding-bottom: nhsuk-spacing(1);
-    vertical-align: middle;
-  }
-
-  .nhsuk-checkboxes {
-    padding: 0;
-    transform-origin: center left;
-    transform: scale(0.75);
-  }
-
-  .nhsuk-checkboxes__item {
-    padding: 0;
-  }
-}
-
-.app-list--filters {
-  [aria-current] {
-    @include nhsuk-link-style-default;
-    @include nhsuk-link-style-text;
-    @include nhsuk-typography-weight-bold;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.app-loader {
-  @keyframes draw {
-    0% {
-      stroke-dashoffset: 25;
-    }
-
-    100% {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  circle {
-    animation: draw 1.5s ease-in-out, pulse 10s ease-in;
-    animation-iteration-count: infinite, 1;
-    fill: none;
-    stroke: $color_nhsuk-blue;
-    stroke-width: 1;
-    stroke-dasharray: 25;
-  }
 }
