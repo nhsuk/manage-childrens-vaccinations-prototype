@@ -58,7 +58,7 @@
 {% endset %}
 
 {{ card({
-  classes: "nhsuk-card--" + outcome(patient, consentRecord).colour,
+  classes: "app-card--" + outcome(patient, consentRecord).colour,
   heading: outcome(patient, consentRecord).text,
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml,

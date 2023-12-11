@@ -12,7 +12,8 @@ $govuk-assets-path: "/govuk/assets/";
 // Import GOV.UK Prototype Components
 @import "@x-govuk/govuk-prototype-components/x-govuk/all";
 
-// Import email layout
+// Import app components
+@import "card";
 @import "email";
 
 // NHS.UK frontend overrides
@@ -52,33 +53,6 @@ $govuk-assets-path: "/govuk/assets/";
   &--white {
     font-weight: normal;
     border-style: dashed;
-  }
-}
-
-.nhsuk-card {
-  &--green {
-    .nhsuk-card__heading--feature {
-      background-color: $color_nhsuk-green;
-    }
-  }
-
-  &--orange {
-    .nhsuk-card__heading--feature {
-      background-color: $color_nhsuk-warm-yellow;
-      color: $nhsuk-focus-text-color;
-    }
-  }
-
-  &--purple {
-    .nhsuk-card__heading--feature {
-      background-color: $color_nhsuk-purple;
-    }
-  }
-
-  &--red {
-    .nhsuk-card__heading--feature {
-      background-color: $color_nhsuk-red;
-    }
   }
 }
 
@@ -128,7 +102,6 @@ $govuk-assets-path: "/govuk/assets/";
   }
 }
 
-
 .app-status {
   align-items: center;
   display: inline-flex;
@@ -140,11 +113,11 @@ $govuk-assets-path: "/govuk/assets/";
   }
 
   &--green {
-    color: $color_nhsuk-green
+    color: $color_nhsuk-green;
   }
 
   &--red {
-    color: $color_nhsuk-red
+    color: $color_nhsuk-red;
   }
 }
 
