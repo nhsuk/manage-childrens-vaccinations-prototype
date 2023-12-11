@@ -66,7 +66,7 @@
       classes: "nhsuk-button--secondary nhsuk-u-margin-bottom-0",
       text: "Assess Gillick competence",
       value: "Gillick"
-    }) if not (session.type == "Flu") }}
+    }) if not (session.type == "Flu") and session.inProgress }}
   {% endif %}
 {% endset %}
 
