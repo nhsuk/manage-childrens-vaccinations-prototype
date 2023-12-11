@@ -28,4 +28,27 @@
     margin-bottom: 0;
     min-height: 300px;
   }
+
+  &--data {
+    background-color: $color_nhsuk-blue;
+    border-color: $color_nhsuk-blue;
+    color: $color_nhsuk-white;
+    margin-bottom: $nhsuk-gutter;
+
+    .nhsuk-card__content {
+      @include nhsuk-responsive-padding(4);
+    }
+
+    .nhsuk-card__heading {
+      @include nhsuk-typography-responsive(19);
+      @include nhsuk-typography-weight-normal;
+
+      margin-bottom: nhsuk-spacing(2);
+    }
+
+    .nhsuk-card__description {
+      @include nhsuk-typography-responsive(48);
+      @include nhsuk-typography-weight-bold;
+    }
+  }
 }

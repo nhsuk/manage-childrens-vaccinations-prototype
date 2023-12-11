@@ -1,0 +1,9 @@
+{%- from "card/macro.njk" import card %}
+
+{% macro dataCard(params) -%}
+  {{ card({
+    classes: "app-card--data",
+    heading: params.heading,
+    description: params.description
+  }) }}
+{% endmacro %}

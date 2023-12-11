@@ -1,5 +1,7 @@
 {% extends "template.njk" %}
+
 {% from "_macros/breadcrumbs.njk" import breadcrumbs %}
+{% from "_macros/data-card.njk" import dataCard %}
 {% from "_macros/events-list.njk" import eventsList %}
 {% from "_macros/heading.njk" import heading %}
 {% from "_macros/icon.njk" import icon %}
@@ -45,6 +47,10 @@
       {
         url: "/vaccines",
         label: "Manage vaccines"
+      },
+      {
+        url: "/reports",
+        label: "Reports"
       },
       {
         url: "/users",

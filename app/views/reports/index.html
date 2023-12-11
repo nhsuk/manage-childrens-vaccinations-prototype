@@ -1,0 +1,230 @@
+{% extends "_layouts/default.html" %}
+{% set title = "Reports" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-third">
+      {{ heading({ title: title, size: "xl" }) }}
+    </div>
+    <div class="nhsuk-grid-column-two-thirds">
+      <p class="nhsuk-body nhsuk-u-margin-bottom-0 nhsuk-u-margin-top-4 nhsuk-u-text-align-right nhsuk-u-secondary-text-color">1 January 2023 - Today<a class="nhsuk-link nhsuk-u-margin-left-2 nhsuk-u-font-size-16" href="#">Change date range</a></p>
+    </div>
+  </div>
+
+  {% macro panelHtml(type) %}
+    <h2>Overall campaign performance</h2>
+
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        {{ dataCard({
+          heading: "Sessions completed",
+          description: "567"
+        }) }}
+      </div>
+
+      <div class="nhsuk-grid-column-one-third">
+        {{ dataCard({
+          heading: "Vaccinations delivered",
+          description: "456"
+        }) }}
+      </div>
+
+      <div class="nhsuk-grid-column-one-third">
+        {{ dataCard({
+          heading: "Children rescheduled",
+          description: "12"
+        }) }}
+      </div>
+    </div>
+
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        {{ dataCard({
+          heading: "Consent requests and reminders sent",
+          description: "1671"
+        }) }}
+      </div>
+
+      <div class="nhsuk-grid-column-one-third">
+        {{ dataCard({
+          heading: "Consent given (versus refused or no response)",
+          description: "78%"
+        }) }}
+      </div>
+
+      <div class="nhsuk-grid-column-one-third">
+        {{ dataCard({
+          heading: "Responses received and triaged",
+          description: "98%"
+        }) }}
+      </div>
+    </div>
+
+    {{ table({
+      tableClasses: "app-table--dense",
+      caption: "Reasons for refusal",
+      captionClasses: "nhsuk-u-font-size-32",
+      head: [
+        { text: "Reason" },
+        { text: "Frequency", format: "numeric" }
+      ],
+      rows: [
+        [
+          { text: "Vaccine contains gelatine from pigs" },
+          { text: "11.1%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Vaccine already received" },
+          { text: "2.0%", format: "numeric" }
+        ],
+        [
+          { text: "Vaccine will be given elsewhere" },
+          { text: "3.6%", format: "numeric" }
+        ],
+        [
+          { text: "Medical reasons" },
+          { text: "1.0%", format: "numeric" }
+        ],
+        [
+          { text: "Personal choice" },
+          { text: "5.1%", format: "numeric" }
+        ],
+        [
+          { text: "Other" },
+          { text: "1.1%", format: "numeric" }
+        ]
+      ]
+    }) }}
+
+    <h3 class="nhsuk-heading-l nhsuk-u-margin-bottom-2">Consent journey</h3>
+
+    {{ summaryList({
+      classes: "app-summary-list--full-width nhsuk-u-margin-bottom-0",
+      rows: [{
+        key: {
+          classes: "nhsuk-u-padding-bottom-1",
+          text: "Average time between parent accessing the start page to submitting their response:"
+        },
+        value: {
+          classes: "nhsuk-u-padding-top-1",
+          text: "3 minutes and 12 seconds"
+        }
+      }]
+    }) }}
+
+    {{ table({
+      tableClasses: "app-table--dense",
+      head: [
+        { text: "Question" },
+        { html: "Dropout&nbsp;rate", format: "numeric" }
+      ],
+      rows: [
+        [
+          { text: "What is your child’s name?" },
+          { text: "11.1%", format: "numeric" }
+        ],
+        [
+          { text: "What is your child’s date of birth?" },
+          { text: "2%", format: "numeric" }
+        ],
+        [
+          { text: "Confirm your child’s school" },
+          { text: "1.9%", format: "numeric" }
+        ],
+        [
+          { text: "About you" },
+          { text: "0.5%", format: "numeric" }
+        ],
+        [
+          { text: "Do you agree to them having the HPV vaccination?" },
+          { text: "9.1%", format: "numeric" }
+        ],
+        [
+          { text: "Is your child registered with a GP?" },
+          { text: "2.1%", format: "numeric" }
+        ],
+        [
+          { text: "Home address" },
+          { text: "1.2%", format: "numeric" }
+        ],
+        [
+          { text: "Has your child been diagnosed with asthma?" },
+          { text: "0.2%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Has your child had a flu vaccination in the last 5 months?" },
+          { text: "0.4%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Does your child have a disease or treatment that severely affects their immune system?" },
+          { text: "1.2%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Is anyone in your household currently having treatment that severely affects their immune system?" },
+          { text: "1.2%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Has your child ever been admitted to intensive care due an allergic reaction to egg?" },
+          { text: "0.2%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Does your child have any allergies to medication?" },
+          { text: "0.4%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Has your child ever had a severe reaction to any medicines, including vaccines?" },
+          { text: "1.2%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Does you child take regular aspirin?" },
+          { text: "1.2%", format: "numeric" }
+        ] if type == "flu",
+        [
+          { text: "Does your child have any severe allergies?" },
+          { text: "0.2%", format: "numeric" }
+        ] if type == "hpv",
+        [
+          { text: "Does your child have any medical conditions for which they receive treatment?" },
+          { text: "0.4%", format: "numeric" }
+        ] if type == "hpv",
+        [
+          { text: "Has your child ever had a severe reaction to any medicines, including vaccines?" },
+          { text: "1.2%", format: "numeric" }
+        ] if type == "hpv",
+        [
+          { text: "Check your answers and confirm" },
+          { text: "0.9%", format: "numeric" }
+        ]
+      ]
+    }) }}
+
+    <h2 class="nhsuk-heading-l">NIVS download</h2>
+
+    {{ button({
+      href: "/public/downloads/vaccinations.csv",
+      text: "Download data (CSV)",
+      attributes: {
+        download: "example.csv"
+      }
+    })}}
+  {% endmacro %}
+
+  {{ tabs({
+    items: [
+      {
+        id: "flu",
+        label: "Flu",
+        panel: {
+          html: panelHtml("flu")
+        }
+      },
+      {
+        id: "hpv",
+        label: "HPV",
+        panel: {
+          html: panelHtml("hpv")
+        }
+      }
+    ]
+  }) }}
+{% endblock %}
