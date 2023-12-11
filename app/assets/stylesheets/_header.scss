@@ -1,0 +1,10 @@
+.app-header {
+  .nhsuk-header__service-name {
+    line-height: 1.25;
+    max-width: auto;
+  }
+
+  .nhsuk-header__navigation-item:has(a[href="/vaccines"]) {
+    margin-right: auto;
+  }
+}
