@@ -28,8 +28,12 @@
         value: VACCINATION_OUTCOME.ALREADY_VACCINATED
       },
       {
+        text: "They were absent from school",
+        value: VACCINATION_OUTCOME.ABSENT_SCHOOL
+      },
+      {
         text: "They were absent from the session",
-        value: VACCINATION_OUTCOME.ABSENT
+        value: VACCINATION_OUTCOME.ABSENT_SESSION
       }
     ],
     decorate: [dataLocation, session.id, patient.nhsNumber, "outcome"]

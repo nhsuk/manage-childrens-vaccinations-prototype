@@ -30,7 +30,8 @@ export const VACCINATION_OUTCOME = {
   ALREADY_VACCINATED: 'Already had the vaccine',
   CONTRAINDICATIONS: 'Had contraindications',
   REFUSED: 'Refused vaccine',
-  ABSENT: 'Absent',
+  ABSENT_SCHOOL: 'Absent from school',
+  ABSENT_SESSION: 'Absent from the session',
   UNWELL: 'Unwell',
   NO_CONSENT: 'Unable to contact parent',
   LATE_CONSENT: 'Consent received too late'
