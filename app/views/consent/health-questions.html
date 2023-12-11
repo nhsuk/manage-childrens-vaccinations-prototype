@@ -37,28 +37,30 @@
     }) }}
   {% endfor %}
 
+  <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
   {{ radios({
-    formGroup: {
-      classes: "nhsuk-u-margin-top-6"
-    },
     fieldset: {
       legend: {
         classes: "nhsuk-fieldset__legend--m",
-        text: "Triage status"
+        text: "Is it safe to vaccinate Leonard Schowalter?"
       }
     },
     items: [
       {
-        text: TRIAGE_OUTCOME.VACCINATE
+        text: "Yes, it’s safe to vaccinate",
+        value: TRIAGE_OUTCOME.VACCINATE
       },
       {
-        text: TRIAGE_OUTCOME.DELAY_VACCINATION
+        text: "No, do not vaccinate",
+        value: TRIAGE_OUTCOME.DO_NOT_VACCINATE
       },
       {
-        text: TRIAGE_OUTCOME.DO_NOT_VACCINATE
+        text: "No, delay vaccination to a later date",
+        value: TRIAGE_OUTCOME.DELAY_VACCINATION
       },
       {
-        text: "Keep in triage",
+        text: "No, keep in triage",
         value: TRIAGE_OUTCOME.NEEDS_TRIAGE
       }
     ],
@@ -70,7 +72,7 @@
       classes: "nhsuk-u-margin-top-6"
     },
     label: {
-      classes: "nhsuk-label--m nhsuk-u-margin-bottom-3",
+      classes: "nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-6",
       text: "Triage notes (optional)"
     },
     rows: 5,
