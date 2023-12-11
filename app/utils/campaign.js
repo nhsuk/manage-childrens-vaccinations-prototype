@@ -21,7 +21,7 @@ export const healthQuestions = (type) => {
         eggAllergy: 'Has your child ever been admitted to intensive care due an allergic reaction to egg?',
         medicationAllergies: 'Does your child have any allergies to medication?',
         previousReaction,
-        aspirin: 'Does you child take regular aspirin?'
+        aspirin: 'Does your child take regular aspirin?'
       }
     case 'HPV':
       return {
