@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { RESPONSE_CONSENT, RESPONSE_REFUSAL, RESPONSE_METHOD } from '../enums.js'
+import getEvent from './event.js'
 import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
 
@@ -76,10 +77,7 @@ const _getResponse = (type, patient, status) => {
         refusalReasonOther: 'My family rejects vaccinations on principle.'
       }
     },
-    events: [{
-      name: `${status} (${method.toLowerCase()})`,
-      date: faker.date.recent({ days })
-    }]
+    events: [getEvent(`${status} (${method.toLowerCase()})`, { days })]
   }
 
   return response

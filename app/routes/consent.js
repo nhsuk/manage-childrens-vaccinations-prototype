@@ -1,6 +1,6 @@
 import merge from 'deepmerge'
 import { RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
-import getNote from '../fakers/note.js'
+import getEvent from '../fakers/event.js'
 import wizard from '../wizards/consent.js'
 
 const getHealthAnswers = (consent) => {
@@ -86,7 +86,7 @@ export default (router) => {
     // Add any triage notes
     if (triage?.note) {
       const { user } = req.session.data
-      patient.triage.notes.push(getNote(triage.note, user))
+      patient.triage.events.push(getEvent(triage.note, { user }))
     }
 
     // Delete temporary session data
@@ -119,9 +119,7 @@ export default (router) => {
           name = 'No response when contacted'
       }
 
-      const date = new Date()
-
-      response.events = [{ name, date, user }]
+      response.events = [getEvent(name, { user })]
 
       if (!parentOrGuardian && response?.gillickCompetent === 'Yes') {
         // Use child as consenting party

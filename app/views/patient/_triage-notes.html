@@ -1,5 +1,5 @@
 {{ card({
   heading: "Triage notes",
   headingClasses: "nhsuk-heading-m",
-  descriptionHtml: notes(patient.triage.notes)
-}) if patient.triage.notes.length }}
+  descriptionHtml: eventsList(patient.triage.events)
+}) if patient.triage.events.length }}

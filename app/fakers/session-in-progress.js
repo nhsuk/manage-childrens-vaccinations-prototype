@@ -2,9 +2,9 @@ import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
 import _ from 'lodash'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
+import getEvent from './event.js'
 import getResponse from './response.js'
 import getSession from './session.js'
-import getUser from './user.js'
 
 const setConsentOutcome = (patient, type) => {
   // Chase 80% of responses
@@ -28,11 +28,9 @@ const setConsentOutcome = (patient, type) => {
     // Confirm refusal
     if (chasedConsent && refusalResponse) {
       refusalResponse.status = RESPONSE_CONSENT.FINAL_REFUSAL
-      refusalResponse.events.push({
-        name: 'Refusal confirmed (by phone)',
-        date: faker.date.recent({ days: 7 }),
-        user: getUser()
-      })
+      refusalResponse.events.push(
+        getEvent('Refusal confirmed (by phone)', { days: 7 })
+      )
       patient.consent.outcome = CONSENT_OUTCOME.FINAL_REFUSAL
     }
   }

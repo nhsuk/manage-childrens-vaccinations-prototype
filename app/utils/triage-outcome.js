@@ -1,5 +1,5 @@
 import { TRIAGE_OUTCOME } from '../enums.js'
-import getNote from '../fakers/note.js'
+import getEvent from '../fakers/event.js'
 
 /**
  * Update patient record with triage outcome
@@ -19,7 +19,7 @@ export default (patient) => {
 
     // Add example triage note if not already added
     if (patient.__triageNote) {
-      patient.triage.notes.push(getNote(patient.__triageNote))
+      patient.triage.events.push(getEvent(patient.__triageNote, { days: 30 }))
       delete patient.__triageNote
     }
   }

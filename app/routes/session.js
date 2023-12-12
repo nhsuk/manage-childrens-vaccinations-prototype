@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import filters from './_filters.js'
-import getNote from '../fakers/note.js'
+import getEvent from '../fakers/event.js'
 import { vaccination } from '../wizards/vaccination.js'
 import { PATIENT_OUTCOME, TRIAGE_OUTCOME } from '../enums.js'
 
@@ -68,7 +68,7 @@ export default (router) => {
       // Update triage notes
       if (triage.note) {
         const { user } = req.session.data
-        patient.triage.notes.push(getNote(triage.note, user, true))
+        patient.triage.events.push(getEvent(triage.note, { user }))
       }
 
       res.redirect(`/sessions/${sessionId}/triage?success=${nhsNumber}`)

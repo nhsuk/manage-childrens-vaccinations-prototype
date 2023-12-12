@@ -271,7 +271,7 @@ export default (_env) => {
       }
     } else if (patient.triage.outcome && patient.consent.outcome === CONSENT_OUTCOME.GIVEN) {
       text = patient.triage.outcome
-      const user = patient.triage.notes.at(-1)?.user.fullName || 'Jane Doe'
+      const user = patient.triage.events.at(-1)?.user.fullName || 'Jane Doe'
 
       switch (patient.triage.outcome) {
         case TRIAGE_OUTCOME.NEEDS_TRIAGE:

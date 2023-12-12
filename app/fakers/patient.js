@@ -40,7 +40,7 @@ const _getPatient = (options) => {
   patient.consent = { events: [] }
   patient.outcome = PATIENT_OUTCOME.NO_OUTCOME_YET
   patient.seen = {}
-  patient.triage = { notes: [] }
+  patient.triage = { events: [] }
 
   // Mark 50% of records as ready for triaged
   patient.__triageOutcome = faker.helpers.maybe(() => true, {

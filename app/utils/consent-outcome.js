@@ -5,7 +5,7 @@ import { CONSENT_OUTCOME, RESPONSE_CONSENT, TRIAGE_OUTCOME } from '../enums.js'
  * @typedef {object} Consent
  * @property {string} outcome - Consent outcome, derived from responses
  * @property {Array} refusalReasons - Unique refusal reasons
- * @property {Array} notes - Consent notes
+ * @property {Array} events - Consent events
  */
 
 /**
