@@ -4,6 +4,33 @@
     <p>{{ description }}</p>
   {% endif %}
 
+  {% set lastTriageEvent = patient.triage.events[0] %}
+  {% set triageCompleted = patient.triage.outcome != TRIAGE_OUTCOME.NEEDS_TRIAGE %}
+  {% set triageSummaryList %}
+    {{ summaryList({
+      rows: decorateRows([
+        {
+          key: "Triage status",
+          value: patient.triage.outcome
+        } if triageCompleted,
+        {
+          key: "Date",
+          value: lastTriageEvent.date | govukDate + " at " + lastTriageEvent.date | govukTime
+        } if triageCompleted,
+        {
+          key: "Nurse",
+          value: lastTriageEvent.user.fullName
+        } if triageCompleted,
+        {
+          key: "Triage notes",
+          value: {
+            html: eventsList(patient.triage.events) if patient.triage.events else "None"
+          }
+        }
+      ])
+    }) if lastTriageEvent }}
+  {% endset %}
+
   {% set vaccineSummary %}
     {% set vaccine = data.vaccines[vaccination.vaccineId] %}
     {% set batch = vaccine.batches[vaccination.batchId] %}
@@ -37,15 +64,15 @@
       {
         key: "Date",
         value: "Today (" + "today" | govukDate + ")"
-      },
+      } if vaccineGiven,
       {
         key: "Time",
         value: "now" | govukTime
-      },
+      } if vaccineGiven,
       {
         key: "Location",
         value: session.location
-      },
+      } if vaccineGiven,
       {
         key: "Vaccinator" if vaccineGiven else "Nurse",
         value: data.user.fullName + ", " + data.user.registration
@@ -57,9 +84,18 @@
       {
         key: "Notes",
         value: vaccination.notes | default("None", true)
-      } if vaccineGiven
+      } if vaccination.notes
     ])
   }) if patient.outcome != PATIENT_OUTCOME.NO_OUTCOME_YET }}
+
+  {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
+    {{ triageSummaryList | safe  }}
+  {% else %}
+    {{ details({
+      text: "Triage outcome",
+      HTML: triageSummaryList
+    }) if lastTriageEvent }}
+  {% endif %}
 {% endset %}
 
 {{ card({
