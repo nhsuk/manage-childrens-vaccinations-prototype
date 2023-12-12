@@ -77,8 +77,8 @@ export default (_env) => {
    * @param {object} singular - Singular
    * @returns {string} Pluralised number
    */
-  filters.plural = (number, singular) => {
-    let pluralised = plural(number, singular)
+  filters.plural = (number, singular, kwargs) => {
+    let pluralised = plural(number, singular, kwargs)
 
     if (number === 0) {
       pluralised = pluralised.replace('0', 'No')
