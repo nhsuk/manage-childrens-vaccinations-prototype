@@ -375,14 +375,5 @@ export default (_env) => {
       : statusText
   }
 
-  /**
-   * Output local data within a view
-   */
-  globals.inspect = function (data) {
-    const { filters } = this.ctx.settings.nunjucksEnv
-    const json = JSON.stringify(data, null, 2)
-    return filters.safe(`<pre>${json}</pre>`)
-  }
-
   return globals
 }
