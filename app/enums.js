@@ -13,10 +13,8 @@ export const TRIAGE_OUTCOME = {
 
 export const VACCINATION_SITE = {
   NOSE: 'Nasal',
-  ARM_LEFT: 'Left arm',
   ARM_LEFT_UPPER: 'Left arm (upper position)',
   ARM_LEFT_LOWER: 'Left arm (lower position)',
-  ARM_RIGHT: 'Right arm',
   ARM_RIGHT_UPPER: 'Right arm (upper position)',
   ARM_RIGHT_LOWER: 'Right arm (lower position)',
   THIGH_LEFT: 'Left thigh',

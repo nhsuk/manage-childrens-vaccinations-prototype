@@ -16,11 +16,10 @@
         conditional: {
           html: radios({
             items: [
-              { text: VACCINATION_SITE.ARM_LEFT },
-              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.ARM_LEFT_UPPER },
+              { text: VACCINATION_SITE.ARM_RIGHT_UPPER },
               { text: VACCINATION_SITE.OTHER }
             ],
-            classes: "nhsuk-radios--inline",
             decorate: ["vaccination", session.id, patient.nhsNumber, "siteMenACWY"]
           })
         }
@@ -30,11 +29,10 @@
         conditional: {
           html: radios({
             items: [
-              { text: VACCINATION_SITE.ARM_LEFT },
-              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.ARM_LEFT_UPPER },
+              { text: VACCINATION_SITE.ARM_RIGHT_UPPER },
               { text: VACCINATION_SITE.OTHER }
             ],
-            classes: "nhsuk-radios--inline",
             decorate: ["vaccination", session.id, patient.nhsNumber, "site3in1"]
           })
         }
@@ -58,11 +56,10 @@
         conditional: {
           html: radios({
             items: [
-              { text: VACCINATION_SITE.ARM_LEFT },
-              { text: VACCINATION_SITE.ARM_RIGHT },
+              { text: VACCINATION_SITE.ARM_LEFT_UPPER },
+              { text: VACCINATION_SITE.ARM_RIGHT_UPPER },
               { text: VACCINATION_SITE.OTHER }
             ],
-            classes: "nhsuk-radios--inline",
             decorate: ["vaccination", session.id, patient.nhsNumber, "site"]
           })
         } if session.isHPV
