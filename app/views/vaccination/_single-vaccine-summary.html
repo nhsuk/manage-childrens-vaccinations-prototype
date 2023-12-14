@@ -26,8 +26,8 @@
     } if vaccineGiven,
     {
       key: "Dose",
-      value: "Half" if vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED else "Full"
-    } if vaccineGiven and type == "Flu",
+      value: vaccine.dose | formatDose(vaccination)
+    } if vaccineGiven,
     {
       key: "Brand",
       value: vaccine.brand + " (" + vaccine.method + ")",

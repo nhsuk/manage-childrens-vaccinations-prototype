@@ -6,7 +6,8 @@
 
   {% set vaccineSummary %}
     {% set vaccine = data.vaccines[vaccination.vaccineId] %}
-    {{ vaccine.summary | replace(")", "") }}, {{ vaccine.batches[vaccination.batchId].id }})
+    {% set batch = vaccine.batches[vaccination.batchId] %}
+    {{ vaccine.summary | replace(")", "") }}, {{ batch.id }})
   {% endset %}
 
   {{ summaryList({
@@ -27,8 +28,8 @@
       } if vaccineGiven,
       {
         key: "Dose",
-        value: "Half" if vaccination.outcome == VACCINATION_OUTCOME.PART_VACCINATED else "Full"
-      } if vaccineGiven and session.type == "Flu",
+        value: vaccine.dose | formatDose(vaccination)
+      } if vaccineGiven,
       {
         key: "Site",
         value: vaccination.otherSite or vaccination.site

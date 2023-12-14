@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { relationshipName } from './utils/relationship.js'
 import prototypeFilters from '@x-govuk/govuk-prototype-filters/index.js'
+import { relationshipName } from './utils/relationship.js'
+import { VACCINATION_OUTCOME } from './enums.js'
 const { plural } = prototypeFilters
 
 export default (_env) => {
@@ -40,7 +41,7 @@ export default (_env) => {
   }
 
   /**
-   * Formatted date with day of the week
+   * Format date with day of the week
    * @param {string} string - ISO date, for example 07-12-2021
    * @returns {string} Formatted date, for example Sunday 7 December 2021
    */
@@ -49,7 +50,25 @@ export default (_env) => {
   }
 
   /**
-   * Formatted NHS number
+   * Format dosage
+   * @param {number} number - Dosage
+   * @param {object} vaccination - Vaccination record
+   * @returns {string} Formatted NHS number
+   */
+  filters.formatDose = (number, vaccination) => {
+    const text = vaccination.outcome === VACCINATION_OUTCOME.PART_VACCINATED
+      ? 'Half'
+      : 'Full'
+
+    const dose = vaccination.outcome === VACCINATION_OUTCOME.PART_VACCINATED
+      ? number / 2
+      : number
+
+    return `${text} (${dose}ml)`
+  }
+
+  /**
+   * Format NHS number
    * @param {string} nhsNumber - NHS Number
    * @returns {string} Formatted NHS number
    */

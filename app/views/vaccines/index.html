@@ -2,51 +2,50 @@
 {% set title = "Manage vaccines" %}
 
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-two-thirds">
-      {{ heading({ title: title, size: "xl" }) }}
+  {{ heading({ title: title, size: "xl" }) }}
 
-      {{ button({
-        href: "#",
-        text: "Add a new vaccine"
-      }) }}
+  {{ button({
+    href: "#",
+    text: "Add a new vaccine"
+  }) }}
 
-      {% for vaccine in vaccines %}
-        {% set descriptionHtml %}
-          <p class="nhsuk-body"><a href="#">Add a batch</a></p>
+  {% for vaccine in vaccines %}
+    {% set descriptionHtml %}
+      <p class="nhsuk-hint nhsuk-u-font-size-16">
+        {{ vaccine.supplier }}, GTIN: {{ vaccine.gtin }}
+      </p>
 
-          <table class="nhsuk-table">
-            <thead class="nhsuk-table__head">
-              <tr class="nhsuk-table__row">
-                <th class="nhsuk-table__header" style="width: 30%">Batch</th>
-                <th class="nhsuk-table__header" style="width: 50%">Expiry</th>
-                <th class="nhsuk-table__header"></th>
-                <th class="nhsuk-table__header"></th>
-              </tr>
-            </thead>
-            <tbody class="nhsuk-table__body">
-            {% for batchId, batch in vaccine.batches %}
-              <tr class="nhsuk-table__row">
-                <td class="nhsuk-table__cell">{{ batchId }}</td>
-                <td class="nhsuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
-                <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-                  <a href="/vaccines/{{ vaccine.id }}/{{ batchId }}">Change</a>
-                </td>
-                <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-                  <a href="#">Move&nbsp;to&nbsp;archive</a>
-                </td>
-              </tr>
-            {% endfor %}
-            </tbody>
-          </table>
-        {% endset %}
+      <p class="nhsuk-body"><a href="#">Add a batch</a></p>
 
-        {{ card({
-          heading: vaccine.brand + " (" + vaccine.vaccine + ")",
-          headingClasses: "nhsuk-heading-m",
-          descriptionHtml: descriptionHtml
-        }) }}
-      {% endfor %}
-    </div>
-  </div>
+      <table class="nhsuk-table">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th class="nhsuk-table__header">Batch</th>
+            <th class="nhsuk-table__header">Entered</th>
+            <th class="nhsuk-table__header">Expiry</th>
+            <th class="nhsuk-table__header"></th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+        {% for batchId, batch in vaccine.batches %}
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">{{ batchId }}</td>
+            <td class="nhsuk-table__cell">{{ batch.expiry | isoDateFromDateInput | govukDate }}</td>
+            <td class="nhsuk-table__cell">{{ batch.enteredDate | govukDate }}</td>
+            <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+              <a class="nhsuk-u-margin-right-2" href="/vaccines/{{ vaccine.id }}/{{ batchId }}">Change</a>
+              <a href="#">Archive</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% endset %}
+
+    {{ card({
+      heading: vaccine.brand + " (" + vaccine.vaccine + ")",
+      headingClasses: "nhsuk-heading-m  nhsuk-u-margin-bottom-1",
+      descriptionHtml: descriptionHtml
+    }) }}
+  {% endfor %}
 {% endblock %}
