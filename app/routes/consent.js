@@ -142,13 +142,7 @@ export default (router) => {
       delete req.session.data.response.healthAnswerDetails
     }
 
-    // Remove ?responseId and ?referrer from path
-    // TODO: Find out which function is appending queries incorrectly
-    // Is this an upstream issue in the NHS Prototype Rig?
-    const next = res.locals.paths.next
-      .replace(/\?responseId=\d/, '')
-      .replace(/\?referrer=.*/, '')
-      .replace(/\?gillick*/, '')
+    const { next } = res.locals.paths
 
     res.redirect(next)
   })

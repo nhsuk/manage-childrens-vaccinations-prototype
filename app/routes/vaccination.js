@@ -175,11 +175,7 @@ export default (router) => {
     '/men-acwy-vaccination/:sessionId/:nhsNumber',
     '/men-acwy-vaccination/:sessionId/:nhsNumber/:view'
   ], (req, res) => {
-    // Remove ?referrer from path
-    // TODO: Find out which function is appending queries incorrectly
-    // Is this an upstream issue in the NHS Prototype Rig?
-    const next = res.locals.paths.next
-      .replace(/\?referrer=.*/, '')
+    const { next } = res.locals.paths
 
     res.redirect(next)
   })
