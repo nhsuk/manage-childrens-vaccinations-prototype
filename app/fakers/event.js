@@ -18,9 +18,14 @@ import getUser from './user.js'
 export default (name, options = {}) => {
   const { user, days } = options
 
+  // If event is a paper submission we won’t have a recorded time
+  let date = days ? new Date() : faker.date.recent({ days })
+  const [dateWithoutTime] = date.toISOString().split('T')
+  date = name.includes('paper') ? dateWithoutTime : date
+
   return {
     name,
-    date: days ? new Date() : faker.date.recent({ days }),
+    date,
     user: user || getUser()
   }
 }

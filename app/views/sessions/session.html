@@ -29,7 +29,7 @@
 
   <h1 class="nhsuk-heading-l">
     {{ title | noOrphans | safe }}
-    <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ session.date | govukDate() }} at {{ session.date | govukTime }} · {{ session.cohort.length | plural("child") }} in cohort</span>
+    <span class="nhsuk-caption-l nhsuk-u-margin-top-2">{{ session.date | govukDateTime }} · {{ session.cohort.length | plural("child") }} in cohort</span>
   </h1>
 
   {% if not isOffline or session["available-offline"] %}
@@ -101,7 +101,7 @@
           {% elif session.hadOfflineChanges and sessionOfflineChangesCount == 0 %}
             <hr>
             <h2 class="nhsuk-heading-s">Your changes were synced</h2>
-            <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
+            <p>They were synced on {{ "now" | govukDateTime }}.</p>
           {% endif %}
         {% endif %}
       </div>

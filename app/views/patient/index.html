@@ -60,7 +60,7 @@
         {% if patient.hadOfflineChanges and not patient.seen.isOffline %}
           <hr>
           <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">Your changes were synced</h2>
-          <p>They were synced on {{ "today" | govukDate }} at {{ "now" | govukTime }}.</p>
+          <p>They were synced on {{ "now" | govukDateTime }}.</p>
           <p><a href="#">Hide this message</a></p>
         {% endif %}
       {% endif %}

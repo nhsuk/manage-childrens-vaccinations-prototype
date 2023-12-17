@@ -7,10 +7,7 @@
       {%- if item.user -%}
         <a href="mailto:{{ item.user.email }}">{{ item.user.fullName }}</a>,
       {% endif -%}
-      {{ item.date | govukDate("truncate") }}
-      {% if not item.name | arrayOrStringIncludes("paper") %}
-       at {{ item.date | govukTime }}
-      {% endif %}
+      {{ item.date | govukDateTime }}
     </p>
   </li>
 {% endfor %}
