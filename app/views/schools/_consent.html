@@ -1,0 +1,18 @@
+{% set descriptionHtml %}
+  {% include "patient/_response-summary.html" %}
+
+  {{ details({
+    text: "Responses to health questions",
+    HTML: summaryList({
+      classes: "app-summary-list--full-width",
+      rows: healthAnswerRows(session.type, [response])
+    }),
+    classes: "nhsuk-expander"
+  }) if response.healthAnswers }}
+{% endset %}
+
+{{ card({
+  heading: "Consent",
+  headingClasses: "nhsuk-heading-m",
+  descriptionHtml: descriptionHtml
+}) | formCard }}

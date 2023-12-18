@@ -1,0 +1,73 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Consent response from " + response.parentOrGuardian.fullName %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: "/schools/" + school.urn + "#responses",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ heading({ title: title }) }}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% include "patient/_details.html" %}
+      {% include "schools/_consent.html" %}
+
+      {% set descriptionHtml %}
+        {{ radios({
+          items: [
+            {
+              text: response.child.fullName + "-Jones",
+              label: {
+                classes: "nhsuk-label--s nhsuk-u-margin-bottom-0"
+              },
+              hint: {
+                html: response.child.address | replace("\n", ", ") + "<br>" + response.child.dob | govukDate
+              }
+            },
+            {
+              text: response.child.fullName,
+              label: {
+                classes: "nhsuk-label--s nhsuk-u-margin-bottom-0"
+              },
+              hint: {
+                html: response.child.address | replace("\n", ", ") + "<br>" + response.child.dob | govukDate | replace("200", "201")
+              }
+            },
+            {
+              text: response.child.fullName,
+              label: {
+                classes: "nhsuk-label--s nhsuk-u-margin-bottom-0"
+              },
+              hint: {
+                html: response.child.address | replace("BS", "B") | replace("\n", ", ") + "<br>" + response.child.dob | govukDate
+              }
+            },
+            {
+              divider: "or"
+            },
+            {
+              text: "Search for a record"
+            }
+          ]
+        }) }}
+
+        {{ button({
+          classes: "nhsuk-u-margin-bottom-0",
+          text: "Update response"
+        }) }}
+      {% endset %}
+
+      {{ card({
+        heading: "Who is this consent response for",
+        headingClasses: "nhsuk-heading-m",
+        descriptionHtml: descriptionHtml
+      }) | formCard }}
+
+    </div>
+  </div>
+{% endblock %}

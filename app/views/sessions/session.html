@@ -41,7 +41,10 @@
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/sessions/{{ session.id }}/responses">Check consent responses</a>
               </h2>
-              <p>{{ filters.consentValid.results.length | plural("child") }} with consent given<br>{{ filters.consentRefused.results.length | plural("child") }} with consent refused<br>{{ filters.noResponse.results.length | plural("child") }} without a response</p>
+              <p class="nhsuk-u-margin-bottom-2">{{ filters.consentValid.results.length | plural("child") }} with consent given<br>{{ filters.consentRefused.results.length | plural("child") }} with consent refused<br>{{ filters.noResponse.results.length | plural("child") }} without a response</p>
+              <p>
+                <a href="/schools/{{ session.school.urn }}/#responses">3 responses need matching with a patient record</a>
+              </p>
 
               <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
                 <a href="/sessions/{{ session.id }}/triage">Triage health questions</a>

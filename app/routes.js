@@ -3,6 +3,7 @@ import getConsentOutcome from './utils/consent-outcome.js'
 import getTriageOutcome from './utils/triage-outcome.js'
 import getPatientOutcome from './utils/patient-outcome.js'
 import accountRoutes from './routes/account.js'
+import schoolRoutes from './routes/school.js'
 import sessionRoutes from './routes/session.js'
 import consentRoutes from './routes/consent.js'
 import newSessionRoutes from './routes/new-session.js'
@@ -78,6 +79,7 @@ router.all('*', (req, res, next) => {
 })
 
 accountRoutes(router)
+schoolRoutes(router)
 newSessionRoutes(router)
 sessionRoutes(router)
 consentRoutes(router)

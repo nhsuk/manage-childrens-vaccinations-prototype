@@ -1,4 +1,5 @@
 import participants from '../.data/participants.json' assert { type: 'json' }
+import schools from '../.data/schools.json' assert { type: 'json' }
 import sessions from '../.data/sessions.json' assert { type: 'json' }
 import users from '../.data/users.json' assert { type: 'json' }
 import vaccines from '../.data/vaccines.json' assert { type: 'json' }
@@ -6,6 +7,7 @@ import getVaccination from './fakers/vaccination.js'
 
 export default {
   pilot: { participants },
+  schools,
   support: 'record-childrens-vaccinations@service.nhs.uk',
   sessions,
   user: Object.values(users)[0],
