@@ -3,48 +3,49 @@
 {% set title = "Manage team" %}
 
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-two-thirds">
-      {% set html %}
-        <p class="govuk-notification-banner__heading">
-          {% if success == "invited" %}
-            <a href="/emails/invite-new-user" class="app-u-hidden-link">Invite sent</a>
-          {% else %}
-            Changes saved
-          {% endif %}
-        </p>
-      {% endset %}
+  {% set html %}
+    <p class="govuk-notification-banner__heading">
+      {% if success == "invited" %}
+        <a href="/emails/invite-new-user" class="app-u-hidden-link">Invite sent</a>
+      {% else %}
+        Changes saved
+      {% endif %}
+    </p>
+  {% endset %}
 
-      {{ govukNotificationBanner({
-        html: html,
-        type: "success"
-      }) if success }}
+  {{ govukNotificationBanner({
+    html: html,
+    type: "success"
+  }) if success }}
 
-      {{ heading({ title: title, size: "xl" }) }}
+  {{ heading({ title: title, size: "xl" }) }}
 
-      {{ button({
-        text: "Add a team member",
-        href: "/users/new"
-      }) }}
+  {{ button({
+    text: "Invite a team member",
+    href: "/users/new"
+  }) }}
 
-      <table class="nhsuk-table">
-        <thead class="nhsuk-table__head">
-          <tr class="nhsuk-table__row">
-            <th class="nhsuk-table__header">Name</th>
-            <th class="nhsuk-table__header">Email address</th>
-          </tr>
-        </thead>
-        <tbody class="nhsuk-table__body">
-          {% for id, user in data.users %}
-            <tr class="nhsuk-table__row">
-              <td class="nhsuk-table__cell">
-                <a href="/users/{{ id }}">{{ user.fullName }}</a>
-              </td>
-              <td class="nhsuk-table__cell">{{ user.email }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <table class="nhsuk-table">
+    <thead class="nhsuk-table__head">
+      <tr class="nhsuk-table__row">
+        <th class="nhsuk-table__header">Name</th>
+        <th class="nhsuk-table__header">Registration</th>
+        <th class="nhsuk-table__header">Email address</th>
+      </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+      {% for id, user in data.users %}
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">
+            <a href="/users/{{ id }}">{{ user.fullName }}</a>
+          </td>
+          <td class="nhsuk-table__cell">
+            {{ user.registration }}
+            ({{ user.registrationBody | upper | replace("GPHC", "GPhC") }})
+          </td>
+          <td class="nhsuk-table__cell">{{ user.email }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

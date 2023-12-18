@@ -65,9 +65,11 @@ const _getResponse = (type, patient, status) => {
   ])
   const days = faker.number.int({ min: 10, max: 35 })
 
+  const user = getParent(patient)
+
   const response = {
     status,
-    parentOrGuardian: getParent(patient),
+    parentOrGuardian: user,
     ...(status === RESPONSE_CONSENT.GIVEN) && {
       healthAnswers: getHealthAnswers(type, patient)
     },
@@ -77,7 +79,7 @@ const _getResponse = (type, patient, status) => {
         refusalReasonOther: 'My family rejects vaccinations on principle.'
       }
     },
-    events: [getEvent(`${status} (${method.toLowerCase()})`, { days })]
+    events: [getEvent(`${status} (${method.toLowerCase()})`, { days, user })]
   }
 
   return response

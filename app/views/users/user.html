@@ -17,6 +17,7 @@
       <form method="post" action="/users?success={{ user.id }}">
         {{ input({
           label: {
+            classes: "nhsuk-label--s",
             text: "Name"
           },
           decorate: "users." + user.id + ".fullName"
@@ -24,9 +25,45 @@
 
         {{ input({
           label: {
+            classes: "nhsuk-label--s",
             text: "Email address"
           },
           decorate: "users." + user.id + ".email"
+        }) }}
+
+        {{ radios({
+          fieldset: {
+            legend: {
+              classes: "nhsuk-fieldset__legend--s",
+              text: "Professional body"
+            }
+          },
+          items: [{
+            text: "General Medical Council",
+            value: "gmc"
+          }, {
+            text: "General Pharmaceutical Council",
+            value: "gphc"
+          }, {
+            text: "Health and Care Professions Council",
+            value: "hcpc"
+          }, {
+            text: "Nursing and Midwifery Council",
+            value: "nmc"
+          }],
+          decorate: "users." + user.id + ".registrationBody"
+        }) }}
+
+        {{ input({
+          classes: "nhsuk-input--width-10",
+          label: {
+            classes: "nhsuk-label--s",
+            text: "Registration number"
+          },
+          hint: {
+            text: "Also known as a GMC number or nurse’s pin number"
+          },
+          decorate: "users." + user.id + ".registration"
         }) }}
 
         {{ button({

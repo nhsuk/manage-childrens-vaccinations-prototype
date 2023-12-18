@@ -47,9 +47,13 @@
         value: session.location
       },
       {
-        key: "Vaccinator",
-        value: "You (" + data.user.fullName + ")"
+        key: "Vaccinator" if vaccineGiven else "Nurse",
+        value: data.user.fullName + ", " + data.user.registration
       },
+      {
+        key: "Protocol",
+        value: "Patient Group Directions"
+      } if vaccineGiven,
       {
         key: "Notes",
         value: vaccination.notes | default("None", true)
