@@ -5,7 +5,7 @@ export default (router) => {
     '/users/:userId',
     '/users/:userId/*'
   ], (req, res, next) => {
-    const data = req.session.data
+    const { data } = req.session
     const user = data.users[req.params.userId]
     res.locals.user = user
     next()
