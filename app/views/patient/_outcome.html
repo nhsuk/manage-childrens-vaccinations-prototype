@@ -1,5 +1,5 @@
 {% set descriptionHtml %}
-  {% set description = outcome(patient, consentRecord).description %}
+  {% set description = outcome(patient).description %}
   {% if description %}
     <p>{{ description }}</p>
   {% endif %}
@@ -63,8 +63,8 @@
 {% endset %}
 
 {{ card({
-  classes: "app-card--" + outcome(patient, consentRecord).colour,
-  heading: outcome(patient, consentRecord).text,
+  classes: "app-card--" + outcome(patient).colour,
+  heading: outcome(patient).text,
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: descriptionHtml,
   feature: true

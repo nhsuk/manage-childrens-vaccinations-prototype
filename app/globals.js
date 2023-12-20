@@ -239,10 +239,9 @@ export default (_env) => {
   /**
    * Outcome properties
    * @param {object} patient - Patient
-   * @param {object} [consentRecord] - Consent record
    * @returns {object} Outcome properties
    */
-  globals.outcome = (patient, consentRecord) => {
+  globals.outcome = (patient) => {
     let colour = 'blue'
     let description
     let respondents
