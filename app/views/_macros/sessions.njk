@@ -2,55 +2,57 @@
 {% from "_macros/icon.njk" import icon %}
 
 {% macro sessions(sessions, isOffline) %}
-<table class="nhsuk-table-responsive">
-  <caption class="nhsuk-table__caption nhsuk-u-font-size-32">{{ sessions[0].type }}</caption>
-  <thead class="nhsuk-table__head">
-    <tr class="nhsuk-table__row">
-      <th class="nhsuk-table__header app-u-width-one-fifth" scope="col">Date</th>
-      <th class="nhsuk-table__header app-u-width-one-fifth" scope="col">Time</th>
-      <th class="nhsuk-table__header" scope="col">School</th>
-      {% if isOffline %}<th class="nhsuk-table__header"></th>{% endif %}
-    </tr>
-  </thead>
-  <tbody class="nhsuk-table__body">
-    {% for session in sessions %}
+<action-table sort="date">
+  <table class="nhsuk-table-responsive">
+    <caption class="nhsuk-table__caption nhsuk-u-font-size-32">{{ sessions[0].type }}</caption>
+    <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
-        <td class="nhsuk-table__cell">
-          <span class="nhsuk-table-responsive__heading">Date</span>
-          {{ session.date | govukDate("truncate") }}
-        </td>
-        <td class="nhsuk-table__cell">
-          <span class="nhsuk-table-responsive__heading">Time</span>
-          {{ session.date | govukTime }}
-        </td>
-        <td class="nhsuk-table__cell">
-          <span class="nhsuk-table-responsive__heading">School</span>
-          <p class="nhsuk-u-margin-bottom-0 nhsuk-u-secondary-text-color">
-            {% if session.inProgress %}
-              {{ tag({
-                classes: "nhsuk-tag--blue nhsuk-u-margin-bottom-2",
-                text: "Session in progress"
-              }) }}<br>
-            {% endif %}
-            <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>
-            {{ session.school.town }}, {{ session.school.postcode }}
-          </p>
-        </td>
-        {% if isOffline %}
-          <td class="nhsuk-table__cell nhsuk-u-text-align-right">
-            {% if session["available-offline"] %}
-              <span class="app-status app-status--green">
-                {{ icon("tick") }} Available offline
-              </span>
-            {% else %}
-              <span class="nhsuk-hint nhsuk-u-margin-bottom-0">
-                Unavailable
-              </span>
-            {% endif %}
-          </td>
-        {% endif %}
+        <th class="nhsuk-table__header app-u-width-one-fifth" scope="col">Date</th>
+        <th class="nhsuk-table__header app-u-width-one-fifth" scope="col">Time</th>
+        <th class="nhsuk-table__header" scope="col">School</th>
+        {% if isOffline %}<th class="nhsuk-table__header"></th>{% endif %}
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </thead>
+    <tbody class="nhsuk-table__body">
+      {% for session in sessions %}
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell" data-sort="{{ session.date }}">
+            <span class="nhsuk-table-responsive__heading">Date</span>
+            {{ session.date | govukDate("truncate") }}
+          </td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-table-responsive__heading">Time</span>
+            {{ session.date | govukTime }}
+          </td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-table-responsive__heading">School</span>
+            <p class="nhsuk-u-margin-bottom-0 nhsuk-u-secondary-text-color">
+              {% if session.inProgress %}
+                {{ tag({
+                  classes: "nhsuk-tag--blue nhsuk-u-margin-bottom-2",
+                  text: "Session in progress"
+                }) }}<br>
+              {% endif %}
+              <a href="/sessions/{{ session.id }}">{{ session.school.name }}</a><br>
+              {{ session.school.town }}, {{ session.school.postcode }}
+            </p>
+          </td>
+          {% if isOffline %}
+            <td class="nhsuk-table__cell nhsuk-u-text-align-right">
+              {% if session["available-offline"] %}
+                <span class="app-status app-status--green">
+                  {{ icon("tick") }} Available offline
+                </span>
+              {% else %}
+                <span class="nhsuk-hint nhsuk-u-margin-bottom-0">
+                  Unavailable
+                </span>
+              {% endif %}
+            </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</action-table>
 {% endmacro %}
