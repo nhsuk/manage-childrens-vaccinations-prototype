@@ -9,7 +9,7 @@ import { yearGroups } from './year-group.js'
  * @property {string} firstName - First/given name
  * @property {string} lastName - Last/family name
  * @property {string} fullName - Full name
- * @property {string} knownAs - Name also known by
+ * @property {string} [knownAs] - Name also known by
  * @property {string} sex - Sex
  * @property {string} dob - Date of birth (ISO 8601)
  * @property {string} gpSurgery - GP surgery
@@ -25,7 +25,10 @@ export default (minYearGroup, maxYearGroup) => {
   const sex = faker.helpers.arrayElement(['Male', 'Female'])
   const firstName = getChildFirstName(faker, sex)
   const lastName = faker.person.lastName()
-  const knownAs = `${firstName} ${faker.person.lastName()}`
+  const knownAs = faker.helpers.maybe(
+    () => `${firstName} ${faker.person.lastName()}`,
+    { probability: 0.1 }
+  )
 
   // Only generate dates of birth applicable to vaccine
   const dob = faker.date.between({
@@ -37,7 +40,7 @@ export default (minYearGroup, maxYearGroup) => {
     firstName,
     lastName,
     fullName: `${firstName} ${lastName}`,
-    knownAs: faker.helpers.maybe(() => knownAs, { probability: 0.1 }),
+    ...knownAs && { knownAs },
     sex,
     dob: DateTime.fromJSDate(dob).toISODate(),
     gpSurgery: getGpSurgery()
