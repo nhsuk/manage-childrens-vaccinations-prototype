@@ -38,8 +38,8 @@ export const yearGroups = () => {
  * @returns {object} Year group
  */
 export const getYearGroup = (date) => {
-  const dobDate = DateTime.fromJSDate(date)
-  for (const [yearGroup, range] of Object.entries(yearGroups)) {
+  const dobDate = DateTime.fromISO(date)
+  for (const [yearGroup, range] of Object.entries(yearGroups())) {
     if (range.interval.contains(dobDate)) {
       return yearGroup
     }
