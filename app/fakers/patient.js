@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { PATIENT_OUTCOME } from '../enums.js'
-import getAddress from './address.js'
 import getChild from './child.js'
 import getResponse from './response.js'
 import { getYearGroup } from './year-group.js'
@@ -34,7 +33,6 @@ const _getPatient = (options) => {
 
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
   patient.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
-  patient.address = getAddress()
   patient.yearGroup = getYearGroup(patient.dob)
   patient.responses = responses
   patient.consent = { events: [] }

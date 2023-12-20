@@ -1,5 +1,6 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
+import getAddress from './address.js'
 import getChildFirstName from './child-first-name.js'
 import getGpSurgery from './gp-surgery.js'
 import { yearGroups } from './year-group.js'
@@ -12,6 +13,7 @@ import { yearGroups } from './year-group.js'
  * @property {string} [knownAs] - Name also known by
  * @property {string} sex - Sex
  * @property {string} dob - Date of birth (ISO 8601)
+ * @property {object} address - Address
  * @property {string} gpSurgery - GP surgery
  */
 
@@ -43,6 +45,7 @@ export default (minYearGroup, maxYearGroup) => {
     ...knownAs && { knownAs },
     sex,
     dob: DateTime.fromJSDate(dob).toISODate(),
+    address: getAddress(),
     gpSurgery: getGpSurgery()
   }
 
