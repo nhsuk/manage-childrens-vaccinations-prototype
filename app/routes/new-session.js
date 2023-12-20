@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { newSessionWizard } from '../wizards/new-session.js'
 import { isoDateFromDateInput } from '@x-govuk/govuk-prototype-filters/lib/date.js'
-import { healthQuestions, yearGroups } from '../utils/campaign.js'
+import { yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
 import getSession from '../fakers/session.js'
 
@@ -65,7 +65,6 @@ export default (router) => {
     session.is3in1MenACWY = session.type === '3-in-1 and MenACWY'
     session.isFlu = session.type === 'Flu'
     session.isHPV = session.type === 'HPV'
-    session.healthQuestions = healthQuestions(session.type)
     session.yearGroups = yearGroups(session.type)
     session.vaccines = _.filter(vaccines, { type: session.type })
 

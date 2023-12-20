@@ -1,5 +1,6 @@
 import filters from '@x-govuk/govuk-prototype-filters'
 import _ from 'lodash'
+import { healthQuestions } from './utils/campaign.js'
 import { relationshipName } from './utils/relationship.js'
 import { CONSENT_OUTCOME, PATIENT_OUTCOME, RESPONSE_CONSENT, RESPONSE_REFUSAL, VACCINATION_SITE, TRIAGE_OUTCOME, VACCINATION_OUTCOME } from './enums.js'
 
@@ -150,14 +151,15 @@ export default (_env) => {
 
   /**
    * Health answer summary list rows
-   * @param {object} session - Session
+   * @param {string} type - Campaign type
    * @param {Array} responses - Consent responses
    * @returns {object} Parameters for summary list component
    */
-  globals.healthAnswerRows = function (session, responses) {
+  globals.healthAnswerRows = function (type, responses) {
     const rows = []
+    const questions = Object.entries(healthQuestions(type))
 
-    for (const [id, question] of Object.entries(session.healthQuestions)) {
+    for (const [id, question] of questions) {
       const responsesWithAnswers = responses.filter(response => response.healthAnswers)
       const uniqueResponses = _.uniqBy(responsesWithAnswers, `healthAnswers[${id}]`)
 
@@ -185,6 +187,13 @@ export default (_env) => {
 
     return rows
   }
+
+  /**
+   * Get health questions used to triage patients in a campaign
+   * @param {string} type - Campaign type
+   * @returns {object} Health questions
+   */
+  globals.healthQuestions = (type) => healthQuestions(type)
 
   /**
    * Action needed filters

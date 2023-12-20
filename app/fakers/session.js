@@ -1,6 +1,6 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
-import { healthQuestions, yearGroups } from '../utils/campaign.js'
+import { yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
 import getSchool from './school.js'
 import getPatient from './patient.js'
@@ -37,7 +37,6 @@ export default (type) => {
     location: school.name,
     date: DateTime.now().plus({ days: daysUntil }).toISODate() + 'T' + atTime,
     type,
-    healthQuestions: healthQuestions(type),
     triageInProgress: daysUntil < 28,
     yearGroups: yearGroups(type),
     school,

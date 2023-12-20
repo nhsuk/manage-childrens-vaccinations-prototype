@@ -38,7 +38,7 @@
     attributes: { open: true } if patient.triage.outcome == TRIAGE_OUTCOME.NEEDS_TRIAGE,
     HTML: summaryList({
       classes: "app-summary-list--full-width",
-      rows: healthAnswerRows(session, patient.responses)
+      rows: healthAnswerRows(session.type, patient.responses)
     }),
     classes: "nhsuk-expander"
   }) if patient.consent.hasHealthAnswers }}
