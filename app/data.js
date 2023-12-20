@@ -1,12 +1,8 @@
-import { createRequire } from 'node:module'
-
+import participants from '../.data/participants.json' assert { type: 'json' }
+import sessions from '../.data/sessions.json' assert { type: 'json' }
+import users from '../.data/users.json' assert { type: 'json' }
+import vaccines from '../.data/vaccines.json' assert { type: 'json' }
 import getVaccination from './fakers/vaccination.js'
-
-const require = createRequire(import.meta.url)
-const participants = require('../.data/participants.json')
-const sessions = require('../.data/sessions.json')
-const users = require('../.data/users.json')
-const vaccines = require('../.data/vaccines.json')
 
 export default {
   pilot: { participants },
