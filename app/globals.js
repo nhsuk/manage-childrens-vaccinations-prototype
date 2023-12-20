@@ -196,17 +196,6 @@ export default (_env) => {
   globals.healthQuestions = (type) => healthQuestions(type)
 
   /**
-   * Action needed filters
-   * @returns {object} Actions needed
-   */
-  globals.actionsFilter = {
-    'get-consent': 'Get consent',
-    'check-refusal': 'Check refusal',
-    triage: 'Triage',
-    vaccinate: 'Vaccinate'
-  }
-
-  /**
    * Action properties
    * @param {object} patient - Patient
    * @returns {object} Action properties

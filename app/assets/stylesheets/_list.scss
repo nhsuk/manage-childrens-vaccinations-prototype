@@ -1,16 +1,3 @@
-.app-list--filters {
-  [aria-current] {
-    @include nhsuk-link-style-default;
-    @include nhsuk-link-style-text;
-    @include nhsuk-typography-weight-bold;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
 .app-list--events {
   p {
     margin-bottom: nhsuk-spacing(1);

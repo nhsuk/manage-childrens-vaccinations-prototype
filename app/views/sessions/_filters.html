@@ -1,77 +1,57 @@
-{% if activeFilters %}
-<p><a href="?">Remove all filters</a></p>
-{% endif %}
-
 {{ input({
   formGroup: {
     classes: "nhsuk-u-margin-top-3"
   },
+  id: "name",
+  name: "name",
+  type: "search",
+  autocomplete: "none",
   label: {
+    classes: "nhsuk-label--s",
     text: "By name"
-  },
-  decorate: "search"
+  }
 }) }}
 
-{% if triaging %}
-  <p class="nhsuk-u-margin-bottom-1">By notes</p>
-  <ul class="nhsuk-list app-list--filters">
-    <li>
-      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "medical", "true") }}">Has notes</a>
-    </li>
-    <li>
-      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "medical", "false") }}">No notes</a>
-    </li>
-  </ul>
-
-  <p class="nhsuk-u-margin-bottom-1">By triage status</p>
-  <ul class="nhsuk-list app-list--filters">
-    {% for key, item in TRIAGE_OUTCOME %}
-      {% set active = activeFilters.triageOutcome == key %}
-      <li>
-        <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "triage.outcome", key) }}">{{ item }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-{% endif %}
-
-<p class="nhsuk-u-margin-bottom-1">By year group</p>
-<ul class="nhsuk-list app-list--filters">
-  {% for group in session.yearGroups %}
-    {% set active = activeFilters.year == group.number %}
-    <li>
-      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "year", group.number) }}">
-        {{ group.name }}
-      </a>
-    </li>
-  {% endfor %}
-</ul>
-
-{% if tab.actionNeededFilter %}
-<p class="nhsuk-u-margin-bottom-1">By action needed</p>
-<ul class="nhsuk-list app-list--filters">
-  {% for key, item in actionsFilter %}
-    {% set active = activeFilters.actionNeeded == key %}
-    <li>
-      <a{% if active %} aria-current="true"{% endif %} href="{{ filterPath(activeFilters, "actionNeeded", key) }}">{{ item }}</a>
-    </li>
-  {% endfor %}
-</ul>
-{% endif %}
-
-<script>
-  function filterTable() {
-    var inputValue = document.getElementById('search').value.toLowerCase();
-    var rows = document.getElementById('patients').querySelectorAll('tbody tr');
-
-    for (var i = 0; i < rows.length; i++) {
-      var nameCell = rows[i].getElementsByTagName('td')[0];
-      var name = nameCell.textContent || nameCell.innerText;
-      if (name.toLowerCase().indexOf(inputValue) > -1) {
-        rows[i].style.display = '';
-      } else {
-        rows[i].style.display = 'none';
-      }
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{{ govukCheckboxes({
+  classes: "govuk-checkboxes--small",
+  name: "year",
+  fieldset: {
+    legend: {
+      classes: "govuk-fieldset__legend--s",
+      text: "By year group"
     }
-  }
-  document.getElementById('search').addEventListener('input', filterTable);
-</script>
+  },
+  items: [
+    { value: "0", text: "Reception" },
+    { value: "1", text: "Year 1" },
+    { value: "2", text: "Year 2" },
+    { value: "3", text: "Year 3" },
+    { value: "4", text: "Year 4" },
+    { value: "5", text: "Year 5" },
+    { value: "6", text: "Year 6" }
+  ]
+}) }}
+
+{{ govukCheckboxes({
+  classes: "govuk-checkboxes--small",
+  name: "status",
+  fieldset: {
+    legend: {
+      classes: "govuk-fieldset__legend--s",
+      text: "By action needed"
+    }
+  },
+  items: [
+    { value: "Get consent", text: "Get consent" },
+    { value: "Check refusal", text: "Check refusal" },
+    { value: "Triage", text: "Triage" },
+    { value: "Vaccinate", text: "Vaccinate" }
+  ]
+}) if tab.actionNeededFilter }}
+
+{{ button({
+  classes: "nhsuk-button--secondary app-button--small",
+  type: "reset",
+  text: "Reset filters"
+}) }}

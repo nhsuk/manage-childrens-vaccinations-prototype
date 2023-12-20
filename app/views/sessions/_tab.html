@@ -1,19 +1,19 @@
-<div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-one-quarter">
+<action-table class="nhsuk-grid-row" sort="name">
+  <action-table-filters class="nhsuk-grid-column-one-quarter">
     {% include "sessions/_filters.html" %}
-  </div>
+  </action-table-filters>
   <div class="nhsuk-grid-column-three-quarters">
     {% if tab.results.length %}
       <table class="nhsuk-table app-table--dense" id="patients">
         <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
             <th class="nhsuk-table__header">Name</th>
-            <th class="nhsuk-table__header app-u-nowrap">Date of birth</th>
+            <th class="nhsuk-table__header app-u-nowrap" data-col="year">Date of birth</th>
             {% if isRefusalReasonNeeded %}
             <th class="nhsuk-table__header">Reason for refusal</th>
             {% endif %}
             {% if tab.statusColumn %}
-            <th class="nhsuk-table__header">{{ tab.statusColumn }}</th>
+            <th class="nhsuk-table__header" data-col="status" no-sort>{{ tab.statusColumn }}</th>
             {% endif %}
           </tr>
         </thead>
@@ -29,7 +29,7 @@
                   <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-color">Refusal confirmed</span>
                 {% endif %}
               </td>
-              <td class="nhsuk-table__cell nhsuk-u-font-size-16">
+              <td class="nhsuk-table__cell nhsuk-u-font-size-16" data-filter="{{ patient.yearGroup }}" data-sort="{{ patient.dob }}">
                 {{ patient.dob | govukDate("truncate") }}
               </td>
               {% if isRefusalReasonNeeded %}
@@ -57,8 +57,7 @@
       </table>
     {% else %}
       {% set descriptionHtml %}
-        <p class="nhsuk-body">We couldn’t find any children that matched your filters.</p>
-        <p class="nhsuk-body"><a href="?">Remove filter</a></p>
+        <p>We couldn’t find any children that matched your filters.</p>
       {% endset %}
       {{ card({
         classes: "app-card--empty-list",
@@ -67,4 +66,4 @@
       }) }}
     {% endif %}
   </div>
-</div>
+</action-table>
