@@ -22,13 +22,17 @@
         }
       } if not hasNoResponse,
       {
+        key: "School",
+        value: school.name or patient.school.name
+      },
+      {
         key: "GP",
         value: patient.gpSurgery
       } if not hasNoResponse,
       {
         key: "NHS Number",
         value: patient.nhsNumber | formatNHSNumber
-      }
+      } if patient.nhsNumber
     ])
   })
 }) }}

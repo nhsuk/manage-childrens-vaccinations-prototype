@@ -1,10 +1,10 @@
 {% from "tag/macro.njk" import tag %}
 {% from "_macros/icon.njk" import icon %}
 
-{% macro sessions(sessions, isOffline) %}
+{% macro sessions(sessions, isOffline, captionFontSize = 32) %}
 <action-table sort="date">
   <table class="nhsuk-table-responsive">
-    <caption class="nhsuk-table__caption nhsuk-u-font-size-32">{{ sessions[0].type }}</caption>
+    <caption class="nhsuk-table__caption nhsuk-u-font-size-{{ captionFontSize }}">{{ sessions[0].type }}</caption>
     <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
         <th class="nhsuk-table__header app-u-width-one-fifth" scope="col">Date</th>

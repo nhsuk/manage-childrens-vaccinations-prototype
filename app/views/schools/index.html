@@ -1,0 +1,33 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Manage schools" %}
+
+{% block content %}
+  {{ heading({ title: title, size: "xl" }) }}
+
+  {{ button({
+    href: "#",
+    text: "Add a new school"
+  }) }}
+
+  <table class="nhsuk-table">
+    <thead class="nhsuk-table__head">
+      <tr class="nhsuk-table__row">
+        <th class="nhsuk-table__header">Name</th>
+        <th class="nhsuk-table__header">Location</th>
+        <th class="nhsuk-table__header">URN</th>
+      </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+      {% for urn, school in data.schools %}
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">
+            <a href="/schools/{{ urn }}">{{ school.name }}</a>
+          </td>
+          <td class="nhsuk-table__cell">{{ school.town }}, {{ school.postcode }}</td>
+          <td class="nhsuk-table__cell">{{ urn }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,12 +1,13 @@
 import fs from 'node:fs'
 import { faker } from '@faker-js/faker'
+import getResponse from './response.js'
 
 const schoolData = 'app/fakers/seeds/schools.json'
 const schools = JSON.parse(fs.readFileSync(schoolData))
 
 /**
  * Generate school
- * @param {string} type - Vaccine type
+ * @param {string} [type] - Campaign type
  * @returns {object} School
  */
 export default (type) => {

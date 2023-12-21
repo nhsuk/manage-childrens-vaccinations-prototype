@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { RESPONSE_CONSENT, RESPONSE_REFUSAL, RESPONSE_METHOD } from '../enums.js'
+import getChild from './child.js'
 import getEvent from './event.js'
 import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
@@ -51,12 +52,16 @@ const _getRefusalReason = (type) => {
 /**
  * Generate consent response
  * @param {string} type - Vaccine type
- * @param {object} patient - Patient record
+ * @param {object} [patient] - Patient record
  * @param {object} [status] - Response status
  * @returns {Response} Consent response
  */
 const _getResponse = (type, patient, status) => {
+  const isUnmatchedResponse = !patient
+
+  patient = patient || getChild(8, 9)
   status = status || _getStatus(type)
+
   const refusalReason = _getRefusalReason(type)
   const method = faker.helpers.weightedArrayElement([
     { value: RESPONSE_METHOD.WEBSITE, weight: 5 },
@@ -68,7 +73,11 @@ const _getResponse = (type, patient, status) => {
   const user = getParent(patient)
 
   const response = {
+    id: faker.string.uuid(),
     status,
+    ...isUnmatchedResponse && {
+      child: patient
+    },
     parentOrGuardian: user,
     ...(status === RESPONSE_CONSENT.GIVEN) && {
       healthAnswers: getHealthAnswers(type, patient)
