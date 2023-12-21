@@ -40,14 +40,19 @@
         href: baseHref + "/cohort"
       },
       {
-        key: "Consent emails",
-        value: session.emailDate | isoDateFromDateInput | dateWithDayOfWeek,
-        href: baseHref + "/emails"
+        key: "Consent requests",
+        value: "Send " + (session.requestDays if session.hasRequestDays == "custom" else "14") + " days before the session",
+        href: baseHref + "/schedule"
       },
       {
-        key: "Reminder emails",
-        value: session.reminderDate | isoDateFromDateInput | dateWithDayOfWeek,
-        href: baseHref + "/emails"
+        key: "Reminders",
+        value: "Send " + (session.reminderDays if session.hasReminderDays == "custom" else "7") + " days after the first consent request",
+        href: baseHref + "/schedule"
+      },
+      {
+        key: "Deadline for responses",
+        value: (session.deadlineDate | isoDateFromDateInput | dateWithDayOfWeek) if session.hasDeadlineDate == "custom" else session.hasDeadlineDate,
+        href: baseHref + "/schedule"
       }
     ])
   }) }}

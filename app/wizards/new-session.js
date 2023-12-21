@@ -9,7 +9,7 @@ export function newSessionWizard (req) {
     [`/sessions/new/${sessionId}/type`]: {},
     [`/sessions/new/${sessionId}/date`]: {},
     [`/sessions/new/${sessionId}/cohort`]: {},
-    [`/sessions/new/${sessionId}/emails`]: {},
+    [`/sessions/new/${sessionId}/schedule`]: {},
     [`/sessions/new/${sessionId}/confirm`]: {},
     [`/sessions/${sessionId}?success=1`]: {}
   }

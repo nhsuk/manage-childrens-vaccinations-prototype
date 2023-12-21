@@ -1,0 +1,114 @@
+{% extends "_layouts/wizard.html" %}
+
+{% set title = "What’s the timeline for consent requests?" %}
+
+{% block form %}
+  {{ heading({ title: title }) }}
+
+  {{ insetText({
+    HTML: "<p>Session scheduled for " + (session.date | isoDateFromDateInput | dateWithDayOfWeek) + " at " + session.location + "</p>"
+  }) }}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Consent requests"
+      }
+    },
+    hint: {
+      text: "When should parents get a request for consent?"
+    },
+    items: [
+      {
+        text: "14 days before the session",
+        value: "14"
+      },
+      {
+        text: "Choose your own schedule",
+        value: "custom",
+        conditional: {
+          html: input({
+            classes: "nhsuk-input--width-2",
+            label: {
+              classes: "nhsuk-u-margin-bottom-3",
+              text: "Days before the session"
+            },
+            suffix: "days",
+            decorate: ["newSession", "requestDays"]
+          })
+        }
+      }
+    ],
+    decorate: ["newSession", "hasRequestDays"]
+  }) }}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Reminders"
+      }
+    },
+    hint: {
+      text: "When should parents who haven’t responded get a reminder?"
+    },
+    items: [
+      {
+        text: "7 days after the first consent request",
+        value: "7"
+      },
+      {
+        text: "Choose your own schedule",
+        value: "custom",
+        conditional: {
+          html: input({
+            classes: "nhsuk-input--width-2",
+            label: {
+              classes: "nhsuk-u-margin-bottom-3",
+              text: "Days after the first consent request"
+            },
+            suffix: "days",
+            decorate: ["newSession", "reminderDays"]
+          })
+        }
+      }
+    ],
+    decorate: ["newSession", "hasReminderDays"]
+  }) }}
+
+  {{ radios({
+    fieldset: {
+      legend: {
+        classes: "nhsuk-fieldset__legend--m",
+        text: "Deadline for responses"
+      }
+    },
+    classes: "nhsuk-radios--inline",
+    items: [
+      {
+        text: "Allow responses until the day of the session",
+        value: "Allow responses until the day of the session"
+      },
+      {
+        text: "Choose your own deadline",
+        value: "custom",
+        conditional: {
+          html: dateInput({
+            fieldset: {
+              legend: {
+                text: "Deadline for consent responses"
+              }
+            },
+            hint: {
+              text: "For example, 27 3 2023"
+            },
+            decorate: ["newSession", "deadlineDate"]
+          })
+        }
+      }
+    ],
+    decorate: ["newSession", "hasDeadlineDate"]
+  }) }}
+
+{% endblock %}
