@@ -3,7 +3,7 @@
 {% set title = "Thank you for registering your interest in the NHS school vaccinations pilot" %}
 
 {% block content %}
-  <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+  {{ heading({ caption: "The Holy Cross School", title: title, size: "xl" }) }}
 
   <p>We’ll review your details to check you’re eligible for the pilot. We’ll be in touch again soon to let you know if you can take part.</p>
 {% endblock %}

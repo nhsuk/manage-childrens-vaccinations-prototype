@@ -7,8 +7,8 @@
 {% endset %}
 
 {% block content %}
-<form action="/pilot/screener/confirmation">
-  <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+<form action="/pilot/screener/{{ school.urn }}/confirmation">
+  {{ heading({ caption: "The Holy Cross School", title: title, size: "xl" }) }}
 
   <p>This pilot is for parents of children who are due to get their HPV vaccination this year.</p>
 
@@ -196,21 +196,6 @@
       },
       decorate: "child.nhs-number"
     }) }}
-
-    {# radios({
-      fieldset: {
-        legend: {
-          classes: "nhsuk-fieldset__legend--s",
-          text: "School"
-        }
-      },
-      items: [
-        { text: "Priestnall School" },
-        { text: "Kingshurst School" },
-        { text: "The Holy Cross School" }
-      ],
-      decorate: "child.school"
-    }) #}
 
     <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
 

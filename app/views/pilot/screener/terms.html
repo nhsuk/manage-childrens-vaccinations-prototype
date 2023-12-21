@@ -3,7 +3,7 @@
 {% set title = "Terms and conditions for the NHS school vaccinations pilot" %}
 
 {% block content %}
-  <h1 class="nhsuk-heading-xl">{{ title }}</h1>
+  {{ heading({ caption: "The Holy Cross School", title: title, size: "xl" }) }}
 
   {% include "pilot/screener/_terms.html" %}
 {% endblock %}
