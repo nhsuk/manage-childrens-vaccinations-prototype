@@ -11,25 +11,30 @@ import getSessionInProgress from './app/fakers/session-in-progress.js'
 import getUser from './app/fakers/user.js'
 import getVaccines from './app/fakers/vaccines.js'
 
+// Participants
 const participantsArray = faker.helpers.multiple(getParticipant, { count: 50 })
 const participants = _.keyBy(participantsArray, 'id')
 
+// Schools
 const schools = _.keyBy(schoolsSeed, 'urn')
 
+// Sessions
 const sessionsArray = faker.helpers.multiple(getSession, { count: 20 })
 sessionsArray.push(getSessionInProgress('Flu'))
 sessionsArray.push(getSessionInProgress('HPV'))
 const sessions = _.keyBy(_.sortBy(sessionsArray, ['date']), 'id')
 
+// Unmatched responses
 const unmatchedResponsesArray = faker.helpers.multiple(getResponse('HPV'), {
   count: { min: 0, max: 30 }
 })
 const unmatchedResponses = _.keyBy(unmatchedResponsesArray, 'id')
 
-
+// Users
 const usersArray = faker.helpers.multiple(getUser, { count: 20 })
 const users = _.keyBy(usersArray, 'id')
 
+// Vaccines
 const vaccinesArray = getVaccines()
 const vaccines = _.keyBy(vaccinesArray, 'id')
 

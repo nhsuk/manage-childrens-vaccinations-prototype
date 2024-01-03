@@ -68,20 +68,23 @@
   {% set responsesHtml %}
     {% set responses = school.unmatchedResponses %}
     {% if responses.length %}
+    <action-table sort="responded">
       <table class="nhsuk-table app-table--dense" id="patients">
         <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
+            <th class="nhsuk-table__header">Responded</th>
             <th class="nhsuk-table__header">Parent or guardian</th>
             <th class="nhsuk-table__header">Child</th>
-            <th class="nhsuk-table__header">Date of birth</th>
-            <th class="nhsuk-table__header">Response</th>
           </tr>
         </thead>
         <tbody class="nhsuk-table__body">
           {% for response in responses %}
             <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell" data-sort="{{ response.date }}">
+                <a href="/schools/{{ school.urn }}/responses/{{ response.id }}">{{ response.date | govukDate("truncate") }}</a>
+              </td>
               <td class="nhsuk-table__cell">
-                <a href="/schools/{{ school.urn }}/responses/{{ response.id }}">{{ response.parentOrGuardian.fullName }}</a>
+                {{ response.parentOrGuardian.fullName }}
               </td>
               <td class="nhsuk-table__cell">
                 {{ response.child.fullName }}
@@ -89,16 +92,11 @@
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
                 {% endif %}
               </td>
-              <td class="nhsuk-table__cell">
-                {{ response.child.dob | govukDate("truncate") }}
-              </td>
-              <td class="nhsuk-table__cell">
-                {{ response.status }}
-              </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
+    </action-table>
     {% else %}
       <p class="nhsuk-body">There are no unmatched consent responses.</p>
     {% endif %}

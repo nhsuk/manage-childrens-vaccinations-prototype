@@ -74,6 +74,7 @@ const _getResponse = (type, patient, status) => {
 
   const response = {
     id: faker.string.uuid(),
+    date: faker.date.recent({ days: 50 }),
     status,
     ...isUnmatchedResponse && {
       child: patient

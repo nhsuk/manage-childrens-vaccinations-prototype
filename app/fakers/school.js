@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import { faker } from '@faker-js/faker'
-import getResponse from './response.js'
 
 const schoolData = 'app/fakers/seeds/schools.json'
 const schools = JSON.parse(fs.readFileSync(schoolData))
