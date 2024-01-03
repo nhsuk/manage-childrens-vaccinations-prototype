@@ -1,0 +1,26 @@
+{% extends "_layouts/default.html" %}
+
+{% set patient = data.patient | patientFromNHSNumber(session) %}
+{% set title = patient.fullName %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: "/sessions/" + session.id + "/responses/" + response.id + "/match",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ heading({ title: title }) }}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% include "patient/_details.html" %}
+
+      {{ button({
+        href: "/sessions/" + session.id + "/responses/" + response.id + "/link?patient=" + data.patient,
+        text: "Select child record"
+      }) }}
+    </div>
+  </div>
+{% endblock %}

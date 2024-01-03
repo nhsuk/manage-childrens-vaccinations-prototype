@@ -37,9 +37,7 @@
       <tbody class="nhsuk-table__body">
         {% for patient in school.cohort %}
           <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <a href="/schools/{{ urn }}">{{ patient.fullName }}</a>
-            </td>
+            <td class="nhsuk-table__cell">{{ patient.fullName }}</td>
             <td class="nhsuk-table__cell">{{ patient.dob | govukDate }}</td>
           </tr>
         {% endfor %}
@@ -65,43 +63,6 @@
     {{ sessions(3in1, isOffline, 24) if 3in1.length }}
   {% endset %}
 
-  {% set responsesHtml %}
-    {% set responses = school.unmatchedResponses %}
-    {% if responses.length %}
-    <action-table sort="responded">
-      <table class="nhsuk-table app-table--dense" id="patients">
-        <thead class="nhsuk-table__head">
-          <tr class="nhsuk-table__row">
-            <th class="nhsuk-table__header">Responded</th>
-            <th class="nhsuk-table__header">Parent or guardian</th>
-            <th class="nhsuk-table__header">Child</th>
-          </tr>
-        </thead>
-        <tbody class="nhsuk-table__body">
-          {% for response in responses %}
-            <tr class="nhsuk-table__row">
-              <td class="nhsuk-table__cell" data-sort="{{ response.date }}">
-                <a href="/schools/{{ school.urn }}/responses/{{ response.id }}">{{ response.date | govukDate("truncate") }}</a>
-              </td>
-              <td class="nhsuk-table__cell">
-                {{ response.parentOrGuardian.fullName }}
-              </td>
-              <td class="nhsuk-table__cell">
-                {{ response.child.fullName }}
-                {% if response.child.knownAs %}
-                  <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </action-table>
-    {% else %}
-      <p class="nhsuk-body">There are no unmatched consent responses.</p>
-    {% endif %}
-  {% endset %}
-
   {{ tabs({
     items: [
       {
@@ -113,12 +74,7 @@
         id: "sessions",
         label: "School sessions (" + school.sessions.length + ")",
         panel: { html: sessionsHtml }
-      },
-      {
-        id: "responses",
-        label: "Unmatched consent responses (" + school.unmatchedResponses.length + ")",
-        panel: { html: responsesHtml }
-      } if school.unmatchedResponses
+      }
     ]
   }) }}
 {% endblock %}

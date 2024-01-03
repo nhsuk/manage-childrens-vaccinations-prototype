@@ -1,0 +1,22 @@
+{{ summaryList({
+  rows: decorateRows([
+    {
+      key: "Name",
+      value: {
+        html: response.parentOrGuardian.fullName
+      }
+    },
+    {
+      key: "Relationship",
+      value: {
+        html: response.parentOrGuardian | relationshipName
+      }
+    } if response.parentOrGuardian.relationship,
+    {
+      key: "Contact",
+      value: {
+        html: [response.parentOrGuardian.tel, response.parentOrGuardian.email | urlize] | removeEmptyFromArray | join("<br>") or "Not provided"
+      }
+    } if response.parentOrGuardian.tel or response.parentOrGuardian.email
+  ])
+}) }}

@@ -1,0 +1,34 @@
+{{ summaryList({
+  rows: decorateRows([
+    {
+      key: "Child’s name",
+      value: response.child.fullName
+    },
+    {
+      key: "Known as",
+      value: patient.knownAs
+    } if response.child.knownAs,
+    {
+      key: "Date of birth",
+      value: response.child.dob | govukDate + " (aged " + response.child.dob | age + ")"
+    },
+    {
+      key: "School",
+      value: session.location
+    },
+    {
+      key: "Address",
+      value: {
+        html: response.child.address | replace("\n", ", ")
+      }
+    },
+    {
+      key: "GP",
+      value: response.child.gpSurgery
+    },
+    {
+      key: "NHS number",
+      value: response.child.nhsNumber | formatNHSNumber
+    } if response.child.nhsNumber
+  ])
+}) }}

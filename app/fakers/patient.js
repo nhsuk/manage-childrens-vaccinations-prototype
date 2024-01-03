@@ -26,7 +26,7 @@ const _getPatient = (options) => {
   const { minYearGroup, maxYearGroup, type } = options
   const patient = getChild(minYearGroup, maxYearGroup)
 
-  let responses = faker.helpers.multiple(getResponse(type, patient), {
+  let responses = faker.helpers.multiple(getResponse(type, { patient }), {
     count: { min: 0, max: 3 }
   })
   responses = _.uniqBy(responses, 'parentOrGuardian.relationship')

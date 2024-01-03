@@ -12,7 +12,10 @@ const setConsentOutcome = (patient, type) => {
 
   if (patient.responses.length === 0) {
     // Get new given response
-    const givenResponse = getResponse(type, patient, RESPONSE_CONSENT.GIVEN)
+    const givenResponse = getResponse(type, {
+      patient,
+      status: RESPONSE_CONSENT.GIVEN
+    })
 
     // Get consent
     if (chasedConsent) {
@@ -62,6 +65,9 @@ const setOutcome = (patient) => {
  */
 export default (type) => {
   const session = getSession(type)
+
+  // Don’t show unmatched responses for an in-progress session
+  delete session.unmatchedResponses
 
   session.inProgress = true
   session.date = DateTime.now().toISODate() + 'T' + '09:00'

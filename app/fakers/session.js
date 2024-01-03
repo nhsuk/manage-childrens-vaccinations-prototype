@@ -4,6 +4,7 @@ import { yearGroups } from '../utils/campaign.js'
 import { generateRandomString } from '../utils/string.js'
 import getSchool from './school.js'
 import getPatient from './patient.js'
+import getUnmatchedResponses from './unmatched-responses.js'
 
 const ageRange = (type) => {
   switch (type) {
@@ -30,6 +31,7 @@ export default (type) => {
   const options = { ...ageRange(type) }
   const cohort = faker.helpers.multiple(getPatient(options), { count: 100 })
     .sort((a, b) => a.fullName.localeCompare(b.fullName))
+  const unmatchedResponses = getUnmatchedResponses(cohort, type)
 
   const session = {
     id: generateRandomString(3),
@@ -43,7 +45,8 @@ export default (type) => {
     isFlu: type === 'Flu',
     isHPV: type === 'HPV',
     is3in1MenACWY: type === '3-in-1 and MenACWY',
-    cohort
+    cohort,
+    unmatchedResponses
   }
 
   return session
