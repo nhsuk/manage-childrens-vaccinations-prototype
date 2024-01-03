@@ -69,7 +69,7 @@ export default (_env) => {
 
   /**
    * Format NHS number
-   * @param {string} nhsNumber - NHS Number
+   * @param {string} nhsNumber - NHS number
    * @returns {string} Formatted NHS number
    */
   filters.formatNHSNumber = string => {
@@ -81,7 +81,7 @@ export default (_env) => {
 
   /**
    * Get patient record from NHS number
-   * @param {string} nhsNumber - NHS Number
+   * @param {string} nhsNumber - NHS number
    * @param {object} session - Session
    * @returns {string} Formatted NHS number
    */
