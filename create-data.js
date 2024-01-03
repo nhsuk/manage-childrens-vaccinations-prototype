@@ -5,7 +5,6 @@ import _ from 'lodash'
 import { faker } from '@faker-js/faker'
 import getParticipant from './app/fakers/participant.js'
 import schoolsSeed from './app/fakers/seeds/schools.json' assert { type: 'json'}
-import getResponse from './app/fakers/response.js'
 import getSession from './app/fakers/session.js'
 import getSessionInProgress from './app/fakers/session-in-progress.js'
 import getUser from './app/fakers/user.js'
@@ -23,12 +22,6 @@ const sessionsArray = faker.helpers.multiple(getSession, { count: 20 })
 sessionsArray.push(getSessionInProgress('Flu'))
 sessionsArray.push(getSessionInProgress('HPV'))
 const sessions = _.keyBy(_.sortBy(sessionsArray, ['date']), 'id')
-
-// Unmatched responses
-const unmatchedResponsesArray = faker.helpers.multiple(getResponse('HPV'), {
-  count: { min: 0, max: 30 }
-})
-const unmatchedResponses = _.keyBy(unmatchedResponsesArray, 'id')
 
 // Users
 const usersArray = faker.helpers.multiple(getUser, { count: 20 })
@@ -53,6 +46,5 @@ const generateDataFile = async (outputPath, data) => {
 generateDataFile('.data/schools.json', schools)
 generateDataFile('.data/sessions.json', sessions)
 generateDataFile('.data/participants.json', participants)
-generateDataFile('.data/unmatched-responses.json', unmatchedResponses)
 generateDataFile('.data/users.json', users)
 generateDataFile('.data/vaccines.json', vaccines)

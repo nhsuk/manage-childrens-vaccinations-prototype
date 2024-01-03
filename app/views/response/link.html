@@ -1,0 +1,35 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Link consent response with child record?" %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: "/sessions/" + session.id + "/responses/" + response.id + "/match",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ heading({
+    caption: "Consent response from " + response.parentOrGuardian.fullName,
+    title: title
+  }) }}
+
+  <form class="nhsuk-grid-row" method="post">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% set patient = data.patient | patientFromNHSNumber(session) %}
+      {% include "patient/_details.html" %}
+
+      {% set html %}{% include "patient/_response-summary.html" %}{% endset %}
+      {{ card({
+        heading: "Consent response",
+        headingClasses: "nhsuk-heading-m",
+        descriptionHtml: html
+      }) }}
+
+      {{ button({
+        text: "Link response with record"
+      }) }}
+    </div>
+  </form>
+{% endblock %}

@@ -99,6 +99,48 @@ export default (router) => {
   })
 
   router.all([
+    '/sessions/:sessionId/responses/:responseId',
+    '/sessions/:sessionId/responses/:responseId/:view'
+  ], (req, res, next) => {
+    const unmatchedResponses = res.locals.session?.unmatchedResponses
+
+    if (unmatchedResponses) {
+      res.locals.response = res.locals.session.unmatchedResponses.find(
+        response => response.id === req.params.responseId
+      )
+    }
+
+    next()
+  })
+
+  router.get([
+    '/sessions/:sessionId/responses/:responseId',
+    '/sessions/:sessionId/responses/:responseId/:view'
+  ], (req, res) => {
+    res.render(`response/${req.params.view || 'index'}`)
+  })
+
+  router.post([
+    '/sessions/:sessionId/responses/:responseId/link'
+  ], (req, res) => {
+    const { responseId, sessionId } = req.params
+    const nhsNumber = req.session.data.patient
+    const patient = res.locals.session.cohort
+      .find(patient => patient.nhsNumber === nhsNumber)
+
+    // Add matched response to responses in patient record
+    patient.responses.push(res.locals.response)
+
+    // Remove matched response from unmatched responses
+    const unmatchedResponses = res.locals.session?.unmatchedResponses
+    res.locals.session.unmatchedResponses = unmatchedResponses.filter(
+      response => response.id !== responseId
+    )
+
+    res.redirect(`/sessions/${sessionId}/responses?success=${nhsNumber}`)
+  })
+
+  router.all([
     '/sessions/:sessionId/record'
   ], (req, res, next) => {
     const session = req.session.data.sessions[req.params.sessionId]

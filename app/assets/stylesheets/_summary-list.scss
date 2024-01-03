@@ -42,3 +42,10 @@
   content: "";
   display: table-cell;
 }
+
+// Remove bottom border on last row of last child
+.nhsuk-summary-list:last-child {
+  .nhsuk-summary-list__row:last-of-type > * {
+    border-bottom: 0;
+  }
+}

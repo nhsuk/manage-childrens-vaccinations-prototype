@@ -61,6 +61,11 @@
     {% include "sessions/_tab.html" %}
   {% endset %}
 
+  {{ insetText({
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4",
+    HTML: ("[" + session.unmatchedResponses.length | plural("response") + " need matching with records in the cohort](unmatched-responses)") | govukMarkdown | replace("govuk-", "nhsuk-")
+  }) if session.unmatchedResponses.length }}
+
   {{ tabs({
     items: [
       {

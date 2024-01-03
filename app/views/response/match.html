@@ -1,0 +1,114 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Search for a child record" %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: "/sessions/" + session.id + "/unmatched-responses",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ heading({
+    caption: "Consent response from " + response.parentOrGuardian.fullName,
+    title: title
+  }) }}
+
+  {{ details({
+    classes: "nhsuk-expander",
+    open: true,
+    text: "Details given in consent response",
+    HTML: summaryList({
+      rows: decorateRows([
+        {
+          key: "Child",
+          value: response.child.fullName
+        },
+        {
+          key: response.parentOrGuardian | relationshipName,
+          value: {
+            html: response.parentOrGuardian.fullName
+          }
+        },
+        {
+          key: "Known as",
+          value: patient.knownAs
+        } if response.child.knownAs,
+        {
+          key: "Date of birth",
+          value: response.child.dob | govukDate + " (aged " + response.child.dob | age + ")"
+        },
+        {
+          key: "Address",
+          value: {
+            html: response.child.address | replace("\n", ", ")
+          }
+        }
+      ])
+    })
+  }) }}
+
+  {% set descriptionHtml %}
+    <action-table class="nhsuk-grid-row" sort="name">
+      <action-table-filters class="nhsuk-grid-column-one-quarter">
+        {% include "sessions/_filters.html" %}
+      </action-table-filters>
+      <div class="nhsuk-grid-column-three-quarters">
+        {% if session.cohort.length %}
+          <table class="nhsuk-table app-table--select-cohort">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th class="nhsuk-table__header">Name</th>
+                <th class="nhsuk-table__header app-u-nowrap" data-col="year">Date of birth</th>
+                <th class="nhsuk-table__header" no-sort>Action</th>
+              </tr>
+            </thead>
+            <tbody class="nhsuk-table__body">
+              {% for patient in session.cohort %}
+                <tr class="nhsuk-table__row">
+                  <td class="nhsuk-table__cell" data-filter="{{ patient.fullName }}">
+                    <a href="/sessions/{{ session.id }}/responses/{{ response.id }}?patient={{ patient.nhsNumber }}">
+                      {{ patient.fullName }}
+                    </a>
+                    {% if patient.knownAs %}
+                      <br><span class="nhsuk-u-font-size-16">Known as: {{ patient.knownAs }}</span>
+                    {% endif %}
+                    <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-color">
+                      {{ patient.address | replace("\n", ", ") }}
+                    </span>
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-font-size-16" data-filter="{{ patient.yearGroup }}" data-sort="{{ patient.dob }}">
+                    {{ patient.dob | govukDate("truncate") }}
+                  </td>
+                  <td class="nhsuk-table__cell">
+                    {{ button({
+                      classes: "nhsuk-button--secondary app-button--small nhsuk-u-margin-bottom-1",
+                      href: "/sessions/" + session.id + "/responses/" + response.id + "/link?patient=" + patient.nhsNumber,
+                      text: "Select"
+                    }) }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          {% set descriptionHtml %}
+            <p>We couldn’t find any children that matched your filters.</p>
+          {% endset %}
+          {{ card({
+            classes: "app-card--empty-list",
+            heading: "No results",
+            descriptionHtml: descriptionHtml
+          }) }}
+        {% endif %}
+      </div>
+    </action-table>
+  {% endset %}
+
+  {{ card({
+    heading: "Children in this cohort",
+    headingClasses: "nhsuk-heading-m",
+    descriptionHtml: descriptionHtml
+  }) }}
+{% endblock %}

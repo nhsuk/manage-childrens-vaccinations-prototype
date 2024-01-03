@@ -1,0 +1,86 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Unmatched consent responses" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs({
+    items: [
+      {
+        text: session.title,
+        href: "/sessions/" + session.id
+      },
+      {
+        text: "Check consent responses",
+        href: "/sessions/" + session.id + "/responses"
+      },
+      {
+        text: title
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {% include "sessions/_notification-banner.html" %}
+
+  {% if session["available-offline"] %}
+    <span class="app-status app-status--green">
+      {{ icon("tick") }} Available offline
+    </span>
+  {% endif %}
+
+  {{ heading({
+    title: filteredYearGroup.name if filteredYearGroup else title,
+    caption: title if filteredYearGroup
+  }) }}
+
+  {% set responses = session.unmatchedResponses | objectToArray %}
+  {% set descriptionHtml %}
+    {% if responses.length %}
+    <action-table sort="responded">
+      <table class="nhsuk-table app-table--dense" id="patients">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th class="nhsuk-table__header">Responded</th>
+            <th class="nhsuk-table__header">Child</th>
+            <th class="nhsuk-table__header">Parent or guardian</th>
+            <th class="nhsuk-table__header">Action</th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          {% for response in responses %}
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell" data-sort="{{ response.date }}">
+                {{ response.date | govukDate("truncate") }}
+              </td>
+              <td class="nhsuk-table__cell">
+                {{ response.child.fullName }}
+                {% if response.child.knownAs %}
+                  <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
+                {% endif %}
+              </td>
+              <td class="nhsuk-table__cell">
+                {{ response.parentOrGuardian.fullName }}
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="/sessions/{{ session.id }}/responses/{{ response.id }}/match">
+                  Find match
+                  <span class="nhsuk-u-visually-hidden">for {{ response.child.fullName }}</span>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </action-table>
+    {% else %}
+      <p class="nhsuk-body">There are no unmatched consent responses.</p>
+    {% endif %}
+  {% endset %}
+
+  {{ card({
+    heading: responses.length + " responses",
+    headingClasses: "nhsuk-heading-m",
+    descriptionHtml: descriptionHtml
+  }) }}
+{% endblock %}

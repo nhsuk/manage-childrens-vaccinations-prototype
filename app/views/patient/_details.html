@@ -1,5 +1,5 @@
 {{ card({
-  heading: "Child details",
+  heading: "Child record",
   headingClasses: "nhsuk-heading-m",
   descriptionHtml: summaryList({
     rows: decorateRows([
@@ -21,10 +21,6 @@
           html: patient.address | nl2br
         }
       } if not hasNoResponse,
-      {
-        key: "School",
-        value: school.name or patient.school.name
-      },
       {
         key: "GP",
         value: patient.gpSurgery

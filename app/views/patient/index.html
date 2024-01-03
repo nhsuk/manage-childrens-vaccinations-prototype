@@ -32,7 +32,7 @@
       {% if patient.outcome == PATIENT_OUTCOME.NO_OUTCOME_YET %}
         {% if triageNeeded %}
           {% include "patient/_action-triage.html" %}
-        {% elif hasConsented and readyToVaccinate and session.inProgress %}
+        {% elif hasConsented and readyToVaccinate and session.inProgress and not session.unmatchedResponses.length %}
           {% include "patient/_action-vaccinate.html" %}
         {% endif %}
       {% endif %}

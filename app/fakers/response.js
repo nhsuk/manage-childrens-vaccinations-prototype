@@ -52,15 +52,20 @@ const _getRefusalReason = (type) => {
 /**
  * Generate consent response
  * @param {string} type - Vaccine type
- * @param {object} [patient] - Patient record
- * @param {object} [status] - Response status
+ * @param {object} options - Response options
+ * @param {object} [options.patient] - Patient record
+ * @param {object} [options.status] - Response status
+ * @param {boolean} [options.unmatched] - Unmatched response
  * @returns {Response} Consent response
  */
-const _getResponse = (type, patient, status) => {
-  const isUnmatchedResponse = !patient
+const _getResponse = (type, options) => {
+  const status = options.status || _getStatus(type)
 
-  patient = patient || getChild(8, 9)
-  status = status || _getStatus(type)
+  // Add modified child details to an unmatched response
+  const isUnmatchedResponse = options.unmatched
+  const child = structuredClone(options.patient)
+  child.lastName = faker.person.lastName()
+  child.fullName = `${child.firstName} ${child.lastName}`
 
   const refusalReason = _getRefusalReason(type)
   const method = faker.helpers.weightedArrayElement([
@@ -70,18 +75,18 @@ const _getResponse = (type, patient, status) => {
   ])
   const days = faker.number.int({ min: 10, max: 35 })
 
-  const user = getParent(patient)
+  const user = getParent(options.patient)
 
   const response = {
     id: faker.string.uuid(),
     date: faker.date.recent({ days: 50 }),
     status,
     ...isUnmatchedResponse && {
-      child: patient
+      child
     },
     parentOrGuardian: user,
     ...(status === RESPONSE_CONSENT.GIVEN) && {
-      healthAnswers: getHealthAnswers(type, patient)
+      healthAnswers: getHealthAnswers(type, options.patient)
     },
     ...(status === RESPONSE_CONSENT.REFUSED) && {
       refusalReason,
@@ -95,9 +100,9 @@ const _getResponse = (type, patient, status) => {
   return response
 }
 
-export default (type, patient, status) => {
+export default (type, options) => {
   const response = () => ({
-    ..._getResponse(type, patient, status)
+    ..._getResponse(type, options)
   })
 
   return response
