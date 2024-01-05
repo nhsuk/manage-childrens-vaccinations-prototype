@@ -24,8 +24,12 @@
   {{ heading({ title: title }) }}
 
   {{ button({
-    text: "Download data for registered parents (CSV)"
-  }) }}
+    href: "/public/downloads/expressions-of-interest.csv",
+    text: "Download data for registered parents (CSV)",
+    attributes: {
+      download: "expressions-of-interest.csv"
+    }
+  })}}
 
   {% set rows = [] %}
   {% for id, participant in data.pilot.participants %}
