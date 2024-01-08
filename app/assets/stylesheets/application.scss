@@ -3,6 +3,7 @@ $govuk-font-family: "Frutiger W01", arial, sans-serif;
 $govuk-global-styles: false;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/govuk/assets/";
+$govuk-border-colour: #d8dde0;
 
 @import "node_modules/nhsuk-frontend/packages/nhsuk";
 
@@ -42,4 +43,9 @@ $govuk-assets-path: "/govuk/assets/";
 .nhsuk-fieldset__legend--s {
   padding-top: nhsuk-spacing(2);
   margin-bottom: nhsuk-spacing(2);
+}
+
+// GOV.UK Frontend overrides
+.govuk-phase-banner__content__tag {
+  background-color: $color_nhsuk-blue;
 }

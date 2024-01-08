@@ -66,6 +66,13 @@
       }
     ]
   }) }}
+  {{ govukPhaseBanner({
+    classes: "nhsuk-width-container",
+    tag: {
+      text: "Pilot"
+    },
+    text: "This is a pilot service. Do not use it to make clinical decisions."
+  }) | replace("govuk-tag", "nhsuk-tag") }}
 {% endblock %}
 
 {% block footer %}
