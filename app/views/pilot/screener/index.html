@@ -208,7 +208,15 @@
 
     {{ checkboxes({
       items: [
-        { text: "I agree to the terms and conditions" }
+        {
+          text: "I agree to the terms and conditions"
+          },
+        {
+          text: "I confirm I’ve responded to the school’s regular request for consent for my child's HPV vaccination",
+          hint: {
+            text: "You can only take part in the pilot if you’ve done this"
+          }
+        }
       ],
       decorate: "terms"
     }) }}
