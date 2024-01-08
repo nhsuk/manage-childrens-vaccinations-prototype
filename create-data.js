@@ -11,8 +11,7 @@ import getUser from './app/fakers/user.js'
 import getVaccines from './app/fakers/vaccines.js'
 
 // Participants
-const participantsArray = faker.helpers.multiple(getParticipant, { count: 50 })
-const participants = _.keyBy(participantsArray, 'id')
+const participants = faker.helpers.multiple(getParticipant, { count: 50 })
 
 // Schools
 const schools = _.keyBy(schoolsSeed, 'urn')

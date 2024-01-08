@@ -29,35 +29,37 @@
     attributes: {
       download: "expressions-of-interest.csv"
     }
-  })}}
-
-  {% set rows = [] %}
-  {% for id, participant in data.pilot.participants %}
-    {% set rows = (rows.push([
-      {
-        header: "Name",
-        text: participant.parent.fullName
-      },
-      {
-        header: "Email",
-        text: participant.parent.email
-      },
-      {
-        header: "Phone number",
-        text: participant.parent.tel or "Not provided"
-      }
-    ]), rows) %}
-  {% endfor %}
-
-  {{ table({
-    responsive: true,
-    caption: (data.pilot.participants | length) + " responses",
-    firstCellIsHeader: false,
-    head: [
-      { text: "Name" },
-      { text: "Email address" },
-      { text: "Phone number" }
-    ],
-    rows: rows
   }) }}
+
+  {% for urn, participants in data.pilot.participants | groupby("urn") %}
+    {% set rows = [] %}
+    {% for participant in participants %}
+      {% set rows = (rows.push([
+        {
+          header: "Name",
+          text: participant.parent.fullName
+        },
+        {
+          header: "Email",
+          text: participant.parent.email
+        },
+        {
+          header: "Phone number",
+          text: participant.parent.tel or "Not provided"
+        }
+      ]), rows) %}
+    {% endfor %}
+
+    {{ table({
+      responsive: true,
+      caption: data.schools[urn].name + " (" + (participants | length) + " responses)",
+      firstCellIsHeader: false,
+      head: [
+        { text: "Name" },
+        { text: "Email address" },
+        { text: "Phone number" }
+      ],
+      rows: rows
+    }) }}
+  {% endfor %}
 {% endblock %}

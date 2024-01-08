@@ -21,12 +21,13 @@ export default () => {
   const child = getChild(5, 10)
   child.address = getAddress()
   child.nhsNumber = faker.helpers.maybe(() => nhsNumber, { probability: 0.7 })
-  child.urn = faker.helpers.replaceSymbolWithNumber('1####')
+  child.urn = faker.helpers.arrayElement([100216, 100757, 100961])
 
   const parent = getParent(child)
 
   const participant = {
     id: faker.string.uuid(),
+    urn: child.urn,
     parent,
     child
   }
