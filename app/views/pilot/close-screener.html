@@ -20,14 +20,15 @@
 
       <p>Once it’s closed, it cannot be reopened.</p>
 
-      <div class="govuk-button-group">
+      <form class="govuk-button-group" action="/pilot/participants?success=1" method="post">
         {{ button({
           classes: "nhsuk-u-margin-right-3",
-          href: "/pilot",
-          text: "Yes, close the pilot to new participants"
+          text: "Yes, close the pilot to new participants",
+          value: "closed",
+          decorate: "screener"
         }) }}
         <p><a class="nhsuk-link" href="/pilot/participants">No, return to list of participants</a></p>
-      </div>
+      </form>
     </div>
   </div>
 {% endblock %}

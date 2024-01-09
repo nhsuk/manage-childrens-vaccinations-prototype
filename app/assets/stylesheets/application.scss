@@ -36,6 +36,7 @@ $govuk-border-colour: #d8dde0;
 
   color: $color_nhsuk-white;
   font-weight: bold;
+  margin-bottom: 0;
 }
 
 // NHS.UK Frontend overrides
@@ -48,4 +49,14 @@ $govuk-border-colour: #d8dde0;
 // GOV.UK Frontend overrides
 .govuk-phase-banner__content__tag {
   background-color: $color_nhsuk-blue;
+}
+
+// Highlight code within body copy
+li code,
+p code,
+td code {
+  background-color: $color_nhsuk-white;
+  color: #d14;
+  padding: 2px nhsuk-spacing(2);
+  word-break: break-word;
 }
