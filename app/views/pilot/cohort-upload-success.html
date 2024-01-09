@@ -1,0 +1,19 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "Cohort data uploaded" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {{ govukPanel({
+        classes: "nhsuk-u-margin-bottom-6",
+        titleText: title,
+        text: "100 children have been added to the pilot cohort"
+      }) }}
+
+      <p>You can select children from this cohort when adding a new session.</p>
+
+      <p><a href="/sessions/new/start">Add a new school session</a></p>
+    </div>
+  </div>
+{% endblock %}

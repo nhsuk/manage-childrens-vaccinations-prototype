@@ -21,6 +21,11 @@
 {% endblock %}
 
 {% block content %}
+  {{ govukNotificationBanner({
+    type: "success",
+    text: "Pilot is now closed to new participants"
+  }) if success }}
+
   {{ heading({ title: title }) }}
 
   {{ button({
