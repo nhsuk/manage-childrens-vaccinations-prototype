@@ -7,7 +7,7 @@ import { initAll as GOVUKFrontend } from 'govuk-frontend'
 // Import GOV.UK Prototype Rig
 import { initAll as GOVUKPrototypeComponents } from '@x-govuk/govuk-prototype-components'
 
-import "@colinaut/action-table";
+import '@colinaut/action-table'
 
 // Initiate scripts on page load
 document.addEventListener('DOMContentLoaded', () => {

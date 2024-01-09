@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker'
 import { RESPONSE_CONSENT, RESPONSE_REFUSAL, RESPONSE_METHOD } from '../enums.js'
-import getChild from './child.js'
 import getEvent from './event.js'
 import getHealthAnswers from './health-answers.js'
 import getParent from './parent.js'
