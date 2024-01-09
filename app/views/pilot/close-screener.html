@@ -1,0 +1,33 @@
+{% extends "_layouts/default.html" %}
+
+{% set caption = "High Cross School" %}
+{% set title = "Are you sure you want to close the pilot to new participants at this school?" %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: "/pilot/participants",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {{ heading({
+        caption: caption,
+        title: title })
+      }}
+
+      <p>Once it’s closed, it cannot be reopened.</p>
+
+      <div class="govuk-button-group">
+        {{ button({
+          classes: "nhsuk-u-margin-right-3",
+          href: "/pilot",
+          text: "Yes, close the pilot to new participants"
+        }) }}
+        <p><a class="nhsuk-link" href="/pilot/participants">No, return to list of participants</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

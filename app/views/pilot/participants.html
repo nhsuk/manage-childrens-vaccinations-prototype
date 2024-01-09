@@ -50,16 +50,33 @@
       ]), rows) %}
     {% endfor %}
 
-    {{ table({
-      responsive: true,
-      caption: data.schools[urn].name + " (" + (participants | length) + " responses)",
-      firstCellIsHeader: false,
-      head: [
-        { text: "Name" },
-        { text: "Email address" },
-        { text: "Phone number" }
-      ],
-      rows: rows
+    {% set descriptionHtml %}
+      {% if data.screener != "closed" %}
+        <p>
+          <a href="/pilot/close-screener">
+            Close pilot to new participants at this school
+            <span class="nhsuk-u-visually-hidden">({{ data.schools[urn].name }})</span>
+          </a>
+        </p>
+      {% endif %}
+      {{ table({
+        responsive: true,
+        caption: (participants | length) + " responses",
+        captionClasses: "nhsuk-u-font-size-19",
+        firstCellIsHeader: false,
+        head: [
+          { text: "Name" },
+          { text: "Email address" },
+          { text: "Phone number" }
+        ],
+        rows: rows
+      }) }}
+    {% endset %}
+
+    {{ card({
+      heading: data.schools[urn].name,
+      headingClasses: "nhsuk-heading-m",
+      descriptionHtml: descriptionHtml
     }) }}
   {% endfor %}
 {% endblock %}
