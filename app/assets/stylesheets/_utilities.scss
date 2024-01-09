@@ -16,9 +16,9 @@
 }
 
 .app-u-width-one-fifth {
-  width: 100% !important;
+  width: 100% !important; // stylelint-disable-line declaration-no-important
 
   @include mq($from: tablet) {
-    width: 20% !important;
+    width: 20% !important; // stylelint-disable-line declaration-no-important
   }
 }
