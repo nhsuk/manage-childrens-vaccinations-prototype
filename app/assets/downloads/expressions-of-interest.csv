@@ -1,2 +1,2 @@
-School URN,School name,EOI ID,Child First name,Child Last name,Child Preferred name,Child Date of birth,Child Address line 1,Child Address line 2,Child Town or City,Child Postcode,Child NHS Number,Parent name,Relationship to child,Parent Email address,Parent Phone number,Expressed interest at
+SCHOOL_URN,SCHOOL_NAME,EOI_ID,CHILD_FIRST_NAME,CHILD_LAST_NAME,CHILD_PREFERRED_NAME,CHILD_DOB,CHILD_ADDRESS_LINE1,CHILD_ADDRESS_LINE2,CHILD_ADDRESS_TOWNCITY,CHILD_POSTCODE,CHILD_NHS_NUMBER,PARENT_NAME,PARENT_RELATIONSHIP_TO_CHILD,PARENT_EMAIL,PARENT_PHONE,EOI_DATE
 199999,St. Mary's CoE School,1234,Elizabeth,Smith,Lizzie Smith,2011-08-13,22 Market Street,,Poole,BH14 0AP,,Kaitlyn Smith,Mother,ksmith@example.com,0781234567,2024-01-05 14:32
