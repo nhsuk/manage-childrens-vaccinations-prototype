@@ -30,7 +30,7 @@
           titleText: "There is a problem",
           errorList: [
             {
-              text: "Uploaded CSV is missing the ‘Child Address line 2’ column",
+              text: "Uploaded CSV is missing the CHILD_POSTCODE column",
               href: "#cohort"
             }
           ]
@@ -44,7 +44,7 @@
             text: "Make sure the CSV you upload has the same format as your standard cohort template"
           },
           errorMessage: {
-            text: "Uploaded CSV is missing the ‘Child Address line 2’ column"
+            text: "Uploaded CSV is missing the CHILD_POSTCODE column"
           } if data.error,
           decorate: "cohort"
         }) }}
