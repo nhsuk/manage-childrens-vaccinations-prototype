@@ -1,0 +1,20 @@
+EOI_ID,EOI_DATE,SCHOOL_URN,SCHOOL_NAME,CHILD_NHS_NUMBER,CHILD_FIRST_NAME,CHILD_LAST_NAME,CHILD_PREFERRED_NAME,CHILD_DOB,CHILD_ADDRESS_LINE1,CHILD_ADDRESS_LINE2,CHILD_ADDRESS_TOWNCITY,CHILD_POSTCODE,PARENT_NAME,PARENT_RELATIONSHIP_TO_CHILD,PARENT_EMAIL,PARENT_PHONE
+{% for participant in data.pilot.participants %}
+{{- participant.id }},
+{{- participant.submitted }},
+{{- participant.urn }},
+{{- participant.schoolName }},
+{{- participant.child.nhsNumber }},
+{{- participant.child.firstName }},
+{{- participant.child.lastName }},
+{{- participant.child.knownAs }},
+{{- participant.child.dob }},
+{{- participant.child.address.line1 }},
+{{- participant.child.address.line2 }},
+{{- participant.child.address.locality }},
+{{- participant.child.address.postcode }},
+{{- participant.parent.firstName }},
+{{- participant.parent.relationship }},
+{{- participant.parent.email }},
+{{- participant.parent.tel }}
+{% endfor %}
