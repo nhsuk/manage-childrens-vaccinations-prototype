@@ -196,40 +196,40 @@
       },
       decorate: "child.nhs-number"
     }) }}
-
-    <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
-
-    <h2>Terms and conditions</h2>
-
-    {{ insetText({
-      text: "View terms and conditions",
-      HTML: termsHtml
-    }) }}
-
-    {{ checkboxes({
-      items: [
-        {
-          text: "I agree to the terms and conditions"
-        },
-        {
-          text: "I agree to my data and my child’s data being processed during the pilot"
-        },
-        {
-          text: "I confirm I’ve responded to the school’s regular request for consent for my child's HPV vaccination",
-          hint: {
-            text: "You can only take part in the pilot if you’ve done this"
-          }
-        }
-      ],
-      decorate: "terms"
-    }) }}
-
-    <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
-
-    {{ button({
-      classes: "nhsuk-button--secondary",
-      text: "Register your interest"
-    }) }}
   {% endcall %}
+
+  <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
+  <h2>Terms and conditions</h2>
+
+  {{ insetText({
+    text: "View terms and conditions",
+    HTML: termsHtml
+  }) }}
+
+  {{ checkboxes({
+    items: [
+      {
+        text: "I agree to the terms and conditions"
+      },
+      {
+        text: "I agree to my data and my child’s data being processed during the pilot"
+      },
+      {
+        text: "I confirm I’ve responded to the school’s regular request for consent for my child's HPV vaccination",
+        hint: {
+          text: "You can only take part in the pilot if you’ve done this"
+        }
+      }
+    ],
+    decorate: "terms"
+  }) }}
+
+  <hr class="nhsuk-section-break nhsuk-section-break--l nhsuk-section-break--visible">
+
+  {{ button({
+    classes: "nhsuk-button--secondary",
+    text: "Register your interest"
+  }) }}
 </form>
 {% endblock %}
