@@ -27,22 +27,28 @@
   </h1>
 
   {% set patientsHtml %}
-    <table class="nhsuk-table app-table--dense">
-      <thead class="nhsuk-table__head">
-        <tr class="nhsuk-table__row">
-          <th class="nhsuk-table__header">Name</th>
-          <th class="nhsuk-table__header">Date of birth</th>
-        </tr>
-      </thead>
-      <tbody class="nhsuk-table__body">
-        {% for patient in school.cohort %}
+    <action-table sort="name">
+      <table class="nhsuk-table app-table--dense nhsuk-u-margin-0">
+        <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">{{ patient.fullName }}</td>
-            <td class="nhsuk-table__cell">{{ patient.dob | govukDate }}</td>
+            <th class="nhsuk-table__header">Name</th>
+            <th class="nhsuk-table__header">Date of birth</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          {% for patient in school.cohort %}
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell" data-sort="{{ patient.lastName }}">
+                {{ patient.lastName }}, {{ patient.firstName }}
+              </td>
+              <td class="nhsuk-table__cell" data-sort="{{ patient.dob }}">
+                {{ patient.dob | govukDate }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </action-table>
   {% endset %}
 
   {% set sessionsHtml %}

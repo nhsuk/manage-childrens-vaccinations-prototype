@@ -23,13 +23,16 @@
   {% for patient in cohort %}
     {% set rows = (rows.push([
       {
-        html: checkboxHtml(patient.name)
+        html: checkboxHtml(patient.fullName)
       },
       {
-        text: patient.fullName
+        text: patient.lastName + ", " + patient.firstName
       },
       {
         text: patient.dob | govukDate("truncate")
+      },
+      {
+        text: ("Year " + patient.yearGroup) | replace("Year 0", "Reception")
       }
     ]), rows) %}
   {% endfor %}
@@ -40,7 +43,8 @@
     head: [
       { html: checkboxHtml("all") },
       { text: "Name" },
-      { text: "Date of birth" }
+      { text: "Date of birth" },
+      { text: "Year group" }
     ],
     rows: rows
   }) }}
