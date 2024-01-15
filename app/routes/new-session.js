@@ -27,7 +27,7 @@ export default (router) => {
     const { type } = res.locals.session
     let { cohort } = getSession(type)
     cohort = _.shuffle(cohort).slice(0, 27)
-    cohort = _.sortBy(cohort, ['firstName'])
+    cohort = _.sortBy(cohort, ['lastName'])
 
     for (const patient of cohort) {
       patient.responses = []

@@ -37,7 +37,9 @@
       {% for id, user in data.users %}
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
-            <a href="/users/{{ id }}">{{ user.fullName }}</a>
+            <a href="/users/{{ id }}">
+              {{ user.lastName }}, {{ user.firstName }}
+            </a>
           </td>
           <td class="nhsuk-table__cell">
             {{ user.registration }}
