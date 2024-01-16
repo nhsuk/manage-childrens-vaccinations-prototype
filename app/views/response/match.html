@@ -1,5 +1,6 @@
 {% extends "_layouts/default.html" %}
 
+{% set caption = "Consent response from " + response.parentOrGuardian.fullName %}
 {% set title = "Search for a child record" %}
 
 {% block outerContent %}
@@ -11,7 +12,7 @@
 
 {% block content %}
   {{ heading({
-    caption: "Consent response from " + response.parentOrGuardian.fullName,
+    caption: caption,
     title: title
   }) }}
 

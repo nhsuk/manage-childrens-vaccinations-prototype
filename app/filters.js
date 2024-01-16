@@ -80,6 +80,20 @@ export default (_env) => {
   }
 
   /**
+   * Highlight difference
+   * @param {string} a - Value in consent response
+   * @param {string} b - Value in patient record
+   * @returns {string} Value, wrapped in <mark> if different
+   */
+  filters.highlightDifference = (a, b) => {
+    if (a !== b) {
+      return `<mark>${a}</mark>`
+    }
+
+    return a
+  }
+
+  /**
    * Get patient record from NHS number
    * @param {string} nhsNumber - NHS number
    * @param {object} session - Session
