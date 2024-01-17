@@ -1,0 +1,47 @@
+{% call fieldset({
+  classes: "nhsuk-u-margin-top-1",
+  legend: {
+    classes: "govuk-fieldset__legend--s",
+    text: "Filter results"
+  }
+}) %}
+  {{ input({
+    id: "name",
+    name: "name",
+    type: "search",
+    autocomplete: "none",
+    label: {
+      text: "Name"
+    }
+  }) }}
+
+  {{ input({
+    id: "postcode",
+    name: "postcode",
+    type: "search",
+    autocomplete: "none",
+    label: {
+      text: "Postcode"
+    }
+  }) }}
+
+  {{ input({
+    id: "dob",
+    name: "dob",
+    type: "search",
+    autocomplete: "none",
+    label: {
+      text: "Date of birth"
+    },
+    hint: {
+      classes: "nhsuk-u-font-size-16",
+      text: "e.g. 2005 or 01/03/2014"
+    }
+  }) }}
+{% endcall %}
+
+{{ button({
+  classes: "nhsuk-button--secondary app-button--small",
+  type: "reset",
+  text: "Reset filters"
+}) }}

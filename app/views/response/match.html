@@ -53,7 +53,7 @@
   {% set descriptionHtml %}
     <action-table class="nhsuk-grid-row" sort="name">
       <action-table-filters class="nhsuk-grid-column-one-quarter">
-        {% include "sessions/_filters.html" %}
+        {% include "response/_filters.html" %}
       </action-table-filters>
       <div class="nhsuk-grid-column-three-quarters">
         {% if session.cohort.length %}
@@ -61,25 +61,26 @@
             <thead class="nhsuk-table__head">
               <tr class="nhsuk-table__row">
                 <th class="nhsuk-table__header">Name</th>
-                <th class="nhsuk-table__header app-u-nowrap" data-col="year">Date of birth</th>
+                <th class="nhsuk-table__header">Postcode</th>
+                <th class="nhsuk-table__header app-u-nowrap" data-col="dob" data-filter="{{ patient.dob }}">Date of birth</th>
                 <th class="nhsuk-table__header" no-sort>Action</th>
               </tr>
             </thead>
             <tbody class="nhsuk-table__body">
               {% for patient in session.cohort %}
                 <tr class="nhsuk-table__row">
-                  <td class="nhsuk-table__cell" data-filter="{{ patient.fullName }}" data-sort="{{ patient.lastName }}">
+                  <td class="nhsuk-table__cell" data-filter="{{ patient.fullName }} {{ patient.knownAs }}" data-sort="{{ patient.lastName }}">
                     <a href="/sessions/{{ session.id }}/responses/{{ response.id }}?patient={{ patient.nhsNumber }}">
                       {{ patient.lastName }}, {{ patient.firstName }}
                     </a>
                     {% if patient.knownAs %}
                       <br><span class="nhsuk-u-font-size-16">Known as: {{ patient.knownAs }}</span>
                     {% endif %}
-                    <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-color">
-                      {{ patient.address | replace("\n", ", ") }}
-                    </span>
                   </td>
-                  <td class="nhsuk-table__cell nhsuk-u-font-size-16" data-filter="{{ patient.yearGroup }}" data-sort="{{ patient.dob }}">
+                  <td class="nhsuk-table__cell nhsuk-u-font-size-16">
+                    {{ patient.postcode }}
+                  </td>
+                  <td class="nhsuk-table__cell nhsuk-u-font-size-16" data-filter="{{ patient.dob | formatDate("dd/MM/yyyy") }}" data-sort="{{ patient.dob }}">
                     {{ patient.dob | govukDate("truncate") }}
                   </td>
                   <td class="nhsuk-table__cell">

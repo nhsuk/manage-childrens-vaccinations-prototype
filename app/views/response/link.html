@@ -30,12 +30,12 @@
         ],
         rows: [
           [
-            { text: "Child’s name" },
+            { html: "Child’s&nbsp;name" },
             { html: response.child.fullName | highlightDifference(patient.fullName) },
             { text: patient.fullName }
           ],
           [
-            { text: "Date of birth" },
+            { html: "Date&nbsp;of&nbsp;birth" },
             { html: response.child.dob | govukDate | highlightDifference(patient.dob | govukDate) },
             { text: patient.dob | govukDate }
           ],
@@ -48,11 +48,6 @@
             { text: "GP" },
             { html: response.child.gpSurgery | highlightDifference(patient.gpSurgery) },
             { text: patient.gpSurgery }
-          ],
-          [
-            { text: "NHS number" },
-            { html: response.child.nhsNumber | formatNHSNumber | highlightDifference(patient.nhsNumber | formatNHSNumber) },
-            { text: patient.nhsNumber | formatNHSNumber }
           ]
         ]
       }) | replace("with-heading-tab", "with-heading-tab nhsuk-u-margin-top-0") }}

@@ -38,6 +38,8 @@ export default (minYearGroup, maxYearGroup) => {
     to: yearGroups()[minYearGroup].end
   })
 
+  const address = getAddress();
+
   const child = {
     firstName,
     lastName,
@@ -45,7 +47,8 @@ export default (minYearGroup, maxYearGroup) => {
     ...knownAs && { knownAs },
     sex,
     dob: DateTime.fromJSDate(dob).toISODate(),
-    address: getAddress(),
+    address,
+    postcode: address.split('\n')[2],
     gpSurgery: getGpSurgery()
   }
 

@@ -50,6 +50,18 @@ export default (_env) => {
   }
 
   /**
+   * Format date
+   * @param {string} string - ISO 8601 date
+   * @param {string} tokens - Formatting token
+   * @returns {string} Formatted date
+   */
+  filters.formatDate = (string, tokens) => {
+    const date = DateTime.fromISO(string)
+
+    return date.toFormat(tokens)
+  }
+
+  /**
    * Format dosage
    * @param {number} number - Dosage
    * @param {object} vaccination - Vaccination record
