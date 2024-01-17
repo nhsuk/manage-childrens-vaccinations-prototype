@@ -37,15 +37,17 @@
     ]), rows) %}
   {% endfor %}
 
-  {{ table({
-    tableClasses: "app-table--select-cohort",
-    firstCellIsHeader: false,
-    head: [
-      { html: checkboxHtml("all") },
-      { text: "Name" },
-      { text: "Date of birth" },
-      { text: "Year group" }
-    ],
-    rows: rows
-  }) }}
+  <action-table>
+    {{ table({
+      tableClasses: "app-table--select-cohort",
+      firstCellIsHeader: false,
+      head: [
+        { html: checkboxHtml("all"), format: "checkbox" },
+        { text: "Name" },
+        { text: "Date of birth" },
+        { text: "Year group" }
+      ],
+      rows: rows
+    }) | replace(' class=" nhsuk-table__header--checkbox"', 'no-sort') }}
+  </action-table>
 {% endblock %}
