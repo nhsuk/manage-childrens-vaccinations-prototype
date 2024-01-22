@@ -26,7 +26,7 @@
         html: checkboxHtml(patient.fullName)
       },
       {
-        text: patient.lastName + ", " + patient.firstName
+        text: patient.fullName
       },
       {
         text: patient.dob | govukDate("truncate")

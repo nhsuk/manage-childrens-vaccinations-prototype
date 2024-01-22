@@ -39,7 +39,7 @@
           {% for patient in school.cohort %}
             <tr class="nhsuk-table__row">
               <td class="nhsuk-table__cell" data-sort="{{ patient.lastName }}">
-                {{ patient.lastName }}, {{ patient.firstName }}
+                {{ patient.fullName }}
               </td>
               <td class="nhsuk-table__cell" data-sort="{{ patient.dob }}">
                 {{ patient.dob | govukDate }}
