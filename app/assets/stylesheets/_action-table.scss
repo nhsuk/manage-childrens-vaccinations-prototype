@@ -38,7 +38,9 @@ action-table {
   }
 
   /* Hide table if no results shown */
-  &:not(:has(action-table-no-results[style^="display"])) table {
-    display: none;
+  &:has(action-table-no-results) {
+    &:has(action-table-no-results[style=""]) table {
+      display: none;
+    }
   }
 }
