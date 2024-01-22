@@ -24,9 +24,9 @@
   {% include "sessions/_notification-banner.html" %}
 
   {{ govukNotificationBanner({
-    text: "Consent response deleted",
+    text: "Consent response archived",
     type: "success"
-  }) if data.deletedResponse }}
+  }) if data.archivedResponse }}
 
   {% if session["available-offline"] %}
     <span class="app-status app-status--green">
@@ -39,38 +39,44 @@
     caption: title if filteredYearGroup
   }) }}
 
-  {% set responses = session.unmatchedResponses | objectToArray %}
-  {% set descriptionHtml %}
+  {% set responses = session.unmatchedResponses | rejectattr("archived") | objectToArray %}
+  {% set unmatchedResponsesHtml %}
     {% if responses.length %}
     <action-table sort="responded">
-      <table class="nhsuk-table app-table--dense" id="patients">
+      <table class="nhsuk-table nhsuk-table-responsive nhsuk-u-margin-0">
+        <caption class="nhsuk-table__caption">{{ responses.length | plural("unmatched response") }}</caption>
         <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
-            <th class="nhsuk-table__header">Responded</th>
+            <th class="nhsuk-table__header app-u-width-one-fifth">Responded</th>
             <th class="nhsuk-table__header">Child</th>
             <th class="nhsuk-table__header">Parent or guardian</th>
-            <th class="nhsuk-table__header" no-sort>Action</th>
+            <th class="nhsuk-table__header nhsuk-u-width-one-quarter" no-sort>Action</th>
           </tr>
         </thead>
         <tbody class="nhsuk-table__body">
           {% for response in responses %}
             <tr class="nhsuk-table__row">
               <td class="nhsuk-table__cell" data-sort="{{ response.date }}">
-                {{ response.date | govukDate("truncate") }}
+                <span class="nhsuk-table-responsive__heading">Responded </span>{{ response.date | govukDate("truncate") }}
               </td>
               <td class="nhsuk-table__cell">
+                <span class="nhsuk-table-responsive__heading">Child </span>
                 {{ response.child.lastName }}, {{ response.child.firstName }}
                 {% if response.child.knownAs %}
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
                 {% endif %}
               </td>
               <td class="nhsuk-table__cell">
+                <span class="nhsuk-table-responsive__heading">Parent or guardian </span>
                 {{ response.parentOrGuardian.fullName }}
               </td>
               <td class="nhsuk-table__cell">
-                <a href="/sessions/{{ session.id }}/responses/{{ response.id }}/match">Find match<span class="nhsuk-u-visually-hidden"> for {{ response.child.fullName }}</span></a>
+                <span class="nhsuk-table-responsive__heading">Actions</span>
+                <span>
+                  <a href="/sessions/{{ session.id }}/responses/{{ response.id }}/match">Find match<span class="nhsuk-u-visually-hidden"> for {{ response.child.fullName }}</span></a>
                 &nbsp;
-                <a href="/sessions/{{ session.id }}/responses/{{ response.id }}/delete">Delete response<span class="nhsuk-u-visually-hidden"> from {{ response.parentOrGuardian.fullName }}</span></a>
+                  <a href="/sessions/{{ session.id }}/responses/{{ response.id }}/archive">Archive<span class="nhsuk-u-visually-hidden"> response from {{ response.parentOrGuardian.fullName }}</span></a>
+                </span>
               </td>
             </tr>
           {% endfor %}
@@ -83,8 +89,56 @@
   {% endset %}
 
   {{ card({
-    heading: responses.length + " responses",
-    headingClasses: "nhsuk-heading-m",
-    descriptionHtml: descriptionHtml
+    descriptionHtml: unmatchedResponsesHtml
+  }) }}
+
+  {% set archived = session.unmatchedResponses | objectToArray | selectattr("archived") %}
+  {% set archivedResponsesHtml %}
+    {% if archived.length %}
+    <action-table sort="responded">
+      <table class="nhsuk-table nhsuk-table-responsive nhsuk-u-margin-0">
+        <caption class="nhsuk-table__caption">{{ archived.length | plural("archived response") }}</caption>
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th class="nhsuk-table__header app-u-width-one-fifth">Responded</th>
+            <th class="nhsuk-table__header">Child</th>
+            <th class="nhsuk-table__header">Parent or guardian</th>
+            <th class="nhsuk-table__header nhsuk-u-width-one-quarter">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          {% for response in archived %}
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell" data-sort="{{ response.date }}">
+                <span class="nhsuk-table-responsive__heading">Responded </span>
+                {{ response.date | govukDate("truncate") }}
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="nhsuk-table-responsive__heading">Child </span>
+                {{ response.child.lastName }}, {{ response.child.firstName }}
+                {% if response.child.knownAs %}
+                  <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
+                {% endif %}
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="nhsuk-table-responsive__heading">Parent or guardian </span>
+                {{ response.parentOrGuardian.fullName }}
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="nhsuk-table-responsive__heading">Actions</span>
+                <a href="/sessions/{{ session.id }}/responses/{{ response.id }}">View response<span class="nhsuk-u-visually-hidden"> for {{ response.child.fullName }}</span></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </action-table>
+    {% else %}
+      <p class="nhsuk-body">There are no archived consent responses.</p>
+    {% endif %}
+  {% endset %}
+
+  {{ card({
+    descriptionHtml: archivedResponsesHtml
   }) }}
 {% endblock %}
