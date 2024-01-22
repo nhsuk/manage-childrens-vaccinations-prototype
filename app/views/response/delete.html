@@ -22,7 +22,7 @@
 
       <form class="govuk-button-group" action="/sessions/{{ session.id }}/unmatched-responses?deletedResponse=1" method="post">
         {{ button({
-          classes: "nhsuk-u-margin-right-3",
+          classes: " app-button--warning nhsuk-u-margin-right-3",
           text: "Yes, delete this consent response"
         }) }}
         <p><a class="nhsuk-link" href="/sessions/{{ session.id }}/unmatched-responses">No, return to unmatched consent responses</a></p>
