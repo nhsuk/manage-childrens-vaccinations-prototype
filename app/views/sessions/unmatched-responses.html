@@ -59,9 +59,9 @@
               <td class="nhsuk-table__cell" data-sort="{{ response.date }}">
                 <span class="nhsuk-table-responsive__heading">Responded </span>{{ response.date | govukDate("truncate") }}
               </td>
-              <td class="nhsuk-table__cell">
+              <td class="nhsuk-table__cell" data-sort="{{ response.child.lastName }}">
                 <span class="nhsuk-table-responsive__heading">Child </span>
-                {{ response.child.lastName }}, {{ response.child.firstName }}
+                {{ response.child.fullName }}
                 {% if response.child.knownAs %}
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
                 {% endif %}
@@ -115,7 +115,7 @@
               </td>
               <td class="nhsuk-table__cell">
                 <span class="nhsuk-table-responsive__heading">Child </span>
-                {{ response.child.lastName }}, {{ response.child.firstName }}
+                {{ response.child.fullName }}
                 {% if response.child.knownAs %}
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ response.child.knownAs }}</span>
                 {% endif %}

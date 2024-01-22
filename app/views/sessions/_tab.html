@@ -21,9 +21,7 @@
           {% for patient in tab.results %}
             <tr class="nhsuk-table__row">
               <td class="nhsuk-table__cell" data-sort="{{ patient.lastName }}">
-                <a href="/sessions/{{ session.id }}/patient/{{ patient.nhsNumber }}?referrer={{ section }}">
-                  {{- patient.lastName }}, {{patient.firstName -}}
-                </a>
+                <a href="/sessions/{{ session.id }}/patient/{{ patient.nhsNumber }}?referrer={{ section }}">{{ patient.fullName }}</a>
                 {% if patient.knownAs %}
                   <br><span class="nhsuk-u-font-size-16">Known as: {{ patient.knownAs }}</span>
                 {% endif %}
