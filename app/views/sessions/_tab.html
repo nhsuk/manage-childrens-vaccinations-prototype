@@ -58,14 +58,18 @@
         </tbody>
       </table>
     {% else %}
-      {% set descriptionHtml %}
-        <p>We couldn’t find any children that matched your filters.</p>
-      {% endset %}
       {{ card({
         classes: "app-card--empty-list",
         heading: "No results",
-        descriptionHtml: descriptionHtml
+        description: "We couldn’t find any children that matched your filters."
       }) }}
     {% endif %}
+    <action-table-no-results>
+      {{ card({
+        classes: "app-card--empty-list",
+        heading: "No results",
+        description: "We couldn’t find any children that matched your filters."
+      }) }}
+    </action-table-no-results>
   </div>
 </action-table>

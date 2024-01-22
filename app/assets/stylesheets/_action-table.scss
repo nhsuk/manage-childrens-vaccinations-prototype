@@ -37,20 +37,8 @@ action-table {
     transform: rotate(180deg);
   }
 
-  .no-results p {
-    text-transform: lowercase;
-
-    &::first-letter {
-      text-transform: uppercase;
-    }
-
-    &:first-of-type {
-      @extend .nhsuk-heading-m;
-    }
-  }
-
-  .no-results button {
-    @include nhsuk-link-style-default;
-    font-weight: normal;
+  /* Hide table if no results shown */
+  &:not(:has(action-table-no-results[style^="display"])) table {
+    display: none;
   }
 }
