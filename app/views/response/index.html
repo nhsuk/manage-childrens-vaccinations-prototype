@@ -1,11 +1,11 @@
 {% extends "_layouts/default.html" %}
 
 {% set patient = data.patient | patientFromNHSNumber(session) %}
-{% set title = patient.fullName %}
+{% set title = "Consent response from " + response.parentOrGuardian.fullName %}
 
 {% block outerContent %}
   {{ backLink({
-    href: "/sessions/" + session.id + "/responses/" + response.id + "/match",
+    href: "/sessions/" + session.id + "/unmatched-responses/",
     classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
   }) }}
 {% endblock %}
@@ -15,11 +15,22 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      {% include "patient/_details.html" %}
+      {% set html %}
+        {% include "response/_patient-summary.html" %}
+      {% endset %}
+      {{ card({
+        heading: "Child",
+        headingClasses: "nhsuk-heading-m",
+        descriptionHtml: html
+      }) }}
 
-      {{ button({
-        href: "/sessions/" + session.id + "/responses/" + response.id + "/link?patient=" + data.patient,
-        text: "Select child record"
+      {% set html %}
+        {% include "response/_parent-summary.html" %}
+      {% endset %}
+      {{ card({
+        heading: "Parent or guardian",
+        headingClasses: "nhsuk-heading-m",
+        descriptionHtml: html
       }) }}
     </div>
   </div>

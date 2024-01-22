@@ -65,6 +65,7 @@ const _getResponse = (type, options) => {
   const child = structuredClone(options.patient)
   child.lastName = faker.person.lastName()
   child.fullName = `${child.firstName} ${child.lastName}`
+  delete child.responses
 
   const refusalReason = _getRefusalReason(type)
   const method = faker.helpers.weightedArrayElement([
@@ -81,7 +82,11 @@ const _getResponse = (type, options) => {
     date: faker.date.recent({ days: 50 }),
     status,
     ...isUnmatchedResponse && {
-      child
+      child,
+      archived: faker.helpers.weightedArrayElement([
+        { weight: 9, value: false },
+        { weight: 1, value: true }
+      ])
     },
     parentOrGuardian: user,
     ...(status === RESPONSE_CONSENT.GIVEN) && {

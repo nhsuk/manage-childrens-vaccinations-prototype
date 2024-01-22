@@ -1,7 +1,7 @@
 {% extends "_layouts/default.html" %}
 
 {% set caption = "Consent response from " + response.parentOrGuardian.fullName %}
-{% set title = "Are you sure you want to delete this consent response?" %}
+{% set title = "Are you sure you want to archive this consent response?" %}
 
 {% block outerContent %}
   {{ backLink({
@@ -18,12 +18,12 @@
         title: title
       }) }}
 
-      <p>You should only delete a consent response if you can’t find a matching child record for {{ response.child.fullName }}.</p>
+      <p>You should only archive a consent response if you can’t find a matching child record for {{ response.child.fullName }}.</p>
 
-      <form class="govuk-button-group" action="/sessions/{{ session.id }}/unmatched-responses?deletedResponse=1" method="post">
+      <form class="govuk-button-group" action="/sessions/{{ session.id }}/unmatched-responses?archivedResponse=1" method="post">
         {{ button({
           classes: " app-button--warning nhsuk-u-margin-right-3",
-          text: "Yes, delete this consent response"
+          text: "Yes, archive this consent response"
         }) }}
         <p><a class="nhsuk-link" href="/sessions/{{ session.id }}/unmatched-responses">No, return to unmatched consent responses</a></p>
       </form>
