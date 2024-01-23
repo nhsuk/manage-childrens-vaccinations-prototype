@@ -149,54 +149,66 @@ export default (req, res) => {
 
   return {
     noResponse: {
-      label: `No response (${noResponseResults.length})`,
+      label: `No response`,
+      length: noResponseResults.length,
       results: sort(noResponseResults)
     },
     consentValid: {
-      label: `Consent given (${consentValidResults.length})`,
+      label: `Given`,
+      length: consentValidResults.length,
       results: sort(consentValidResults)
     },
     consentRefused: {
-      label: `Consent refused (${consentRefusedResults.length})`,
+      label: `Refused`,
+      length: consentRefusedResults.length,
       results: sort(consentRefusedResults)
     },
     consentConflicts: {
-      label: `Consent conflicts (${consentConflictsResults.length})`,
+      label: `Conflicts`,
+      length: consentConflictsResults.length,
       results: sort(consentConflictsResults)
     },
     triageNeeded: {
-      label: `Triage needed (${triageNeededResults.length})`,
+      label: `Triage needed`,
+      length: triageNeededResults.length,
       results: sort(triageNeededResults)
     },
     triageCompleted: {
-      label: `Triage completed (${triageCompletedResults.length})`,
+      label: `Triage completed`,
+      length: triageCompletedResults.length,
       results: sort(triageCompletedResults)
     },
     noTriageNeeded: {
-      label: `No triage needed (${noTriageNeededResults.length})`,
+      label: `No triage needed`,
+      length: noTriageNeededResults.length,
       results: sort(noTriageNeededResults)
     },
     readyToVaccinate: {
-      label: `Not vaccinated (${readyToVaccinateResults.length})`,
+      label: `Not vaccinated`,
+      length: readyToVaccinateResults.length,
       results: sort(readyToVaccinateResults)
     },
     vaccinated: {
-      label: `Vaccinated (${vaccinatedResults.length})`,
+      label: 'Vaccinated',
+      length: vaccinatedResults.length,
       results: sort(vaccinatedResults),
       statusColumn: 'Outcome'
     },
     vaccinateLater: {
-      label: `Vaccinate later (${vaccinateLaterResults.length})`,
+      label: 'Vaccinate later',
+      length: vaccinateLaterResults.length,
       results: sort(vaccinateLaterResults),
       statusColumn: 'Outcome'
     },
     couldNotVaccinate: {
-      label: `Could not vaccinate (${couldNotVaccinateResults.length})`,
+      label: 'Could not vaccinate',
+      length: couldNotVaccinateResults.length,
       results: sort(couldNotVaccinateResults),
       statusColumn: 'Outcome'
     },
     actionNeeded: {
-      label: `Action needed (${actionNeededResults.length})`,
+      label: 'Action needed',
+      length: actionNeededResults.length,
       results: sort(actionNeededResults),
       statusColumn: 'Action needed',
       actionNeededFilter: true

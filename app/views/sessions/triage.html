@@ -43,16 +43,19 @@
   }) }}
 
   {% set triageNeeded %}
+    {% set caption = "Children needing triage" %}
     {% set tab = filters.triageNeeded %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set triageCompleted %}
+    {% set caption = "Children with " + (filters.triageCompleted.label | lower) %}
     {% set tab = filters.triageCompleted %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set noTriageNeeded %}
+    {% set caption = "Children with " + (filters.noTriageNeeded.label | lower) %}
     {% set tab = filters.noTriageNeeded %}
     {% include "sessions/_tab.html" %}
   {% endset %}
@@ -61,17 +64,17 @@
     items: [
       {
         id: "needs-triage",
-        label: filters.triageNeeded.label,
+        label: filters.triageNeeded.label + " (" + filters.triageNeeded.length + ")",
         panel: { html: triageNeeded }
       },
       {
         id: "triage-completed",
-        label: filters.triageCompleted.label,
+        label: filters.triageCompleted.label + " (" + filters.triageCompleted.length + ")",
         panel: { html: triageCompleted }
       },
       {
         id: "no-triage-needed",
-        label: filters.noTriageNeeded.label,
+        label: filters.noTriageNeeded.label + " (" + filters.noTriageNeeded.length + ")",
         panel: { html: noTriageNeeded }
       }
     ]

@@ -26,6 +26,7 @@ $govuk-border-colour: #d8dde0;
 @import "status";
 @import "summary-list";
 @import "table";
+@import "tabs";
 @import "tag";
 @import "utilities";
 
@@ -40,8 +41,8 @@ $govuk-border-colour: #d8dde0;
 }
 
 // NHS.UK Frontend overrides
-.nhsuk-label--s,
-.nhsuk-fieldset__legend--s {
+.nhsuk-label,
+.nhsuk-fieldset__legend {
   padding-top: nhsuk-spacing(2);
   margin-bottom: nhsuk-spacing(2);
 }

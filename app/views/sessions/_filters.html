@@ -1,57 +1,61 @@
-{{ input({
-  formGroup: {
-    classes: "nhsuk-u-margin-top-2"
-  },
-  id: "name",
-  name: "name",
-  type: "search",
-  autocomplete: "none",
-  label: {
-    classes: "nhsuk-label--s",
-    text: "By name"
+{% call fieldset({
+  legend: {
+    classes: "nhsuk-fieldset__legend--m nhsuk-u-padding-top-0 nhsuk-u-font-size-22",
+    text: "Filter results"
   }
-}) }}
-
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{{ govukCheckboxes({
-  classes: "govuk-checkboxes--small",
-  name: "year",
-  fieldset: {
-    legend: {
-      classes: "govuk-fieldset__legend--s",
-      text: "By year group"
+}) %}
+  {{ input({
+    id: "name",
+    name: "name",
+    type: "search",
+    autocomplete: "none",
+    label: {
+      classes: "govuk-label--s",
+      text: "By name"
     }
-  },
-  items: [
-    { value: "0", text: "Reception" },
-    { value: "1", text: "Year 1" },
-    { value: "2", text: "Year 2" },
-    { value: "3", text: "Year 3" },
-    { value: "4", text: "Year 4" },
-    { value: "5", text: "Year 5" },
-    { value: "6", text: "Year 6" }
-  ]
-}) }}
+  }) }}
 
-{{ govukCheckboxes({
-  classes: "govuk-checkboxes--small",
-  name: "status",
-  fieldset: {
-    legend: {
-      classes: "govuk-fieldset__legend--s",
-      text: "By action needed"
-    }
-  },
-  items: [
-    { value: "Get consent", text: "Get consent" },
-    { value: "Check refusal", text: "Check refusal" },
-    { value: "Triage", text: "Triage" },
-    { value: "Vaccinate", text: "Vaccinate" }
-  ]
-}) if tab.actionNeededFilter }}
+  {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+  {{ govukCheckboxes({
+    classes: "govuk-checkboxes--small",
+    name: "year",
+    fieldset: {
+      legend: {
+        classes: "govuk-fieldset__legend--s",
+        text: "By year group"
+      }
+    },
+    items: [
+      { value: "0", text: "Reception" },
+      { value: "1", text: "Year 1" },
+      { value: "2", text: "Year 2" },
+      { value: "3", text: "Year 3" },
+      { value: "4", text: "Year 4" },
+      { value: "5", text: "Year 5" },
+      { value: "6", text: "Year 6" }
+    ]
+  }) }}
 
-{{ button({
-  classes: "nhsuk-button--secondary app-button--small",
-  type: "reset",
-  text: "Reset filters"
-}) }}
+  {{ govukCheckboxes({
+    classes: "govuk-checkboxes--small",
+    name: "status",
+    fieldset: {
+      legend: {
+        classes: "govuk-fieldset__legend--s",
+        text: "By action needed"
+      }
+    },
+    items: [
+      { value: "Get consent", text: "Get consent" },
+      { value: "Check refusal", text: "Check refusal" },
+      { value: "Triage", text: "Triage" },
+      { value: "Vaccinate", text: "Vaccinate" }
+    ]
+  }) if tab.actionNeededFilter }}
+
+  {{ button({
+    classes: "nhsuk-button--secondary app-button--small",
+    type: "reset",
+    text: "Reset filters"
+  }) }}
+{% endcall %}

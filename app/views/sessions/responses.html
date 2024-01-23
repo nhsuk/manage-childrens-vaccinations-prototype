@@ -40,23 +40,27 @@
   }) }}
 
   {% set consentValid %}
+    {% set caption = "Children with consent given" %}
     {% set tab = filters.consentValid %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set consentRefused %}
+    {% set caption = "Children with consent refused" %}
     {% set tab = filters.consentRefused %}
     {% set isRefusalReasonNeeded = true %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set consentConflicts %}
+    {% set caption = "Children with conflicting consent responses" %}
     {% set tab = filters.consentConflicts %}
     {% set isRefusalReasonNeeded = false %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set noResponse %}
+    {% set caption = "Children with no consent response" %}
     {% set tab = filters.noResponse %}
     {% include "sessions/_tab.html" %}
   {% endset %}
@@ -70,22 +74,22 @@
     items: [
       {
         id: "consent-valid",
-        label: filters.consentValid.label,
+        label: filters.consentValid.label + " (" + filters.consentValid.length + ")",
         panel: { html: consentValid }
       },
       {
         id: "consent-refused",
-        label: filters.consentRefused.label,
+        label: filters.consentRefused.label + " (" + filters.consentRefused.length + ")",
         panel: { html: consentRefused }
       },
       {
         id: "consent-conflicts",
-        label: filters.consentConflicts.label,
+        label: filters.consentConflicts.label + " (" + filters.consentConflicts.length + ")",
         panel: { html: consentConflicts }
       },
       {
         id: "no-response",
-        label: filters.noResponse.label,
+        label: filters.noResponse.label + " (" + filters.noResponse.length + ")",
         panel: { html: noResponse }
       }
     ]

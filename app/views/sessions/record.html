@@ -40,21 +40,25 @@
   }) }}
 
   {% set actionNeeded %}
+    {% set caption = "Children with action needed" %}
     {% set tab = filters.actionNeeded %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set vaccinated %}
+    {% set caption = "Vaccinated children" %}
     {% set tab = filters.vaccinated %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set vaccinateLater %}
+    {% set caption = "Children to vaccinate later" %}
     {% set tab = filters.vaccinateLater %}
     {% include "sessions/_tab.html" %}
   {% endset %}
 
   {% set couldNotVaccinate %}
+    {% set caption = "Children who could not be vaccinated" %}
     {% set tab = filters.couldNotVaccinate %}
     {% include "sessions/_tab.html" %}
   {% endset %}
