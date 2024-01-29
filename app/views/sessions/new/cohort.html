@@ -19,33 +19,34 @@
     }) }}
   {% endmacro %}
 
-  {% set rows = [] %}
-  {% for patient in cohort %}
-    {% set rows = (rows.push([
-      {
-        html: checkboxHtml(patient.fullName)
-      },
-      {
-        text: patient.fullName
-      },
-      {
-        text: patient.dob | govukDate("truncate")
-      },
-      {
-        text: ("Year " + patient.yearGroup) | replace("Year 0", "Reception")
-      }
-    ]), rows) %}
-  {% endfor %}
-
-  {{ table({
-    tableClasses: "app-table--select-cohort",
-    firstCellIsHeader: false,
-    head: [
-      { html: checkboxHtml("all") },
-      { text: "Name" },
-      { text: "Date of birth" },
-      { text: "Year group" }
-    ],
-    rows: rows
-  }) }}
+  <action-table sort="name">
+    <table class="nhsuk-table app-table--select-cohort">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th class="nhsuk-table__header" no-sort>{{ checkboxHtml("all") }}</th>
+          <th class="nhsuk-table__header">Name</th>
+          <th class="nhsuk-table__header app-u-nowrap">Date of birth</th>
+          <th class="nhsuk-table__header">Year group</th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        {% for patient in cohort %}
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">
+            {{ checkboxHtml(patient.fullName) }}
+          </td>
+          <td class="nhsuk-table__cell" data-sort="{{ patient.lastName }}">
+            {{ patient.fullName }}
+          </td>
+          <td class="nhsuk-table__cell" data-sort="{{ patient.dob }}">
+            {{ patient.dob | govukDate("truncate") }}
+          </td>
+          <td class="nhsuk-table__cell" data-sort="{{ patient.yearGroup }}">
+            Year {{ (patient.yearGroup) | replace("Year 0", "Reception") }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </action-table>
 {% endblock %}
