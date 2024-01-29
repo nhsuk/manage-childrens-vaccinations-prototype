@@ -25,16 +25,18 @@
         value: "14"
       },
       {
-        text: "Choose your own schedule",
+        text: "Choose your own date",
         value: "custom",
         conditional: {
-          html: input({
-            classes: "nhsuk-input--width-2",
-            label: {
-              classes: "nhsuk-u-margin-bottom-3",
-              text: "Days before the session"
+          html: dateInput({
+            fieldset: {
+              legend: {
+                text: "Date to send consent requests"
+              }
             },
-            suffix: "days",
+            hint: {
+              text: "For example, 27 3 2023"
+            },
             decorate: ["newSession", "requestDays"]
           })
         }
@@ -59,16 +61,18 @@
         value: "7"
       },
       {
-        text: "Choose your own schedule",
+        text: "Choose your own date",
         value: "custom",
         conditional: {
-          html: input({
-            classes: "nhsuk-input--width-2",
-            label: {
-              classes: "nhsuk-u-margin-bottom-3",
-              text: "Days after the first consent request"
+          html: dateInput({
+            fieldset: {
+              legend: {
+                text: "Date to send reminders"
+              }
             },
-            suffix: "days",
+            hint: {
+              text: "For example, 27 3 2023"
+            },
             decorate: ["newSession", "reminderDays"]
           })
         }
