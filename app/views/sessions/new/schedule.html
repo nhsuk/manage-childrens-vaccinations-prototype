@@ -9,7 +9,10 @@
     HTML: "<p>Session scheduled for " + (session.date | isoDateFromDateInput | dateWithDayOfWeek) + " at " + session.location + "</p>"
   }) }}
 
-  {{ radios({
+  {{ dateInput({
+    formGroup: {
+      classes: "nhsuk-u-margin-bottom-6"
+    },
     fieldset: {
       legend: {
         classes: "nhsuk-fieldset__legend--m",
@@ -17,32 +20,10 @@
       }
     },
     hint: {
+      classes: "nhsuk-u-margin-bottom-0",
       text: "When should parents get a request for consent?"
     },
-    items: [
-      {
-        text: "14 days before the session",
-        value: "14"
-      },
-      {
-        text: "Choose your own date",
-        value: "custom",
-        conditional: {
-          html: dateInput({
-            fieldset: {
-              legend: {
-                text: "Date to send consent requests"
-              }
-            },
-            hint: {
-              text: "For example, 27 3 2023"
-            },
-            decorate: ["newSession", "requestDays"]
-          })
-        }
-      }
-    ],
-    decorate: ["newSession", "hasRequestDays"]
+    decorate: ["newSession", "openDate"]
   }) }}
 
   {{ radios({
@@ -57,8 +38,8 @@
     },
     items: [
       {
-        text: "7 days after the first consent request",
-        value: "7"
+        text: "2 days after the first consent request",
+        value: "2"
       },
       {
         text: "Choose your own date",
@@ -73,12 +54,12 @@
             hint: {
               text: "For example, 27 3 2023"
             },
-            decorate: ["newSession", "reminderDays"]
+            decorate: ["newSession", "reminderDate"]
           })
         }
       }
     ],
-    decorate: ["newSession", "hasReminderDays"]
+    decorate: ["newSession", "hasReminderDate"]
   }) }}
 
   {{ radios({
@@ -107,12 +88,12 @@
             hint: {
               text: "For example, 27 3 2023"
             },
-            decorate: ["newSession", "deadlineDate"]
+            decorate: ["newSession", "closeDate"]
           })
         }
       }
     ],
-    decorate: ["newSession", "hasDeadlineDate"]
+    decorate: ["newSession", "hasCloseDate"]
   }) }}
 
 {% endblock %}

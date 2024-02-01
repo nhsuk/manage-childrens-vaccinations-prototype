@@ -67,6 +67,9 @@ export default (router) => {
     session.isHPV = session.type === 'HPV'
     session.yearGroups = yearGroups(session.type)
     session.vaccines = _.filter(vaccines, { type: session.type })
+    session.openDate = `${isoDateFromDateInput(session.openDate)}T${time}`
+    session.reminderDate = `${isoDateFromDateInput(session.reminderDate)}T${time}`
+    session.closeDate = `${isoDateFromDateInput(session.closeDate)}T${time}`
 
     req.session.data.sessions[session.id] = session
     delete req.session.data.newCohort
