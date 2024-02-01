@@ -3,57 +3,66 @@
 {% set title = "Check and confirm details" %}
 {% set buttonText = "Confirm" %}
 {% set baseHref = "/sessions/new/" + sessionId %}
+{% set gridClass = "nhsuk-grid-column-three-quarters" %}
 
 {% block form %}
   {{ heading({ title: title }) }}
 
-  {{ summaryList({
-    rows: decorateRows([
-      {
-        key: "Type of session",
-        value: session.format,
-        href: baseHref
-      },
-      {
-        key: "School",
-        value: session.location,
-        href: baseHref + "/location"
-      },
-      {
-        key: "Vaccine",
-        value: session.type,
-        href: baseHref + "/type"
-      },
-      {
-        key: "Date",
-        value: session.date | isoDateFromDateInput | dateWithDayOfWeek,
-        href: baseHref + "/date"
-      },
-      {
-        key: "Time",
-        value: session.time,
-        href: baseHref + "/date"
-      },
-      {
-        key: "Cohort",
-        value: cohort.length + " children",
-        href: baseHref + "/cohort"
-      },
-      {
-        key: "Consent requests",
-        value: "Send " + (session.requestDays if session.hasRequestDays == "custom" else "14") + " days before the session",
-        href: baseHref + "/schedule"
-      },
-      {
-        key: "Reminders",
-        value: "Send " + (session.reminderDays if session.hasReminderDays == "custom" else "7") + " days after the first consent request",
-        href: baseHref + "/schedule"
-      },
-      {
-        key: "Deadline for responses",
-        value: (session.deadlineDate | isoDateFromDateInput | dateWithDayOfWeek) if session.hasDeadlineDate == "custom" else session.hasDeadlineDate,
-        href: baseHref + "/schedule"
-      }
-    ])
-  }) }}
+  <div class="nhsuk-card">
+    <div class="nhsuk-card__content">
+      {{ summaryList({
+        rows: decorateRows([
+          {
+            key: "Type of session",
+            value: session.format,
+            href: baseHref
+          },
+          {
+            key: "School",
+            value: session.location,
+            href: baseHref + "/location"
+          },
+          {
+            key: "Vaccine",
+            value: session.type,
+            href: baseHref + "/type"
+          },
+          {
+            key: "Date",
+            value: session.date | isoDateFromDateInput | dateWithDayOfWeek,
+            href: baseHref + "/date"
+          },
+          {
+            key: "Time",
+            value: session.time,
+            href: baseHref + "/date"
+          },
+          {
+            key: "Cohort",
+            value: cohort.length + " children",
+            href: baseHref + "/cohort"
+          },
+          {
+            key: "Send consent requests",
+            value: "Today" if data.state == "today" else session.openDate | isoDateFromDateInput | dateWithDayOfWeek,
+            href: baseHref + "/schedule"
+          },
+          {
+            key: "Send reminders",
+            value: session.reminderDate | isoDateFromDateInput | dateWithDayOfWeek if session.hasReminderDate == "custom" else "2 days after the first consent request",
+            href: baseHref + "/schedule"
+          },
+          {
+            key: "Deadline for responses",
+            value: (session.closeDate | isoDateFromDateInput | dateWithDayOfWeek) if session.hasCloseDate == "custom" else session.closeDate,
+            href: baseHref + "/schedule"
+          }
+        ])
+      }) }}
+    </div>
+  </div>
+
+  {{ insetText({
+    HTML: "<p>After clicking confirm, consent request emails will be sent today at 2pm.</p>"
+  }) if data.state == "today" }}
 {% endblock %}

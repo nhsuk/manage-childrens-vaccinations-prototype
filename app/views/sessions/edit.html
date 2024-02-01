@@ -1,0 +1,73 @@
+{% extends "_layouts/wizard.html" %}
+
+{% set title = "Edit session" %}
+{% set buttonText = "Confirm" %}
+{% set baseHref = "/sessions/new/" + sessionId %}
+{% set gridClass = "nhsuk-grid-column-three-quarters" %}
+
+{% block form %}
+  {{ heading({ title: title }) }}
+
+  <div class="nhsuk-card">
+    <div class="nhsuk-card__content">
+      {{ summaryList({
+        rows: decorateRows([
+          {
+            key: "Type of session",
+            value: session.format,
+            href: "#"
+          },
+          {
+            key: "School",
+            value: session.location
+          },
+          {
+            key: "Vaccine",
+            value: session.type
+          },
+          {
+            key: "Date",
+            value: session.date | dateWithDayOfWeek,
+            href: "#"
+          },
+          {
+            key: "Time",
+            value: session.time,
+            href: "#"
+          },
+          {
+            key: "Cohort",
+            value: session.cohort.length + " children"
+          },
+          {
+            key: "Consent requests",
+            value: {
+              classes: "nhsuk-u-secondary-text-color",
+              html: "27 consent requests were sent on<br>26 February 2024"
+            }
+          } if data.state == "past" else {
+            key: "Send consent requests",
+            value: session.openDate | dateWithDayOfWeek,
+            href: "#"
+          },
+          {
+            key: "Reminders",
+            value: {
+              classes: "nhsuk-u-secondary-text-color",
+              html: "27 consent requests were sent on<br>26 February 2024"
+            }
+          } if data.state == "past" else {
+            key: "Send reminders",
+            value: session.reminderDate | dateWithDayOfWeek,
+            href: "#"
+          },
+          {
+            key: "Deadline for responses",
+            value: session.closeDate | dateWithDayOfWeek,
+            href: "#"
+          }
+        ])
+      }) }}
+    </div>
+  </div>
+{% endblock %}
