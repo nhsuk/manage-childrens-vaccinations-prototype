@@ -1,0 +1,29 @@
+{% extends "_layouts/default.html" %}
+
+{% set title = "All children from this school have been added to a session" %}
+
+{% block outerContent %}
+  {{ backLink({
+    href: "#",
+    classes: "nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ heading({ title: title }) }}
+
+      <p>Choose a different school to add children to a session.</p>
+
+      <div class="govuk-button-group">
+        {{ button({
+          href: "#",
+          classes: "nhsuk-u-margin-right-3",
+          text: "Choose a different school"
+        }) }}
+        <p><a class="nhsuk-link" href="/sessions">Cancel</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
