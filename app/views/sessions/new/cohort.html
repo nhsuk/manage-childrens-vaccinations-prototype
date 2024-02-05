@@ -1,6 +1,6 @@
 {% extends "_layouts/wizard.html" %}
 
-{% set title = "Select cohort for this session" %}
+{% set title = "Choose cohort for this session" %}
 
 {% block form %}
   {{ heading({ title: title }) }}
@@ -13,7 +13,7 @@
       idPrefix: "selected",
       name: "selected",
       items: [{
-        html: "<span class=\"nhsuk-u-visually-hidden\">Select " + label + "</span>",
+        html: "<span class=\"nhsuk-u-visually-hidden\">Choose " + label + "</span>",
         checked: true
       }]
     }) }}
