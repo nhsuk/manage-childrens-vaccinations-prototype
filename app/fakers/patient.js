@@ -32,7 +32,9 @@ const _getPatient = (options) => {
   responses = _.uniqBy(responses, 'parentOrGuardian.relationship')
 
   // https://digital.nhs.uk/services/e-referral-service/document-library/synthetic-data-in-live-environments
-  patient.nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
+  patient.nhsNumber = '999#######'.replace(/#+/g, (m) =>
+    faker.string.numeric(m.length)
+  )
   patient.yearGroup = getYearGroup(patient.dob)
   patient.responses = responses
   patient.consent = { events: [] }

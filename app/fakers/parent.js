@@ -57,7 +57,9 @@ export default (patient) => {
     ])
     : faker.person.lastName()
 
-  const phone = faker.helpers.replaceSymbolWithNumber('07### ######')
+  const phone = '07### ######'.replace(/#+/g, (m) =>
+    faker.string.numeric(m.length)
+  )
   const tel = faker.helpers.maybe(() => phone, { probability: 0.7 })
 
   const parent = {

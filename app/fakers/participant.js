@@ -20,7 +20,9 @@ const schools = JSON.parse(fs.readFileSync(schoolData))
  * @returns {Participant} Participant
  */
 export default () => {
-  const nhsNumber = faker.helpers.replaceSymbolWithNumber('999#######')
+  const nhsNumber = '999#######'.replace(/#+/g, (m) =>
+    faker.string.numeric(m.length)
+  )
 
   const child = getChild(5, 10)
   child.address = getAddress()
