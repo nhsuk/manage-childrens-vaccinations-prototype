@@ -28,7 +28,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@colinaut/action-table": "^2.4.9",
+    "@colinaut/action-table": "^2.4.11",
     "@faker-js/faker": "^8.4.1",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
