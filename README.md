@@ -1,5 +1,8 @@
 # Manage vaccinations in schools prototype
 
+> [!Important]
+> This repository was used for prototyping the pilot service and is no longer being updated. The [prototype for the beta service can be found in a separate repo](https://github.com/nhsuk/manage-vaccinations-in-schools-prototype).
+
 View the prototype:
 https://poc-prototype.herokuapp.com/
 
